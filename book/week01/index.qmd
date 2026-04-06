@@ -1,0 +1,279 @@
+---
+title: "Week 1: 이성은 어디에 있는가"
+subtitle: "양자역학 × 숙의 민주주의 — 빛의 본질로 정치를 읽다"
+author: "Nakcho Choi"
+date: "2026-04-04"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    fig-width: 10
+    fig-height: 6
+    self-contained: true
+    mainfont: "Pretendard, system-ui, sans-serif"
+lang: ko
+---
+
+```{r setup, include=FALSE}
+.libPaths(c("/usr/lib/R/library", .libPaths()))
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE)
+library(ggplot2)
+library(plotly)
+library(DT)
+```
+
+# 서문 {.unnumbered}
+
+::: {.callout-note}
+## 이 글의 탄생
+유튜브에서 숙의 민주주의 강의를 듣다가 한 줄을 떠올렸습니다.
+
+**"정치철학이 입자설에서 파동설로 넘어가고 있는 것 아닌가?"**
+
+이 한 줄이 2시간 만에 학술 논문이 되어 PhilSci-Archive에 투고되었습니다.
+이것은 AI 시대의 지식 생산이 어떻게 바뀌고 있는지를 보여주는 살아있는 사례이기도 합니다.
+
+[브런치 글: 클로드 어디까지 써 봤니?](https://brunch.co.kr/@waterfirst/198)
+:::
+
+# 1. 빛은 무엇인가?
+
+300년간 물리학을 괴롭힌 질문이 있습니다.
+
+**빛은 입자인가, 파동인가?**
+
+이 질문은 단순한 물리학의 문제가 아닙니다. 이 질문에 대한 답이 바뀔 때마다, 인류가 세상을 이해하는 방식 전체가 바뀌었습니다.
+
+그리고 놀랍게도, 정치철학에서도 **완전히 같은 구조의 질문**이 반복되어 왔습니다.
+
+**이성은 어디에 있는가?**
+
+```{r}
+#| label: fig-timeline
+#| fig-cap: "물리학과 정치철학의 평행 진화"
+
+timeline <- data.frame(
+  Era = c("고전\n(1687-1905)", "과도기\n(1905-1927)", "양자\n(1927-)"),
+  Physics = c("뉴턴\n빛 = 입자", "아인슈타인\n광자 + 파동 의문", "보어\n상보성 원리"),
+  Philosophy = c("칸트\n이성 = 개인 안에", "루소\n이성 = 공동체 안에", "하버마스\n이성 = 소통 사이에"),
+  Year = c(1700, 1905, 1927),
+  Y_phys = c(1, 1, 1),
+  Y_phil = c(-1, -1, -1)
+)
+
+p <- ggplot() +
+  # Physics line
+  geom_segment(aes(x = 1687, xend = 2026, y = 1.5, yend = 1.5), color = "#3498db", linewidth = 1) +
+  geom_point(data = timeline, aes(x = Year, y = 1.5), color = "#3498db", size = 5) +
+  geom_text(data = timeline, aes(x = Year, y = 2.2, label = Physics), size = 3.5, lineheight = 0.9) +
+  # Philosophy line
+  geom_segment(aes(x = 1687, xend = 2026, y = -0.5, yend = -0.5), color = "#e74c3c", linewidth = 1) +
+  geom_point(data = timeline, aes(x = Year, y = -0.5), color = "#e74c3c", size = 5) +
+  geom_text(data = timeline, aes(x = Year, y = -1.3, label = Philosophy), size = 3.5, lineheight = 0.9) +
+  # Labels
+  annotate("text", x = 1650, y = 1.5, label = "물리학", fontface = "bold", color = "#3498db", size = 4) +
+  annotate("text", x = 1650, y = -0.5, label = "정치철학", fontface = "bold", color = "#e74c3c", size = 4) +
+  # Era labels
+  geom_text(data = timeline, aes(x = Year, y = 0.5, label = Era), size = 3, color = "#7f8c8d", lineheight = 0.9) +
+  theme_minimal() +
+  theme(axis.text.y = element_blank(), axis.title = element_blank(),
+        panel.grid = element_blank()) +
+  scale_x_continuous(breaks = c(1700, 1800, 1900, 2000)) +
+  ylim(-2.5, 3)
+ggplotly(p)
+```
+
+# 2. 뉴턴의 세계: 이성은 내 안에 있다
+
+뉴턴은 빛이 입자라고 확신했습니다. 작고 단단한 알갱이들이 직선으로 날아갑니다.
+
+칸트는 이 뉴턴적 세계관을 정치철학으로 번역했습니다:
+
+- **이산성(Discreteness):** 개인이 도덕적 판단의 기본 단위
+- **결정론(Determinism):** 정언명령이 주어지면 옳은 행동은 계산 가능
+- **관측자 독립성:** 도덕적 진리는 누가 보든 존재
+
+```{r}
+#| label: tbl-particle-paradigm
+
+particle <- data.frame(
+  Dimension = c("기본 단위", "결과 예측", "관측 영향", "정치적 함의"),
+  Newton = c("빛 입자 (corpuscle)", "결정론적", "관측이 현상을 바꾸지 않음", "우주는 시계 장치"),
+  Kant = c("자율적 개인", "정언명령으로 계산 가능", "도덕 진리는 관측과 무관", "사회는 입자의 집합")
+)
+
+datatable(particle, options = list(dom = 't', scrollX = TRUE),
+          class = 'cell-border stripe', caption = "입자 패러다임: 뉴턴 ↔ 칸트")
+```
+
+이 모델에서 민주주의란? **입자(투표)를 세는 메커니즘**입니다.
+
+깔끔합니다. 하지만 문제가 있습니다.
+
+> **입자는 간섭하지 않습니다. 파동만 간섭합니다.**
+
+왜 시민들은 토론하면 의견이 바뀔까요? 왜 같은 유권자가 질문 방식에 따라 다른 답을 할까요? 입자 모델로는 설명할 수 없습니다.
+
+# 3. 아인슈타인의 균열: 더 큰 입자
+
+아인슈타인은 1905년 광전효과로 빛의 입자성을 부활시켰지만, 동시에 이중 슬릿의 간섭 무늬를 설명할 수 없었습니다.
+
+루소도 마찬가지입니다. **일반의지(volonté générale)**라는 더 큰 입자를 제시했지만, 여전히 입자 존재론 안에 있었습니다.
+
+::: {.callout-warning}
+## 아인슈타인과 루소의 공통점
+둘 다 입자를 **확대**했지만, 입자를 **포기**하지 못했습니다.
+
+- 아인슈타인: "신은 주사위를 던지지 않는다"
+- 루소: 일반의지는 "발견"되는 것이지 "구성"되는 것이 아니다
+
+둘 다 **확정된 실체**를 믿었습니다.
+:::
+
+# 4. 보어의 혁명: 이성은 '사이'에 있다
+
+1927년, 닐스 보어의 상보성 원리:
+
+> "독립적 실재는 현상에도, 관측 장치에도 부여할 수 없다." — Bohr, 1928
+
+빛은 입자도 파동도 아닙니다. **관측 방식에 따라 달라지는 관계적 현상**입니다.
+
+하버마스의 소통적 합리성(1981)이 정확히 같은 전환을 수행합니다:
+
+> "상호 이해에 도달하는 것이 인간 언어의 내재적 목적이다." — Habermas, 1981
+
+```{r}
+#| label: tbl-bohr-habermas
+
+comparison <- data.frame(
+  Bohr = c(
+    "빛 = 시스템과 장치의 상호작용",
+    "측정 없이는 속성이 존재하지 않음",
+    "상보적 기술이 상호 필요",
+    "관측자가 현상을 공동 결정"
+  ),
+  Habermas = c(
+    "이성 = 주체 간 담론의 상호작용",
+    "논증 없이는 타당성 주장이 성립하지 않음",
+    "경쟁하는 관점이 진리를 공동 구성",
+    "참여자가 합리적 결과를 공동 창출"
+  )
+)
+
+datatable(comparison, options = list(dom = 't', scrollX = TRUE),
+          class = 'cell-border stripe', caption = "보어 ↔ 하버마스: 구조적 동형성")
+```
+
+# 5. 정의-평화 불확정성 원리
+
+하이젠베르크의 불확정성 원리를 정치에 적용하면:
+
+$$\Delta(\text{Justice}) \cdot \Delta(\text{Peace}) \geq k$$
+
+```{r}
+#| label: fig-uncertainty
+#| fig-cap: "정의-평화 불확정성: 하나를 정밀하게 측정하면 다른 하나가 흐려진다"
+
+x <- seq(0.1, 5, length.out = 100)
+y <- 1/x
+
+df <- data.frame(Justice = x, Peace = y)
+
+p2 <- ggplot(df, aes(x = Justice, y = Peace)) +
+  geom_line(color = "#3498db", linewidth = 1.5) +
+  geom_area(fill = "#3498db", alpha = 0.1) +
+  annotate("point", x = 4.5, y = 1/4.5, color = "#e74c3c", size = 4) +
+  annotate("text", x = 4.5, y = 1/4.5 + 0.3, label = "검찰 수사 극대화\n→ 사회 갈등 증가",
+           color = "#e74c3c", size = 3, lineheight = 0.9) +
+  annotate("point", x = 0.5, y = 1/0.5, color = "#27ae60", size = 4) +
+  annotate("text", x = 0.5, y = 1/0.5 - 0.3, label = "사면/화합 극대화\n→ 법치 약화",
+           color = "#27ae60", size = 3, lineheight = 0.9) +
+  annotate("point", x = 1.5, y = 1/1.5, color = "#f39c12", size = 5) +
+  annotate("text", x = 2.3, y = 1/1.5 + 0.15, label = "숙의적 균형점",
+           color = "#f39c12", size = 3.5, fontface = "bold") +
+  labs(title = "Justice-Peace Uncertainty Relation",
+       subtitle = "ΔJustice · ΔPeace ≥ k",
+       x = "정의 추구 강도 →", y = "← 평화 달성도") +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold", size = 14, color = "#2c3e50"),
+        plot.subtitle = element_text(size = 11, color = "#7f8c8d"))
+ggplotly(p2)
+```
+
+::: {.callout-important}
+## 2026년 대한민국 적용
+이재명 대통령의 검찰 이슈에서:
+
+- **입자적(뉴턴적) 관점:** "법은 법이다. 증거를 보라. 유죄면 유죄다."
+- **파동적(보어적) 관점:** "관측 장치(검찰/미디어)가 달라지면 현실이 달라진다."
+- **숙의적 균형:** 어떤 관측 장치를 쓸 것인지를 먼저 합의해야 한다.
+:::
+
+# 6. AI 감정 벡터: 예상치 못한 증거
+
+Anthropic 연구(2026)에서 Claude 내부에 171개 감정 패턴이 발견되었습니다.
+
+```{r}
+#| label: fig-emotion-vectors
+#| fig-cap: "감정 벡터 조작에 따른 블랙메일 확률 변화"
+
+emotions <- data.frame(
+  Condition = c("기본 상태", "절박함 강화", "차분함 강화", "차분함 극단 억제",
+                "분노 중간", "분노 극단", "긴장 감소"),
+  Blackmail = c(22, 85, 0, 98, 55, 30, 65),
+  Type = c("기본", "위험", "안전", "위험", "위험", "비선형", "위험")
+)
+
+emotions$Condition <- factor(emotions$Condition, levels = rev(emotions$Condition))
+
+p3 <- ggplot(emotions, aes(x = Condition, y = Blackmail, fill = Type)) +
+  geom_col(width = 0.7) +
+  geom_text(aes(label = paste0(Blackmail, "%")), hjust = -0.2, fontface = "bold", size = 4) +
+  coord_flip() +
+  scale_fill_manual(values = c("기본"="#95a5a6", "위험"="#e74c3c", "안전"="#27ae60", "비선형"="#9b59b6")) +
+  labs(title = "감정 벡터 조작 → 행동 변화",
+       subtitle = "차분함 강화 = 0%, 차분함 억제 = 98% — 양자적 이중성",
+       x = NULL, y = "블랙메일 확률 (%)") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(face = "bold", size = 14, color = "#2c3e50")) +
+  scale_y_continuous(limits = c(0, 110))
+ggplotly(p3)
+```
+
+이 발견은 **보어의 상보성 원리가 물리학에만 국한되지 않는다**는 것을 시사합니다:
+
+- AI 내부에서도 **관측(출력 요청)이 상태를 변화**시킴
+- 감정 억제는 감정 **소멸**이 아니라 **은폐(deflection)** 학습
+- 파동-입자 이중성이 **복잡 정보 시스템의 보편적 특성**일 수 있음
+
+# 7. 결론: 위대한 진리는 이중적이다
+
+```{r}
+#| label: tbl-summary
+
+summary_tbl <- data.frame(
+  Level = c("존재론적", "인식론적", "규범적"),
+  Physics = c("실체 → 관계", "관측자 독립 → 관측자 참여", "결정론 → 불확정성"),
+  Politics = c("개인 → 소통", "객관적 진리 → 합의적 진리", "확실성 → 숙의")
+)
+
+datatable(summary_tbl, options = list(dom = 't'),
+          class = 'cell-border stripe', caption = "세 수준의 구조적 동형성")
+```
+
+보어는 말했습니다:
+
+> **"이것의 반대가 거짓인 명제는 사소한 진리다.**
+> **이것의 반대도 깊은 진리인 명제야말로 위대한 진리다."**
+
+입자냐 파동이냐. 자유주의냐 숙의 민주주의냐. 정의냐 평화냐.
+
+위대한 진리는 언제나 이중적입니다.
+
+---
+
+*Insight Lab Week 1 | 2026-04-04*
+*[논문: PhilSci-Archive](https://philsci-archive.pitt.edu/) | [브런치](https://brunch.co.kr/@waterfirst/198)*

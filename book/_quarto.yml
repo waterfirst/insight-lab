@@ -1,0 +1,20 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "INSIGHT LAB — 인문학 × 과학 크로스오버"
+  subtitle: "서로 다른 세계를 충돌시켜 새로운 인사이트를 만든다"
+  author: "Nakcho Choi"
+  date: "2026"
+  chapters:
+    - index.qmd
+    - week01/index.qmd
+
+format:
+  html:
+    theme: cosmo
+    mainfont: "Pretendard, system-ui, sans-serif"
+    code-fold: true
+
+lang: ko
