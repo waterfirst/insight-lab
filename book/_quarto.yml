@@ -10,6 +10,7 @@ book:
   chapters:
     - index.qmd
     - week01/index.qmd
+    - week02/index.qmd
 
 format:
   html:
