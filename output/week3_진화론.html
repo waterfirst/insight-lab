@@ -1,358 +1,660 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Insight Lab Week 3 — 진화론 × 기업 전략</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-
-:root {
-  --bg: #fafaf8;
-  --fg: #1a1a1a;
-  --accent: #2563eb;
-  --accent2: #dc2626;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --card-bg: #ffffff;
-  --highlight: #fef3c7;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background: var(--bg);
-  color: var(--fg);
-  line-height: 1.85;
-  font-size: 17px;
-}
-
-.header {
-  background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
-  color: white;
-  padding: 4rem 2rem 3rem;
-  text-align: center;
-}
-
-.header h1 {
-  font-family: 'Noto Serif KR', serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.02em;
-}
-
-.header .subtitle {
-  font-size: 1.2rem;
-  opacity: 0.85;
-  font-weight: 300;
-}
-
-.header .meta {
-  margin-top: 1.5rem;
-  font-size: 0.85rem;
-  opacity: 0.6;
-}
-
-.container {
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 2.5rem 1.5rem 4rem;
-}
-
-h1 { font-family: 'Noto Serif KR', serif; font-size: 2rem; margin: 3rem 0 1.5rem; color: #0f172a; border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; }
-h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; margin: 2.5rem 0 1rem; color: #1e3a5f; }
-h3 { font-size: 1.25rem; margin: 2rem 0 0.8rem; color: #374151; font-weight: 700; }
-
-p { margin-bottom: 1.2rem; text-align: justify; }
-
-blockquote {
-  border-left: 4px solid var(--accent);
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
-  background: #f0f4ff;
-  border-radius: 0 8px 8px 0;
-  font-style: italic;
-  color: #374151;
-}
-
-strong { color: #1e3a5f; }
-em { color: var(--muted); }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-  font-size: 0.92rem;
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-}
-
-th {
-  background: #1e3a5f;
-  color: white;
-  padding: 0.8rem 1rem;
-  text-align: left;
-  font-weight: 500;
-}
-
-td {
-  padding: 0.7rem 1rem;
-  border-bottom: 1px solid var(--border);
-}
-
-tr:hover td { background: #f8fafc; }
-
-ul, ol {
-  margin: 1rem 0 1.5rem 1.5rem;
-}
-
-li {
-  margin-bottom: 0.5rem;
-}
-
-hr {
-  border: none;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--border), transparent);
-  margin: 3rem 0;
-}
-
-.toc {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem 2rem;
-  margin-bottom: 2.5rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-}
-
-.toc h2 { font-size: 1.1rem; margin: 0 0 1rem; color: var(--accent); border: none; }
-
-.footer {
-  text-align: center;
-  padding: 2rem;
-  color: var(--muted);
-  font-size: 0.85rem;
-  border-top: 1px solid var(--border);
-  margin-top: 3rem;
-}
-
-@media (max-width: 600px) {
-  .header h1 { font-size: 1.8rem; }
-  .container { padding: 1.5rem 1rem; }
-  body { font-size: 16px; }
-  table { font-size: 0.8rem; }
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="generator" content="quarto-1.6.37" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Insight Lab" />
+  <meta name="dcterms.date" content="2026-04-12" />
+  <title>적자생존의 경영학 — 진화론으로 읽는 기업의 흥망</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="" />
+  <style>
+  @import url('https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/cosmo/bootstrap.min.css');
+  body { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; font-family: system-ui, -apple-system, sans-serif; line-height: 1.8; color: #212529; }
+  h1 { border-bottom: 2px solid #2780e3; padding-bottom: 0.3rem; margin-top: 2.5rem; }
+  h2 { color: #1a4d7a; margin-top: 2rem; }
+  h3 { color: #374151; margin-top: 1.5rem; }
+  blockquote { border-left: 4px solid #2780e3; padding: 0.8rem 1.2rem; background: #f0f4ff; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+  th { background: #2780e3; color: white; padding: 0.6rem 0.8rem; text-align: left; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #dee2e6; }
+  tr:hover td { background: #f8f9fa; }
+  #TOC { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 1rem 1.5rem; margin-bottom: 2rem; }
+  #TOC > ul { padding-left: 1rem; }
+  .title { font-size: 2.2rem; margin-bottom: 0.3rem; }
+  .subtitle { font-size: 1.2rem; color: #6c757d; }
+  .author, .date { color: #6c757d; }
+  hr { border: none; height: 1px; background: linear-gradient(to right, transparent, #dee2e6, transparent); margin: 2.5rem 0; }
+  </style>
 </head>
 <body>
-
-<div class="header">
-  <h1>진화론 × 기업 전략</h1>
-  <div class="subtitle">적자생존의 경영학 — 미국·한국·일본 기업의 흥망성쇠를 다윈으로 읽다</div>
-  <div class="meta">Insight Lab Week 3 · Nakcho Choi × Claude Opus 4.6 · 2026-04-12</div>
-</div>
-
-<div class="container">
-<h1 id="_1">진화론 × 기업 전략</h1>
-<h2 id="_2">서론: 왜 다윈이 경영대학원에 필요한가</h2>
-<p>1975년, 코닥의 젊은 엔지니어 스티브 새슨이 세계 최초의 디지털 카메라를 만들었을 때, 경영진의 반응은 "귀엽군. 아무에게도 말하지 마"였다. 37년 후 코닥은 파산했다. 같은 해, 후지필름은 화장품과 의약품 회사로 변신해 살아남았다. 왜 같은 환경 변화 앞에서 한 종은 멸종하고, 다른 종은 적응에 성공하는가?</p>
-<p>찰스 다윈이 150여 년 전 갈라파고스에서 관찰한 원리 — 변이, 선택, 유전 — 는 놀랍게도 21세기 기업 생태계에서 매일 실시간으로 재현되고 있다. 이 에세이는 진화생물학의 세 가지 핵심 메커니즘을 미국·한국·일본 기업의 흥망성쇠와 교차시킴으로써, AI 시대 기업 적응의 새로운 프레임워크를 제시한다. 단순한 비유가 아니라, 진화론이 기업 전략에 제공하는 구조적 통찰을 추적한다.</p>
-<h2 id="part-i">Part I: 진화론의 세 가지 엔진</h2>
-<h3 id="1-natural-selection">1. 자연선택 (Natural Selection) — "적합한 자의 번식"</h3>
-<p>다윈의 자연선택은 세 가지 조건이 동시에 충족될 때 작동한다.</p>
+<header id="title-block-header">
+<h1 class="title">��������������� ��������� ��� ��������������� ������
+��������� ������</h1>
+<p class="subtitle">Insight Lab Week 3 | ��������� �� ������ ������</p>
+<p class="author">Insight Lab</p>
+<p class="date">2026-04-12</p>
+</header>
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><strong>변이(Variation)</strong>: 개체 간에 형질의 차이가 존재해야 한다</li>
-<li><strong>유전(Heritability)</strong>: 그 차이가 다음 세대에 전달되어야 한다  </li>
-<li><strong>차등 번식(Differential Reproduction)</strong>: 환경에 더 적합한 형질을 가진 개체가 더 많은 후손을 남겨야 한다</li>
-</ul>
-<p>핵심은 '가장 강한 자'가 아니라 <strong>'환경에 가장 적합한 자'</strong>가 살아남는다는 것이다. 공룡은 1억 6천만 년간 지구를 지배했지만, 소행성 충돌이라는 급격한 환경 변화 앞에서 멸종했다. 반면 당시 보잘것없던 포유류는 작은 체구와 잡식성이라는 '열등한' 형질 덕분에 살아남아 지구의 새 주인이 되었다.</p>
-<h3 id="2-punctuated-equilibrium">2. 단속평형설 (Punctuated Equilibrium) — "진화는 계단이다"</h3>
-<p>1972년, 스티븐 제이 굴드와 닐스 엘드리지는 화석 기록의 불편한 진실을 직시했다. 다윈이 예측한 '점진적 변화의 중간 형태'가 거의 발견되지 않는 것이다. 그들의 대안적 설명은 이렇다:</p>
-<blockquote>
-<p>대부분의 종은 수백만 년간 <strong>거의 변하지 않는다(평형)</strong>. 그러다 환경적 압력이나 지리적 격리 같은 조건이 만들어지면, <strong>비교적 짧은 시간(수천~수만 년) 내에 급격히 변화한다(단속)</strong>.</p>
-</blockquote>
-<p>진화는 직선이 아니라 계단이다. 오랜 정체기와 급격한 도약이 번갈아 나타난다. 이것은 기업 혁신의 리듬과 놀라울 만큼 닮아 있다.</p>
-<h3 id="3-adaptive-radiation">3. 적응 방산 (Adaptive Radiation) — "빈 생태계의 폭발적 분화"</h3>
-<p>갈라파고스 제도의 핀치새 13종은 모두 하나의 조상에서 분화했다. 남미 대륙에서 날아온 단일 종이 섬이라는 '빈 생태계'에 도착한 후, 씨앗을 깨는 부리, 곤충을 잡는 부리, 선인장 꽃꿀을 빠는 부리 등으로 각각 특화되며 폭발적으로 분화한 것이다.</p>
-<p>적응 방산이 일어나는 핵심 조건은 두 가지다:</p>
+<li><a href="#서론-왜-다윈으로-기업을-읽는가"
+id="toc-서론-왜-다윈으로-기업을-읽는가"><span
+class="toc-section-number">1</span> 서론: 왜 다윈으로 기업을
+읽는가</a></li>
+<li><a href="#제1장-진화론의-세-가지-엔진"
+id="toc-제1장-진화론의-세-가지-엔진"><span
+class="toc-section-number">2</span> 제1장: 진화론의 세 가지 엔진</a>
 <ul>
-<li><strong>빈 생태적 지위(Empty Niche)</strong>: 새로운 환경이 열리거나 기존 경쟁자가 사라질 때</li>
-<li><strong>핵심 혁신(Key Innovation)</strong>: 새로운 자원을 이용할 수 있게 해주는 형질 변화</li>
+<li><a href="#자연선택-적합한-자의-번식"
+id="toc-자연선택-적합한-자의-번식"><span
+class="toc-section-number">2.1</span> 자연선택 — “적합한 자의
+번식”</a></li>
+<li><a href="#단속평형설-진화는-직선이-아니라-계단이다"
+id="toc-단속평형설-진화는-직선이-아니라-계단이다"><span
+class="toc-section-number">2.2</span> 단속평형설 — “진화는 직선이 아니라
+계단이다”</a></li>
+<li><a href="#적응-방산-빈-생태계의-폭발적-분화"
+id="toc-적응-방산-빈-생태계의-폭발적-분화"><span
+class="toc-section-number">2.3</span> 적응 방산 — “빈 생태계의 폭발적
+분화”</a></li>
+</ul></li>
+<li><a href="#제2장-미국-기업-자연선택의-냉혹한-실험실"
+id="toc-제2장-미국-기업-자연선택의-냉혹한-실험실"><span
+class="toc-section-number">3</span> 제2장: 미국 기업 — 자연선택의 냉혹한
+실험실</a>
+<ul>
+<li><a href="#코닥의-멸종-과적응이-부른-진화적-막다른-골목"
+id="toc-코닥의-멸종-과적응이-부른-진화적-막다른-골목"><span
+class="toc-section-number">3.1</span> 코닥의 멸종 — 과적응이 부른 진화적
+막다른 골목</a></li>
+<li><a href="#아마존의-적응-방산-서점에서-시작된-종의-폭발"
+id="toc-아마존의-적응-방산-서점에서-시작된-종의-폭발"><span
+class="toc-section-number">3.2</span> 아마존의 적응 방산 — 서점에서
+시작된 종의 폭발</a></li>
+<li><a href="#애플의-단속평형-20년의-정체와-10년의-폭발"
+id="toc-애플의-단속평형-20년의-정체와-10년의-폭발"><span
+class="toc-section-number">3.3</span> 애플의 단속평형 — 20년의 정체와
+10년의 폭발</a></li>
+<li><a href="#엔비디아의-전적응-게임에서-ai-인프라로"
+id="toc-엔비디아의-전적응-게임에서-ai-인프라로"><span
+class="toc-section-number">3.4</span> 엔비디아의 전적응 — 게임에서 AI
+인프라로</a></li>
+</ul></li>
+<li><a href="#제3장-일본-기업-갈라파고스-증후군과-과적응의-비극"
+id="toc-제3장-일본-기업-갈라파고스-증후군과-과적응의-비극"><span
+class="toc-section-number">4</span> 제3장: 일본 기업 — 갈라파고스
+증후군과 과적응의 비극</a>
+<ul>
+<li><a href="#갈라파고스-증후군의-진화론적-해부"
+id="toc-갈라파고스-증후군의-진화론적-해부"><span
+class="toc-section-number">4.1</span> 갈라파고스 증후군의 진화론적
+해부</a></li>
+<li><a href="#후지필름-vs-코닥-자연-통제-실험"
+id="toc-후지필름-vs-코닥-자연-통제-실험"><span
+class="toc-section-number">4.2</span> 후지필름 vs 코닥 — 자연 통제
+실험</a></li>
+<li><a href="#소니의-부분적-부활-지연된-적응-방산"
+id="toc-소니의-부분적-부활-지연된-적응-방산"><span
+class="toc-section-number">4.3</span> 소니의 부분적 부활 — 지연된 적응
+방산</a></li>
+</ul></li>
+<li><a href="#제4장-한국-기업-빠른-세대-교체의-진화적-우위"
+id="toc-제4장-한국-기업-빠른-세대-교체의-진화적-우위"><span
+class="toc-section-number">5</span> 제4장: 한국 기업 — 빠른 세대 교체의
+진화적 우위</a>
+<ul>
+<li><a href="#r-전략-vs-k-전략-삼성과-소니"
+id="toc-r-전략-vs-k-전략-삼성과-소니"><span
+class="toc-section-number">5.1</span> r-전략 vs K-전략: 삼성과
+소니</a></li>
+<li><a href="#sk하이닉스의-니치-전략-hbm-선점"
+id="toc-sk하이닉스의-니치-전략-hbm-선점"><span
+class="toc-section-number">5.2</span> SK하이닉스의 니치 전략 — HBM
+선점</a></li>
+<li><a href="#현대차의-단속평형-30년-축적과-ev-도약"
+id="toc-현대차의-단속평형-30년-축적과-ev-도약"><span
+class="toc-section-number">5.3</span> 현대차의 단속평형 — 30년 축적과 EV
+도약</a></li>
+</ul></li>
+<li><a href="#제5장-ai-시대의-적응-방산-지금-벌어지는-대분화"
+id="toc-제5장-ai-시대의-적응-방산-지금-벌어지는-대분화"><span
+class="toc-section-number">6</span> 제5장: AI 시대의 적응 방산 — 지금
+벌어지는 대분화</a>
+<ul>
+<li><a href="#미국-플랫폼-공룡들의-종분화"
+id="toc-미국-플랫폼-공룡들의-종분화"><span
+class="toc-section-number">6.1</span> 미국: 플랫폼 공룡들의
+종분화</a></li>
+<li><a href="#한국-하드웨어-ai-공진화"
+id="toc-한국-하드웨어-ai-공진화"><span
+class="toc-section-number">6.2</span> 한국: 하드웨어-AI 공진화</a></li>
+<li><a href="#일본-자동차라는-최후의-생태적-지위"
+id="toc-일본-자동차라는-최후의-생태적-지위"><span
+class="toc-section-number">6.3</span> 일본: 자동차라는 최후의 생태적
+지위</a></li>
+</ul></li>
+<li><a href="#제6장-진화론이-기업-전략에-주는-다섯-가지-교훈"
+id="toc-제6장-진화론이-기업-전략에-주는-다섯-가지-교훈"><span
+class="toc-section-number">7</span> 제6장: 진화론이 기업 전략에 주는
+다섯 가지 교훈</a>
+<ul>
+<li><a href="#교훈-1-예측보다-변이가-중요하다"
+id="toc-교훈-1-예측보다-변이가-중요하다"><span
+class="toc-section-number">7.1</span> 교훈 1: 예측보다 변이가
+중요하다</a></li>
+<li><a href="#교훈-2-과적응은-멸종의-전조다"
+id="toc-교훈-2-과적응은-멸종의-전조다"><span
+class="toc-section-number">7.2</span> 교훈 2: 과적응은 멸종의
+전조다</a></li>
+<li><a href="#교훈-3-혁신은-계단이지-경사로가-아니다"
+id="toc-교훈-3-혁신은-계단이지-경사로가-아니다"><span
+class="toc-section-number">7.3</span> 교훈 3: 혁신은 계단이지 경사로가
+아니다</a></li>
+<li><a href="#교훈-4-빈-생태계를-먼저-찾아라"
+id="toc-교훈-4-빈-생태계를-먼저-찾아라"><span
+class="toc-section-number">7.4</span> 교훈 4: 빈 생태계를 먼저
+찾아라</a></li>
+<li><a href="#교훈-5-문화유전가-진화를-결정한다"
+id="toc-교훈-5-문화유전가-진화를-결정한다"><span
+class="toc-section-number">7.5</span> 교훈 5: 문화(유전)가 진화를
+결정한다</a></li>
+</ul></li>
+<li><a href="#결론-엔트로피에서-진화로-두-주의-연결"
+id="toc-결론-엔트로피에서-진화로-두-주의-연결"><span
+class="toc-section-number">8</span> 결론: 엔트로피에서 진화로 — 두 주의
+연결</a>
+<ul>
+<li><a href="#참고-문헌" id="toc-참고-문헌"><span
+class="toc-section-number">8.1</span> 참고 문헌</a></li>
+</ul></li>
 </ul>
-<hr />
-<h2 id="part-ii">Part II: 미국 기업 — 자연선택의 냉혹한 실험실</h2>
-<p>미국 시장은 진화론적 자연선택이 가장 순수한 형태로 작동하는 생태계다. 규제가 상대적으로 적고, 자본 시장이 발달하여 '적합하지 못한' 기업에 대한 도태 압력이 강하다.</p>
-<h3 id="1">사례 1: 코닥의 멸종 — 환경 변화를 거부한 공룡</h3>
-<p>코닥은 진화생물학에서 말하는 <strong>'진화적 막다른 골목(Evolutionary Dead End)'</strong>의 교과서적 사례다.</p>
-<p>1976년, 코닥은 미국 필름 시장의 90%, 카메라 시장의 85%를 장악한 절대 강자였다. 시가총액은 1997년 310억 달러에 달했다. 그런데 바로 이 <strong>과도한 적합성</strong>이 독이 되었다. 진화생물학에서 '과적응(Over-specialization)'이라 불리는 현상이다. 코알라가 유칼립투스 잎만 먹을 수 있도록 진화한 것처럼, 코닥은 필름이라는 단일 생태적 지위에 완벽하게 최적화되어 있었다.</p>
-<p>아이러니는 코닥이 1975년 최초의 디지털 카메라를 <strong>발명했다</strong>는 점이다. 변이는 이미 존재했다. 그러나 코닥은 이 변이를 억압했다. 필름 사업이라는 기존 수익원을 잠식할 것을 두려워했기 때문이다. 진화적 용어로 말하면, <strong>유전 메커니즘을 스스로 차단</strong>한 것이다.</p>
-<p>2001년 코닥이 인수한 사진 공유 사이트 Ofoto는 인스타그램이 될 수 있었다. 그러나 코닥은 이를 '디지털 사진을 인화하도록 유도하는 도구'로만 활용했다. 새로운 환경에 도착한 핀치새가 부리를 바꾸는 대신, 원래 대륙의 씨앗을 공수해 오려 한 셈이다. 2012년, 코닥은 파산했다.</p>
-<h3 id="2">사례 2: 아마존의 적응 방산 — 서점에서 '모든 것의 상점'으로</h3>
-<p>아마존의 진화 궤적은 갈라파고스 핀치새의 적응 방산과 구조적으로 동일하다.</p>
-<p>1994년 온라인 서점이라는 <strong>단일 종</strong>에서 출발한 아마존은, 인터넷이라는 '빈 생태계'에서 놀라운 속도로 분화했다. 도서 → 전자상거래 전반 → 클라우드 컴퓨팅(AWS) → 스트리밍(프라임 비디오) → 인공지능(알렉사) → 식료품(홀푸드 인수) → 헬스케어(아마존 클리닉) → 우주(블루 오리진). 각 사업부는 서로 다른 생태적 지위를 차지하며, 다른 '종'과의 직접 경쟁을 피한다.</p>
-<p>특히 AWS의 탄생은 진화생물학에서 말하는 <strong>'전적응(Exaptation)'</strong>의 완벽한 사례다. 전적응이란 원래 다른 목적으로 진화한 형질이 새로운 기능을 수행하게 되는 현상을 말한다. 새의 깃털이 원래 체온 조절용이었다가 나중에 비행에 쓰이게 된 것처럼, AWS는 원래 아마존 내부의 인프라 효율화를 위해 개발되었다가 세계 최대의 클라우드 서비스로 진화했다. 2024년 기준 AWS는 아마존 전체 영업이익의 60% 이상을 창출한다.</p>
-<h3 id="3-20-10">사례 3: 애플의 단속평형 — 20년의 정체와 10년의 폭발</h3>
-<p>애플의 기업 역사는 단속평형설의 완벽한 시연이다.</p>
-<p><strong>제1 평형기(1977~1997)</strong>: 애플은 개인용 컴퓨터의 선구자였지만, IBM PC와 마이크로소프트 윈도우에 밀려 점점 쇠퇴했다. 1997년 시가총액은 30억 달러 수준이었고, 90일 치 운영자금밖에 남지 않았다. 마이클 델은 공개적으로 "애플을 폐쇄하고 주주들에게 돈을 돌려줘라"고 말했다.</p>
-<p><strong>단속기(1997~2007)</strong>: 스티브 잡스의 복귀와 함께 급격한 진화가 시작됐다. iMac(1998) → iPod(2001) → iTunes Store(2003) → iPhone(2007). 불과 10년 만에 기업의 DNA가 완전히 재편되었다. 컴퓨터 회사에서 소비자 전자기기 및 디지털 생태계 회사로의 종분화(speciation)가 일어난 것이다.</p>
-<p><strong>제2 평형기(2007~현재)</strong>: iPhone 이후 애플은 새로운 평형 상태에 진입했다. 서비스 매출 비중 확대, Apple Watch, AirPods 등의 점진적 진화를 보이지만, iPhone 수준의 급격한 도약은 아직 일어나지 않았다. 진화론의 관점에서, 다음 '단속'은 AI나 XR(확장현실) 영역에서 올 가능성이 높다.</p>
+</nav>
+<h1 data-number="1" id="서론-왜-다윈으로-기업을-읽는가"><span
+class="header-section-number">1</span> 서론: 왜 다윈으로 기업을
+읽는가</h1>
 <blockquote>
-<p><strong>진화론적 통찰</strong>: 애플의 사례는 기업의 혁신이 연속적이 아니라 불연속적이라는 단속평형설의 핵심 주장을 정확히 보여준다. 평시의 안정성 유지와 위기 시의 급진적 변환 역량, 이 둘을 동시에 갖추는 것이 생존의 조건이다.</p>
+<p><em>“살아남는 것은 가장 강한 종도, 가장 똑똑한 종도 아니다. 변화에
+가장 잘 적응하는 종이다.”</em> — 레온 메긴슨, 다윈을 경영학으로 번역하며
+(1963)</p>
 </blockquote>
+<p>1975년, 코닥의 엔지니어 스티브 새슨이 세계 최초의 디지털 카메라를
+발명했을 때, 경영진은 “귀엽군, 아무에게도 말하지 마”라고 말했다. 37년 후
+코닥은 파산했다. 같은 해, 후지필름은 화장품과 의약품 회사로 변신해
+살아남았다. <strong>왜 같은 환경 변화 앞에서 한 종은 멸종하고, 다른 종은
+적응에 성공하는가?</strong></p>
+<p>이 에세이는 진화생물학의 세 가지 핵심 메커니즘 — 자연선택,
+단속평형설, 적응 방산 — 을 미국·한국·일본 기업의 흥망성쇠와 교차시킨다.
+이것은 단순한 비유가 아니라, <strong>구조적 동형성(structural
+isomorphism)</strong>에 대한 탐구다. Week 2에서 열역학의 엔트로피로
+제국의 붕괴를 읽었듯이, 이번에는 진화론의 자연선택으로 기업의 생사를
+읽는다.</p>
 <hr />
-<h2 id="part-iii">Part III: 일본 기업 — '갈라파고스 증후군'과 과적응의 비극</h2>
-<p>일본 전자산업의 쇠퇴는 진화생물학에서 가장 경고적인 패턴인 <strong>'섬 고유종의 멸종(Island Endemic Extinction)'</strong>과 놀라운 유사성을 보인다.</p>
-<h3 id="_3">갈라파고스 증후군의 진화론적 해부</h3>
-<p>갈라파고스 제도의 고유종들은 섬이라는 격리된 환경에서 독특하게 진화했지만, 외래종이 유입되면 경쟁력을 상실한다. 일본 전자기업들에게도 정확히 같은 일이 벌어졌다.</p>
-<p>1980년대, 소니의 워크맨은 개인 오디오 혁명을 일으켰고, 파나소닉과 샤프는 TV 시장을 지배했다. 이들은 NTT 도코모의 i-mode 표준을 중심으로 한 '일본 내수 생태계'에서 완벽하게 적응했다. 일본 소비자들이 요구하는 고기능·다기능 제품에 최적화되어, 매 시즌 신제품을 출시하는 독특한 '사계절 제품 주기'를 발전시켰다.</p>
-<p>그러나 이 <strong>과적응</strong>은 치명적이었다. 와튼스쿨의 연구에 따르면, 일본 전자기업들은 국내 시장에만 최적화된 나머지 글로벌 소비자의 니즈를 읽지 못했다. 소니의 전자책 리더 'Librie'(2004)는 킨들보다 3년 앞섰지만, 소프트웨어가 일본어 전용이었고 책 선택이 제한적이었다. 기술적으로 우월했지만 생태적으로 부적합했다.</p>
-<p>오사카 올림푸스의 전 CEO 마이클 우드포드는 이렇게 진단했다: 일본의 전자기업에는 자연선택 프로세스가 문화적으로 부재하다. "튀어나온 못은 망치로 두들긴다(出る杭は打たれる)"는 격언이 변이의 억압으로 작동하고, 고령화된 경영진이 창의적 돌연변이를 허용하지 않는다.</p>
-<p>2012년 한 해에만 소니·파나소닉·샤프 3사의 합산 적자가 200억 달러에 달했다. 신용등급은 '정크' 수준으로 하락했다. 이들의 합산 시가총액은 애플 한 회사의 극히 일부에 불과했다.</p>
-<h3 id="_4">소니의 부분적 부활 — 지연된 종분화</h3>
-<p>흥미롭게도 소니는 이후 <strong>지연된 적응 방산</strong>을 보여준다. 가전 분야에서의 열세를 인정하고, 게임(PlayStation), 음악, 영화, 이미지 센서라는 각기 다른 생태적 지위로 분화한 것이다. 특히 이미지 센서 사업은 스마트폰 카메라 시장의 지배적 공급자로 자리잡으며, '하드웨어 부품 공급자'라는 새로운 틈새로 성공적으로 진입했다. 전적응의 또 다른 사례다 — TV용 디스플레이 기술이 스마트폰 센서 기술로 전환된 것이다.</p>
-<h3 id="vs">후지필름 vs 코닥 — 같은 환경, 다른 진화</h3>
-<p>가장 극적인 비교는 후지필름과 코닥이다. 두 기업은 동일한 생태적 지위(사진 필름)를 차지하고 있었고, 동일한 환경 변화(디지털 전환)에 직면했다. 그러나 결과는 정반대였다.</p>
-<p>후지필름은 필름 제조에 축적된 화학 기술이라는 <strong>핵심 역량</strong>을 화장품(아스타리프트), 의약품, 광학 필름 등으로 전환시켰다. 진화론에서 말하는 '전적응'을 의도적으로 실행한 것이다. 필름의 콜라겐 보존 기술이 피부 노화 방지 화장품으로, 필름의 산화 방지 기술이 의약품 성분으로 변환되었다. 반면 코닥은 동일한 기술적 기반을 갖고도 기존 사업 모델에 고착되어 멸종했다.</p>
-<p>이 차이를 만든 것은 <strong>변이에 대한 관용</strong>이다. 후지필름의 경영진은 "필름은 반드시 사라질 것"이라는 전제 하에 적극적으로 새로운 형질을 실험했다. 코닥의 경영진은 "필름은 아직 수익을 내고 있다"는 현재에 고착했다.</p>
+<h1 data-number="2" id="제1장-진화론의-세-가지-엔진"><span
+class="header-section-number">2</span> 제1장: 진화론의 세 가지 엔진</h1>
+<h2 data-number="2.1" id="자연선택-적합한-자의-번식"><span
+class="header-section-number">2.1</span> 자연선택 — “적합한 자의
+번식”</h2>
+<p>자연선택은 세 가지 조건이 동시에 충족될 때 작동한다.</p>
+<ul>
+<li><strong>변이(Variation)</strong>: 개체 간에 형질의 차이가 존재해야
+한다</li>
+<li><strong>유전(Heritability)</strong>: 그 차이가 다음 세대에
+전달되어야 한다</li>
+<li><strong>차등 번식(Differential Reproduction)</strong>: 환경에 더
+적합한 형질을 가진 개체가 더 많은 후손을 남겨야 한다</li>
+</ul>
+<p>핵심은 ‘가장 강한 자’가 아니라 <strong>’환경에 가장 적합한
+자’</strong>가 살아남는다는 것이다. 공룡은 1억 6천만 년간 지구를
+지배했지만, 소행성 충돌이라는 급격한 환경 변화 앞에서 멸종했다. 반면
+당시 보잘것없던 포유류는 작은 체구와 잡식성이라는 ’열등한’ 형질 덕분에
+살아남아 지구의 새 주인이 되었다.</p>
+<p>기업을 유기체로, 시장을 생태계로 바라보면 자연선택의 세 조건이 그대로
+적용된다. 기업 간에는 전략·문화·기술 역량에서 <strong>변이</strong>가
+존재한다. 성공한 기업의 관행과 문화는 인재 이동과 벤치마킹을 통해
+<strong>유전</strong>된다. 그리고 시장에서 더 적합한 특성을 가진 기업이
+더 많은 자원(매출, 투자, 인재)을 확보하며 <strong>차등
+번식(확장)</strong>한다.</p>
+<h2 data-number="2.2"
+id="단속평형설-진화는-직선이-아니라-계단이다"><span
+class="header-section-number">2.2</span> 단속평형설 — “진화는 직선이
+아니라 계단이다”</h2>
+<p>1972년, 스티븐 제이 굴드와 닐스 엘드리지는 화석 기록의 불편한 진실을
+직시했다. 다윈이 예측한 ’점진적 변화의 중간 형태’가 거의 발견되지 않는
+것이다. 그들의 대안적 설명:</p>
+<blockquote>
+<p><em>대부분의 종은 수백만 년간 거의 변하지 않는다(평형). 그러다 환경적
+압력이나 지리적 격리 같은 조건이 만들어지면, 비교적 짧은 시간 내에
+급격히 변화한다(단속).</em></p>
+</blockquote>
+<p>진화는 직선이 아니라 <strong>계단</strong>이다. 오랜 정체기와 급격한
+도약이 번갈아 나타난다. Week 2에서 다룬 프리고진의 분기점(bifurcation
+point)과 구조적으로 동일한 패턴이다 — 오랜 평형 상태가 임계점에서 급격한
+상전이로 넘어가는 것.</p>
+<h2 data-number="2.3" id="적응-방산-빈-생태계의-폭발적-분화"><span
+class="header-section-number">2.3</span> 적응 방산 — “빈 생태계의 폭발적
+분화”</h2>
+<p>갈라파고스 제도의 핀치새 13종은 모두 하나의 조상에서 분화했다. 남미
+대륙에서 날아온 단일 종이 섬이라는 ’빈 생태계’에 도착한 후, 씨앗을 깨는
+부리, 곤충을 잡는 부리, 선인장 꽃꿀을 빠는 부리 등으로 각각 특화되며
+폭발적으로 분화한 것이다.</p>
+<p>적응 방산의 핵심 조건:</p>
+<ul>
+<li><strong>빈 생태적 지위(Empty Niche)</strong>: 새로운 환경이 열리거나
+기존 경쟁자가 사라질 때</li>
+<li><strong>핵심 혁신(Key Innovation)</strong>: 새로운 자원을 이용할 수
+있게 해주는 형질 변화</li>
+</ul>
+<p>캄브리아기 대폭발(5억 4천만 년 전)이 대표 사례다. 눈(eye)이라는 핵심
+혁신이 등장하자, 불과 수천만 년 만에 현존하는 거의 모든 동물 문(門)이
+출현했다. AI는 21세기 기업 생태계의 ’눈’이 될 수 있다.</p>
 <hr />
-<h2 id="part-iv">Part IV: 한국 기업 — 빠른 세대 교체의 진화적 우위</h2>
-<p>한국 기업의 진화 패턴은 미국이나 일본과 뚜렷하게 다르다. 진화생물학적으로 가장 가까운 비유는 <strong>'r-전략가(r-strategist)'</strong>다.</p>
-<h3 id="r-vs-k-">r-전략 vs K-전략: 삼성과 소니의 대비</h3>
-<p>생태학에서 r-전략가는 빠르게 번식하고 환경 변화에 민첩하게 대응하는 종을 말하고, K-전략가는 안정적 환경에서 소수의 후손에 많은 투자를 하는 종을 말한다. 생쥐(r) vs 코끼리(K)의 대비와 같다.</p>
-<p>삼성전자는 전형적인 r-전략가다. "빠른 추격자(Fast Follower)" 전략으로 기존 시장에 후발 진입하되, 압도적 속도와 자원 투입으로 선두를 추월한다. 메모리 반도체에서 일본 기업을 추월하고, 스마트폰에서 노키아를 넘어서고, OLED 디스플레이에서 일본 LCD 진영을 대체한 모든 과정이 이 전략을 따른다.</p>
-<p>2025년 삼성은 AI 시대에 맞춰 또다시 빠른 세대 교체를 실행했다. 161명을 임원으로 승진시키며 AI·로보틱스·첨단 반도체 분야의 차세대 리더를 대거 등용했다. 이는 진화적으로 '세대 시간(Generation Time)'을 단축시키는 것과 같다 — 세대 교체가 빠를수록 환경 변화에 대한 적응 속도도 빨라진다.</p>
-<p>반면 소니는 K-전략가에 가까웠다. 완벽한 제품을 오랜 시간에 걸쳐 개발하고, 기존 제품라인을 오래 유지했다. 안정적 환경에서는 효과적이지만, 급변하는 디지털 환경에서는 치명적이었다.</p>
-<h3 id="30-ev">현대차의 단속평형 — 30년의 축적과 EV 전환</h3>
-<p>현대자동차 그룹의 궤적도 단속평형설로 설명할 수 있다.</p>
-<p><strong>평형기(1967~2010)</strong>: 값싼 자동차 제조업체로서 점진적 품질 향상. 미국 시장에서 '가격 대비 가치' 포지셔닝.</p>
-<p><strong>단속기(2010~현재)</strong>: 디자인 혁신(피터 슈라이어), 제네시스 럭셔리 브랜드 출시, 아이오닉 전기차 라인업, 보스턴 다이나믹스 인수. 30년간 축적된 제조 역량이라는 '유전적 기반' 위에 급격한 형질 변화를 시도하고 있다.</p>
-<h3 id="sk-hbm">SK하이닉스의 니치 전략 — HBM이라는 새로운 생태적 지위</h3>
-<p>SK하이닉스는 적응 방산의 교과서적 성공 사례를 보여준다. AI 시대가 열리면서 '고대역폭 메모리(HBM)'라는 새로운 생태적 지위가 출현했고, SK하이닉스는 이 빈 틈새를 가장 먼저 차지하는 데 성공했다. 경쟁사인 삼성전자가 HBM 시장 진입에 어려움을 겪는 사이, SK하이닉스는 엔비디아의 핵심 공급자로 자리잡으며 기록적 실적을 달성했다.</p>
-<p>이는 적응 방산에서 '선점 효과(First-mover Advantage)'가 작동하는 전형적 패턴이다. 새로운 생태적 지위에 먼저 진입한 종이 그 지위를 장악하면, 후발 주자는 진입 장벽에 부딪힌다.</p>
-<hr />
-<h2 id="part-v-ai">Part V: AI 시대의 적응 방산 — 지금 벌어지고 있는 종분화</h2>
-<p>2023년 ChatGPT의 등장은 생물학의 <strong>'대멸종 후 적응 방산'</strong>에 비견할 만한 사건이다. 페름기-트라이아스기 대멸종(2억 5천만 년 전) 이후 공룡이 폭발적으로 분화한 것처럼, AI라는 '핵심 혁신'이 만들어낸 빈 생태계에서 기업들의 급격한 분화가 시작되고 있다.</p>
-<h3 id="_5">미국: 플랫폼 공룡들의 분화</h3>
+<h1 data-number="3" id="제2장-미국-기업-자연선택의-냉혹한-실험실"><span
+class="header-section-number">3</span> 제2장: 미국 기업 — 자연선택의
+냉혹한 실험실</h1>
+<p>미국 시장은 진화론적 자연선택이 가장 순수한 형태로 작동하는 생태계다.
+규제가 상대적으로 적고, 자본 시장이 발달하여 ‘적합하지 못한’ 기업에 대한
+도태 압력이 강력하다.</p>
+<h2 data-number="3.1"
+id="코닥의-멸종-과적응이-부른-진화적-막다른-골목"><span
+class="header-section-number">3.1</span> 코닥의 멸종 — 과적응이 부른
+진화적 막다른 골목</h2>
+<p>코닥은 진화생물학에서 말하는 <strong>‘진화적 막다른 골목(Evolutionary
+Dead End)’</strong>의 교과서적 사례다.</p>
+<p><strong>과적응의 구조</strong>: 1976년 코닥은 미국 필름 시장의 90%,
+카메라 시장의 85%를 장악했다. 시가총액은 1997년 310억 달러에 달했다.
+바로 이 과도한 적합성이 독이 되었다. 코알라가 유칼립투스 잎만 먹을 수
+있도록 진화한 것처럼, 코닥은 필름이라는 단일 생태적 지위에 완벽하게
+최적화되어 있었다. ‘Razor-and-Blades’ 모델은 아름다울 정도로 정교한
+적응이었지만, 디지털이라는 환경 변화 앞에서는 치명적 족쇄가 되었다.</p>
+<p><strong>변이의 억압</strong>: 코닥은 1975년 최초의 디지털 카메라를
+<strong>발명했다</strong>. 변이는 이미 존재했다. 그러나 코닥은 이 변이를
+억압했다. 새슨이 디지털 카메라를 시연했을 때 경영진이 “아무에게도 말하지
+마”라고 한 것은, 돌연변이를 감지하고 제거하는 유전적 수리 메커니즘과
+같다 — 다만 이 경우, 제거된 돌연변이가 바로 미래 생존의 열쇠였다.</p>
+<p><strong>전적응의 실패</strong>: 2001년 인수한 사진 공유 사이트
+Ofoto는 인스타그램이 될 수 있었다. 그러나 코닥은 이를 ’디지털 사진을
+인화하도록 유도하는 도구’로만 활용했다. MIT Sloan Management Review의
+진단: “기술을 놓친 게 아니라, 비즈니스 모델을 놓쳤다.”
+<strong>형태(기술)는 변했지만 생태적 전략(수익 모델)은 변하지
+않았다.</strong> 2012년, 자산 51억 달러, 부채 68억 달러로 파산.</p>
+<h2 data-number="3.2"
+id="아마존의-적응-방산-서점에서-시작된-종의-폭발"><span
+class="header-section-number">3.2</span> 아마존의 적응 방산 — 서점에서
+시작된 종의 폭발</h2>
+<p>아마존의 진화 궤적은 갈라파고스 핀치새의 적응 방산과 구조적으로
+동일하다.</p>
 <table>
 <thead>
-<tr>
-<th>기업</th>
-<th>기존 생태적 지위</th>
-<th>AI 시대 새로운 지위</th>
-<th>진화적 패턴</th>
+<tr class="header">
+<th>분화 시기</th>
+<th>새로운 생태적 지위</th>
+<th>진화적 메커니즘</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
+<td>1994</td>
+<td>온라인 서점</td>
+<td>시조종(Ancestral Species)</td>
+</tr>
+<tr class="even">
+<td>1998</td>
+<td>전자상거래 전반</td>
+<td>생태적 지위 확장</td>
+</tr>
+<tr class="odd">
+<td>2006</td>
+<td>클라우드 컴퓨팅(AWS)</td>
+<td><strong>전적응(Exaptation)</strong></td>
+</tr>
+<tr class="even">
+<td>2007</td>
+<td>디지털 콘텐츠(Kindle)</td>
+<td>적응 방산</td>
+</tr>
+<tr class="odd">
+<td>2014</td>
+<td>스트리밍(프라임 비디오)</td>
+<td>생태적 지위 분화</td>
+</tr>
+<tr class="even">
+<td>2017</td>
+<td>식료품(홀푸드 인수)</td>
+<td>이종 생태계 진입</td>
+</tr>
+<tr class="odd">
+<td>2020</td>
+<td>헬스케어(아마존 클리닉)</td>
+<td>적응 방산 지속</td>
+</tr>
+</tbody>
+</table>
+<p>AWS의 탄생은 <strong>‘전적응(Exaptation)’</strong>의 완벽한 사례다.
+새의 깃털이 원래 체온 조절용이었다가 나중에 비행에 쓰이게 된 것처럼,
+AWS는 아마존 내부 인프라 효율화용으로 개발되었다가 세계 최대의 클라우드
+서비스로 진화했다. 2024년 기준 AWS는 아마존 전체 영업이익의 60% 이상을
+창출한다.</p>
+<h2 data-number="3.3"
+id="애플의-단속평형-20년의-정체와-10년의-폭발"><span
+class="header-section-number">3.3</span> 애플의 단속평형 — 20년의 정체와
+10년의 폭발</h2>
+<p><strong>제1 평형기(1977~1997)</strong>: PC 선구자이나 IBM/윈도우에
+밀려 쇠퇴. 1997년 시가총액 30억 달러, 90일 치 운영자금만 남은 상태.</p>
+<p><strong>단속기(1997~2007)</strong>: 잡스 복귀 → iMac → iPod → iTunes
+→ iPhone. 불과 10년 만에 컴퓨터 회사에서 디지털 생태계 회사로
+<strong>종분화(speciation)</strong>.</p>
+<p><strong>제2 평형기(2007~현재)</strong>: iPhone 이후 점진적 진화. 다음
+’단속’은 AI/XR에서 올 가능성.</p>
+<p>핵심 교훈: 잡스는 NeXT와 Pixar에서 축적한 경험 — OS 설계, 디지털
+콘텐츠 유통 — 을 iPhone이라는 급진적 혁신에 투입했다. <strong>외부에서
+유입된 변이가 내부 시스템과 결합하여 종분화를 촉발</strong>한
+것이다.</p>
+<h2 data-number="3.4" id="엔비디아의-전적응-게임에서-ai-인프라로"><span
+class="header-section-number">3.4</span> 엔비디아의 전적응 — 게임에서 AI
+인프라로</h2>
+<p>엔비디아는 전적응의 가장 극적인 성공 사례다. 게임용 GPU의 병렬 연산
+구조가 딥러닝에 완벽히 적합하다는 것이 밝혀지면서, 시가총액 기준 세계
+최대 기업으로 도약했다. <strong>가장 강력한 적응이 의도치 않은 곳에서
+나온다</strong>는 진화론의 핵심 원리를 증명한다.</p>
+<hr />
+<h1 data-number="4"
+id="제3장-일본-기업-갈라파고스-증후군과-과적응의-비극"><span
+class="header-section-number">4</span> 제3장: 일본 기업 — 갈라파고스
+증후군과 과적응의 비극</h1>
+<p>일본 전자산업의 쇠퇴는 <strong>‘섬 고유종의 멸종(Island Endemic
+Extinction)’</strong>과 놀라운 유사성을 보인다.</p>
+<h2 data-number="4.1" id="갈라파고스-증후군의-진화론적-해부"><span
+class="header-section-number">4.1</span> 갈라파고스 증후군의 진화론적
+해부</h2>
+<p>1980년대, 소니의 워크맨은 개인 오디오 혁명을, 파나소닉과 샤프는 TV
+시장 지배를 이끌었다. 이들은 NTT 도코모의 i-mode를 중심으로 한 일본 내수
+생태계에서 완벽하게 적응하여, ’사계절 제품 주기’라는 독특한 진화 패턴을
+발전시켰다.</p>
+<p>이 <strong>과적응</strong>은 치명적이었다:</p>
+<ul>
+<li><strong>소니</strong> Librie(2004)는 킨들보다 3년 앞섰지만 일본어
+전용. 기술적 우월, 생태적 부적합.</li>
+<li><strong>샤프</strong>는 대형 TV 올인 후 가격 경쟁에서 패배. 2012년
+“생존에 실질적 의문” 보고.</li>
+<li><strong>파나소닉</strong>은 너무 많은 제품을 만들어 선택과 집중의
+원리에 역행.</li>
+</ul>
+<p>올림푸스 전 CEO 마이클 우드포드의 진단: <strong>“일본에는 자연선택
+프로세스가 기업 문화의 일부로 존재하지 않는다.”</strong> “튀어나온
+못(出る杭は打たれる)” 격언이 변이의 체계적 억압으로 작동하고, 고령
+경영진이 돌연변이를 허용하지 않았다.</p>
+<p>2012년 소니·파나소닉·샤프 3사 합산 적자 약 200억 달러. 신용등급
+‘정크’ 수준 하락. 합산 시가총액은 애플의 극히 일부.</p>
+<h2 data-number="4.2" id="후지필름-vs-코닥-자연-통제-실험"><span
+class="header-section-number">4.2</span> 후지필름 vs 코닥 — 자연 통제
+실험</h2>
+<p>자연과학에서 가장 강력한 증거는 통제 실험이다. 후지필름과 코닥은 기업
+진화의 자연 통제 실험이다:</p>
+<table>
+<thead>
+<tr class="header">
+<th>변수</th>
+<th>코닥</th>
+<th>후지필름</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>초기 생태적 지위</td>
+<td>사진 필름 (미국 90%)</td>
+<td>사진 필름 (일본/글로벌)</td>
+</tr>
+<tr class="even">
+<td>환경 변화</td>
+<td>디지털 전환</td>
+<td>동일</td>
+</tr>
+<tr class="odd">
+<td>핵심 기술 기반</td>
+<td>화학·광학</td>
+<td>동일</td>
+</tr>
+<tr class="even">
+<td>변이 관용</td>
+<td><strong>억압</strong> (디지털 은폐)</td>
+<td><strong>장려</strong> (필름 사망 전제)</td>
+</tr>
+<tr class="odd">
+<td>전적응 시도</td>
+<td>실패 (Ofoto→인화 유도)</td>
+<td><strong>성공</strong> (화장품·의약품)</td>
+</tr>
+<tr class="even">
+<td>결과</td>
+<td>2012년 파산</td>
+<td>건재 (다각화 기업)</td>
+</tr>
+</tbody>
+</table>
+<p>후지필름은 필름 콜라겐 보존 기술 → 피부 노화 방지
+화장품(아스타리프트), 산화 방지 기술 → 의약품으로 전환했다.
+<strong>전적응을 의도적으로 실행</strong>한 것이다. 차이를 만든 것은
+기술이 아니라 <strong>변이에 대한 관용</strong>, 즉 조직 문화다.</p>
+<h2 data-number="4.3" id="소니의-부분적-부활-지연된-적응-방산"><span
+class="header-section-number">4.3</span> 소니의 부분적 부활 — 지연된
+적응 방산</h2>
+<p>소니는 이후 게임(PlayStation), 이미지 센서, 음악·영화로
+<strong>지연된 적응 방산</strong>을 달성했다. 특히 이미지 센서는 TV
+디스플레이 기술이 스마트폰 센서 기술로 전환된 <strong>전적응</strong>
+사례다. ’완성품 제조자’에서 ’핵심 부품 공급자’로 생태적 전략을
+이동시킴으로써 부분적 부활에 성공했다.</p>
+<hr />
+<h1 data-number="5"
+id="제4장-한국-기업-빠른-세대-교체의-진화적-우위"><span
+class="header-section-number">5</span> 제4장: 한국 기업 — 빠른 세대
+교체의 진화적 우위</h1>
+<h2 data-number="5.1" id="r-전략-vs-k-전략-삼성과-소니"><span
+class="header-section-number">5.1</span> r-전략 vs K-전략: 삼성과
+소니</h2>
+<p>생태학에서 r-전략가는 빠르게 번식하고 환경 변화에 민첩한
+종(생쥐)이고, K-전략가는 안정적 환경에서 소수에 많이 투자하는
+종(코끼리)이다.</p>
+<p>삼성전자는 전형적인 r-전략가다. <strong>“빠른 추격자(Fast
+Follower)”</strong> 전략으로 메모리 반도체(일본 추월), 스마트폰(노키아
+대체), OLED(일본 LCD 대체) 모두에서 후발 진입 → 선두 추월 패턴을
+보였다.</p>
+<p>2025년 삼성은 161명 임원 승진으로 AI·로보틱스·첨단 반도체 차세대
+리더를 대거 등용했다(전년 137명 대비 대폭 증가). 진화적으로 <strong>세대
+시간(Generation Time) 단축</strong> — 세대 교체가 빠를수록 적응 속도도
+빨라진다.</p>
+<p>그러나 r-전략의 위험도 있다. 삼성은 2024년 HBM 경쟁에서 SK하이닉스에
+뒤처졌다. “빠른 추격자”가 “선도자”로 전환하지 못하면 새로운 환경에서
+적응에 실패할 수 있다. 2026년 AI 전 기기 통합 선언은 이 한계를 인식한
+전환 시도다.</p>
+<h2 data-number="5.2" id="sk하이닉스의-니치-전략-hbm-선점"><span
+class="header-section-number">5.2</span> SK하이닉스의 니치 전략 — HBM
+선점</h2>
+<p>AI 시대에 ’고대역폭 메모리(HBM)’라는 새 생태적 지위가 출현했고,
+SK하이닉스가 이를 가장 먼저 차지했다. 엔비디아의 핵심 공급자로
+자리잡으며 기록적 실적 달성. 적응 방산에서 <strong>선점 효과</strong>가
+작동하는 전형적 패턴이다.</p>
+<h2 data-number="5.3" id="현대차의-단속평형-30년-축적과-ev-도약"><span
+class="header-section-number">5.3</span> 현대차의 단속평형 — 30년 축적과
+EV 도약</h2>
+<p><strong>평형기(1967~2010)</strong>: 값싼 차 → 점진적 품질 향상.
+30년간 제조 역량이라는 유전적 기반 축적.</p>
+<p><strong>단속기(2010~현재)</strong>: 디자인 혁신(피터 슈라이어),
+제네시스 럭셔리 브랜드, 아이오닉 EV, 보스턴 다이나믹스 인수.
+<strong>충분한 평형기가 단속기의 도약을 가능하게 한다.</strong></p>
+<hr />
+<h1 data-number="6"
+id="제5장-ai-시대의-적응-방산-지금-벌어지는-대분화"><span
+class="header-section-number">6</span> 제5장: AI 시대의 적응 방산 — 지금
+벌어지는 대분화</h1>
+<p>2023년 ChatGPT의 등장은 <strong>‘대멸종 후 적응 방산’</strong>에
+비견될 사건이다. AI라는 핵심 혁신이 만들어낸 빈 생태계에서 기업들의
+급격한 분화가 시작되고 있다.</p>
+<h2 data-number="6.1" id="미국-플랫폼-공룡들의-종분화"><span
+class="header-section-number">6.1</span> 미국: 플랫폼 공룡들의
+종분화</h2>
+<table>
+<thead>
+<tr class="header">
+<th>기업</th>
+<th>기존 생태적 지위</th>
+<th>AI 시대 새로운 지위</th>
+<th>진화적 메커니즘</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>마이크로소프트</td>
 <td>OS/오피스</td>
-<td>Copilot 생태계/OpenAI 투자</td>
+<td>Copilot/OpenAI 생태계</td>
 <td>공생(Symbiosis)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>구글</td>
 <td>검색/광고</td>
 <td>Gemini/DeepMind 통합</td>
 <td>내부 적응</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>메타</td>
 <td>소셜네트워크</td>
-<td>Llama 오픈소스/메타버스</td>
+<td>Llama 오픈소스</td>
 <td>적응 방산</td>
 </tr>
-<tr>
+<tr class="even">
 <td>아마존</td>
 <td>이커머스/클라우드</td>
 <td>Bedrock/AI 인프라</td>
 <td>전적응</td>
 </tr>
-<tr>
-<td>애플</td>
-<td>하드웨어 생태계</td>
-<td>Apple Intelligence/온디바이스 AI</td>
-<td>점진적 적응</td>
-</tr>
-<tr>
+<tr class="odd">
 <td>엔비디아</td>
 <td>게임 GPU</td>
-<td>AI 연산 인프라 독점</td>
+<td>AI 연산 독점</td>
 <td>전적응의 극단적 성공</td>
+</tr>
+<tr class="even">
+<td>애플</td>
+<td>하드웨어 생태계</td>
+<td>Apple Intelligence</td>
+<td>점진적 적응</td>
 </tr>
 </tbody>
 </table>
-<p>엔비디아의 사례는 전적응의 가장 극적인 성공이다. 원래 게임용으로 설계된 GPU의 병렬 연산 구조가 AI 학습에 완벽하게 적합하다는 것이 밝혀지면서, 엔비디아는 게임 회사에서 AI 인프라의 절대 강자로 변모했다. 마치 원래 체온 조절용이던 깃털이 비행이라는 전혀 다른 기능을 수행하게 된 것과 같다.</p>
-<h3 id="dna-ai">한국: 하드웨어 DNA의 AI 전환</h3>
-<p>한국 기업들은 고유의 강점인 반도체·디스플레이·제조 역량을 AI라는 새로운 환경에 연결하는 <strong>'하드웨어-AI 공진화(Co-evolution)'</strong> 전략을 펼치고 있다.</p>
-<p>삼성전자는 2024년 자체 AI 모델 Samsung Gauss2를 공개하며, 하드웨어 기업이 소프트웨어·AI 역량을 내재화하는 시도를 보여줬다. 2026년에는 AI를 모든 기기에 유기적으로 통합하겠다고 선언했다. 이는 단순한 사업 확장이 아니라, 기업의 DNA 자체를 재편하려는 '종분화' 수준의 시도다.</p>
-<p>2025년 10월, 삼성과 SK는 OpenAI의 Stargate 이니셔티브에 합류했다. 이는 한국의 하드웨어 역량과 미국의 AI 소프트웨어 역량이 결합하는 <strong>공생(Symbiosis)</strong> 관계의 형성이다. 생물학에서 미토콘드리아가 원래 독립 세균이었다가 진핵세포에 공생하며 에너지 공급자가 된 것처럼, 한국 반도체 기업은 글로벌 AI 생태계의 필수 공급자로 자리매김하고 있다.</p>
-<h3 id="_6">일본: 자동차 산업의 지연된 적응</h3>
-<p>일본 전자산업의 쇠퇴와 대조적으로, 일본 자동차 산업(토요타, 혼다)은 아직 상대적으로 강세를 유지하고 있다. 그러나 EV와 자율주행이라는 환경 변화 앞에서, 이들도 단속평형의 '단속' 국면에 진입하고 있다. 토요타의 전기차 전환 지연은 30년 전 코닥이 디지털 전환을 지연한 패턴과 불안한 유사성을 보인다.</p>
-<p>한편, 소니·르네사스 등 일본 전자기업들은 자동차 분야에서 새로운 생태적 지위를 찾고 있다. 이미지 센서, ADAS(첨단 운전자 보조 시스템), 자율주행 프로세서 등에서 일본 기업들은 여전히 최첨단 기술력을 보유하고 있다. 이것이 일본 전자산업의 <strong>'잔존 적응 방산(Residual Adaptive Radiation)'</strong> — 소비자 전자기기라는 기존 생태적 지위를 상실한 후, 자동차라는 새로운 생태적 지위에서 부분적 부활을 시도하는 것이다.</p>
+<h2 data-number="6.2" id="한국-하드웨어-ai-공진화"><span
+class="header-section-number">6.2</span> 한국: 하드웨어-AI 공진화</h2>
+<p>2025년 10월, 삼성과 SK는 OpenAI의 Stargate 이니셔티브에 합류했다.
+미토콘드리아가 독립 세균이었다가 진핵세포의 에너지 공급자가 된 것처럼,
+한국 반도체 기업은 글로벌 AI 생태계의 <strong>필수 공생자</strong>로
+자리매김하고 있다.</p>
+<p>한국 AI 시장: 2025년 43.4억 달러 → 2030년 147.1억 달러 전망. 삼성
+Gauss2 AI 모델은 DX 부문 개발자 60%가 활용 중. 정부는 AI R&amp;D에 9천억
+원 이상 투자.</p>
+<h2 data-number="6.3" id="일본-자동차라는-최후의-생태적-지위"><span
+class="header-section-number">6.3</span> 일본: 자동차라는 최후의 생태적
+지위</h2>
+<p>소비자 가전 쇠퇴와 대조적으로, 자동차 분야에서 르네사스(자율주행
+프로세서), 소니(이미지 센서/스마트 모빌리티), 파나소닉(EV 배터리)이 새
+생태적 지위를 개척 중이다. 그러나 토요타의 EV 전환 지연은 30년 전 코닥의
+디지털 전환 지연과 불안한 유사성을 보인다.</p>
 <hr />
-<h2 id="part-vi-5">Part VI: 크로스오버 — 진화론이 기업 전략에 주는 5가지 핵심 인사이트</h2>
-<h3 id="1_1">인사이트 1: "예측보다 변이가 중요하다"</h3>
-<p>자연선택에서 어떤 변이가 유용할지는 <strong>사전에 알 수 없다</strong>. 환경이 변한 후에야 적합한 형질이 드러난다. 아마존의 AWS, 엔비디아의 GPU가 원래 다른 목적으로 개발되었다가 AI 시대에 핵심 역할을 하게 된 것이 이를 증명한다.</p>
-<p><strong>전략적 함의</strong>: 기업은 '올바른 미래를 예측하는 것'보다 '충분한 변이를 유지하는 것'에 집중해야 한다. 구글의 20% 시간, 아마존의 Day 1 철학이 바로 이 변이 유지 메커니즘이다.</p>
-<h3 id="2_1">인사이트 2: "과적응은 멸종의 전조다"</h3>
-<p>코닥의 필름 의존, 일본 전자기업의 내수 시장 과적응, 노키아의 피처폰 완성도 — 현재 환경에 완벽하게 최적화된 기업일수록 환경 변화에 취약하다. 진화생물학의 <strong>'레드퀸 효과(Red Queen Effect)'</strong>처럼, 같은 자리에 머물기 위해서라도 끊임없이 변해야 한다.</p>
-<p><strong>전략적 함의</strong>: 기업은 항상 핵심 사업과 동떨어진 '실험 프로젝트'를 유지해야 한다. 이것은 비용이 아니라 진화적 보험이다.</p>
-<h3 id="3">인사이트 3: "혁신은 점진적이지 않다"</h3>
-<p>애플의 iPhone, 넷플릭스의 스트리밍 전환, 테슬라의 전기차 — 산업을 재편하는 혁신은 항상 '단속'의 형태로 나타났다. 문제는 <strong>단속이 언제 일어날지 예측할 수 없다</strong>는 것이다.</p>
-<p><strong>전략적 함의</strong>: 평상시에는 효율을 추구하되, 위기의 징후가 나타나면 과감하게 전환할 수 있는 '양손잡이 역량(Ambidexterity)'이 필수적이다. 이는 진화적으로 '표현형 가소성(Phenotypic Plasticity)' — 같은 유전자가 환경에 따라 다른 형질을 발현하는 능력 — 에 해당한다.</p>
-<h3 id="4">인사이트 4: "빈 생태계를 먼저 찾아라"</h3>
-<p>AI 시대는 무수히 많은 '빈 생태적 지위'를 만들어내고 있다. SK하이닉스가 HBM이라는 새 니치를 선점한 것, 엔비디아가 AI 연산 인프라를 장악한 것, OpenAI가 대규모 언어모델이라는 새 시장을 열어젖힌 것이 모두 빈 생태계에 대한 선점이다.</p>
-<p><strong>전략적 함의</strong>: 기존 시장에서 경쟁하는 것(경쟁적 배타)보다, AI가 만들어내는 새로운 시장을 찾아 먼저 진입하는 것(적응 방산)이 더 높은 생존 확률을 보장한다.</p>
-<h3 id="5">인사이트 5: "유전(문화)이 진화를 결정한다"</h3>
-<p>후지필름과 코닥의 차이, 삼성과 소니의 차이를 만든 것은 기술이 아니라 <strong>조직 문화</strong>였다. 진화에서 유전 메커니즘이 없으면 아무리 좋은 변이도 사라지듯, 혁신적 실험을 장려하고 실패를 학습으로 전환하는 문화가 없으면 어떤 전략도 지속되지 않는다.</p>
-<p>일본 기업문화의 "튀어나온 못" 격언 vs 실리콘밸리의 "빨리 실패하라(Fail Fast)" 철학은, 진화적 변이에 대한 관용 수준의 차이를 극명하게 보여준다.</p>
+<h1 data-number="7"
+id="제6장-진화론이-기업-전략에-주는-다섯-가지-교훈"><span
+class="header-section-number">7</span> 제6장: 진화론이 기업 전략에 주는
+다섯 가지 교훈</h1>
+<h2 data-number="7.1" id="교훈-1-예측보다-변이가-중요하다"><span
+class="header-section-number">7.1</span> 교훈 1: 예측보다 변이가
+중요하다</h2>
+<p>AWS, 엔비디아 GPU가 원래 다른 목적으로 개발되었다가 AI 시대에 핵심이
+된 것처럼, 기업은 ’올바른 미래 예측’보다 <strong>‘충분한 변이
+유지’</strong>에 집중해야 한다. 구글의 20% 시간, 아마존의 Day 1 철학이
+바로 변이 유지 메커니즘이다.</p>
+<h2 data-number="7.2" id="교훈-2-과적응은-멸종의-전조다"><span
+class="header-section-number">7.2</span> 교훈 2: 과적응은 멸종의
+전조다</h2>
+<p>코닥, 일본 기업, 노키아 — 현재 환경에 완벽하게 최적화된 기업일수록
+환경 변화에 취약하다. <strong>레드퀸 효과</strong>: 같은 자리에 머물기
+위해서라도 끊임없이 변해야 한다.</p>
+<h2 data-number="7.3" id="교훈-3-혁신은-계단이지-경사로가-아니다"><span
+class="header-section-number">7.3</span> 교훈 3: 혁신은 계단이지
+경사로가 아니다</h2>
+<p>단속평형설처럼, 산업 재편은 항상 불연속적으로 나타난다. 평시 효율
+추구 + 위기 시 과감한 전환이 가능한 <strong>양손잡이
+역량(Ambidexterity)</strong>이 필수적이다.</p>
+<h2 data-number="7.4" id="교훈-4-빈-생태계를-먼저-찾아라"><span
+class="header-section-number">7.4</span> 교훈 4: 빈 생태계를 먼저
+찾아라</h2>
+<p>AI 시대는 무수한 빈 생태적 지위를 만들어낸다. 기존 시장 경쟁보다
+<strong>새로운 시장 선점</strong>이 생존 확률을 높인다. SK하이닉스의 HBM
+선점이 증명한다.</p>
+<h2 data-number="7.5" id="교훈-5-문화유전가-진화를-결정한다"><span
+class="header-section-number">7.5</span> 교훈 5: 문화(유전)가 진화를
+결정한다</h2>
+<p>후지필름 vs 코닥, 삼성 vs 소니의 차이를 만든 것은 기술이 아니라
+<strong>조직 문화</strong>다. “튀어나온 못” vs “빨리 실패하라” — 변이에
+대한 관용 수준의 차이가 기업의 생사를 갈랐다.</p>
 <hr />
-<h2 id="part-vii">Part VII: 철학적 함의 — 기업은 '진화'하는가, '설계'되는가</h2>
-<p>진화론과 기업 전략의 교차는 근본적 질문을 던진다.</p>
-<p><strong>생물학적 진화에는 목적이 없다.</strong> 환경에 대한 맹목적 적응의 누적일 뿐이다. 그러나 기업 전략에는 분명 의도와 계획이 존재한다. 그렇다면 기업의 변화는 '진화'인가 '설계'인가?</p>
-<p>답은 아마 <strong>'반-의도적 진화(Semi-intentional Evolution)'</strong>일 것이다. 경영자는 방향을 설정하지만, 최종 결과는 시장이라는 환경이 선택한다. 아마존이 AWS를 '계획'한 것이 아니듯, 많은 성공적 혁신은 의도와 우연의 교차점에서 탄생한다. 파스퇴르의 말처럼, "행운은 준비된 마음에 찾아온다." 이를 진화적으로 번역하면, "전적응은 충분한 변이를 유지하는 조직에서 일어난다."</p>
-<p>또 하나의 질문: <strong>과도한 최적화(optimization)와 적응(adaptation)은 어떻게 다른가?</strong> 코닥은 필름 사업을 '최적화'했지만 디지털 환경에 '적응'하지 못했다. 최적화는 현재 환경에 대한 정적 반응이고, 적응은 변화하는 환경에 대한 동적 반응이다. AI 시대에 기업이 추구해야 할 것은 효율의 최적화가 아니라 적응력의 극대화다.</p>
-<h2 id="part-viii">Part VIII: 실용적 적용 — 당신의 기업은 어떤 종인가?</h2>
-<h3 id="_7">투자자를 위한 체크리스트: 진화 역량 평가</h3>
-<ol>
-<li><strong>변이 유지 능력</strong>: 핵심 사업 외에 실험적 프로젝트가 존재하는가?</li>
-<li><strong>유전(문화) 적합성</strong>: 실패를 학습으로 전환하는 문화가 있는가?</li>
-<li><strong>세대 교체 속도</strong>: 경영진의 평균 연령과 교체 주기는?</li>
-<li><strong>과적응 위험</strong>: 매출의 몇 %가 단일 사업/고객에 의존하는가?</li>
-<li><strong>전적응 잠재력</strong>: 기존 기술이 새로운 시장에 전용될 가능성이 있는가?</li>
-</ol>
-<h3 id="_8">경영자를 위한 프레임워크: 진화적 경영</h3>
+<h1 data-number="8" id="결론-엔트로피에서-진화로-두-주의-연결"><span
+class="header-section-number">8</span> 결론: 엔트로피에서 진화로 — 두
+주의 연결</h1>
+<p>Week 2에서 열역학의 엔트로피로 제국의 붕괴를 읽었다. 이번 주에
+진화론의 자연선택으로 기업의 생사를 읽었다. 이 두 프레임워크는
+<strong>상보적</strong>이다.</p>
+<p>엔트로피는 <strong>붕괴의 필연성</strong>을 말한다 — 질서 유지에는
+끊임없는 에너지 투입이 필요하다. 진화론은 <strong>적응의
+메커니즘</strong>을 말한다 — 변이를 유지하고 환경 변화에 민감하게
+반응하는 시스템이 살아남는다.</p>
+<blockquote>
+<p><strong>질서(현재의 성공)는 자연 상태가 아니라 지속적 에너지 투입의
+산물이다. 그리고 그 에너지의 원천은 다양한 변이를 유지하고, 실패를
+허용하며, 새로운 생태적 지위를 끊임없이 탐색하는 문화에
+있다.</strong></p>
+</blockquote>
+<p>다윈은 <em>종의 기원</em> 마지막 문단에서 이렇게 썼다: “생명의 이
+관점에는 장엄함이 있다.” 기업의 흥망성쇠에도 같은 장엄함이 있다.
+불확실한 환경에서 변이를 유지하고, 실패에서 배우며, 새로운 틈새를 찾아
+분화해 나가는 것 — 그것이 기업 진화의 본질이자, 우리 모두에게 주어진
+과제다.</p>
+<hr />
+<p><em>이 보고서는 Insight Lab Week 3 리서치의 일환으로
+작성되었습니다.</em></p>
+<h2 data-number="8.1" id="참고-문헌"><span
+class="header-section-number">8.1</span> 참고 문헌</h2>
 <ul>
-<li><strong>평시</strong>: 핵심 사업 70% + 인접 영역 탐색 20% + 급진적 실험 10% (구글의 70-20-10 법칙)</li>
-<li><strong>단속기 진입 시</strong>: 실험 비율을 30% 이상으로 확대, '선택적 방산' 시도</li>
-<li><strong>새 생태계 발견 시</strong>: 가장 빠르게 진입하여 선점 효과 확보</li>
+<li>Darwin, C. (1859). <em>On the Origin of Species by Means of Natural
+Selection</em></li>
+<li>Gould, S. J. &amp; Eldredge, N. (1972). “Punctuated Equilibria: An
+Alternative to Phyletic Gradualism”</li>
+<li>Gould, S. J. &amp; Vrba, E. S. (1982). “Exaptation: A Missing Term
+in the Science of Form”</li>
+<li>Christensen, C. (1997). <em>The Innovator’s Dilemma</em></li>
+<li>Solis, B. (2013). “The Rise and Fall of Sony, Panasonic, and
+Sharp”</li>
+<li>MIT Sloan Management Review (2016). “The Real Lessons from Kodak’s
+Decline”</li>
+<li>Samsung Newsroom (2024). “SDC24 Korea: Samsung Gauss2”</li>
+<li>Korea Herald (2025). “Samsung taps new AI talent in biggest
+reshuffle”</li>
+<li>OpenAI (2025). “AI in South Korea: Economic Blueprint”</li>
+<li>Wharton Knowledge (2012). “Sony’s Reincarnation May Be Too Little,
+Too Late”</li>
+<li>Al Jazeera (2012). “The Mighty Downfall of Japan’s Tech Giants”</li>
 </ul>
-<h3 id="_9">정책 입안자를 위한 제안: 생태계 다양성 유지</h3>
-<p>정부의 역할은 특정 기업이나 산업을 '선택'하는 것이 아니라, 생태계의 <strong>다양성을 유지</strong>하는 것이다. 규제 샌드박스, 창업 생태계 지원, 실패에 대한 사회적 관용 확산 — 이 모든 것이 변이의 폭을 넓히고, 자연선택이 작동할 수 있는 환경을 만든다.</p>
-<h2 id="ai">미래 전망: AI 대멸종 이후의 새로운 생태계</h2>
-<p>향후 5~10년은 기업 진화사에서 페름기 대멸종에 비견될 만한 격변기가 될 것이다. AI가 기존 비즈니스 모델을 대규모로 파괴하는 동시에, 무수히 많은 새로운 생태적 지위를 창출할 것이기 때문이다.</p>
-<p>예측할 수 있는 패턴들:</p>
-<p><strong>대멸종</strong>: 단순 반복 업무 기반 기업의 대규모 도태. 콜센터, 기본 법률 서비스, 정형화된 콘텐츠 생산 등.</p>
-<p><strong>적응 방산</strong>: AI를 핵심 역량과 결합한 기업의 폭발적 분화. 제조+AI, 의료+AI, 교육+AI 등 각 산업별 특화 AI 솔루션 기업의 등장.</p>
-<p><strong>공생 관계 확대</strong>: 인간-AI 협업이 새로운 '종'을 만들어낼 것이다. AI를 도구로 쓰는 수준을 넘어, AI와 인간이 하나의 작업 단위로 융합하는 '공생적 지능(Symbiotic Intelligence)'이 기업의 핵심 역량이 될 것이다.</p>
-<p>다윈은 종의 기원 마지막 문단에서 이렇게 썼다: "생명의 이 관점에는 장엄함이 있다." 기업의 흥망성쇠에도 같은 장엄함이 있다. 불확실한 환경에서 변이를 유지하고, 실패에서 배우며, 새로운 틈새를 찾아 분화해 나가는 과정 — 그것이 기업 진화의 본질이자, AI 시대를 살아가는 모든 조직과 개인에게 주어진 과제다.</p>
-<hr />
-<p><em>"살아남는 것은 가장 강한 종도, 가장 똑똑한 종도 아니다. 변화에 가장 잘 적응하는 종이다."</em><br />
-<em>— 흔히 다윈에게 귀속되지만, 실제로는 경영학자 레온 메긴슨이 다윈을 해석한 말</em></p>
-<hr />
-<p><em>생성: 2026-04-12 · Claude Opus 4.6 · Insight Lab Season 1 Week 3</em>
-<em>Enhanced Edition: 미국·한국·일본 기업 사례 심층 분석</em></p>
-</div>
-
-<div class="footer">
-  Insight Lab Season 1 · Week 3 Enhanced Edition<br>
-  Generated: 2026-04-12 · Claude Opus 4.6
-</div>
-
 </body>
 </html>
