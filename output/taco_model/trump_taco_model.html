@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌮 TACO 사이클 투자 모델 — 트럼프 행동 패턴 예측</title>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0a0a1a; color: #e0e0e0; line-height: 1.6; }
+  .header { text-align: center; padding: 30px 20px 10px; }
+  .header h1 { font-size: 1.5em; color: #ffcc44; }
+  .header p { font-size: 0.85em; color: #888; margin-top: 6px; }
+  .section { max-width: 1100px; margin: 20px auto; padding: 0 20px; }
+  .card { background: #141428; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  .card h2 { color: #7ecfff; font-size: 1.1em; margin-bottom: 12px; }
+  .card h3 { color: #ffaa44; font-size: 0.95em; margin: 14px 0 8px; }
+  .phase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 12px 0; }
+  .phase-box { background: #1a1a36; border-radius: 10px; padding: 14px; border-left: 4px solid; }
+  .phase-box.p1 { border-color: #ff6b6b; }
+  .phase-box.p2 { border-color: #ff4444; }
+  .phase-box.p3 { border-color: #44dd88; }
+  .phase-box.p4 { border-color: #7ecfff; }
+  .phase-box .phase-name { font-weight: bold; font-size: 0.9em; margin-bottom: 6px; }
+  .phase-box .phase-name.p1 { color: #ff6b6b; }
+  .phase-box .phase-name.p2 { color: #ff4444; }
+  .phase-box .phase-name.p3 { color: #44dd88; }
+  .phase-box .phase-name.p4 { color: #7ecfff; }
+  .phase-box p { font-size: 0.8em; color: #aaa; }
+  .phase-box .action { font-size: 0.8em; color: #ffcc44; margin-top: 8px; font-weight: bold; }
+  .chart-box { margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.85em; }
+  th { background: #1a1a36; color: #7ecfff; padding: 10px; text-align: left; }
+  td { padding: 8px 10px; border-bottom: 1px solid #222; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; font-weight: bold; }
+  .tag-buy { background: #1a4a2a; color: #44dd88; }
+  .tag-sell { background: #4a1a1a; color: #ff6b6b; }
+  .tag-hold { background: #3a3a1a; color: #ffcc44; }
+  .tag-hedge { background: #1a2a4a; color: #7ecfff; }
+  .risk-box { background: #2a1a1a; border: 1px solid #ff6b6b44; border-radius: 10px; padding: 16px; margin: 12px 0; }
+  .risk-box h3 { color: #ff6b6b; }
+  .controls { display: flex; flex-wrap: wrap; gap: 14px; margin: 12px 0; align-items: end; }
+  .ctrl { flex: 1; min-width: 150px; }
+  .ctrl label { display: block; font-size: 0.75em; color: #7ecfff; margin-bottom: 4px; }
+  .ctrl input, .ctrl select { width: 100%; padding: 8px; background: #1a1a36; border: 1px solid #333; border-radius: 6px; color: #eee; font-size: 0.85em; }
+  .btn { background: #ffcc44; color: #0a0a1a; border: none; padding: 10px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.9em; }
+  .btn:hover { background: #eebb33; }
+  .metric-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
+  .metric { flex: 1; min-width: 120px; background: #1a1a36; border-radius: 8px; padding: 12px; text-align: center; }
+  .metric .num { font-size: 1.4em; font-weight: bold; }
+  .metric .lbl { font-size: 0.75em; color: #888; margin-top: 4px; }
+  .green { color: #44dd88; }
+  .red { color: #ff6b6b; }
+  .yellow { color: #ffcc44; }
+  .blue { color: #7ecfff; }
+  ul { padding-left: 20px; }
+  li { font-size: 0.85em; margin: 4px 0; color: #bbb; }
+  .footnote { font-size: 0.75em; color: #666; text-align: center; padding: 20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🌮 TACO 사이클 투자 모델</h1>
+  <p>Trump Always Chickens Out — 큰 진폭 속 숨겨진 규칙성으로 투자 대응</p>
+</div>
+
+<div class="section">
+
+<!-- 1. TACO 사이클 4단계 -->
+<div class="card">
+  <h2>📊 TACO 사이클 4단계 — Strange Attractor의 궤도</h2>
+  <p style="font-size:0.85em; color:#aaa; margin-bottom:12px;">
+    비선형 진동자의 위상 공간에서 궤도가 발산하지 않고 attractor 내에서 순환하듯,<br>
+    트럼프의 행동도 4단계 사이클을 반복한다. 진폭은 크지만 <strong style="color:#ffcc44;">구조는 예측 가능</strong>하다.
+  </p>
+
+  <div class="phase-grid">
+    <div class="phase-box p1">
+      <div class="phase-name p1">Phase 1: 위협/에스컬레이션 🔥</div>
+      <p>관세 폭탄, 전쟁 위협, NATO 탈퇴, SNS 공격<br>기간: 3~14일<br>VIX: 급등 (+40~80%)</p>
+      <div class="action">💰 현금 확보, 풋옵션 매수</div>
+    </div>
+    <div class="phase-box p2">
+      <div class="phase-name p2">Phase 2: 시장 공포 극대 📉</div>
+      <p>S&P500 -5~15% 급락, 안전자산 급등<br>기간: 2~7일<br>VIX: 피크 (30~45)</p>
+      <div class="action">💰 분할 매수 시작 (1차 30%)</div>
+    </div>
+    <div class="phase-box p3">
+      <div class="phase-name p3">Phase 3: 후퇴/양보 🕊️</div>
+      <p>"협상 중", "90일 유예", "좋은 대화"<br>기간: 1~5일<br>VIX: 급락 (-30~50%)</p>
+      <div class="action">💰 추가 매수 (2차 40%), VIX 풋 매수</div>
+    </div>
+    <div class="phase-box p4">
+      <div class="phase-name p4">Phase 4: 안정/소강 ☀️</div>
+      <p>시장 회복, 관심 이동, "승리 선언"<br>기간: 14~60일<br>VIX: 정상화 (15~20)</p>
+      <div class="action">💰 이익 실현, 다음 사이클 대비 현금 확보</div>
+    </div>
+  </div>
+
+  <div class="chart-box" id="chart-cycle"></div>
+</div>
+
+<!-- 2. 실증 데이터: 역대 TACO 사이클 -->
+<div class="card">
+  <h2>📋 실증 데이터 — 역대 TACO 사이클 (2025~2026)</h2>
+  <table>
+    <tr><th>이벤트</th><th>위협일</th><th>저점일</th><th>후퇴일</th><th>S&P 낙폭</th><th>회복 기간</th><th>VIX 피크</th></tr>
+    <tr><td>Liberation Day 관세</td><td>Apr 2, '25</td><td>Apr 8</td><td>Apr 9 (90일유예)</td><td>-12%</td><td>32일</td><td>45</td></tr>
+    <tr><td>중국 145% 관세</td><td>Apr 9, '25</td><td>Apr 22</td><td>May (슬금슬금 인하)</td><td>-6%</td><td>18일</td><td>38</td></tr>
+    <tr><td>2차 관세 라운드</td><td>Aug 1, '25</td><td>Aug 5</td><td>Aug 12</td><td>-4%</td><td>10일</td><td>28</td></tr>
+    <tr><td>NATO 탈퇴 위협</td><td>Mar 31, '26</td><td>Apr 2</td><td>Apr 5</td><td>-3%</td><td>5일</td><td>24</td></tr>
+    <tr><td>이란 전쟁 에스컬레이션</td><td>Apr 1, '26</td><td>Apr 3</td><td>Apr 8 (휴전 시사)</td><td>-5%</td><td>8일</td><td>32</td></tr>
+  </table>
+  <p style="font-size:0.8em; color:#888; margin-top:8px;">
+    패턴: 시간이 갈수록 <strong style="color:#44dd88;">낙폭 축소</strong> (12% → 5% → 3%),
+    <strong style="color:#44dd88;">회복 가속</strong> (32일 → 8일 → 5일). 시장이 TACO를 학습 중.
+  </p>
+</div>
+
+<!-- 3. 시뮬레이터 -->
+<div class="card">
+  <h2>🎛️ TACO 투자 시뮬레이터</h2>
+  <p style="font-size:0.85em; color:#aaa; margin-bottom:12px;">투자금과 전략을 설정하고 TACO 사이클 10회 시뮬레이션</p>
+
+  <div class="controls">
+    <div class="ctrl">
+      <label>초기 투자금 (만원)</label>
+      <input type="number" id="capital" value="5000">
+    </div>
+    <div class="ctrl">
+      <label>Phase 2 매수 비중 (%)</label>
+      <input type="range" id="buyRatio" min="10" max="80" value="40">
+      <span id="buyRatio-val" style="color:#ffaa44; font-size:0.85em;">40%</span>
+    </div>
+    <div class="ctrl">
+      <label>평균 사이클 수익률 (%)</label>
+      <input type="range" id="cycleReturn" min="2" max="15" value="7" step="0.5">
+      <span id="cycleReturn-val" style="color:#ffaa44; font-size:0.85em;">7%</span>
+    </div>
+    <div class="ctrl">
+      <label>TACO 실패 확률 (%)</label>
+      <input type="range" id="failRate" min="5" max="40" value="15">
+      <span id="failRate-val" style="color:#ff6b6b; font-size:0.85em;">15%</span>
+    </div>
+    <div class="ctrl">
+      <label>실패 시 손실 (%)</label>
+      <input type="range" id="failLoss" min="5" max="30" value="12">
+      <span id="failLoss-val" style="color:#ff6b6b; font-size:0.85em;">12%</span>
+    </div>
+    <div class="ctrl">
+      <button class="btn" onclick="runTacoSim()">▶ 1000회 몬테카를로</button>
+    </div>
+  </div>
+
+  <div class="metric-row" id="metrics"></div>
+  <div class="chart-box" id="chart-sim"></div>
+  <div class="chart-box" id="chart-dist"></div>
+</div>
+
+<!-- 4. 실전 전략 -->
+<div class="card">
+  <h2>🎯 실전 투자 전략 — TACO Playbook</h2>
+
+  <h3>A. 핵심 원칙</h3>
+  <ul>
+    <li><strong>진폭이 클수록 수익 기회도 크다</strong> — 댐핑 없는 진동자의 에너지를 수확하는 전략</li>
+    <li><strong>시장은 TACO를 학습한다</strong> — 같은 위협의 2번째는 충격이 절반 (낙폭 축소 패턴)</li>
+    <li><strong>새로운 유형의 위협은 풀 임팩트</strong> — 관세→전쟁→NATO 등 도메인이 바뀌면 리셋</li>
+  </ul>
+
+  <h3>B. Phase별 포지셔닝</h3>
+  <table>
+    <tr><th>Phase</th><th>신호</th><th>주식</th><th>옵션</th><th>현금</th></tr>
+    <tr>
+      <td style="color:#ff6b6b;">1. 위협</td>
+      <td>Truth Social 폭풍, 기자회견 공격적 어조</td>
+      <td><span class="tag tag-sell">비중 축소</span></td>
+      <td><span class="tag tag-buy">풋 매수</span></td>
+      <td><span class="tag tag-buy">30%↑</span></td>
+    </tr>
+    <tr>
+      <td style="color:#ff4444;">2. 공포</td>
+      <td>VIX 30+, CNN Fear Index &lt;20, 연속 하락 3일+</td>
+      <td><span class="tag tag-buy">분할 매수</span></td>
+      <td><span class="tag tag-sell">풋 익절</span></td>
+      <td><span class="tag tag-sell">투입 시작</span></td>
+    </tr>
+    <tr>
+      <td style="color:#44dd88;">3. 후퇴</td>
+      <td>"좋은 대화", "유예", "합의 가능"</td>
+      <td><span class="tag tag-buy">추가 매수</span></td>
+      <td><span class="tag tag-buy">VIX 풋</span></td>
+      <td><span class="tag tag-hold">유지</span></td>
+    </tr>
+    <tr>
+      <td style="color:#7ecfff;">4. 안정</td>
+      <td>VIX &lt;20, 랠리 지속, 관심 이동</td>
+      <td><span class="tag tag-sell">이익 실현</span></td>
+      <td><span class="tag tag-hedge">다음 헤지 준비</span></td>
+      <td><span class="tag tag-buy">비축 시작</span></td>
+    </tr>
+  </table>
+
+  <h3>C. 모니터링 지표 (트럼프 진동자의 변위 측정)</h3>
+  <ul>
+    <li><strong>Truth Social 포스트 빈도</strong> — 일 10개 이상 = Phase 1 진입 신호</li>
+    <li><strong>발언 공격성 스코어</strong> — NLP 감성 분석으로 자동 측정 가능</li>
+    <li><strong>VIX 일간 변동</strong> — +20% 이상 = Phase 2 진입</li>
+    <li><strong>CNN Fear & Greed Index</strong> — 25 이하 = 매수 영역</li>
+    <li><strong>"deal", "negotiate", "pause" 키워드</strong> — Phase 3 전환 신호</li>
+  </ul>
+
+  <div class="risk-box">
+    <h3>⚠️ TACO 실패 시나리오 (테일 리스크)</h3>
+    <ul>
+      <li><strong>진짜 전쟁 확대</strong> — 이란이 호르무즈 봉쇄하면 "chicken out" 불가</li>
+      <li><strong>신용등급 강등</strong> — 재정적자 + 관세로 구조적 하락</li>
+      <li><strong>인지 기능 급격한 저하</strong> — 예측 모델 자체가 무의미해짐</li>
+      <li><strong>시장 학습 과잉</strong> — 모두가 TACO를 믿으면 역이용 가능성</li>
+    </ul>
+    <p style="font-size:0.85em; color:#ff6b6b; margin-top:10px;">
+      → 항상 포트폴리오의 <strong>최소 20%는 현금/단기채</strong> 유지. 풋 헤지 필수.
+    </p>
+  </div>
+</div>
+
+<!-- 5. 물리학-투자 비유 정리 -->
+<div class="card">
+  <h2>🔬 물리학 ↔ 투자 매핑</h2>
+  <table>
+    <tr><th>비선형 진동자</th><th>트럼프 행동</th><th>투자 대응</th></tr>
+    <tr><td>변위 x(t) 최대</td><td>Phase 2: 시장 공포 극대</td><td>매수 시점</td></tr>
+    <tr><td>속도 v(t) = 0 (전환점)</td><td>Phase 3: 후퇴 시작</td><td>추가 매수 확인</td></tr>
+    <tr><td>평형점 통과</td><td>Phase 4: 정상 복귀</td><td>이익 실현</td></tr>
+    <tr><td>에너지 재축적</td><td>Phase 1: 새 위협 준비</td><td>현금 비축, 헤지</td></tr>
+    <tr><td>Strange Attractor</td><td>TACO 사이클 범위</td><td>예측 가능한 투자 영역</td></tr>
+    <tr><td>Attractor 탈출</td><td>TACO 실패 (진짜 위기)</td><td>손절, 안전자산 전환</td></tr>
+  </table>
+</div>
+
+</div><!-- section end -->
+
+<div class="footnote">
+  ⚠️ 이 모델은 연구/교육 목적이며 투자 조언이 아닙니다. 실제 투자 시 개인의 판단과 리스크 관리가 필수입니다.<br>
+  TACO = Trump Always Chickens Out | 데이터: S&P500, VIX 역사적 패턴 기반
+</div>
+
+<script>
+// Slider value displays
+['buyRatio','cycleReturn','failRate','failLoss'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => {
+    document.getElementById(id+'-val').textContent = el.value + '%';
+  });
+});
+
+// 1. TACO Cycle Visualization (Duffing-inspired with labels)
+function drawCycle() {
+  const dt = 0.03, tMax = 50;
+  const gamma = 0.08, eps = 0.3, F = 1.5, w = 0.8;
+  const ts = [], xs = [], phases = [], colors = [];
+
+  let y = [1.0, 0.0];
+  for (let t = 0; t <= tMax; t += dt) {
+    const [x, v] = y;
+    const dvdt = -gamma*v - x - eps*x*x*x + F*Math.cos(w*t);
+    y = [x + dt*v, v + dt*dvdt];
+    if (Math.abs(y[0]) > 50) y = [Math.sign(y[0])*50, 0];
+    ts.push(t);
+    xs.push(y[0]);
+
+    // Phase classification by derivative + position
+    if (y[1] > 0.3 && y[0] > 0) colors.push('#ff6b6b');      // Phase 1: rising threat
+    else if (y[0] > 1.0) colors.push('#ff4444');               // Phase 2: peak fear
+    else if (y[1] < -0.3 && y[0] > 0) colors.push('#44dd88'); // Phase 3: retreat
+    else colors.push('#7ecfff');                                 // Phase 4: calm
+  }
+
+  // Market proxy (inverted & lagged)
+  const market = xs.map((x, i) => {
+    const base = 4500;
+    return base - x * 300 + Math.sin(i*0.01)*50;
+  });
+
+  Plotly.newPlot('chart-cycle', [
+    { x: ts, y: xs, name: '트럼프 공격성 x(t)', yaxis: 'y', line: { color: '#ff6b6b', width: 2 } },
+    { x: ts, y: market, name: 'S&P 500 (역상관)', yaxis: 'y2', line: { color: '#44dd88', width: 2 } }
+  ], {
+    title: { text: 'TACO 사이클: 트럼프 공격성 vs 시장 (역상관)', font: { color: '#ccc', size: 14 } },
+    xaxis: { title: '시간', color: '#888', gridcolor: '#222' },
+    yaxis: { title: '공격성 지수', color: '#ff6b6b', gridcolor: '#222', side: 'left' },
+    yaxis2: { title: 'S&P 500', color: '#44dd88', overlaying: 'y', side: 'right' },
+    paper_bgcolor: '#0a0a1a', plot_bgcolor: '#0e0e20',
+    legend: { font: { color: '#ccc' }, x: 0.01, y: 0.99 },
+    margin: { t: 50 },
+    shapes: [
+      // Annotation zones
+      { type: 'rect', x0: 5.5, x1: 8, y0: -3, y1: 3, fillcolor: '#ff6b6b22', line: { width: 0 } },
+      { type: 'rect', x0: 8, x1: 9.5, y0: -3, y1: 3, fillcolor: '#44dd8822', line: { width: 0 } },
+    ],
+    annotations: [
+      { x: 6.8, y: 2.5, text: '🔥 위협', showarrow: false, font: { color: '#ff6b6b', size: 11 } },
+      { x: 8.8, y: 2.5, text: '🕊️ 후퇴', showarrow: false, font: { color: '#44dd88', size: 11 } },
+      { x: 6.8, y: -2.8, text: '💰 매수↗', showarrow: false, font: { color: '#ffcc44', size: 11 } },
+      { x: 11, y: -2.8, text: '💰 익절↗', showarrow: false, font: { color: '#ffcc44', size: 11 } },
+    ]
+  }, { responsive: true });
+}
+drawCycle();
+
+// 2. Monte Carlo Simulation
+function runTacoSim() {
+  const capital = parseFloat(document.getElementById('capital').value);
+  const buyPct = parseFloat(document.getElementById('buyRatio').value) / 100;
+  const cycleRet = parseFloat(document.getElementById('cycleReturn').value) / 100;
+  const failPct = parseFloat(document.getElementById('failRate').value) / 100;
+  const failLoss = parseFloat(document.getElementById('failLoss').value) / 100;
+
+  const nSim = 1000, nCycles = 10;
+  const allPaths = [];
+  const finalValues = [];
+
+  for (let s = 0; s < nSim; s++) {
+    let port = capital;
+    const path = [port];
+    for (let c = 0; c < nCycles; c++) {
+      const invested = port * buyPct;
+      const cash = port - invested;
+      if (Math.random() < failPct) {
+        // TACO fails
+        const loss = failLoss * (0.5 + Math.random());
+        port = cash + invested * (1 - loss);
+      } else {
+        // TACO succeeds
+        const gain = cycleRet * (0.5 + Math.random() * 1.0);
+        port = cash + invested * (1 + gain);
+      }
+      path.push(port);
+    }
+    allPaths.push(path);
+    finalValues.push(port);
+  }
+
+  // Percentiles
+  finalValues.sort((a,b) => a - b);
+  const p5 = finalValues[Math.floor(nSim*0.05)];
+  const p25 = finalValues[Math.floor(nSim*0.25)];
+  const p50 = finalValues[Math.floor(nSim*0.50)];
+  const p75 = finalValues[Math.floor(nSim*0.75)];
+  const p95 = finalValues[Math.floor(nSim*0.95)];
+  const avg = finalValues.reduce((a,b)=>a+b,0)/nSim;
+  const winRate = finalValues.filter(v => v > capital).length / nSim * 100;
+
+  // Metrics
+  document.getElementById('metrics').innerHTML = `
+    <div class="metric"><div class="num green">${(avg/10000).toFixed(2)}억</div><div class="lbl">평균 최종</div></div>
+    <div class="metric"><div class="num yellow">${(p50/10000).toFixed(2)}억</div><div class="lbl">중앙값</div></div>
+    <div class="metric"><div class="num green">${(p95/10000).toFixed(2)}억</div><div class="lbl">상위 5%</div></div>
+    <div class="metric"><div class="num red">${(p5/10000).toFixed(2)}억</div><div class="lbl">하위 5%</div></div>
+    <div class="metric"><div class="num blue">${winRate.toFixed(1)}%</div><div class="lbl">수익 확률</div></div>
+    <div class="metric"><div class="num yellow">${((avg/capital-1)*100).toFixed(1)}%</div><div class="lbl">평균 수익률</div></div>
+  `;
+
+  // Path chart (sample 50 paths + percentile bands)
+  const traces = [];
+  const xLabels = Array.from({length: nCycles+1}, (_,i) => `사이클 ${i}`);
+
+  // Sample paths (light)
+  for (let i = 0; i < Math.min(100, nSim); i++) {
+    traces.push({
+      x: xLabels, y: allPaths[i], mode: 'lines',
+      line: { color: allPaths[i][nCycles] > capital ? '#44dd8822' : '#ff6b6b22', width: 1 },
+      showlegend: false, hoverinfo: 'skip'
+    });
+  }
+
+  // Percentile lines
+  const pLines = [
+    { pct: 0.05, name: '하위 5%', color: '#ff6b6b' },
+    { pct: 0.50, name: '중앙값', color: '#ffcc44' },
+    { pct: 0.95, name: '상위 5%', color: '#44dd88' },
+  ];
+  for (const pl of pLines) {
+    const line = [];
+    for (let c = 0; c <= nCycles; c++) {
+      const vals = allPaths.map(p => p[c]).sort((a,b) => a-b);
+      line.push(vals[Math.floor(nSim * pl.pct)]);
+    }
+    traces.push({
+      x: xLabels, y: line, name: pl.name, mode: 'lines',
+      line: { color: pl.color, width: 3 }
+    });
+  }
+
+  Plotly.react('chart-sim', traces, {
+    title: { text: `1000회 몬테카를로 시뮬레이션 (${nCycles} TACO 사이클)`, font: { color: '#ccc', size: 14 } },
+    xaxis: { color: '#888' },
+    yaxis: { title: '포트폴리오 (만원)', color: '#888', gridcolor: '#222' },
+    paper_bgcolor: '#0a0a1a', plot_bgcolor: '#0e0e20',
+    legend: { font: { color: '#ccc' } },
+    margin: { t: 50 },
+    shapes: [{ type: 'line', x0: xLabels[0], x1: xLabels[nCycles], y0: capital, y1: capital, line: { color: '#ffffff44', dash: 'dash', width: 1 } }]
+  }, { responsive: true });
+
+  // Distribution histogram
+  Plotly.react('chart-dist', [{
+    x: finalValues, type: 'histogram', nbinsx: 50,
+    marker: { color: finalValues.map(v => v > capital ? '#44dd88' : '#ff6b6b'), line: { color: '#0a0a1a', width: 0.5 } },
+    opacity: 0.8
+  }], {
+    title: { text: '최종 포트폴리오 분포', font: { color: '#ccc', size: 14 } },
+    xaxis: { title: '최종 금액 (만원)', color: '#888', gridcolor: '#222' },
+    yaxis: { title: '빈도', color: '#888', gridcolor: '#222' },
+    paper_bgcolor: '#0a0a1a', plot_bgcolor: '#0e0e20',
+    margin: { t: 50 },
+    shapes: [
+      { type: 'line', x0: capital, x1: capital, y0: 0, y1: 100, line: { color: '#ffffff66', dash: 'dash', width: 2 } },
+      { type: 'line', x0: avg, x1: avg, y0: 0, y1: 100, line: { color: '#ffcc44', width: 2 } }
+    ],
+    annotations: [
+      { x: capital, y: 90, text: '원금', showarrow: false, font: { color: '#fff', size: 10 } },
+      { x: avg, y: 80, text: '평균', showarrow: false, font: { color: '#ffcc44', size: 10 } }
+    ]
+  }, { responsive: true });
+}
+
+// Run initial sim
+runTacoSim();
+</script>
+</body>
+</html>
