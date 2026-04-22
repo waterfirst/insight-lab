@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>비선형 진동자 시뮬레이터 — 댐핑 유무 비교</title>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0a0a1a; color: #e0e0e0; }
+  .header { text-align: center; padding: 30px 20px 10px; }
+  .header h1 { font-size: 1.6em; color: #7ecfff; }
+  .header p { font-size: 0.9em; color: #888; margin-top: 8px; }
+  .controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; max-width: 900px; margin: 0 auto; }
+  .control-group { background: #141428; border-radius: 12px; padding: 16px 20px; min-width: 180px; flex: 1; }
+  .control-group label { display: block; font-size: 0.8em; color: #7ecfff; margin-bottom: 6px; }
+  .control-group input[type="range"] { width: 100%; accent-color: #7ecfff; }
+  .control-group .val { text-align: right; font-size: 0.85em; color: #ffaa44; font-weight: bold; }
+  .charts { max-width: 1100px; margin: 0 auto; padding: 0 20px 30px; }
+  .chart-box { margin-bottom: 10px; }
+  .analogy { max-width: 900px; margin: 0 auto 30px; padding: 20px; background: #141428; border-radius: 12px; border-left: 4px solid #ff6b6b; }
+  .analogy h3 { color: #ff6b6b; margin-bottom: 10px; font-size: 1em; }
+  .analogy p { font-size: 0.85em; line-height: 1.7; color: #bbb; }
+  .analogy strong { color: #ffaa44; }
+  .legend-box { max-width: 900px; margin: 0 auto 20px; display: flex; gap: 30px; justify-content: center; font-size: 0.85em; }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 50%; }
+  .btn-row { text-align: center; margin: 10px 0 20px; }
+  .btn { background: #7ecfff; color: #0a0a1a; border: none; padding: 10px 28px; border-radius: 8px; font-size: 0.95em; cursor: pointer; font-weight: bold; }
+  .btn:hover { background: #5bb8ee; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🌀 비선형 진동자 시뮬레이터</h1>
+  <p>댐핑(제동)이 사라지면 진동은 어떻게 변하는가?</p>
+</div>
+
+<div class="controls">
+  <div class="control-group">
+    <label>비선형 강도 (ε)</label>
+    <input type="range" id="epsilon" min="0" max="2" step="0.1" value="0.5">
+    <div class="val" id="epsilon-val">0.5</div>
+  </div>
+  <div class="control-group">
+    <label>댐핑 계수 (γ) — 정상</label>
+    <input type="range" id="gamma" min="0" max="1" step="0.02" value="0.3">
+    <div class="val" id="gamma-val">0.3</div>
+  </div>
+  <div class="control-group">
+    <label>외부 자극 강도 (F)</label>
+    <input type="range" id="force" min="0" max="3" step="0.1" value="1.2">
+    <div class="val" id="force-val">1.2</div>
+  </div>
+  <div class="control-group">
+    <label>자극 주파수 (ω)</label>
+    <input type="range" id="omega" min="0.1" max="3" step="0.1" value="1.0">
+    <div class="val" id="omega-val">1.0</div>
+  </div>
+</div>
+
+<div class="btn-row">
+  <button class="btn" onclick="simulate()">▶ 시뮬레이션 실행</button>
+</div>
+
+<div class="legend-box">
+  <div class="legend-item"><div class="legend-dot" style="background:#ff6b6b;"></div> 댐핑 없음 (γ=0) — 브레이크 고장</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7ecfff;"></div> 댐핑 있음 (γ=설정값) — 정상 제동</div>
+</div>
+
+<div class="charts">
+  <div class="chart-box" id="chart-time"></div>
+  <div class="chart-box" id="chart-phase"></div>
+  <div class="chart-box" id="chart-energy"></div>
+</div>
+
+<div class="analogy">
+  <h3>🧠 물리-심리 비유</h3>
+  <p>
+    <strong>변위 x(t)</strong> = 발언/행동의 극단성 (진폭이 클수록 과격)<br>
+    <strong>댐핑 γ</strong> = 자기조절력, 측근의 제동, 제도적 견제<br>
+    <strong>비선형 ε</strong> = 나르시시즘 강도 (클수록 작은 자극에도 과잉반응)<br>
+    <strong>외부 자극 F</strong> = 미디어, 반대 세력, 국제 위기<br>
+    <strong>주파수 ω</strong> = 자극이 오는 빈도<br><br>
+    댐핑이 있으면 진동이 수렴하거나 일정 범위에 머문다 (건강한 리더십).<br>
+    댐핑이 사라지면 <strong>진폭이 끝없이 커지며 예측 불가능한 카오스</strong>에 진입한다.
+  </p>
+</div>
+
+<script>
+const sliders = ['epsilon','gamma','force','omega'];
+sliders.forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => {
+    document.getElementById(id+'-val').textContent = el.value;
+  });
+});
+
+function rk4Step(f, t, y, dt) {
+  const k1 = f(t, y);
+  const k2 = f(t + dt/2, y.map((v,i) => v + dt/2*k1[i]));
+  const k3 = f(t + dt/2, y.map((v,i) => v + dt/2*k2[i]));
+  const k4 = f(t + dt,   y.map((v,i) => v + dt*k3[i]));
+  return y.map((v,i) => v + dt/6*(k1[i] + 2*k2[i] + 2*k3[i] + k4[i]));
+}
+
+function solveDuffing(gamma, epsilon, F, omega, tMax, dt) {
+  // Duffing equation: x'' + γx' + x + εx³ = F cos(ωt)
+  const deriv = (t, y) => {
+    const [x, v] = y;
+    const dxdt = v;
+    const dvdt = -gamma*v - x - epsilon*x*x*x + F*Math.cos(omega*t);
+    return [dxdt, dvdt];
+  };
+
+  const ts = [], xs = [], vs = [], energies = [];
+  let y = [1.0, 0.0]; // initial: x=1, v=0
+  for (let t = 0; t <= tMax; t += dt) {
+    ts.push(t);
+    xs.push(y[0]);
+    vs.push(y[1]);
+    // Total energy: KE + PE(linear) + PE(nonlinear)
+    const E = 0.5*y[1]*y[1] + 0.5*y[0]*y[0] + 0.25*epsilon*Math.pow(y[0],4);
+    energies.push(E);
+    y = rk4Step(deriv, t, y, dt);
+    // Safety clamp
+    if (Math.abs(y[0]) > 100 || Math.abs(y[1]) > 100) {
+      y = [Math.sign(y[0])*100, Math.sign(y[1])*100];
+    }
+  }
+  return { ts, xs, vs, energies };
+}
+
+function simulate() {
+  const eps = parseFloat(document.getElementById('epsilon').value);
+  const gam = parseFloat(document.getElementById('gamma').value);
+  const F   = parseFloat(document.getElementById('force').value);
+  const w   = parseFloat(document.getElementById('omega').value);
+
+  const tMax = 80, dt = 0.02;
+  const noDamp  = solveDuffing(0,   eps, F, w, tMax, dt);
+  const damped  = solveDuffing(gam, eps, F, w, tMax, dt);
+
+  // 1. Time series
+  Plotly.react('chart-time', [
+    { x: noDamp.ts, y: noDamp.xs, name: '댐핑 없음 (γ=0)', line: { color: '#ff6b6b', width: 1.5 } },
+    { x: damped.ts, y: damped.xs, name: `댐핑 있음 (γ=${gam})`, line: { color: '#7ecfff', width: 2 } }
+  ], {
+    title: { text: '시간에 따른 진동 — x(t)', font: { color: '#ccc', size: 14 } },
+    xaxis: { title: '시간 t', color: '#888', gridcolor: '#222' },
+    yaxis: { title: '변위 x (행동 극단성)', color: '#888', gridcolor: '#222' },
+    paper_bgcolor: '#0a0a1a', plot_bgcolor: '#0e0e20',
+    legend: { font: { color: '#ccc' } },
+    margin: { t: 50 }
+  }, { responsive: true });
+
+  // 2. Phase portrait
+  Plotly.react('chart-phase', [
+    { x: noDamp.xs, y: noDamp.vs, name: '댐핑 없음', mode: 'lines', line: { color: '#ff6b6b', width: 1 }, opacity: 0.7 },
+    { x: damped.xs, y: damped.vs, name: `댐핑 있음`, mode: 'lines', line: { color: '#7ecfff', width: 1.5 } }
+  ], {
+    title: { text: '위상 공간 (Phase Portrait)', font: { color: '#ccc', size: 14 } },
+    xaxis: { title: '변위 x', color: '#888', gridcolor: '#222' },
+    yaxis: { title: '속도 v (변화율)', color: '#888', gridcolor: '#222' },
+    paper_bgcolor: '#0a0a1a', plot_bgcolor: '#0e0e20',
+    legend: { font: { color: '#ccc' } },
+    margin: { t: 50 }
+  }, { responsive: true });
+
+  // 3. Energy
+  Plotly.react('chart-energy', [
+    { x: noDamp.ts, y: noDamp.energies, name: '댐핑 없음', line: { color: '#ff6b6b', width: 1.5 }, fill: 'tozeroy', fillcolor: 'rgba(255,107,107,0.1)' },
+    { x: damped.ts, y: damped.energies, name: `댐핑 있음`, line: { color: '#7ecfff', width: 2 }, fill: 'tozeroy', fillcolor: 'rgba(126,207,255,0.1)' }
+  ], {
+    title: { text: '시스템 에너지 E(t)', font: { color: '#ccc', size: 14 } },
+    xaxis: { title: '시간 t', color: '#888', gridcolor: '#222' },
+    yaxis: { title: '에너지 (불안정성 크기)', color: '#888', gridcolor: '#222' },
+    paper_bgcolor: '#0a0a1a', plot_bgcolor: '#0e0e20',
+    legend: { font: { color: '#ccc' } },
+    margin: { t: 50 }
+  }, { responsive: true });
+}
+
+// Run on load
+simulate();
+</script>
+</body>
+</html>
