@@ -1,0 +1,400 @@
+---
+title: "메타렌즈 2D/3D 전환 기술과 픽셀 단위 응용 아이디어"
+subtitle: "POSTECH 노준석 × 삼성전자 | Nature 2026"
+author: "Nakcho Choi"
+date: "2026-04-23"
+format:
+  html:
+    theme: darkly
+    embed-resources: true
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    page-layout: article
+execute:
+  echo: false
+  warning: false
+---
+
+```{=html}
+<style>
+  .callout-note { background: rgba(13, 110, 253, 0.08) !important; }
+  .callout-tip { background: rgba(25, 135, 84, 0.08) !important; }
+  .callout-warning { background: rgba(255, 193, 7, 0.08) !important; }
+  .callout-important { background: rgba(220, 53, 69, 0.08) !important; }
+</style>
+```
+
+## 1. 논문 개요
+
+::: {.callout-note}
+## Nature 2026.04.30 게재 예정 (2편 동시)
+
+**Paper 1:** "Switchable 2D-3D Display Through a Metasurface Lenticular Lens"
+
+- 저자: 노준석(POSTECH) + 삼성리서치 비주얼 테크놀로지팀
+- 세계 최초 전압 기반 2D↔3D 실시간 전환 메타렌즈 시연
+
+**Paper 2:** 메타렌즈 대량 생산 공정
+
+- 저자: 노준석 + 조규진·김인기(성균관대)
+- 국내 연구자 Nature 같은 호 교신저자 2편 동시 게재 — 최초
+:::
+
+### 메타렌즈란?
+
+기존 렌즈는 유리/플라스틱의 곡면으로 빛을 굴절시킨다. **메타렌즈(Metalens)**는 나노미터 크기의 인공 구조물을 기판 위에 정밀 배열하여 빛의 **위상, 진폭, 편광**을 제어하는 초박형 평면 광학 소자다.
+
+### 동작 원리
+
+```{python}
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import numpy as np
+
+fig = make_subplots(rows=1, cols=2, subplot_titles=["2D 모드 (V = ON)", "3D 모드 (V = OFF)"],
+                    horizontal_spacing=0.08)
+
+# 2D mode - light goes straight
+for i in range(7):
+    x_start = i * 0.15 - 0.45
+    fig.add_trace(go.Scatter(
+        x=[x_start, x_start], y=[0, 1],
+        mode='lines', line=dict(color='#7ecfff', width=2),
+        showlegend=False
+    ), row=1, col=1)
+
+# Labels for 2D
+fig.add_annotation(x=0, y=-0.15, text="OLED 패널", showarrow=False,
+                   font=dict(color='#888', size=11), xref='x1', yref='y1')
+fig.add_annotation(x=0, y=0.25, text="편광 제어 ON → 오목렌즈", showarrow=False,
+                   font=dict(color='#ffcc44', size=10), xref='x1', yref='y1')
+fig.add_annotation(x=0, y=0.5, text="메타렌즈 (상쇄)", showarrow=False,
+                   font=dict(color='#44dd88', size=10), xref='x1', yref='y1')
+fig.add_annotation(x=0, y=1.1, text="직진 → 고해상도 평면 영상", showarrow=False,
+                   font=dict(color='#7ecfff', size=11), xref='x1', yref='y1')
+
+# 3D mode - light fans out
+angles = np.linspace(-0.4, 0.4, 7)
+for i, a in enumerate(angles):
+    x_start = i * 0.15 - 0.45
+    fig.add_trace(go.Scatter(
+        x=[x_start, x_start + a * 1.2], y=[0, 1],
+        mode='lines', line=dict(color='#ff6b6b', width=2),
+        showlegend=False
+    ), row=1, col=2)
+
+fig.add_annotation(x=0, y=-0.15, text="OLED 패널", showarrow=False,
+                   font=dict(color='#888', size=11), xref='x2', yref='y2')
+fig.add_annotation(x=0, y=0.25, text="편광 제어 OFF → 볼록렌즈", showarrow=False,
+                   font=dict(color='#ffcc44', size=10), xref='x2', yref='y2')
+fig.add_annotation(x=0, y=0.5, text="메타렌즈 (렌티큘러)", showarrow=False,
+                   font=dict(color='#44dd88', size=10), xref='x2', yref='y2')
+fig.add_annotation(x=-0.4, y=1.1, text="👁 좌안", showarrow=False,
+                   font=dict(color='#ff6b6b', size=11), xref='x2', yref='y2')
+fig.add_annotation(x=0.4, y=1.1, text="우안 👁", showarrow=False,
+                   font=dict(color='#ff6b6b', size=11), xref='x2', yref='y2')
+
+# Metalens layer line
+for col in [1, 2]:
+    fig.add_shape(type="rect", x0=-0.6, x1=0.6, y0=0.45, y1=0.55,
+                  fillcolor="rgba(68,221,136,0.15)", line=dict(color="#44dd88", width=1),
+                  xref=f'x{col}', yref=f'y{col}')
+    fig.add_shape(type="rect", x0=-0.6, x1=0.6, y0=-0.05, y1=0.05,
+                  fillcolor="rgba(126,207,255,0.15)", line=dict(color="#7ecfff", width=1),
+                  xref=f'x{col}', yref=f'y{col}')
+
+fig.update_xaxes(visible=False, range=[-0.7, 0.7])
+fig.update_yaxes(visible=False, range=[-0.3, 1.25])
+fig.update_layout(
+    height=400, template='plotly_dark',
+    paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+    title=dict(text="메타렌즈 2D/3D 전환 원리", font=dict(size=14)),
+    margin=dict(t=60, b=20)
+)
+fig.show()
+```
+
+**2D 모드**: 편광 컨트롤러 ON → 메타렌즈가 오목렌즈로 작동 → 기존 볼록렌즈와 상쇄 → 빛이 직진 → 왜곡 없는 고해상도 평면 영상
+
+**3D 모드**: 편광 컨트롤러 OFF → 메타렌즈가 볼록렌즈로 전환 → 렌티큘러 효과 → 좌/우안 분리 → 입체 영상
+
+### 핵심 스펙
+
+```{python}
+fig2 = go.Figure()
+
+categories = ['시야각 (°)', '두께 (mm 역수)', '해상도 유지율 (%)', '2D/3D 전환', '대량 생산성']
+existing_lenticular = [15, 1/3*100, 100, 0, 90]
+parallax_barrier = [10, 1/1*100, 50, 80, 90]
+metalens = [100, 1/1.2*100, 95, 100, 70]
+
+fig2.add_trace(go.Scatterpolar(
+    r=existing_lenticular, theta=categories, fill='toself',
+    name='기존 렌티큘러', line=dict(color='#888'),
+    fillcolor='rgba(136,136,136,0.1)'
+))
+fig2.add_trace(go.Scatterpolar(
+    r=parallax_barrier, theta=categories, fill='toself',
+    name='패럴랙스 배리어', line=dict(color='#ffcc44'),
+    fillcolor='rgba(255,204,68,0.1)'
+))
+fig2.add_trace(go.Scatterpolar(
+    r=metalens, theta=categories, fill='toself',
+    name='메타렌즈 (본 연구)', line=dict(color='#44dd88', width=3),
+    fillcolor='rgba(68,221,136,0.15)'
+))
+
+fig2.update_layout(
+    polar=dict(
+        bgcolor='rgba(0,0,0,0)',
+        radialaxis=dict(visible=True, range=[0, 110], gridcolor='#333'),
+        angularaxis=dict(gridcolor='#333')
+    ),
+    template='plotly_dark',
+    paper_bgcolor='rgba(0,0,0,0)',
+    title=dict(text="기술 비교 레이더 차트", font=dict(size=14)),
+    height=420, margin=dict(t=60, b=20),
+    legend=dict(x=0.02, y=-0.15, orientation='h')
+)
+fig2.show()
+```
+
+| 항목 | 기존 렌티큘러 | 패럴랙스 배리어 | **메타렌즈 (본 연구)** |
+|------|-------------|---------------|---------------------|
+| 3D 시야각 | ~15° | ~10° | **100°** |
+| 2D/3D 전환 | 불가 | 가능 (해상도 ↓) | **가능 (해상도 유지)** |
+| 두께 | 수 mm | ~1mm | **1.2mm** |
+| 대면적 검증 | O | O | **50×50mm OLED 검증** |
+
+---
+
+## 2. 픽셀 단위 메타렌즈 — 아이디어 제안
+
+현재 논문은 **패널 전체에 부착하는 렌티큘러 방식**이다. 이걸 한 단계 더 — **각 픽셀 위에 독립적인 나노구조 메타렌즈를 배치**하면 어떻게 될까?
+
+::: {.callout-tip}
+## 핵심 아이디어
+
+디스플레이의 각 서브픽셀 위에 메타렌즈를 올리고, 그 아래 LC층으로 편광을 픽셀별로 독립 제어하면 — 디스플레이 자체가 **"프로그래머블 광학계"**가 된다.
+:::
+
+### 구조 개념
+
+```{python}
+fig3 = go.Figure()
+
+# Draw layered structure
+layers = [
+    (0, 0.8, 'OLED 발광층 (RGB 서브픽셀)', '#7ecfff', 0.15),
+    (1.0, 1.5, '편광 제어층 (LC) — 픽셀별 독립 전압', '#ffcc44', 0.12),
+    (1.7, 2.4, '메타렌즈 어레이 — 나노구조', '#44dd88', 0.15),
+    (2.6, 2.8, '보호층', '#888888', 0.08),
+]
+
+for y0, y1, label, color, opacity in layers:
+    fig3.add_shape(type="rect", x0=0, x1=10, y0=y0, y1=y1,
+                   fillcolor=f'rgba({int(color[1:3],16)},{int(color[3:5],16)},{int(color[5:7],16)},{opacity})',
+                   line=dict(color=color, width=2))
+    fig3.add_annotation(x=5, y=(y0+y1)/2, text=label, showarrow=False,
+                       font=dict(color=color, size=12))
+
+# Sub-pixels
+for i in range(6):
+    colors_px = ['#ff4444', '#44dd88', '#4444ff']
+    c = colors_px[i % 3]
+    fig3.add_shape(type="rect", x0=i*1.6+0.3, x1=i*1.6+1.5, y0=0.1, y1=0.7,
+                   fillcolor=c, opacity=0.3, line=dict(color=c, width=1))
+    fig3.add_annotation(x=i*1.6+0.9, y=0.4, text=['R','G','B'][i%3],
+                       showarrow=False, font=dict(color='white', size=10))
+
+# Nano pillars on metalens layer
+for i in range(30):
+    x = i * 0.33 + 0.2
+    fig3.add_shape(type="rect", x0=x, x1=x+0.15, y0=1.8, y1=2.3,
+                   fillcolor='rgba(68,221,136,0.4)', line=dict(width=0))
+
+# Light rays - left pixels go left, right pixels go right (dual view)
+for i in range(3):
+    x = i * 1.6 + 0.9
+    fig3.add_trace(go.Scatter(x=[x, x-1.5], y=[2.8, 4.5], mode='lines',
+                              line=dict(color='#7ecfff', width=1.5, dash='dot'),
+                              showlegend=False))
+for i in range(3, 6):
+    x = i * 1.6 + 0.9
+    fig3.add_trace(go.Scatter(x=[x, x+1.5], y=[2.8, 4.5], mode='lines',
+                              line=dict(color='#ff6b6b', width=1.5, dash='dot'),
+                              showlegend=False))
+
+# Viewers
+fig3.add_annotation(x=0.5, y=4.8, text="👁 Viewer A<br>(내비)", showarrow=False,
+                   font=dict(color='#7ecfff', size=12))
+fig3.add_annotation(x=9.5, y=4.8, text="👁 Viewer B<br>(영화)", showarrow=False,
+                   font=dict(color='#ff6b6b', size=12))
+
+fig3.update_layout(
+    template='plotly_dark', height=500,
+    paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+    xaxis=dict(visible=False, range=[-1, 11]),
+    yaxis=dict(visible=False, range=[-0.5, 5.3]),
+    title=dict(text="픽셀 단위 메타렌즈 듀얼뷰 개념도", font=dict(size=14)),
+    margin=dict(t=60, b=20)
+)
+fig3.show()
+```
+
+### 응용 A: Automotive Dual-View Display
+
+```{python}
+fig4 = go.Figure()
+
+# Car dashboard visualization
+# Screen
+fig4.add_shape(type="rect", x0=2, x1=8, y0=1, y1=4,
+               fillcolor='rgba(20,20,40,0.9)', line=dict(color='#444', width=2))
+
+# Left half - Navigation
+fig4.add_shape(type="rect", x0=2.2, x1=4.9, y0=1.2, y1=3.8,
+               fillcolor='rgba(13,110,253,0.15)', line=dict(color='#7ecfff', width=1))
+fig4.add_annotation(x=3.55, y=2.5, text="🗺 Navigation", showarrow=False,
+                   font=dict(color='#7ecfff', size=14))
+
+# Right half - Movie
+fig4.add_shape(type="rect", x0=5.1, x1=7.8, y0=1.2, y1=3.8,
+               fillcolor='rgba(255,71,87,0.15)', line=dict(color='#ff6b6b', width=1))
+fig4.add_annotation(x=6.45, y=2.5, text="🎬 Movie", showarrow=False,
+                   font=dict(color='#ff6b6b', size=14))
+
+# Light rays
+for i in range(5):
+    fig4.add_trace(go.Scatter(x=[3+i*0.4, 1], y=[4, 6], mode='lines',
+                              line=dict(color='#7ecfff', width=1), opacity=0.4, showlegend=False))
+for i in range(5):
+    fig4.add_trace(go.Scatter(x=[5.5+i*0.4, 9], y=[4, 6], mode='lines',
+                              line=dict(color='#ff6b6b', width=1), opacity=0.4, showlegend=False))
+
+fig4.add_annotation(x=1, y=6.3, text="🧑‍✈️ 운전자", showarrow=False,
+                   font=dict(color='#7ecfff', size=13))
+fig4.add_annotation(x=9, y=6.3, text="🧑 조수석", showarrow=False,
+                   font=dict(color='#ff6b6b', size=13))
+
+# Advantage labels
+advantages = [
+    (5, 0.3, "해상도 손실 없음 | 시야각 100° | 2D↔3D↔듀얼뷰 자유 전환")
+]
+for x, y, t in advantages:
+    fig4.add_annotation(x=x, y=y, text=t, showarrow=False,
+                       font=dict(color='#ffcc44', size=10))
+
+fig4.update_layout(
+    template='plotly_dark', height=400,
+    paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+    xaxis=dict(visible=False, range=[0, 10]),
+    yaxis=dict(visible=False, range=[-0.3, 7]),
+    title=dict(text="Automotive Dual-View: 운전자 내비 + 조수석 영화", font=dict(size=14)),
+    margin=dict(t=60, b=30)
+)
+fig4.show()
+```
+
+**현재 문제**: 패럴랙스 배리어 방식은 해상도 1/2 손실, 시야각 좁음, 고정 2방향
+
+**메타렌즈 해결**: 픽셀 단위 빛 방향 제어 → 해상도 유지 + 시야각 100° + N방향 프로그래머블
+
+추가 가능성:
+
+- 3인 이상 분리 (뒷좌석 포함)
+- 야간 운전 시 백라이트 방향 제어로 대향차 눈부심 방지
+- HUD와 결합 시 운전자 시선 추적 → 동적 초점 조절
+
+### 응용 B: Mobile Flex Magic Pixel
+
+**문제**: 폴더블 디스플레이가 접히면 시야각이 왜곡되고, Color Shift 발생
+
+**아이디어**: 각 픽셀의 메타렌즈가 패널 곡률을 실시간 감지 → 빛 방향을 보정
+
+- 접힌 상태 / 펼친 상태에서 2D↔3D 자동 전환
+- 접힌 각도에 따라 밝기/색 보정
+- 프라이버시 모드: 정면 외 시야 차단 (전압으로 ON/OFF)
+
+### 응용 C: Privacy Display
+
+**현재**: 3M Privacy Filter = 물리 필름, 밝기 50%+ 손실, 탈부착 불편
+
+**메타렌즈**: 전압 ON/OFF로 시야각 100° ↔ 20° 전환
+
+- 밝기 손실 최소화
+- 소프트웨어로 ON/OFF → 물리 필름 불필요
+- **부분 프라이버시**: 화면 상단은 공개, 하단만 비공개 — 기존 기술로 불가능
+
+---
+
+## 3. 기술적 과제와 실현 가능성
+
+```{python}
+challenges = ['나노구조<br>제작', 'LC 픽셀<br>독립 구동', '열 관리', '색수차<br>보정', 'OLED<br>공정 통합', '구동 IC']
+difficulty = [60, 30, 40, 85, 55, 35]
+colors_ch = ['#ffcc44', '#44dd88', '#44dd88', '#ff6b6b', '#ffcc44', '#44dd88']
+
+fig5 = go.Figure(go.Bar(
+    x=challenges, y=difficulty,
+    marker=dict(color=colors_ch, line=dict(width=0)),
+    text=[f'{d}%' for d in difficulty],
+    textposition='outside', textfont=dict(color='#ddd')
+))
+
+fig5.add_shape(type="line", x0=-0.5, x1=5.5, y0=50, y1=50,
+               line=dict(color='#ff6b6b', dash='dash', width=1))
+fig5.add_annotation(x=5.2, y=53, text="High Risk", showarrow=False,
+                   font=dict(color='#ff6b6b', size=10))
+
+fig5.update_layout(
+    template='plotly_dark', height=350,
+    paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+    yaxis=dict(title='난이도 (%)', gridcolor='#222', range=[0, 100]),
+    xaxis=dict(gridcolor='#222'),
+    title=dict(text="기술적 과제별 난이도", font=dict(size=14)),
+    margin=dict(t=60, b=20)
+)
+fig5.show()
+```
+
+::: {.callout-important}
+## 최대 허들: 색수차 (Chromatic Aberration)
+
+메타렌즈는 파장별 위상 지연이 다르다. RGB 서브픽셀별로 최적화된 메타구조가 필요하다. 삼성이 Nature Communications에 발표한 **Achromatic Metalens** 기술이 해결의 열쇠.
+:::
+
+| 과제 | 난이도 | 해결 방향 |
+|------|--------|---------|
+| 픽셀 크기 메타렌즈 제작 | 중 | 노준석 대량 생산 논문으로 길 열림 |
+| LC 층 픽셀별 독립 구동 | 낮음 | 기존 LCD TFT 기술 활용 가능 |
+| 색수차 보정 | **높음** | Achromatic Metalens 기술 적용 |
+| OLED 공정 통합 | 중 | Encap 후 메타렌즈 적층 |
+| 구동 IC 개발 | 낮음 | 기존 DDIC에 편광 제어 채널 추가 |
+
+---
+
+## 4. 결론
+
+노준석 팀의 메타렌즈는 **"패널에 붙이는 스티커"** 수준에서 시작하지만, 이를 픽셀 단위로 확장하면 디스플레이의 패러다임이 바뀐다.
+
+::: {.callout-tip}
+## 한 줄 요약
+
+**메타렌즈를 패널 전체가 아니라 픽셀 위에 올리면, 디스플레이가 "프로그래머블 광학계"가 된다. Dual-View, 3D, Privacy가 소프트웨어 한 줄로 전환된다.**
+:::
+
+---
+
+## 참고 문헌
+
+1. 노준석 외, "Switchable 2D-3D Display Through a Metasurface Lenticular Lens", *Nature* (2026.04.30)
+2. 노준석, 조규진, 김인기, "메타렌즈 대량 생산 공정", *Nature* (같은 호)
+3. Samsung & POSTECH, "Compact eye camera with two-third wavelength phase-delay metalens", *Nature Communications* ([Link](https://www.nature.com/articles/s41467-025-62577-1))
+4. Chen et al., "GaN Metalens for Pixel-Level Full-Color Routing", *Nano Letters* 17, 6345 (2017) ([Link](https://pubs.acs.org/doi/10.1021/acs.nanolett.7b03135))
+5. "Dual-View Groups Super-multiview Display with Metagrating Matrix", *ACS Photonics* (2024) ([Link](https://pubs.acs.org/doi/10.1021/acsphotonics.4c02393))
+
+---
+
+*2026-04-23 · Nakcho Choi × Claude Opus 4.6*
