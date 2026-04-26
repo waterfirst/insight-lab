@@ -1,0 +1,450 @@
+---
+title: "TACO-GIBBS MODEL"
+subtitle: "깁스 자유에너지로 보는 트럼프 정치경제학"
+author: "Nakcho Choi | Physics × Economics × Political Dynamics"
+date: "2026-04-26"
+format:
+  html:
+    theme: darkly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    code-tools: true
+    self-contained: true
+    smooth-scroll: true
+    fig-width: 10
+    fig-height: 6
+execute:
+  echo: false
+  warning: false
+---
+
+```{python}
+#| label: setup
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import numpy as np
+
+FONT = "Noto Sans CJK KR, sans-serif"
+BG = "#0a0a14"
+CARD = "#14142a"
+RED = "#ef4444"
+AMBER = "#f59e0b"
+BLUE = "#6366f1"
+GREEN = "#22c55e"
+CYAN = "#06b6d4"
+GRAY = "#888898"
+WHITE = "#e4e4ec"
+```
+
+## 핵심 공식: 경제 시스템의 깁스 자유에너지 {.unnumbered}
+
+$$\Delta G_{시장} = \Delta H_{정책} - T_{감정} \cdot \Delta S_{무질서}$$
+
+::: {.callout-important}
+## TACO-Gibbs 핵심 통찰
+엔트로피(무질서)는 각 TACO 사이클 후 **절대 완전히 복원되지 않는다** (열역학 제2법칙).
+이를 되돌리는 유일한 방법은 외부 에너지 주입 = **민주주의, 법치, 시민 행동**.
+**사필귀정의 열역학적 증명.**
+:::
+
+## 열역학 변수의 사회경제적 매핑
+
+| 열역학 변수 | 사회경제적 의미 | 현재 상태 (2026.04) |
+|:---:|:---|:---:|
+| **ΔH (엔탈피)** | 정책 충격 에너지: 관세, 전쟁, 제재, 행정명령 | **↑↑ 80%** |
+| **T (온도)** | 사회적 열기: 미디어 강도, 공포/탐욕, 선거 근접도 | **↑↑↑ 85%** |
+| **ΔS (엔트로피)** | 시스템 무질서: VIX, 제도 신뢰 침식, 법치 붕괴 | **↑↑ 75%** |
+| **ΔG (자유에너지)** | 시장 자발성: ΔG<0 → 변화 자발적, ΔG>0 → 불안정 | **안정성 25%** |
+
+: TACO-Gibbs 변수 매핑 {.striped .hover}
+
+### ΔH (엔탈피) = 정책 충격 에너지
+
+- **흡열 반응 (+ΔH):** 관세, 전쟁, 제재 → 사회가 에너지를 *흡수*해야 함 → 비용 발생
+- **발열 반응 (-ΔH):** 딜, 부양책, 외교 타결 → 에너지 *방출* → 시장 안정
+- **트럼프의 특성:** 의도적으로 흡열 반응을 만든다. 보통 리더는 발열(안정)을 추구하지만, 트럼프는 흡열(불안정)을 주입해서 시스템을 평형에서 밀어낸다
+
+### T (온도) = 사회적 열기
+
+- 미디어 사이클 강도, 대중 감정(공포/탐욕), 지정학 긴장도, 선거 근접도
+- **핵심:** T가 높으면 -TΔS 항이 지배 → **무질서가 시장 방향을 결정**
+- 트럼프는 T를 극대화한다 — 높은 T에서는 작은 엔트로피 변화도 거대한 ΔG 변화를 생성
+
+### ΔS (엔트로피) = 시스템 무질서도
+
+- 시장 변동성(VIX), 제도적 신뢰 침식, 법치 붕괴, 정보 비대칭
+- **엔트로피 래칫 효과:** 각 TACO 사이클 후 엔트로피가 완전히 복원되지 않음
+- 제도적 신뢰는 한번 깨지면 영구적으로 훼손 — **열역학 제2법칙의 정치학적 적용**
+
+## 진동 분석: 왜 트럼프는 감쇠하지 않는가
+
+```{python}
+#| label: fig-oscillation
+#| fig-cap: "외부 충격에 대한 진동 반응 비교 — 일반 정치인(과감쇠) vs 트럼프(부감쇠+공명)"
+
+t = np.linspace(0, 12, 500)
+normal = 1.5 * np.exp(-0.4*t) * np.sin(2*t)
+trump = np.piecewise(t,
+    [t<2, (t>=2)&(t<5), (t>=5)&(t<8), t>=8],
+    [lambda x: 1.2*np.sin(2.5*x),
+     lambda x: 1.5*np.sin(2.5*x)*(1+0.12*x),
+     lambda x: 1.8*np.sin(2.5*x+0.5)*(1+0.08*x),
+     lambda x: 2.0*np.sin(2.5*x+1)*(1+0.05*x)])
+
+fig1 = go.Figure()
+fig1.add_trace(go.Scatter(x=t, y=normal, mode='lines', name='일반 정치인 (과감쇠)',
+                           line=dict(color=BLUE, width=2, dash='dot')))
+fig1.add_trace(go.Scatter(x=t, y=trump, mode='lines', name='트럼프 (부감쇠+공명)',
+                           line=dict(color=AMBER, width=3)))
+
+for sx, sl in [(2,'2024 유세장 피습'), (5.5,'2025 탄핵 시도'), (9,'2026 만찬장 총격')]:
+    fig1.add_vline(x=sx, line=dict(color=RED, width=1.5, dash='dash'))
+    fig1.add_annotation(x=sx, y=2.7, text=f"<b>{sl}</b>", showarrow=False,
+                        font=dict(size=10, color=RED, family=FONT),
+                        bgcolor="rgba(40,20,20,0.85)", bordercolor=RED, borderwidth=1)
+
+fig1.add_annotation(x=11, y=-2.0, text="<b>감쇠 없음!<br>진폭 계속 증가</b>",
+                    showarrow=False, font=dict(size=12, color=RED, family=FONT))
+
+fig1.update_layout(
+    height=400, paper_bgcolor=BG, plot_bgcolor=CARD,
+    font=dict(family=FONT, color=WHITE),
+    xaxis=dict(title="시간 →", gridcolor='#222'),
+    yaxis=dict(title="정치적 강도 (진폭)", gridcolor='#222'),
+    legend=dict(bgcolor='rgba(20,20,40,0.8)', bordercolor='#333'),
+    margin=dict(t=30, b=50),
+)
+fig1.show()
+```
+
+::: {.callout-note}
+## 물리학 해석
+- **일반 정치인** = 과감쇠 진동자 (overdamped): 위기 후 빠르게 안정
+- **트럼프** = 부감쇠 진동자 + 외부 에너지 주입 (underdamped + forced): 충격을 받을수록 진폭이 커짐
+- 미디어 피드백 루프가 **양의 피드백** 역할 → 감쇠 대신 공명 증폭
+:::
+
+## 경제 상(Phase) 다이어그램
+
+```{python}
+#| label: fig-phase-diagram
+#| fig-cap: "T-S 평면의 경제 상 다이어그램 — 안정(고체)/변동(액체)/위기(기체) 영역"
+
+T_r = np.linspace(0.5, 5.5, 100)
+S_b1 = 0.8 + 0.3*T_r
+S_b2 = 1.5 + 0.5*T_r
+
+fig2 = go.Figure()
+
+fig2.add_trace(go.Scatter(x=list(T_r)+list(T_r[::-1]),
+    y=list(np.zeros_like(T_r))+list(S_b1[::-1]),
+    fill='toself', fillcolor='rgba(34,197,94,0.12)', line=dict(width=0), name='안정 (고체)'))
+fig2.add_trace(go.Scatter(x=list(T_r)+list(T_r[::-1]),
+    y=list(S_b1)+list(S_b2[::-1]),
+    fill='toself', fillcolor='rgba(245,158,11,0.12)', line=dict(width=0), name='변동 (액체)'))
+fig2.add_trace(go.Scatter(x=list(T_r)+list(T_r[::-1]),
+    y=list(S_b2)+[6]*len(T_r),
+    fill='toself', fillcolor='rgba(239,68,68,0.12)', line=dict(width=0), name='위기 (기체)'))
+
+fig2.add_trace(go.Scatter(x=T_r, y=S_b1, mode='lines',
+    line=dict(color=GREEN, width=2, dash='dash'), showlegend=False))
+fig2.add_trace(go.Scatter(x=T_r, y=S_b2, mode='lines',
+    line=dict(color=RED, width=2, dash='dash'), showlegend=False))
+
+events = [(1.5,1.0,'2019 코로나 이전',GREEN,12),
+          (3.0,2.5,'2020 코로나',AMBER,14),
+          (2.0,1.8,'2023 회복기',GREEN,12),
+          (3.5,2.0,'2025 관세전쟁',AMBER,13),
+          (4.2,3.5,'<b>2026 NOW</b><br>이란+총격',RED,18)]
+
+for ex,ey,el,ec,es in events:
+    fig2.add_trace(go.Scatter(x=[ex], y=[ey], mode='markers+text', text=[el],
+        textposition='top right', textfont=dict(size=10, color=ec, family=FONT),
+        marker=dict(size=es, color=ec, line=dict(width=2, color='white')), showlegend=False))
+
+fig2.add_annotation(x=4.2, y=3.5, ax=3.5, ay=2.0, arrowhead=3, arrowsize=1.5,
+    arrowwidth=2.5, arrowcolor=RED, showarrow=True)
+
+fig2.add_annotation(x=1.5, y=0.5, text="<b>STABLE</b>", showarrow=False,
+    font=dict(size=14, color=GREEN, family=FONT), opacity=0.4)
+fig2.add_annotation(x=3.0, y=2.0, text="<b>VOLATILE</b>", showarrow=False,
+    font=dict(size=14, color=AMBER, family=FONT), opacity=0.4)
+fig2.add_annotation(x=4.5, y=4.5, text="<b>CRISIS</b>", showarrow=False,
+    font=dict(size=14, color=RED, family=FONT), opacity=0.4)
+
+fig2.update_layout(
+    height=450, paper_bgcolor=BG, plot_bgcolor=CARD,
+    font=dict(family=FONT, color=WHITE),
+    xaxis=dict(title="T (사회적 온도 / 감정 열기)", gridcolor='#222', range=[0,5.5]),
+    yaxis=dict(title="S (시스템 엔트로피 / 무질서도)", gridcolor='#222', range=[0,5.5]),
+    legend=dict(bgcolor='rgba(20,20,40,0.8)', bordercolor='#333'),
+    margin=dict(t=30, b=50),
+)
+fig2.show()
+```
+
+::: {.callout-warning}
+## 현재 위치: 위기 영역 진입
+2026년 현재, 이란 전쟁 + 만찬장 총격이 겹치면서 경제 시스템이 **변동(액체) → 위기(기체) 상전이 경계**에 진입했다. 사회적 온도(T)와 엔트로피(S)가 동시에 급등 중.
+:::
+
+## ΔG 시간 변화: 시장은 어디로 가는가
+
+```{python}
+#| label: fig-delta-g
+#| fig-cap: "정책 충격(ΔH), 혼돈 에너지(-TΔS), 시장 자발성(ΔG)의 시간 변화"
+
+t2 = np.linspace(0, 10, 200)
+H = np.zeros_like(t2)
+H[t2>1] += 1.0; H[t2>3] -= 0.5; H[t2>5] += 2.0; H[t2>7] += 0.8; H[t2>8] -= 0.3
+T_l = 1.0 + 0.3*t2 + 0.5*np.sin(1.5*t2)
+S2 = 0.5 + 0.15*t2 + 0.3*np.cumsum(np.abs(np.diff(H, prepend=0)))
+G = H - T_l * S2 * 0.3
+
+fig3 = go.Figure()
+fig3.add_trace(go.Scatter(x=t2, y=H, mode='lines', name='ΔH (정책 충격)',
+    line=dict(color=RED, width=2.5)))
+fig3.add_trace(go.Scatter(x=t2, y=-T_l*S2*0.3, mode='lines', name='-TΔS (혼돈 에너지)',
+    line=dict(color=AMBER, width=2.5)))
+fig3.add_trace(go.Scatter(x=t2, y=G, mode='lines', name='ΔG (시장 방향)',
+    line=dict(color=GREEN, width=3), fill='tozeroy', fillcolor='rgba(34,197,94,0.08)'))
+fig3.add_hline(y=0, line=dict(color=GRAY, width=1, dash='dot'))
+
+for lt, ll in [(1,'관세'), (3,'딜'), (5,'이란 전쟁'), (7,'만찬 총격')]:
+    fig3.add_vline(x=lt, line=dict(color='#444', width=1, dash='dot'))
+    fig3.add_annotation(x=lt, y=3.2, text=f"<b>{ll}</b>", showarrow=False,
+        font=dict(size=10, color=GRAY, family=FONT))
+
+fig3.add_annotation(x=9, y=-2.5, text="<b>ΔG < 0</b><br>자발적 변화 영역",
+    showarrow=False, font=dict(size=11, color=GREEN, family=FONT),
+    bgcolor="rgba(20,40,20,0.85)", bordercolor=GREEN, borderwidth=1)
+
+fig3.update_layout(
+    height=400, paper_bgcolor=BG, plot_bgcolor=CARD,
+    font=dict(family=FONT, color=WHITE),
+    xaxis=dict(title="시간 →", gridcolor='#222'),
+    yaxis=dict(title="에너지", gridcolor='#222'),
+    legend=dict(bgcolor='rgba(20,20,40,0.8)', bordercolor='#333'),
+    margin=dict(t=30, b=50),
+)
+fig3.show()
+```
+
+### ΔG 해석
+
+- **ΔG > 0:** 시스템이 불안정 → 변화에 에너지 투입이 필요 → 시장 하방 압력
+- **ΔG < 0:** 변화가 자발적으로 진행 → 시장이 방향을 찾음 → 매수 기회
+- **ΔG ≈ 0:** 상전이 임계점 → 어느 방향으로든 급변 가능 → 최대 경계 구간
+
+현재 이란 전쟁 + 총격으로 **-TΔS 항이 ΔH를 추월** → 혼돈이 정책 충격보다 큰 에너지를 생성 중.
+
+## 엔트로피 래칫: 비가역적 무질서 축적
+
+```{python}
+#| label: fig-entropy-ratchet
+#| fig-cap: "매 TACO 사이클마다 엔트로피 바닥선이 상승하는 '래칫 효과'"
+
+cycles = np.linspace(0, 10, 300)
+entropy_base = np.zeros_like(cycles)
+for i, c in enumerate(cycles):
+    cn = int(c / 2.5)
+    phase = (c % 2.5) / 2.5
+    if phase < 0.3:
+        entropy_base[i] = 0.5*cn + 0.8*phase/0.3
+    elif phase < 0.5:
+        entropy_base[i] = 0.5*cn + 0.8
+    elif phase < 0.8:
+        entropy_base[i] = 0.5*cn + 0.8 - 0.3*(phase-0.5)/0.3
+    else:
+        entropy_base[i] = 0.5*cn + 0.5
+
+fig4 = go.Figure()
+fig4.add_trace(go.Scatter(x=cycles, y=entropy_base, mode='lines', name='누적 엔트로피',
+    line=dict(color=BLUE, width=3), fill='tozeroy', fillcolor='rgba(99,102,241,0.1)'))
+
+for c in range(4):
+    fig4.add_vline(x=c*2.5, line=dict(color='#333', width=1, dash='dot'))
+    fig4.add_annotation(x=c*2.5+1.25, y=-0.2, text=f"<b>TACO #{c+1}</b>",
+        showarrow=False, font=dict(size=10, color=GRAY, family=FONT))
+    fig4.add_shape(type='line', x0=c*2.5, x1=(c+1)*2.5, y0=0.5*c, y1=0.5*c,
+        line=dict(color=RED, width=2, dash='dash'))
+    fig4.add_annotation(x=(c+1)*2.5-0.3, y=0.5*c+0.1,
+        text=f"바닥선 S₀={0.5*c:.1f}", showarrow=False,
+        font=dict(size=8, color=RED, family=FONT))
+
+fig4.add_annotation(x=8.5, y=1.8,
+    text="<b>비가역적!<br>엔트로피는 절대<br>리셋되지 않는다</b>",
+    showarrow=True, arrowhead=2, arrowcolor=RED, ax=40, ay=-40,
+    font=dict(size=12, color=RED, family=FONT),
+    bgcolor="rgba(40,20,20,0.9)", bordercolor=RED, borderwidth=1)
+
+fig4.update_layout(
+    height=400, paper_bgcolor=BG, plot_bgcolor=CARD,
+    font=dict(family=FONT, color=WHITE),
+    xaxis=dict(title="시간 (TACO 사이클 반복)", gridcolor='#222'),
+    yaxis=dict(title="누적 엔트로피 (S)", gridcolor='#222'),
+    legend=dict(bgcolor='rgba(20,20,40,0.8)', bordercolor='#333'),
+    margin=dict(t=30, b=50),
+)
+fig4.show()
+```
+
+::: {.callout-caution}
+## 엔트로피 래칫의 의미
+각 사이클의 Phase 3-4에서 엔트로피가 일부 감소하지만, **이전 사이클 시작점보다 항상 높은 수준에서 안정화된다.**
+
+- 사이클 1 바닥: S₀ = 0.0
+- 사이클 2 바닥: S₀ = 0.5 (제도 신뢰 일부 훼손)
+- 사이클 3 바닥: S₀ = 1.0 (규범 붕괴 누적)
+- 사이클 4 바닥: S₀ = 1.5 (시스템 구조적 약화)
+
+**이것이 열역학 제2법칙의 사회적 버전이다.**
+:::
+
+## TACO 4단계 × 깁스 자유에너지 매핑
+
+```{python}
+#| label: fig-taco-phases
+#| fig-cap: "TACO 4단계별 깁스 변수 상태와 투자 전략"
+
+fig5 = go.Figure()
+
+fig5.add_trace(go.Table(
+    header=dict(
+        values=['<b>TACO 단계</b>', '<b>ΔH 엔탈피<br>(정책 충격)</b>', '<b>T 온도<br>(사회 열기)</b>',
+                '<b>ΔS 엔트로피<br>(무질서)</b>', '<b>ΔG 자유에너지<br>(시장 방향)</b>', '<b>투자 전략</b>'],
+        fill_color='#1e1e3a',
+        font=dict(size=13, color=WHITE, family=FONT),
+        align='center', height=50,
+        line=dict(color='#444', width=1),
+    ),
+    cells=dict(
+        values=[
+            ['<b>Phase 1</b><br>충격 (SHOCK)<br>◀ 현재 위치',
+             '<b>Phase 2</b><br>분노 (RAGE)<br>4/27~30 예상',
+             '<b>Phase 3</b><br>무기화 (WEAPONIZE)<br>5월 초 예상',
+             '<b>Phase 4</b><br>리셋 (RESET)<br>5월 중순~'],
+            ['<b>↑↑ 흡열</b><br>정책 충격 주입<br>시스템 에너지 흡수',
+             '<b>↑ 추가 충격</b><br>에스컬레이션<br>적 지목+공격',
+             '<b>↓ 발열</b><br>딜/안정화<br>에너지 방출',
+             '<b>≈0 중립</b><br>소강 상태<br>충격 소멸'],
+            ['<b>↑↑ 급등</b><br>공포 스파이크<br>미디어 폭발',
+             '<b>↑↑↑ 최대</b><br>미디어 광풍<br>감정 극대화',
+             '<b>피크 후 하강</b><br>내러티브 형성<br>새 프레임',
+             '<b>↓ 냉각</b><br>관심 이탈<br>일상 복귀'],
+            ['<b>↑ 상승</b><br>VIX 스파이크<br>불확실성 확대',
+             '<b>↑↑ 피크</b><br>제도 신뢰 붕괴<br>규범 파괴',
+             '<b>횡보</b><br>새 질서 형성<br>적응 시작',
+             '<b>높은 채 고착!</b><br>완전 복원 불가<br>래칫 효과'],
+            ['<b>ΔG > 0</b><br>불안정<br>변화에 저항',
+             '<b>TΔS > ΔH</b><br>상전이 임계점<br>체제 전환 가능',
+             '<b>ΔG → 0</b><br>새 평형 접근<br>바닥 형성',
+             '<b>ΔG < 0</b><br>새 안정<br>(더 높은 S 기저)'],
+            ['<b>현금 확보</b><br>풋옵션 매수<br>VIX 모니터링',
+             '<b>방산주 주목</b><br>AXON, PLTR<br>총기주 관찰',
+             '<b>분할 매수 시작</b><br>시장 바닥 탐색<br>지지율 확인',
+             '<b>이익 실현</b><br>다음 사이클 대비<br>이란/관세 주시'],
+        ],
+        fill_color=[
+            ['rgba(239,68,68,0.2)','rgba(245,158,11,0.15)','rgba(34,197,94,0.15)','rgba(99,102,241,0.15)'],
+        ] * 6,
+        font=dict(size=11, color='#ddd', family=FONT),
+        align='center', height=80,
+        line=dict(color='#333', width=1),
+    ),
+))
+
+fig5.update_layout(
+    height=420, paper_bgcolor=BG,
+    font=dict(family=FONT, color=WHITE),
+    margin=dict(t=10, b=10, l=10, r=10),
+)
+fig5.show()
+```
+
+## 현재 상태 진단 (2026.04.26)
+
+```{python}
+#| label: fig-gauges
+#| fig-cap: "현재 시점의 TACO-Gibbs 상태 변수 측정"
+
+fig6 = make_subplots(rows=1, cols=4, specs=[[{"type":"indicator"}]*4],
+    subplot_titles=["ΔH 정책 충격", "T 사회적 열기", "ΔS 무질서도", "ΔG 안정성"])
+
+gauges = [
+    (80, RED, "ΔH", [0,100]),
+    (85, AMBER, "T", [0,100]),
+    (75, BLUE, "ΔS", [0,100]),
+    (25, GREEN, "ΔG", [0,100]),
+]
+
+for i, (val, col, name, rng) in enumerate(gauges):
+    fig6.add_trace(go.Indicator(
+        mode="gauge+number",
+        value=val,
+        number=dict(suffix="%", font=dict(size=28, color=col)),
+        gauge=dict(
+            axis=dict(range=rng, tickcolor='#444'),
+            bar=dict(color=col),
+            bgcolor=CARD,
+            borderwidth=1, bordercolor='#333',
+            steps=[
+                dict(range=[0,30], color='rgba(34,197,94,0.15)'),
+                dict(range=[30,70], color='rgba(245,158,11,0.15)'),
+                dict(range=[70,100], color='rgba(239,68,68,0.15)'),
+            ],
+            threshold=dict(line=dict(color=RED, width=3), thickness=0.75, value=80),
+        ),
+    ), row=1, col=i+1)
+
+fig6.update_layout(
+    height=280, paper_bgcolor=BG, plot_bgcolor=CARD,
+    font=dict(family=FONT, color=WHITE, size=12),
+    margin=dict(t=50, b=20),
+)
+fig6.update_annotations(font=dict(size=12, color=WHITE, family=FONT))
+fig6.show()
+```
+
+### 진단 요약
+
+- **ΔH = 80%:** 이란 전쟁 + 만찬장 총격으로 정책 충격 에너지 매우 높음
+- **T = 85%:** 사회적 열기 거의 최대 — 미디어/SNS 광풍 진행 중
+- **ΔS = 75%:** 무질서도 높음 — 제도 신뢰 침식, VIX 상승
+- **ΔG = 25%:** 시스템 안정성 매우 낮음 — 상전이(위기) 임계 근처
+
+## 사건 배경: 백악관 기자단 만찬장 총격
+
+- **일시:** 2026.04.25(토) 오후 8:40 EDT, 워싱턴 힐튼 호텔
+- **용의자:** 캘리포니아 토렌스 출신 31세 남성, 산탄총+권총 소지
+- **피해:** 비밀경호국 요원 1명 방탄조끼 피탄(경상). 사망자 없음
+- **대피:** 트럼프, 멜라니아, 밴스 부통령, 루비오 국무장관 등 긴급 대피
+- **트럼프 반응:** "꽤 파란만장한 밤" — 2024 피습 때와 동일한 "강한 남자" 내러티브 즉시 가동
+
+## 투자 시사점
+
+### Phase별 포지셔닝
+
+- **Phase 1 (현재):** 현금 비중 확대, 풋옵션 매수, VIX 추이 주시
+- **Phase 2 (4/27~30):** 방산/보안주 (AXON, PLTR), 총기주 (SWBI, RGR) 관심
+- **Phase 3 (5월 초):** 분할 매수 시작, 시장 바닥 탐색, 트럼프 지지율 확인
+- **Phase 4 (5월 중순~):** 이익 실현, 다음 TACO 사이클(이란/관세) 대비
+
+### 모니터링 포인트
+
+1. 트럼프가 총격사건을 **이란/중국과 연결하는 발언** → Phase 2 폭발 신호
+2. **"미친 놈" 프레이밍**으로 끝나면 → 빠르게 Phase 4로 감쇠
+3. 월요일(4/28) 시장 개장 시 **선물/VIX** 반응 → 시장 학습 효과 확인
+
+## 결론: 사필귀정의 열역학
+
+> **엔트로피를 줄이는 유일한 방법은 시민이 자유에너지를 직접 투입하는 것.**
+
+한국이 촛불로 보여준 것이 바로 이것이다. 매번 후퇴하는 것 같아도 결국 바로잡는다.
+4.19, 5.18, 6.10, 2016 촛불, 2024 계엄 무력화 — 열역학 제2법칙에 맞서는 **민주주의의 외부 에너지.**
+
+$$\Delta G_{민주주의} = \Delta H_{시민행동} - T_{사회열기} \cdot \Delta S_{무질서} < 0$$
+
+**민주주의가 자발적으로 작동할 때, ΔG < 0이다. 사필귀정.**
