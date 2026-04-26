@@ -52,7 +52,9 @@ LAYOUT_DEFAULTS = dict(
 
 ## 핵심 공식: 경제 시스템의 깁스 자유에너지 {.unnumbered}
 
-$$\Delta G_{\text{market}} = \Delta H_{\text{policy}} - T_{\text{sentiment}} \cdot \Delta S_{\text{disorder}}$$
+::: {.text-center style="font-size: 1.5em; font-weight: bold; padding: 15px 0; letter-spacing: 1px;"}
+ΔG~market~ = ΔH~policy~ − T~sentiment~ · ΔS~disorder~
+:::
 
 ::: {.callout-important}
 ## TACO-Gibbs 핵심 통찰
@@ -314,64 +316,49 @@ fig4.show()
 
 ## TACO 4단계 × 깁스 자유에너지 매핑
 
-```{python}
-#| label: fig-taco-phases
-#| fig-cap: "TACO 4단계별 깁스 변수 상태와 투자 전략"
+### Phase 1: 충격 (SHOCK) — ◀ 현재 위치 {.panel-tabset}
 
-fig5 = go.Figure()
+#### 열역학
+- **ΔH:** ↑↑ 흡열 — 정책 충격 주입, 시스템 에너지 흡수
+- **T:** ↑↑ 급등 — 공포 스파이크, 미디어 폭발
+- **ΔS:** ↑ 상승 — VIX 스파이크, 불확실성 확대
+- **ΔG:** ΔG > 0 — 불안정, 변화에 저항
 
-fig5.add_trace(go.Table(
-    header=dict(
-        values=['<b>TACO 단계</b>', '<b>ΔH 엔탈피<br>(정책 충격)</b>', '<b>T 온도<br>(사회 열기)</b>',
-                '<b>ΔS 엔트로피<br>(무질서)</b>', '<b>ΔG 자유에너지<br>(시장 방향)</b>', '<b>투자 전략</b>'],
-        fill_color='rgba(79,70,229,0.15)',
-        font=dict(size=13, color='#1a1a2e', family=FONT),
-        align='center', height=50,
-        line=dict(color='rgba(128,128,128,0.3)', width=1),
-    ),
-    cells=dict(
-        values=[
-            ['<b>Phase 1</b><br>충격 (SHOCK)<br>◀ 현재 위치',
-             '<b>Phase 2</b><br>분노 (RAGE)<br>4/27~30 예상',
-             '<b>Phase 3</b><br>무기화 (WEAPONIZE)<br>5월 초 예상',
-             '<b>Phase 4</b><br>리셋 (RESET)<br>5월 중순~'],
-            ['<b>↑↑ 흡열</b><br>정책 충격 주입<br>시스템 에너지 흡수',
-             '<b>↑ 추가 충격</b><br>에스컬레이션<br>적 지목+공격',
-             '<b>↓ 발열</b><br>딜/안정화<br>에너지 방출',
-             '<b>≈0 중립</b><br>소강 상태<br>충격 소멸'],
-            ['<b>↑↑ 급등</b><br>공포 스파이크<br>미디어 폭발',
-             '<b>↑↑↑ 최대</b><br>미디어 광풍<br>감정 극대화',
-             '<b>피크 후 하강</b><br>내러티브 형성<br>새 프레임',
-             '<b>↓ 냉각</b><br>관심 이탈<br>일상 복귀'],
-            ['<b>↑ 상승</b><br>VIX 스파이크<br>불확실성 확대',
-             '<b>↑↑ 피크</b><br>제도 신뢰 붕괴<br>규범 파괴',
-             '<b>횡보</b><br>새 질서 형성<br>적응 시작',
-             '<b>높은 채 고착!</b><br>완전 복원 불가<br>래칫 효과'],
-            ['<b>ΔG > 0</b><br>불안정<br>변화에 저항',
-             '<b>TΔS > ΔH</b><br>상전이 임계점<br>체제 전환 가능',
-             '<b>ΔG → 0</b><br>새 평형 접근<br>바닥 형성',
-             '<b>ΔG < 0</b><br>새 안정<br>(더 높은 S 기저)'],
-            ['<b>현금 확보</b><br>풋옵션 매수<br>VIX 모니터링',
-             '<b>방산주 주목</b><br>AXON, PLTR<br>총기주 관찰',
-             '<b>분할 매수 시작</b><br>시장 바닥 탐색<br>지지율 확인',
-             '<b>이익 실현</b><br>다음 사이클 대비<br>이란/관세 주시'],
-        ],
-        fill_color=[
-            ['rgba(239,68,68,0.25)','rgba(245,158,11,0.2)','rgba(34,197,94,0.2)','rgba(99,102,241,0.2)'],
-        ] * 6,
-        font=dict(size=11, color='#1a1a2e', family=FONT),
-        align='center', height=80,
-        line=dict(color='rgba(128,128,128,0.3)', width=1),
-    ),
-))
+#### 투자전략
+- 현금 확보, 풋옵션 매수, VIX 모니터링
 
-fig5.update_layout(
-    height=420,
-    margin=dict(t=10, b=10, l=10, r=10),
-    paper_bgcolor=BG,
-)
-fig5.show()
-```
+### Phase 2: 분노 (RAGE) — 4/27~30 예상 {.panel-tabset}
+
+#### 열역학
+- **ΔH:** ↑ 추가 충격 — 에스컬레이션, 적 지목+공격
+- **T:** ↑↑↑ 최대 — 미디어 광풍, 감정 극대화
+- **ΔS:** ↑↑ 피크 — 제도 신뢰 붕괴, 규범 파괴
+- **ΔG:** TΔS > ΔH — 상전이 임계점, 체제 전환 가능
+
+#### 투자전략
+- 방산주 주목 (AXON, PLTR), 총기주 관찰
+
+### Phase 3: 무기화 (WEAPONIZE) — 5월 초 예상 {.panel-tabset}
+
+#### 열역학
+- **ΔH:** ↓ 발열 — 딜/안정화, 에너지 방출
+- **T:** 피크 후 하강 — 내러티브 형성, 새 프레임
+- **ΔS:** 횡보 — 새 질서 형성, 적응 시작
+- **ΔG:** ΔG → 0 — 새 평형 접근, 바닥 형성
+
+#### 투자전략
+- 분할 매수 시작, 시장 바닥 탐색, 지지율 확인
+
+### Phase 4: 리셋 (RESET) — 5월 중순~ {.panel-tabset}
+
+#### 열역학
+- **ΔH:** ≈0 중립 — 소강 상태, 충격 소멸
+- **T:** ↓ 냉각 — 관심 이탈, 일상 복귀
+- **ΔS:** **높은 채 고착!** — 완전 복원 불가, 래칫 효과
+- **ΔG:** ΔG < 0 — 새 안정 (더 높은 S 기저)
+
+#### 투자전략
+- 이익 실현, 다음 사이클 대비, 이란/관세 주시
 
 ## 현재 상태 진단 (2026.04.26)
 
@@ -453,6 +440,8 @@ fig6.show()
 한국이 촛불로 보여준 것이 바로 이것이다. 매번 후퇴하는 것 같아도 결국 바로잡는다.
 4.19, 5.18, 6.10, 2016 촛불, 2024 계엄 무력화 — 열역학 제2법칙에 맞서는 **민주주의의 외부 에너지.**
 
-$$\Delta G_{\text{democracy}} = \Delta H_{\text{civic action}} - T_{\text{social heat}} \cdot \Delta S_{\text{disorder}} < 0$$
+::: {.text-center style="font-size: 1.4em; font-weight: bold; padding: 15px 0;"}
+ΔG~democracy~ = ΔH~civic\ action~ − T~social\ heat~ · ΔS~disorder~ < 0
+:::
 
 **민주주의가 자발적으로 작동할 때, ΔG < 0이다. 사필귀정.**
