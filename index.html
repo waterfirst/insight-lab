@@ -12,9 +12,16 @@
 :root{--bg:#0f0f1a;--sf:#1a1a2e;--bd:#2a2a3a;--ac:#6366f1;--tx:#e4e4ec;--mt:#888;--gd:#f59e0b;--rd:#ef4444;--gn:#22c55e}
 [data-theme=light]{--bg:#f8f8fa;--sf:#fff;--bd:#e0e0e8;--ac:#4f46e5;--tx:#1a1a2e;--mt:#666}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:30px 16px;transition:background .3s,color .3s}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;display:flex;flex-direction:column;align-items:center;transition:background .3s,color .3s}
 .theme-btn{position:fixed;top:14px;right:14px;background:var(--sf);border:1px solid var(--bd);color:var(--tx);border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:18px;z-index:100;display:flex;align-items:center;justify-content:center}
-header{text-align:center;margin-bottom:32px;max-width:650px}
+.splash{width:100%;max-height:340px;overflow:hidden;position:relative;margin-bottom:0}
+.splash img{width:100%;height:340px;object-fit:cover;display:block;filter:brightness(.7)}
+.splash::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to top,var(--bg),transparent);pointer-events:none}
+.splash-text{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);text-align:center;z-index:2;width:90%}
+.splash-text h1{font-size:2.6em;font-weight:900;color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.7);margin-bottom:4px}
+.splash-text .stag{font-size:12px;color:rgba(255,255,255,.7);letter-spacing:3px;text-transform:uppercase}
+.content{padding:0 16px 30px;display:flex;flex-direction:column;align-items:center;width:100%}
+header{text-align:center;margin:24px 0 32px;max-width:650px}
 h1{font-size:2em;font-weight:900;margin-bottom:4px;background:linear-gradient(135deg,#6366f1,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .badge{display:inline-block;background:rgba(99,102,241,.15);color:var(--ac);font-size:11px;font-weight:700;padding:3px 12px;border-radius:12px;margin-bottom:8px}
 .desc{color:var(--mt);font-size:13px;line-height:1.6;margin-bottom:6px}
@@ -40,9 +47,18 @@ footer a{color:var(--ac);text-decoration:none}
 </head>
 <body>
 <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+
+<div class="splash">
+<img src="hero.png" alt="Insight Lab Hero">
+<div class="splash-text">
+<h1>INSIGHT LAB</h1>
+<div class="stag">Humanities × Science Crossover</div>
+</div>
+</div>
+
+<div class="content">
 <header>
 <div class="badge">Quarto HTML Interactive Reports</div>
-<h1>🔬 INSIGHT LAB</h1>
 <div class="desc">인문학과 과학을 충돌시켜 새로운 인사이트를 만드는 크로스오버 프로젝트.<br>물리학, 열역학, 진화론, 카오스 이론으로 정치·사회·문명을 읽는다.</div>
 <div class="author">Nakcho Choi | 응용물리 Ph.D | Samsung Display</div>
 </header>
@@ -111,6 +127,7 @@ footer a{color:var(--ac);text-decoration:none}
 <div>"이것의 반대도 깊은 진리인 명제야말로 위대한 진리다" — 닐스 보어</div>
 <div><a href="https://github.com/waterfirst/insight-lab">GitHub</a> · © 2026 Insight Lab</div>
 </footer>
+</div><!-- /content -->
 <script>
 function toggleTheme(){const b=document.body,t=b.getAttribute('data-theme');b.setAttribute('data-theme',t==='light'?'':'light');document.getElementById('themeBtn').textContent=t==='light'?'🌙':'☀️';localStorage.setItem('il-theme',t==='light'?'dark':'light')}
 const s=localStorage.getItem('il-theme');if(s==='light'){document.body.setAttribute('data-theme','light');document.getElementById('themeBtn').textContent='☀️'}
