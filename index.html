@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Insight Lab — 인문학 × 과학 크로스오버</title>
+<style>
+:root{--bg:#0f0f1a;--sf:#1a1a2e;--ac:#6366f1;--tx:#e4e4ec;--mt:#888;--gd:#f59e0b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 20px}
+h1{font-size:2em;margin-bottom:4px;background:linear-gradient(135deg,#6366f1,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{color:var(--mt);font-size:14px;margin-bottom:30px}
+.author{color:var(--ac);font-size:13px;margin-bottom:40px}
+.card{background:var(--sf);border:1px solid #2a2a3a;border-radius:14px;padding:20px 24px;margin-bottom:14px;max-width:600px;width:100%;transition:border-color .2s}
+.card:hover{border-color:var(--ac)}
+.card a{color:var(--tx);text-decoration:none;display:block}
+.card .tag{display:inline-block;font-size:11px;padding:2px 10px;border-radius:12px;font-weight:600;margin-bottom:8px}
+.tag-sp{background:rgba(245,158,11,.2);color:var(--gd)}
+.tag-wk{background:rgba(99,102,241,.15);color:var(--ac)}
+.card h3{font-size:16px;margin-bottom:6px}
+.card p{font-size:13px;color:var(--mt);line-height:1.6}
+.new{animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+footer{margin-top:40px;color:#444;font-size:11px}
+</style>
+</head>
+<body>
+<h1>INSIGHT LAB</h1>
+<div class="sub">인문학 × 과학 크로스오버 프로젝트</div>
+<div class="author">Nakcho Choi | Physics × Economics × Political Dynamics</div>
+
+<div class="card">
+<a href="report.html">
+<span class="tag tag-sp new">🔥 SP6 · 특별편 NEW</span>
+<h3>TACO-GIBBS MODEL</h3>
+<p>깁스 자유에너지로 보는 트럼프 정치경제학<br>
+ΔG = ΔH − TΔS | 백악관 만찬장 총격사건 분석<br>
+엔트로피 래칫 효과 · 사필귀정의 열역학적 증명</p>
+</a>
+</div>
+
+<div class="card">
+<a href="output/sp5_population_damping.html">
+<span class="tag tag-sp">SP5 · 특별편</span>
+<h3>인구감소의 댐핑 진동</h3>
+<p>물리학 × 인구학 크로스오버</p>
+</a>
+</div>
+
+<div class="card">
+<a href="output/sp4_llm_emotion.html">
+<span class="tag tag-sp">SP4 · 특별편</span>
+<h3>LLM 감정의 현상학</h3>
+<p>AI × 철학 크로스오버</p>
+</a>
+</div>
+
+<div class="card">
+<a href="output/taco_model/trump_taco_model.html">
+<span class="tag tag-wk">TACO</span>
+<h3>TACO 댐핑 시뮬레이터</h3>
+<p>트럼프 행동패턴의 물리학적 모델링 · 인터랙티브 시뮬레이터</p>
+</a>
+</div>
+
+<footer>© 2026 Insight Lab · waterfirst.github.io/insight-lab</footer>
+</body>
+</html>
