@@ -14,9 +14,6 @@ format:
     code-fold: true
     self-contained: true
     smooth-scroll: true
-execute:
-  eval: false
-  echo: true
 lang: ko
 ---
 
