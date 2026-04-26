@@ -4,65 +4,221 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Insight Lab — 인문학 × 과학 크로스오버</title>
+<meta name="description" content="물리학, 열역학, 진화론, 카오스 이론으로 정치·경제·사회를 읽는 크로스오버 프로젝트">
+<meta property="og:title" content="Insight Lab — 인문학 × 과학 크로스오버">
+<meta property="og:description" content="물리학으로 세상을 읽다. 양자역학×민주주의, 엔트로피×제국, 깁스자유에너지×트럼프 정치경제학">
+<meta property="og:url" content="https://waterfirst.github.io/insight-lab/">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f0f1a;--sf:#1a1a2e;--ac:#6366f1;--tx:#e4e4ec;--mt:#888;--gd:#f59e0b}
+:root{--bg:#0f0f1a;--sf:#1a1a2e;--ac:#6366f1;--tx:#e4e4ec;--mt:#888;--gd:#f59e0b;--rd:#ef4444;--gn:#22c55e;--cy:#06b6d4}
+[data-theme=light]{--bg:#f5f5f7;--sf:#fff;--ac:#4f46e5;--tx:#1a1a2e;--mt:#666;--gd:#d97706}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 20px}
-h1{font-size:2em;margin-bottom:4px;background:linear-gradient(135deg,#6366f1,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.sub{color:var(--mt);font-size:14px;margin-bottom:30px}
-.author{color:var(--ac);font-size:13px;margin-bottom:40px}
-.card{background:var(--sf);border:1px solid #2a2a3a;border-radius:14px;padding:20px 24px;margin-bottom:14px;max-width:600px;width:100%;transition:border-color .2s}
-.card:hover{border-color:var(--ac)}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:30px 16px;transition:background .3s,color .3s}
+header{text-align:center;margin-bottom:36px;max-width:700px}
+h1{font-size:2.2em;margin-bottom:6px;background:linear-gradient(135deg,#6366f1,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{color:var(--mt);font-size:14px;margin-bottom:6px}
+.author{color:var(--ac);font-size:12px;margin-bottom:10px}
+.eq{font-size:15px;color:var(--gd);font-weight:600;letter-spacing:0.5px}
+.theme-btn{position:fixed;top:14px;right:14px;background:var(--sf);border:1px solid rgba(128,128,128,.3);color:var(--tx);border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:18px;z-index:100;display:flex;align-items:center;justify-content:center}
+
+.section-title{font-size:13px;font-weight:700;color:var(--gd);text-transform:uppercase;letter-spacing:2px;margin:28px 0 12px;max-width:650px;width:100%;padding-left:4px}
+.section-title:first-of-type{margin-top:0}
+
+.card{background:var(--sf);border:1px solid rgba(128,128,128,.15);border-radius:14px;padding:18px 22px;margin-bottom:12px;max-width:650px;width:100%;transition:border-color .2s,transform .15s}
+.card:hover{border-color:var(--ac);transform:translateY(-1px)}
 .card a{color:var(--tx);text-decoration:none;display:block}
-.card .tag{display:inline-block;font-size:11px;padding:2px 10px;border-radius:12px;font-weight:600;margin-bottom:8px}
+.card-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.tag{font-size:10px;padding:3px 10px;border-radius:12px;font-weight:700;white-space:nowrap}
 .tag-sp{background:rgba(245,158,11,.2);color:var(--gd)}
 .tag-wk{background:rgba(99,102,241,.15);color:var(--ac)}
-.card h3{font-size:16px;margin-bottom:6px}
-.card p{font-size:13px;color:var(--mt);line-height:1.6}
-.new{animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
-footer{margin-top:40px;color:#444;font-size:11px}
+.tag-tool{background:rgba(6,182,212,.15);color:var(--cy)}
+.tag-new{background:rgba(239,68,68,.2);color:var(--rd);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.date{font-size:11px;color:var(--mt);margin-left:auto}
+.card h3{font-size:15px;margin-bottom:4px;line-height:1.4}
+.card p{font-size:12.5px;color:var(--mt);line-height:1.6}
+.cross{font-size:11px;color:var(--ac);font-weight:600;margin-top:4px}
+
+.stats{display:flex;gap:16px;justify-content:center;margin-bottom:30px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-size:24px;font-weight:800;color:var(--ac)}
+.stat-label{font-size:11px;color:var(--mt)}
+
+footer{margin-top:36px;color:var(--mt);font-size:11px;text-align:center;line-height:1.8}
+footer a{color:var(--ac);text-decoration:none}
+@media(max-width:480px){h1{font-size:1.6em}.card{padding:14px 16px}}
 </style>
 </head>
 <body>
+<button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+
+<header>
 <h1>INSIGHT LAB</h1>
 <div class="sub">인문학 × 과학 크로스오버 프로젝트</div>
-<div class="author">Nakcho Choi | Physics × Economics × Political Dynamics</div>
+<div class="author">Nakcho Choi | 응용물리 Ph.D | Samsung Display</div>
+<div class="eq">ΔG = ΔH − TΔS</div>
+</header>
+
+<div class="stats">
+<div class="stat"><div class="stat-num">5</div><div class="stat-label">Weekly</div></div>
+<div class="stat"><div class="stat-num">3</div><div class="stat-label">Special</div></div>
+<div class="stat"><div class="stat-num">3</div><div class="stat-label">Tools</div></div>
+</div>
+
+<!-- ===== 특별편 ===== -->
+<div class="section-title">특별편 Special Edition</div>
 
 <div class="card">
 <a href="report.html">
-<span class="tag tag-sp new">🔥 SP6 · 특별편 NEW</span>
-<h3>TACO-GIBBS MODEL</h3>
-<p>깁스 자유에너지로 보는 트럼프 정치경제학<br>
-ΔG = ΔH − TΔS | 백악관 만찬장 총격사건 분석<br>
-엔트로피 래칫 효과 · 사필귀정의 열역학적 증명</p>
+<div class="card-top">
+<span class="tag tag-new">NEW</span>
+<span class="tag tag-sp">SP6 · 특별편</span>
+<span class="date">2026.04.26</span>
+</div>
+<h3>TACO-GIBBS MODEL — 깁스 자유에너지로 보는 트럼프 정치경제학</h3>
+<p>백악관 기자단 만찬장 총격사건 분석 · ΔG = ΔH − TΔS<br>엔트로피 래칫 효과 · TACO 4단계 × 깁스 매핑 · 사필귀정의 열역학적 증명</p>
+<div class="cross">열역학 × 정치경제학 × 투자</div>
 </a>
 </div>
 
 <div class="card">
 <a href="output/sp5_population_damping.html">
+<div class="card-top">
 <span class="tag tag-sp">SP5 · 특별편</span>
-<h3>인구감소의 댐핑 진동</h3>
-<p>물리학 × 인구학 크로스오버</p>
+<span class="date">2026.04</span>
+</div>
+<h3>인구감소의 댐핑 진동 — 감쇠 진동자로 읽는 저출생</h3>
+<p>인구 동역학을 물리학 감쇠 진동 모델로 분석</p>
+<div class="cross">물리학 × 인구학</div>
 </a>
 </div>
 
 <div class="card">
 <a href="output/sp4_llm_emotion.html">
+<div class="card-top">
 <span class="tag tag-sp">SP4 · 특별편</span>
-<h3>LLM 감정의 현상학</h3>
-<p>AI × 철학 크로스오버</p>
+<span class="date">2026.04</span>
+</div>
+<h3>LLM 감정의 현상학 — AI는 감정을 느끼는가</h3>
+<p>해밀토니안 역학으로 본 AI 감정 벡터 · 인간 감정과의 구조적 비교</p>
+<div class="cross">AI × 철학 × 현상학</div>
+</a>
+</div>
+
+<!-- ===== 주간 보고서 ===== -->
+<div class="section-title">주간 보고서 Weekly Report</div>
+
+<div class="card">
+<a href="output/week5_chaos_finance.qmd">
+<div class="card-top">
+<span class="tag tag-wk">Week 5</span>
+<span class="date">2026.04</span>
+</div>
+<h3>카오스 이론 × 금융 위기 — 나비 효과와 프랙탈</h3>
+<p>호르무즈 해협의 배 한 척이 유가를 바꾼다 · 만델브로트의 시장의 (잘못된) 행동</p>
+<div class="cross">카오스 이론 × 금융경제학</div>
 </a>
 </div>
 
 <div class="card">
-<a href="output/taco_model/trump_taco_model.html">
-<span class="tag tag-wk">TACO</span>
-<h3>TACO 댐핑 시뮬레이터</h3>
-<p>트럼프 행동패턴의 물리학적 모델링 · 인터랙티브 시뮬레이터</p>
+<a href="output/week4_godel_law.qmd">
+<div class="card-top">
+<span class="tag tag-wk">Week 4</span>
+<span class="date">2026.04</span>
+</div>
+<h3>괴델의 불완전성 정리 × 법치주의</h3>
+<p>어떤 체계든 스스로 증명할 수 없는 명제가 있다 · 헌법재판소의 역할</p>
+<div class="cross">수학 × 법철학</div>
 </a>
 </div>
 
-<footer>© 2026 Insight Lab · waterfirst.github.io/insight-lab</footer>
+<div class="card">
+<a href="output/week3_진화론.qmd">
+<div class="card-top">
+<span class="tag tag-wk">Week 3</span>
+<span class="date">2026.04</span>
+</div>
+<h3>진화론 × 기업 전략 — 다윈의 자연선택과 시장</h3>
+<p>단속평형설 · 왜 혁신은 점진적이지 않은가 · AI 시대의 적응 방산</p>
+<div class="cross">생물학 × 경영전략</div>
+</a>
+</div>
+
+<div class="card">
+<a href="output/week2_entropy_empire.qmd">
+<div class="card-top">
+<span class="tag tag-wk">Week 2</span>
+<span class="date">2026.04.06</span>
+</div>
+<h3>엔트로피와 제국 — 열역학으로 읽는 문명의 흥망</h3>
+<p>프리고진의 산일 구조 · 혼돈 속에서 새로운 질서가 탄생하는가 · 미국 패권의 엔트로피</p>
+<div class="cross">열역학 × 역사학</div>
+</a>
+</div>
+
+<div class="card">
+<a href="book/week01/index.qmd">
+<div class="card-top">
+<span class="tag tag-wk">Week 1</span>
+<span class="date">2026.04.04</span>
+</div>
+<h3>이성은 어디에 있는가 — 양자역학 × 숙의 민주주의</h3>
+<p>보어의 상보성 원리 → 하버마스의 소통적 합리성 · PhilSci-Archive 논문</p>
+<div class="cross">양자역학 × 정치철학</div>
+</a>
+</div>
+
+<!-- ===== 도구/시뮬레이터 ===== -->
+<div class="section-title">도구 & 시뮬레이터 Tools</div>
+
+<div class="card">
+<a href="output/taco_model/trump_taco_model.html">
+<div class="card-top">
+<span class="tag tag-tool">TOOL</span>
+<span class="date">2026.04</span>
+</div>
+<h3>TACO 댐핑 시뮬레이터</h3>
+<p>트럼프 행동패턴의 물리학적 모델링 · 파라미터 조절 인터랙티브 시뮬레이터</p>
+</a>
+</div>
+
+<div class="card">
+<a href="output/taco_model/damping_comparison.html">
+<div class="card-top">
+<span class="tag tag-tool">TOOL</span>
+<span class="date">2026.04</span>
+</div>
+<h3>감쇠 진동 비교 시뮬레이터</h3>
+<p>과감쇠 · 부감쇠 · 임계감쇠 진동의 시각적 비교</p>
+</a>
+</div>
+
+<div class="card">
+<a href="output/metalens_idea.html">
+<div class="card-top">
+<span class="tag tag-tool">RESEARCH</span>
+<span class="date">2026.04</span>
+</div>
+<h3>메타렌즈 아이디어 노트</h3>
+<p>메타서피스 기반 광학 소자 연구 아이디어 정리</p>
+</a>
+</div>
+
+<footer>
+<div>© 2026 Insight Lab — 인문학 × 과학 크로스오버</div>
+<div><a href="https://github.com/waterfirst/insight-lab">GitHub</a> · Nakcho Choi</div>
+<div style="margin-top:8px;font-size:10px;color:#555">"이것의 반대도 깊은 진리인 명제야말로 위대한 진리다" — 닐스 보어</div>
+</footer>
+
+<script>
+function toggleTheme(){
+  const b=document.body,t=b.getAttribute('data-theme');
+  b.setAttribute('data-theme',t==='light'?'':'light');
+  document.getElementById('themeBtn').textContent=t==='light'?'🌙':'☀️';
+  localStorage.setItem('il-theme',t==='light'?'dark':'light');
+}
+const saved=localStorage.getItem('il-theme');
+if(saved==='light'){document.body.setAttribute('data-theme','light');document.getElementById('themeBtn').textContent='☀️';}
+</script>
 </body>
 </html>
