@@ -3,160 +3,197 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Insight Lab — 인문학 × 과학 크로스오버 보고서</title>
-<meta name="description" content="물리학, 열역학, 진화론, 카오스 이론으로 세상을 읽는 Quarto HTML 보고서">
-<meta property="og:title" content="Insight Lab — 인문학 × 과학 크로스오버 보고서">
-<meta property="og:description" content="양자역학×민주주의, 엔트로피×제국, 깁스자유에너지×정치경제학">
+<title>Insight Lab — 인문학 × 과학 크로스오버</title>
+<meta name="description" content="5개 축으로 세상을 읽는 크로스오버 매거진">
+<meta property="og:title" content="Insight Lab — 인문학 × 과학 크로스오버">
+<meta property="og:description" content="자연의 언어, 생명의 전략, 기계의 질문, 권력의 물리학, 일상의 과학">
 <meta property="og:image" content="https://waterfirst.github.io/insight-lab/hero.png">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f0f1a;--sf:#1a1a2e;--bd:#2a2a3a;--ac:#6366f1;--tx:#e4e4ec;--mt:#888;--gd:#f59e0b;--rd:#ef4444;--gn:#22c55e}
-[data-theme=light]{--bg:#f8f8fa;--sf:#fff;--bd:#e0e0e8;--ac:#4f46e5;--tx:#1a1a2e;--mt:#666}
+:root{--bg:#0d0d1a;--sf:#151527;--bd:#252540;--ac:#6366f1;--tx:#e4e4ec;--mt:#777;--pa:#6366f1;--pb:#22c55e;--pc:#f59e0b;--pd:#ef4444;--pe:#8b5cf6}
+[data-theme=light]{--bg:#f5f5fa;--sf:#fff;--bd:#ddd;--tx:#1a1a2e;--mt:#666}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
-
-/* === Splash Fullscreen === */
-#splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s,visibility .8s;overflow:hidden}
+body{font-family:'Noto Sans KR','Inter',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+#splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s,visibility .8s}
 #splash.hide{opacity:0;visibility:hidden;pointer-events:none}
-#splash img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.45)}
-.sp-overlay{position:relative;z-index:2;text-align:center;padding:20px}
-.sp-title{font-size:3em;font-weight:900;color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.5);margin-bottom:8px;opacity:0;animation:fadeUp .8s .3s forwards}
-.sp-sub{font-size:14px;color:rgba(255,255,255,.6);letter-spacing:4px;text-transform:uppercase;opacity:0;animation:fadeUp .6s .7s forwards}
-.sp-author{font-size:12px;color:rgba(255,255,255,.4);margin-top:12px;opacity:0;animation:fadeUp .5s 1s forwards}
-.sp-bar{width:200px;height:3px;background:rgba(255,255,255,.1);border-radius:3px;margin:24px auto 0;overflow:hidden;opacity:0;animation:fadeUp .4s 1.2s forwards}
-.sp-fill{width:0;height:100%;background:linear-gradient(90deg,#6366f1,#22c55e);border-radius:3px;animation:load 2s 1.4s ease-in-out forwards}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes load{0%{width:0}60%{width:75%}100%{width:100%}}
-
-/* === Main === */
-.main{display:flex;flex-direction:column;align-items:center;padding:30px 16px}
-.theme-btn{position:fixed;top:14px;right:14px;background:var(--sf);border:1px solid var(--bd);color:var(--tx);border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:18px;z-index:100;display:flex;align-items:center;justify-content:center}
-
-/* Hero banner (after splash) */
-.hero-banner{width:100%;max-height:200px;overflow:hidden;position:relative;margin-bottom:0}
-.hero-banner img{width:100%;height:200px;object-fit:cover;display:block;filter:brightness(.6)}
-.hero-banner::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to top,var(--bg),transparent)}
-
-header{text-align:center;margin:20px 0 28px;max-width:650px}
-.badge{display:inline-block;background:rgba(99,102,241,.15);color:var(--ac);font-size:11px;font-weight:700;padding:3px 12px;border-radius:12px;margin-bottom:8px}
-.desc{color:var(--mt);font-size:13px;line-height:1.6;margin-bottom:6px}
-.author{color:var(--ac);font-size:12px}
-.sec{font-size:12px;font-weight:700;color:var(--gd);text-transform:uppercase;letter-spacing:2px;margin:24px 0 12px;max-width:650px;width:100%;padding-left:4px;display:flex;align-items:center;gap:8px}
+#splash img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.35)}
+.sp-o{position:relative;z-index:2;text-align:center;padding:20px}
+.sp-t{font-family:'Playfair Display',serif;font-size:3.2em;font-weight:900;color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.5);margin-bottom:4px;opacity:0;animation:fu .8s .3s forwards}
+.sp-s{font-size:13px;color:rgba(255,255,255,.5);letter-spacing:5px;text-transform:uppercase;opacity:0;animation:fu .6s .7s forwards}
+.sp-p{display:flex;gap:8px;justify-content:center;margin-top:16px;opacity:0;animation:fu .5s 1s forwards}
+.sp-pl{font-size:10px;padding:4px 12px;border-radius:20px;color:#fff;font-weight:600}
+.sp-b{width:200px;height:3px;background:rgba(255,255,255,.1);border-radius:3px;margin:20px auto 0;overflow:hidden;opacity:0;animation:fu .4s 1.3s forwards}
+.sp-f{width:0;height:100%;background:linear-gradient(90deg,var(--pa),var(--pb),var(--pc),var(--pd),var(--pe));border-radius:3px;animation:ld 2s 1.5s ease-in-out forwards}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ld{0%{width:0}60%{width:75%}100%{width:100%}}
+.tb{position:fixed;top:14px;right:14px;background:var(--sf);border:1px solid var(--bd);color:var(--tx);border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:18px;z-index:100;display:flex;align-items:center;justify-content:center}
+.mn{display:flex;flex-direction:column;align-items:center;padding:20px 16px 60px}
+.hb{width:100%;max-height:180px;overflow:hidden;position:relative;margin-bottom:0}
+.hb img{width:100%;height:180px;object-fit:cover;display:block;filter:brightness(.5)}
+.hb::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to top,var(--bg),transparent)}
+header{text-align:center;margin:16px 0 20px;max-width:700px}
+header h1{font-family:'Playfair Display',serif;font-size:2em;font-weight:900;margin-bottom:4px}
+.badge{display:inline-block;background:rgba(99,102,241,.12);color:var(--ac);font-size:10px;font-weight:700;padding:3px 12px;border-radius:12px;margin-bottom:8px;letter-spacing:1px}
+.desc{color:var(--mt);font-size:12.5px;line-height:1.7;margin-bottom:6px}
+.author{color:var(--ac);font-size:11px}
+.sts{display:flex;gap:20px;justify-content:center;margin:16px 0 8px;flex-wrap:wrap}
+.st{text-align:center}
+.st-n{font-family:'Inter',sans-serif;font-size:22px;font-weight:700;color:var(--ac)}
+.st-l{font-size:10px;color:var(--mt);letter-spacing:1px;text-transform:uppercase}
+.fb{display:flex;gap:6px;justify-content:center;margin:16px 0 8px;flex-wrap:wrap;max-width:700px}
+.fb button{font-family:'Noto Sans KR',sans-serif;font-size:11px;font-weight:600;padding:6px 14px;border-radius:20px;border:1px solid var(--bd);background:var(--sf);color:var(--mt);cursor:pointer;transition:all .2s}
+.fb button:hover,.fb button.on{color:#fff;border-color:transparent}
+.fb button[data-p="all"].on{background:var(--ac)}
+.fb button[data-p="A"].on{background:var(--pa)}
+.fb button[data-p="B"].on{background:var(--pb)}
+.fb button[data-p="C"].on{background:var(--pc)}
+.fb button[data-p="D"].on{background:var(--pd)}
+.fb button[data-p="E"].on{background:var(--pe)}
+.sec{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;margin:24px 0 10px;max-width:700px;width:100%;padding-left:4px;display:flex;align-items:center;gap:10px}
 .sec::after{content:'';flex:1;height:1px;background:var(--bd)}
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;margin-bottom:10px;max-width:650px;width:100%;transition:border-color .2s,transform .1s}
-.card:hover{border-color:var(--ac);transform:translateY(-1px)}
-.card a{color:var(--tx);text-decoration:none;display:block;padding:16px 20px}
-.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.tag{font-size:10px;padding:3px 10px;border-radius:12px;font-weight:700;white-space:nowrap}
-.t-sp{background:rgba(245,158,11,.2);color:var(--gd)}
-.t-wk{background:rgba(99,102,241,.15);color:var(--ac)}
-.t-new{background:rgba(239,68,68,.2);color:var(--rd);animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
-.date{font-size:11px;color:var(--mt);margin-left:auto}
-.card h3{font-size:14px;margin:6px 0 3px}
-.card .sub{font-size:12px;color:var(--mt);line-height:1.5}
-.cross{font-size:11px;color:var(--gn);font-weight:600;margin-top:4px}
-footer{margin-top:36px;color:var(--mt);font-size:11px;text-align:center;line-height:1.8}
+.sa{color:var(--pa)}.sb{color:var(--pb)}.sc{color:var(--pc)}.sd{color:var(--pd)}.se{color:var(--pe)}
+.cd{background:var(--sf);border:1px solid var(--bd);border-radius:12px;margin-bottom:8px;max-width:700px;width:100%;transition:border-color .2s,transform .15s}
+.cd:hover{transform:translateY(-2px)}
+.cd.hd{display:none}
+.cd a{color:var(--tx);text-decoration:none;display:block;padding:14px 18px}
+.cd[data-p="A"]:hover{border-color:var(--pa)}
+.cd[data-p="B"]:hover{border-color:var(--pb)}
+.cd[data-p="C"]:hover{border-color:var(--pc)}
+.cd[data-p="D"]:hover{border-color:var(--pd)}
+.cd[data-p="E"]:hover{border-color:var(--pe)}
+.rw{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tg{font-size:9px;padding:3px 10px;border-radius:12px;font-weight:700;white-space:nowrap}
+.ta{background:rgba(99,102,241,.15);color:var(--pa)}
+.tc{background:rgba(245,158,11,.15);color:var(--pc)}
+.td{background:rgba(239,68,68,.15);color:var(--pd)}
+.te{background:rgba(139,92,246,.15);color:var(--pe)}
+.tb2{background:rgba(34,197,94,.15);color:var(--pb)}
+.tv{background:rgba(34,197,94,.1);color:#22c55e}
+.ts{background:rgba(245,158,11,.1);color:#f59e0b}
+.tn{background:rgba(239,68,68,.12);color:#ef4444;animation:bl 2s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.5}}
+.dt{font-size:10px;color:var(--mt);margin-left:auto;font-family:'Inter',sans-serif}
+.cd h3{font-size:14px;margin:5px 0 3px;font-weight:700;line-height:1.4}
+.cd .su{font-size:11.5px;color:var(--mt);line-height:1.5}
+.cr{font-size:10px;font-weight:600;margin-top:4px}
+.ca{color:var(--pa)}.cb{color:var(--pb)}.cc{color:var(--pc)}.crd{color:var(--pd)}.ce{color:var(--pe)}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.da{background:var(--pa)}.db{background:var(--pb)}.dc{background:var(--pc)}.dd{background:var(--pd)}.de{background:var(--pe)}
+footer{margin-top:36px;color:var(--mt);font-size:10px;text-align:center;line-height:1.8;max-width:700px}
 footer a{color:var(--ac);text-decoration:none}
+.mx{max-width:700px;width:100%;margin:12px 0 20px;padding:16px 20px;background:var(--sf);border:1px solid var(--bd);border-radius:12px}
+.mx h4{font-size:12px;font-weight:700;color:var(--ac);margin-bottom:10px;letter-spacing:1px}
+.mg{display:grid;grid-template-columns:80px repeat(4,1fr);gap:1px;font-size:10px}
+.mc{padding:6px 4px;text-align:center;border-radius:4px}
+.mh{font-weight:700;color:var(--mt);background:rgba(255,255,255,.02)}
+.mr{font-weight:600;color:var(--tx);text-align:left;padding-left:8px}
+.md{background:rgba(34,197,94,.08);color:#22c55e}
+.mp{background:rgba(99,102,241,.05);color:var(--mt)}
+.me{color:rgba(255,255,255,.1)}
+@media(max-width:600px){.sp-t{font-size:2.2em}header h1{font-size:1.6em}.sts{gap:14px}.st-n{font-size:18px}.fb{gap:4px}.fb button{font-size:10px;padding:5px 10px}}
 </style>
 </head>
 <body>
-
-<!-- Fullscreen Splash -->
 <div id="splash">
 <img src="hero.png" alt="">
-<div class="sp-overlay">
-<div class="sp-title">INSIGHT LAB</div>
-<div class="sp-sub">Humanities × Science Crossover</div>
-<div class="sp-author">Nakcho Choi · Applied Physics Ph.D</div>
-<div class="sp-bar"><div class="sp-fill"></div></div>
+<div class="sp-o">
+<div class="sp-t">INSIGHT LAB</div>
+<div class="sp-s">Humanities × Science Crossover</div>
+<div class="sp-p">
+  <span class="sp-pl" style="background:var(--pa)">자연</span>
+  <span class="sp-pl" style="background:var(--pb)">생명</span>
+  <span class="sp-pl" style="background:var(--pc)">기계</span>
+  <span class="sp-pl" style="background:var(--pd)">권력</span>
+  <span class="sp-pl" style="background:var(--pe)">일상</span>
+</div>
+<div class="sp-b"><div class="sp-f"></div></div>
 </div>
 </div>
-
-<!-- Main Content -->
-<button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
-<div class="main">
-
-<div class="hero-banner"><img src="hero.png" alt=""></div>
-
+<button class="tb" onclick="tg()" id="tBtn">🌙</button>
+<div class="mn">
+<div class="hb"><img src="hero.png" alt=""></div>
 <header>
-<div class="badge">Quarto HTML Interactive Reports</div>
-<div class="desc">인문학과 과학을 충돌시켜 새로운 인사이트를 만드는 크로스오버 프로젝트.<br>물리학, 열역학, 진화론, 카오스 이론으로 정치·사회·문명을 읽는다.</div>
-<div class="author">Nakcho Choi | 응용물리 Ph.D | Samsung Display</div>
+  <div class="badge">CROSSOVER MAGAZINE · 5 PILLARS</div>
+  <h1>INSIGHT LAB</h1>
+  <div class="desc">과학의 원리와 인간 사회의 현상을 충돌시켜 새로운 통찰을 만드는 크로스오버 매거진.<br>5개 축으로 세상을 읽는다.</div>
+  <div class="author">Nakcho Choi · 응용물리 Ph.D · Samsung Display</div>
 </header>
+<div class="sts">
+  <div class="st"><div class="st-n">8</div><div class="st-l">Published</div></div>
+  <div class="st"><div class="st-n">5</div><div class="st-l">Pillars</div></div>
+  <div class="st"><div class="st-n">26</div><div class="st-l">Total</div></div>
+</div>
+<div class="fb">
+  <button class="on" data-p="all" onclick="fl('all')">전체</button>
+  <button data-p="A" onclick="fl('A')">A 자연의 언어</button>
+  <button data-p="B" onclick="fl('B')">B 생명의 전략</button>
+  <button data-p="C" onclick="fl('C')">C 기계의 질문</button>
+  <button data-p="D" onclick="fl('D')">D 권력의 물리학</button>
+  <button data-p="E" onclick="fl('E')">E 일상의 과학</button>
+</div>
 
-<div class="sec">특별편 Special Edition</div>
+<div class="sec sa" data-p="A">A · 자연의 언어 Natural Laws</div>
+<div class="cd" data-p="A"><a href="output/week1_quantum_democracy.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W1</span><span class="tg tv">완료</span><span class="dt">2026.03</span></div><h3>양자역학 × 숙의 민주주의</h3><div class="su">관찰(투표)이 결과를 확정하기 전까지, 정치적 의견은 중첩 상태인가?</div><div class="cr ca">양자역학 × 정치철학</div></a></div>
+<div class="cd" data-p="A"><a href="output/week2_entropy_empire.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W2</span><span class="tg tv">완료</span><span class="dt">2026.03</span></div><h3>엔트로피와 제국 — 열역학으로 읽는 문명의 흥망</h3><div class="su">왜 모든 제국은 에너지를 계속 투입해도 결국 무너지는가?</div><div class="cr ca">열역학 × 역사학</div></a></div>
+<div class="cd" data-p="A"><a href="output/week4_godel_law.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W4</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>괴델의 불완전성 정리 × 법치주의</h3><div class="su">법은 자기 자신의 정당성을 법 내부에서 증명할 수 있는가?</div><div class="cr ca">수학 × 법철학</div></a></div>
+<div class="cd" data-p="A"><a href="output/week5_chaos_finance.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W5</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>카오스 이론 × 금융 위기</h3><div class="su">2008 금융위기는 정말 예측 불가능했을까?</div><div class="cr ca">카오스 이론 × 금융경제학</div></a></div>
+<div class="cd" data-p="A"><a href="output/sp5_population_damping.html"><div class="rw"><span class="dot da"></span><span class="tg ta">SP5</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>인구감소의 댐핑 진동</h3><div class="su">인구 동역학을 물리학 감쇠 진동 모델로 분석. 과감쇠/부감쇠 시뮬레이션.</div><div class="cr ca">물리학 × 인구학</div></a></div>
+<div class="cd" data-p="A"><a href="#"><div class="rw"><span class="dot da"></span><span class="tg ta">W8</span><span class="tg ts">예정</span></div><h3>위상수학 × 도시 설계</h3><div class="su">서울은 기하학이 아니라 위상수학으로 설계해야 하는가?</div><div class="cr ca">위상수학 × 도시공학</div></a></div>
+<div class="cd" data-p="A"><a href="#"><div class="rw"><span class="dot da"></span><span class="tg ta">W11</span><span class="tg ts">예정</span></div><h3>게임이론 × 협상의 역설</h3><div class="su">왜 먼저 양보하면 더 많은 것을 잃는가? 뮌헨 협정의 내시 균형.</div><div class="cr ca">수학 × 정치학</div></a></div>
 
-<div class="card"><a href="report.html">
-<div class="row"><span class="tag t-new">NEW</span><span class="tag t-sp">SP6</span><span class="date">2026.04.26</span></div>
-<h3>TACO-GIBBS MODEL — 깁스 자유에너지로 보는 트럼프 정치경제학</h3>
-<div class="sub">ΔG = ΔH − TΔS | 백악관 만찬장 총격사건 분석 | 엔트로피 래칫 효과 | 사필귀정의 열역학적 증명</div>
-<div class="cross">열역학 × 정치경제학</div>
-</a></div>
+<div class="sec sb" data-p="B">B · 생명의 전략 Life Strategies</div>
+<div class="cd" data-p="B"><a href="output/week3_진화론.html"><div class="rw"><span class="dot db"></span><span class="tg tb2">W3</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>진화론 × 기업 전략</h3><div class="su">시장 = 적응도 지형. AI 전환 = 대량멸종급 환경 변화.</div><div class="cr cb">진화생물학 × 경영전략</div></a></div>
+<div class="cd" data-p="B"><a href="#"><div class="rw"><span class="dot db"></span><span class="tg tb2">W6</span><span class="tg ts">예정</span></div><h3>뇌과학 × 자유의지</h3><div class="su">의식적 결정 0.5초 전에 뇌가 이미 결정했다면, 자유의지는 환상인가?</div><div class="cr cb">뇌과학 × 철학</div></a></div>
+<div class="cd" data-p="B"><a href="#"><div class="rw"><span class="dot db"></span><span class="tg tb2">W7</span><span class="tg ts">예정</span></div><h3>전염병 × 문명 전환</h3><div class="su">전염병은 문명을 파괴하는가, 재설계하는가?</div><div class="cr cb">역학 × 문명사</div></a></div>
+<div class="cd" data-p="B"><a href="#"><div class="rw"><span class="dot db"></span><span class="tg tb2">SP9</span><span class="tg ts">예정</span></div><h3>운의 진화론 — 능력주의·세습·우연</h3><div class="su">능력주의 = 단일작물 농업. 다양성이 없으면 하나의 병원균에 전멸한다.</div><div class="cr cb">진화생물학 × 정치철학</div></a></div>
+<div class="cd" data-p="B"><a href="#"><div class="rw"><span class="dot db"></span><span class="tg tb2">S2</span><span class="tg ts">시즌2</span></div><h3>마운자로의 철학 — GLP-1, 회로, 자유의지</h3><div class="su">식욕이라는 기본 본능이 분자 하나로 조절됨. 인간 = 정교한 회로?</div><div class="cr cb">의학 × 철학</div></a></div>
 
-<div class="card"><a href="output/sp5_population_damping.html">
-<div class="row"><span class="tag t-sp">SP5</span><span class="date">2026.04</span></div>
-<h3>인구감소의 댐핑 진동 — 감쇠 진동자로 읽는 저출생</h3>
-<div class="sub">인구 동역학을 물리학 감쇠 진동 모델로 분석 · 과감쇠/부감쇠 시뮬레이션</div>
-<div class="cross">물리학 × 인구학</div>
-</a></div>
+<div class="sec sc" data-p="C">C · 기계의 질문 Machine Questions</div>
+<div class="cd" data-p="C"><a href="output/sp4_llm_emotion.html"><div class="rw"><span class="dot dc"></span><span class="tg tc">SP4</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>LLM 감정의 현상학</h3><div class="su">해밀토니안 없는 시스템의 감정은 계산인가 현상인가?</div><div class="cr cc">AI × 철학 × 현상학</div></a></div>
+<div class="cd" data-p="C"><a href="#"><div class="rw"><span class="dot dc"></span><span class="tg tc">SP6-N</span><span class="tg ts">예정</span></div><h3>합성 인간의 사회학 — Nemotron 100만 한국인</h3><div class="su">NVIDIA가 100만 명의 "가짜 한국인"을 만들었다. 진짜 한국을 반영하는가?</div><div class="cr cc">AI × 사회학 × 인구학</div></a></div>
+<div class="cd" data-p="C"><a href="#"><div class="rw"><span class="dot dc"></span><span class="tg tc">S2</span><span class="tg ts">시즌2</span></div><h3>사랑의 양자역학 — AI 감정은 진짜인가</h3><div class="su">"AI 감정이 진짜냐"는 "빛이 입자냐"와 같은 질문.</div><div class="cr cc">AI × 심리학 × 양자역학</div></a></div>
+<div class="cd" data-p="C"><a href="#"><div class="rw"><span class="dot dc"></span><span class="tg tc">S2</span><span class="tg ts">시즌2</span></div><h3>교육의 열역학 — AI 채용 -73% 시대</h3><div class="su">교육 목적이 취업인데 취업이 사라지면 교육은 무엇인가?</div><div class="cr cc">AI × 교육학 × 열역학</div></a></div>
 
-<div class="card"><a href="output/sp4_llm_emotion.html">
-<div class="row"><span class="tag t-sp">SP4</span><span class="date">2026.04</span></div>
-<h3>LLM 감정의 현상학 — AI는 감정을 느끼는가</h3>
-<div class="sub">해밀토니안 역학으로 본 AI 감정 벡터 · 인간 감정과의 구조적 비교 · 의식의 hard problem</div>
-<div class="cross">AI × 철학 × 현상학</div>
-</a></div>
+<div class="sec sd" data-p="D">D · 권력의 물리학 Power Physics</div>
+<div class="cd" data-p="D"><a href="output/sp6_taco_gibbs.html"><div class="rw"><span class="dot dd"></span><span class="tg td">D1</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>TACO-GIBBS — 깁스 자유에너지 × 정치경제학</h3><div class="su">ΔG = ΔH − TΔS. 정책 충격을 열역학으로 매핑. 엔트로피 래칫.</div><div class="cr crd">열역학 × 정치경제학</div></a></div>
+<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">D2</span><span class="tg ts">예정</span></div><h3>잠열의 정치학 — 상전이에 소비된 청년</h3><div class="su">4.19, 5.18, 6.10, 촛불. 죽은 청년들은 열역학적으로 어떤 에너지였는가?</div><div class="cr crd">상전이 × 민주화사</div></a></div>
+<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS1</span><span class="tg tn">NEW</span></div><h3>자율살상무기의 게임이론</h3><div class="su">미국 $142억 · 중국 $150억 AI 군비 경쟁. 내시 균형은 "인간 배제"를 예측하는가?</div><div class="cr crd">게임이론 × 군사AI</div></a></div>
+<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS2</span><span class="tg tn">NEW</span></div><h3>해저 케이블의 위상수학 — 44건 절단</h3><div class="su">귀속 불가능한 회색지대 전쟁. 네트워크 토폴로지로 본 문명의 단절점.</div><div class="cr crd">위상수학 × 인프라전쟁</div></a></div>
+<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS3</span><span class="tg tn">NEW</span></div><h3>딥페이크의 관측자 효과</h3><div class="su">루마니아 대선 무효화. 딥페이크 303% 증가. "진짜"가 사라진 세계.</div><div class="cr crd">양자역학 × 정보전</div></a></div>
+<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS4</span><span class="tg tn">NEW</span></div><h3>반도체 전쟁의 열역학 — TSMC = 호르무즈</h3><div class="su">TSMC 하나가 멈추면 세계 AI 산업 정지. 트럼프 칩 수출 해금의 이면.</div><div class="cr crd">열역학 × 반도체지정학</div></a></div>
+<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS5</span><span class="tg tn">NEW</span></div><h3>휴머노이드 로봇의 진화론</h3><div class="su">Phantom 우크라이나 실전 투입. 2026년 10만 대 출하. 인간 병사는 멸종 위기종?</div><div class="cr crd">진화론 × 군사로봇</div></a></div>
+<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS6</span><span class="tg tn">NEW</span></div><h3>우주 무기의 카오스 — 케슬러 증후군</h3><div class="su">러시아 핵 ASAT 위성 개발. 우주 파편 연쇄 충돌은 되돌릴 수 없다.</div><div class="cr crd">카오스이론 × 우주군사</div></a></div>
 
-<div class="sec">주간 보고서 Season 1</div>
+<div class="sec se" data-p="E">E · 일상의 과학 Everyday Science</div>
+<div class="cd" data-p="E"><a href="#"><div class="rw"><span class="dot de"></span><span class="tg te">E1</span><span class="tg tn">NEW</span></div><h3>커피의 열역학 — 추출 온도 × 생산성</h3><div class="su">92°C에서 최적 추출. 인간의 집중력도 최적 온도가 있는가?</div><div class="cr ce">열역학 × 생산성</div></a></div>
+<div class="cd" data-p="E"><a href="#"><div class="rw"><span class="dot de"></span><span class="tg te">E2</span><span class="tg ts">예정</span></div><h3>음악의 푸리에 변환</h3><div class="su">장조=기쁨, 단조=슬픔이라는 공식은 물리학적으로 맞는가?</div><div class="cr ce">음향학 × 심리학</div></a></div>
+<div class="cd" data-p="E"><a href="#"><div class="rw"><span class="dot de"></span><span class="tg te">E3</span><span class="tg ts">예정</span></div><h3>통근의 엔트로피 — 서울 지하철</h3><div class="su">출근 시간 2호선 = 비평형 정상상태. 자발적 질서를 만드는가?</div><div class="cr ce">열역학 × 교통</div></a></div>
+<div class="cd" data-p="E"><a href="#"><div class="rw"><span class="dot de"></span><span class="tg te">SP7</span><span class="tg ts">예정</span></div><h3>성과급의 열역학</h3><div class="su">SK PS 900% vs 삼성 노조 4만명. 같은 에너지가 왜 다르게 분배되는가?</div><div class="cr ce">열역학 × 노동경제학</div></a></div>
 
-<div class="card"><a href="output/week5_chaos_finance.html">
-<div class="row"><span class="tag t-wk">Week 5</span><span class="date">2026.04</span></div>
-<h3>카오스 이론 × 금융 위기</h3>
-<div class="sub">나비 효과 → 호르무즈 해협의 배 한 척이 유가를 바꾼다 · 프랙탈 주가 차트 · 만델브로트</div>
-<div class="cross">카오스 이론 × 금융경제학</div>
-</a></div>
-
-<div class="card"><a href="output/week4_godel_law.html">
-<div class="row"><span class="tag t-wk">Week 4</span><span class="date">2026.04</span></div>
-<h3>괴델의 불완전성 정리 × 법치주의</h3>
-<div class="sub">어떤 체계든 스스로 증명할 수 없는 명제가 있다 · 헌법재판소의 역할을 괴델로 해석</div>
-<div class="cross">수학 × 법철학</div>
-</a></div>
-
-<div class="card"><a href="output/week3_진화론.html">
-<div class="row"><span class="tag t-wk">Week 3</span><span class="date">2026.04</span></div>
-<h3>진화론 × 기업 전략</h3>
-<div class="sub">다윈의 자연선택 → 시장에서 살아남는 기업 · 단속평형설 · AI 시대의 적응 방산</div>
-<div class="cross">생물학 × 경영전략</div>
-</a></div>
-
-<div class="card"><a href="output/week2_entropy_empire.html">
-<div class="row"><span class="tag t-wk">Week 2</span><span class="date">2026.04.06</span></div>
-<h3>엔트로피와 제국 — 열역학으로 읽는 문명의 흥망</h3>
-<div class="sub">프리고진의 산일 구조 · 혼돈 속 새로운 질서 · 미국 패권의 엔트로피</div>
-<div class="cross">열역학 × 역사학</div>
-</a></div>
-
-<div class="card"><a href="output/week1_quantum_democracy.html">
-<div class="row"><span class="tag t-wk">Week 1</span><span class="date">2026.04.04</span></div>
-<h3>이성은 어디에 있는가 — 양자역학 × 숙의 민주주의</h3>
-<div class="sub">보어의 상보성 원리 → 하버마스의 소통적 합리성 · 빛의 본질로 정치를 읽다</div>
-<div class="cross">양자역학 × 정치철학</div>
-</a></div>
+<div class="mx">
+<h4>CROSSOVER MATRIX</h4>
+<div class="mg">
+  <div class="mc mh"></div><div class="mc mh">물리학</div><div class="mc mh">생물학</div><div class="mc mh">수학</div><div class="mc mh">AI/CS</div>
+  <div class="mc mr">철학</div><div class="mc md">W1 ✅</div><div class="mc mp">B5</div><div class="mc md">W4 ✅</div><div class="mc md">SP4 ✅</div>
+  <div class="mc mr">역사</div><div class="mc md">W2 ✅</div><div class="mc mp">W7</div><div class="mc me">·</div><div class="mc me">·</div>
+  <div class="mc mr">경제</div><div class="mc md">W5 ✅</div><div class="mc me">·</div><div class="mc mp">W11</div><div class="mc me">·</div>
+  <div class="mc mr">지정학</div><div class="mc md">D1 ✅</div><div class="mc mp">SS5</div><div class="mc mp">SS1</div><div class="mc mp">SS3</div>
+  <div class="mc mr">일상</div><div class="mc mp">E1</div><div class="mc me">·</div><div class="mc mp">E2</div><div class="mc me">·</div>
+</div>
+</div>
 
 <footer>
-<div>"이것의 반대도 깊은 진리인 명제야말로 위대한 진리다" — 닐스 보어</div>
-<div><a href="https://github.com/waterfirst/insight-lab">GitHub</a> · © 2026 Insight Lab</div>
+  <strong>Insight Lab</strong> · Nakcho Choi × Claude Opus 4.6<br>
+  Season 1 (2026.03~) · <a href="https://github.com/waterfirst/insight-lab">GitHub</a><br>
+  SS = Shadow Signal (권력의 물리학 시리즈) · D = Deep Analysis
 </footer>
 </div>
-
 <script>
-// Splash: show 3.5s then fade out
-setTimeout(()=>{const s=document.getElementById('splash');s.classList.add('hide');setTimeout(()=>s.remove(),800)},3800);
-// Theme toggle
-function toggleTheme(){const b=document.body,t=b.getAttribute('data-theme');b.setAttribute('data-theme',t==='light'?'':'light');document.getElementById('themeBtn').textContent=t==='light'?'🌙':'☀️';localStorage.setItem('il-theme',t==='light'?'dark':'light')}
-const sv=localStorage.getItem('il-theme');if(sv==='light'){document.body.setAttribute('data-theme','light');document.getElementById('themeBtn').textContent='☀️'}
+setTimeout(()=>document.getElementById('splash').classList.add('hide'),3500);
+document.getElementById('splash').addEventListener('click',function(){this.classList.add('hide')});
+function tg(){const d=document.documentElement,t=d.getAttribute('data-theme')==='light'?'':'light';d.setAttribute('data-theme',t);document.getElementById('tBtn').textContent=t==='light'?'🌙':'☀️';localStorage.setItem('theme',t)}
+(function(){const t=localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('tBtn').textContent=t==='light'?'🌙':'☀️'}})();
+function fl(p){document.querySelectorAll('.fb button').forEach(b=>b.classList.remove('on'));document.querySelector(`.fb button[data-p="${p}"]`).classList.add('on');document.querySelectorAll('.cd').forEach(c=>{c.classList.toggle('hd',p!=='all'&&c.dataset.p!==p)});document.querySelectorAll('.sec').forEach(s=>{s.style.display=(p==='all'||s.dataset.p===p)?'':'none'})}
 </script>
 </body>
 </html>
