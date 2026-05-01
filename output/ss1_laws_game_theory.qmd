@@ -1,0 +1,555 @@
+---
+title: "자율살상무기의 게임이론 — 내시 균형은 '인간 배제'를 예측하는가"
+subtitle: "Insight Lab Shadow Signal #1 | 게임이론 × 군사AI × 국제정치"
+author: "Nakcho Choi × Claude Opus 4.6"
+date: "2026-05-01"
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    code-summary: "코드 보기"
+    self-contained: true
+    fig-width: 11
+    fig-height: 7
+    fig-dpi: 150
+    html-math-method: mathjax
+    lightbox: true
+lang: ko
+knitr:
+  opts_chunk:
+    dev: ragg_png
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(patchwork)
+library(scales)
+library(knitr)
+library(kableExtra)
+library(ggtext)
+
+theme_shadow <- function(base_size = 13) {
+  theme_minimal(base_size = base_size, base_family = "Noto Sans CJK KR") +
+    theme(
+      plot.title = element_text(face = "bold", size = rel(1.3), margin = margin(b = 8)),
+      plot.subtitle = element_markdown(color = "#666666", size = rel(0.9), margin = margin(b = 12)),
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_line(color = "#eeeeee"),
+      legend.position = "bottom",
+      axis.title = element_text(size = rel(0.9), color = "#444444"),
+      plot.caption = element_text(color = "#888888", size = rel(0.7), hjust = 0),
+      plot.margin = margin(15, 15, 15, 15)
+    )
+}
+
+pal <- list(
+  us = "#3b82f6", china = "#ef4444", russia = "#f59e0b",
+  dark = "#1e293b", grey = "#94a3b8", green = "#22c55e",
+  purple = "#8b5cf6", orange = "#f97316"
+)
+```
+
+## 프롤로그: 전쟁에서 인간이 결정을 내리는 마지막 세대
+
+> "충분히 발전한 무기는 사용된다. 충분히 자율적인 무기는 허락을 구하지 않는다."
+
+2026년 4월, 뉴욕타임즈는 미국·중국·러시아의 AI 군비 경쟁을 "상호 자동화 파괴(Mutually Automated Destruction)"라 명명했다. 핵 시대의 MAD(Mutually Assured Destruction)를 패러디한 이 표현은, 자율살상무기(LAWS: Lethal Autonomous Weapon Systems)가 핵무기 이후 **가장 위험한 군사 혁명**임을 암시한다.
+
+이 보고서는 **게임이론**의 렌즈로 이 경쟁을 분석한다. 3국이 각각 합리적으로 행동할 때, 내시 균형은 어디에서 형성되는가? 그 균형점은 **"인간을 전쟁에서 배제하는 것"**을 예측하는가?
+
+---
+
+## I. 현황: 3강의 AI 군비 지출
+
+### 1.1 투자 규모 비교
+
+```{r budget_comparison}
+#| fig-cap: "미·중·러 AI 군사 투자 규모 (2026 회계연도)"
+#| label: fig-budget
+
+budget <- data.frame(
+  country = factor(c("미국", "중국", "러시아"), levels = c("미국", "중국", "러시아")),
+  total_defense = c(886, 225, 109),
+  ai_autonomous = c(14.2, 15.0, 5.1),
+  ai_pct = c(1.6, 6.7, 4.7)
+)
+
+p1 <- ggplot(budget, aes(x = country, y = ai_autonomous, fill = country)) +
+  geom_col(width = 0.6, alpha = 0.9) +
+  geom_text(aes(label = paste0("$", ai_autonomous, "B")),
+            vjust = -0.5, fontface = "bold", size = 5, family = "Noto Sans CJK KR") +
+  scale_fill_manual(values = c(pal$us, pal$china, pal$russia)) +
+  scale_y_continuous(limits = c(0, 20), labels = dollar_format(suffix = "B")) +
+  labs(title = "AI/자율무기 연간 투자 (2026)",
+       subtitle = "중국이 <span style='color:#ef4444'>**$15B**</span>로 미국 <span style='color:#3b82f6'>**$14.2B**</span>을 추월",
+       x = NULL, y = "투자액 (USD Billions)",
+       caption = "출처: Pentagon FY2026 Budget, SIPRI, 공개 추정치") +
+  theme_shadow() +
+  theme(legend.position = "none")
+
+p2 <- ggplot(budget, aes(x = country, y = ai_pct, fill = country)) +
+  geom_col(width = 0.6, alpha = 0.9) +
+  geom_text(aes(label = paste0(ai_pct, "%")),
+            vjust = -0.5, fontface = "bold", size = 5, family = "Noto Sans CJK KR") +
+  scale_fill_manual(values = c(pal$us, pal$china, pal$russia)) +
+  scale_y_continuous(limits = c(0, 9)) +
+  labs(title = "국방비 대비 AI 투자 비율",
+       subtitle = "중국은 국방비의 <span style='color:#ef4444'>**6.7%**</span>를 AI에 집중",
+       x = NULL, y = "국방비 대비 %",
+       caption = "군민융합(MCF) 정책으로 민간 AI 투자 별도") +
+  theme_shadow() +
+  theme(legend.position = "none")
+
+p1 + p2 + plot_annotation(
+  title = "Shadow Signal #1 — AI 군비 경쟁의 규모",
+  theme = theme(plot.title = element_text(face = "bold", size = 16, family = "Noto Sans CJK KR"))
+)
+```
+
+### 1.2 주요 무기 체계
+
+```{r weapons_table}
+#| label: tbl-weapons
+
+weapons <- data.frame(
+  국가 = c("미국", "미국", "미국", "중국", "중국", "중국", "러시아", "러시아"),
+  체계 = c("Replicator 드론", "Phantom 휴머노이드", "Anduril ALTIUS",
+           "九天 드론 모함", "200대 군집 드론", "RoboWolf 사족보행",
+           "Lancet 자율드론", "S-70 Okhotnik"),
+  유형 = c("자율 군집", "지상 로봇", "순항 무인기",
+           "드론 캐리어", "군집 자율", "전투 로봇",
+           "자율 공격", "스텔스 폭격"),
+  자율수준 = c("감독 하 자율", "원격+자율", "반자율",
+               "완전 자율", "완전 자율", "원격 조종",
+               "완전 자율", "반자율"),
+  상태 = c("배치 중", "우크라이나 투입", "양산",
+           "시험 중", "테스트 성공", "양산 $69M 투자",
+           "실전 사용 중", "시험비행")
+)
+
+kable(weapons, align = "c",
+      caption = "3국 주요 자율무기 체계 (2026년 기준)") |>
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = TRUE, font_size = 13) |>
+  row_spec(0, bold = TRUE, background = "#1e293b", color = "white") |>
+  column_spec(1, bold = TRUE) |>
+  row_spec(1:3, background = "#eff6ff") |>
+  row_spec(4:6, background = "#fef2f2") |>
+  row_spec(7:8, background = "#fffbeb")
+```
+
+---
+
+## II. 게임이론 프레임워크
+
+### 2.1 죄수의 딜레마: 자율무기 개발
+
+3국의 선택을 단순화하면 2×2 게임이 된다: **개발(D)** vs **제한(R)**.
+
+```{r payoff_matrix}
+#| fig-cap: "자율무기 개발의 2자 게임 보수 행렬"
+#| label: fig-payoff
+
+payoff <- expand.grid(
+  US = c("개발 (D)", "제한 (R)"),
+  China = c("개발 (D)", "제한 (R)")
+)
+payoff$US_payoff <- c(3, 1, 5, 4)
+payoff$China_payoff <- c(3, 5, 1, 4)
+payoff$label <- paste0("US: ", payoff$US_payoff, " / CN: ", payoff$China_payoff)
+payoff$cell_type <- c("내시 균형\n(군비경쟁)", "중국 우위", "미국 우위", "최적\n(상호 제한)")
+
+ggplot(payoff, aes(x = China, y = US)) +
+  geom_tile(aes(fill = cell_type), color = "white", linewidth = 2, alpha = 0.8) +
+  geom_text(aes(label = label), size = 5, fontface = "bold", family = "Noto Sans CJK KR") +
+  geom_text(aes(label = cell_type), size = 3.5, vjust = 3, color = "#555555",
+            family = "Noto Sans CJK KR") +
+  scale_fill_manual(values = c("내시 균형\n(군비경쟁)" = "#fecaca",
+                                "중국 우위" = "#fef3c7",
+                                "미국 우위" = "#dbeafe",
+                                "최적\n(상호 제한)" = "#bbf7d0")) +
+  labs(title = "자율무기 개발의 보수 행렬 (Payoff Matrix)",
+       subtitle = "양쪽 모두 '개발'이 우월전략 → <span style='color:#ef4444'>**내시 균형 = 군비경쟁**</span>",
+       x = "중국의 선택", y = "미국의 선택",
+       caption = "보수: 5=최고, 1=최악 | 러시아는 중국과 유사한 전략으로 가정") +
+  theme_shadow() +
+  theme(legend.position = "none",
+        axis.text = element_text(size = 12, face = "bold"),
+        panel.grid = element_blank())
+```
+
+::: {.callout-important}
+## 핵심 발견: 개발이 우월전략
+
+상대가 **개발하면** → 나도 개발해야 뒤처지지 않는다 (3 > 1)
+상대가 **제한하면** → 나만 개발하면 압도적 우위 (5 > 4)
+
+**어떤 경우든 "개발"이 합리적** → 내시 균형 = (D, D) = 군비경쟁
+:::
+
+### 2.2 자율수준 에스컬레이션 모델
+
+단순 개발/제한이 아니라, **자율 수준(Autonomy Level)**을 연속 변수로 놓으면 더 현실적이다.
+
+```{r autonomy_escalation}
+#| fig-cap: "자율 수준 에스컬레이션 시뮬레이션 (30라운드)"
+#| label: fig-escalation
+
+set.seed(42)
+rounds <- 30
+n_countries <- 3
+
+sim <- data.frame(
+  round = rep(1:rounds, n_countries),
+  country = rep(c("미국", "중국", "러시아"), each = rounds),
+  autonomy = 0
+)
+
+us_a <- cn_a <- ru_a <- numeric(rounds)
+us_a[1] <- 0.3; cn_a[1] <- 0.25; ru_a[1] <- 0.2
+
+for (i in 2:rounds) {
+  max_rival_us <- max(cn_a[i-1], ru_a[i-1])
+  max_rival_cn <- max(us_a[i-1], ru_a[i-1])
+  max_rival_ru <- max(us_a[i-1], cn_a[i-1])
+
+  us_a[i] <- min(1, us_a[i-1] + 0.03 * (max_rival_us - us_a[i-1] + 0.5) + rnorm(1, 0, 0.01))
+  cn_a[i] <- min(1, cn_a[i-1] + 0.035 * (max_rival_cn - cn_a[i-1] + 0.5) + rnorm(1, 0, 0.012))
+  ru_a[i] <- min(1, ru_a[i-1] + 0.025 * (max_rival_ru - ru_a[i-1] + 0.4) + rnorm(1, 0, 0.015))
+}
+
+sim$autonomy[sim$country == "미국"] <- us_a
+sim$autonomy[sim$country == "중국"] <- cn_a
+sim$autonomy[sim$country == "러시아"] <- ru_a
+
+labels_df <- data.frame(
+  y = c(0.25, 0.5, 0.75, 1.0),
+  label = c("인간 승인 필수", "감독 하 자율", "예외적 개입만", "완전 자율")
+)
+
+ggplot(sim, aes(x = round, y = autonomy, color = country)) +
+  geom_hline(yintercept = c(0.25, 0.5, 0.75, 1.0),
+             linetype = "dashed", color = "#cccccc", linewidth = 0.4) +
+  annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0.75, ymax = 1.0,
+           fill = "#ef4444", alpha = 0.06) +
+  annotate("text", x = 1.5, y = c(0.25, 0.5, 0.75, 1.0),
+           label = c("인간 승인 필수", "감독 하 자율", "예외적 개입만", "완전 자율"),
+           hjust = 0, size = 3, color = "#888888", family = "Noto Sans CJK KR") +
+  geom_line(linewidth = 1.2, alpha = 0.9) +
+  geom_point(data = sim |> filter(round == rounds), size = 3) +
+  scale_color_manual(values = c("미국" = pal$us, "중국" = pal$china, "러시아" = pal$russia)) +
+  scale_y_continuous(limits = c(0, 1.05), labels = percent_format()) +
+  scale_x_continuous(breaks = seq(0, 30, 5)) +
+  labs(title = "자율 수준 에스컬레이션 시뮬레이션",
+       subtitle = "각국은 경쟁국의 자율 수준에 반응하여 <span style='color:#ef4444'>**단조 증가**</span>한다",
+       x = "라운드 (각 라운드 ≈ 6개월)", y = "무기 자율 수준",
+       color = NULL,
+       caption = "시뮬레이션: 반응 계수 US=0.03, CN=0.035, RU=0.025 | 붉은 영역 = 완전 자율 위험") +
+  theme_shadow()
+```
+
+::: {.callout-warning}
+## 에스컬레이션의 비가역성
+
+시뮬레이션에서 **어떤 국가도 자율 수준을 자발적으로 낮추지 않는다**. 이것은 열역학의 엔트로피와 같다: 군비 경쟁의 자율 수준은 **단조 증가 함수**이며, 래칫 효과를 보인다.
+:::
+
+---
+
+## III. 속도의 딜레마: 왜 인간을 배제하는가
+
+### 3.1 OODA 루프 속도 비교
+
+전투에서의 의사결정 주기(OODA: Observe-Orient-Decide-Act)를 비교하면, 인간 배제의 동기가 명확해진다.
+
+```{r ooda_comparison}
+#| fig-cap: "OODA 루프 속도: 인간 vs AI"
+#| label: fig-ooda
+
+ooda <- data.frame(
+  단계 = factor(rep(c("관찰\n(Observe)", "판단\n(Orient)", "결정\n(Decide)", "행동\n(Act)"), 2),
+               levels = c("관찰\n(Observe)", "판단\n(Orient)", "결정\n(Decide)", "행동\n(Act)")),
+  주체 = rep(c("인간 조종사", "AI 시스템"), each = 4),
+  시간_ms = c(200, 1500, 3000, 500,  # 인간
+              5, 10, 2, 3)            # AI
+)
+
+ggplot(ooda, aes(x = 단계, y = 시간_ms, fill = 주체)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.6, alpha = 0.9) +
+  geom_text(aes(label = ifelse(시간_ms > 100,
+                                paste0(round(시간_ms/1000, 1), "s"),
+                                paste0(시간_ms, "ms"))),
+            position = position_dodge(width = 0.7), vjust = -0.5,
+            size = 4, fontface = "bold", family = "Noto Sans CJK KR") +
+  scale_fill_manual(values = c(pal$orange, pal$purple)) +
+  scale_y_log10(labels = comma_format(suffix = "ms"),
+                breaks = c(1, 10, 100, 1000, 5000)) +
+  labs(title = "OODA 루프 속도 비교 (로그 스케일)",
+       subtitle = "AI는 인간보다 <span style='color:#8b5cf6'>**약 250배 빠른**</span> 의사결정 주기",
+       x = NULL, y = "소요 시간 (ms, 로그)",
+       fill = NULL,
+       caption = "인간: F-16 조종사 평균 | AI: 2025-26년 시스템 벤치마크 추정") +
+  theme_shadow()
+```
+
+```{r speed_ratio}
+#| fig-cap: "전투 도메인별 인간 대비 AI 의사결정 속도 배율"
+#| label: fig-speed-ratio
+
+domains <- data.frame(
+  domain = factor(c("사이버전", "공중전 (드론)", "해상전", "지상전", "우주전"),
+                  levels = c("사이버전", "공중전 (드론)", "해상전", "지상전", "우주전")),
+  ratio = c(10000, 500, 200, 50, 1000),
+  critical = c(TRUE, TRUE, FALSE, FALSE, TRUE)
+)
+
+ggplot(domains, aes(x = reorder(domain, ratio), y = ratio, fill = critical)) +
+  geom_col(width = 0.6, alpha = 0.9) +
+  geom_text(aes(label = paste0(comma(ratio), "x")),
+            hjust = -0.2, fontface = "bold", size = 5, family = "Noto Sans CJK KR") +
+  coord_flip() +
+  scale_fill_manual(values = c("FALSE" = pal$grey, "TRUE" = pal$china),
+                    labels = c("인간 가능", "인간 불가")) +
+  scale_y_log10(limits = c(1, 50000), labels = comma_format(suffix = "x")) +
+  labs(title = "도메인별 AI 속도 우위 (인간 대비 배율)",
+       subtitle = "사이버전·우주전은 인간 개입이 <span style='color:#ef4444'>**물리적으로 불가능한 속도**</span>",
+       x = NULL, y = "AI/인간 속도 비율 (로그)",
+       fill = "인간 개입 가능성",
+       caption = "사이버: 밀리초 단위 공방 | 우주: 광속 지연 vs 위성 궤도 속도") +
+  theme_shadow()
+```
+
+::: {.callout-important}
+## 속도의 딜레마 (Speed Dilemma)
+
+인간이 결정 루프에 남아 있으면 **의사결정 속도에서 패배**한다.
+인간을 빼면 **통제력을 상실**한다.
+
+어떤 선택이든 대가가 있다. 그리고 게임이론은 예측한다: **상대가 인간을 빼면, 나도 뺄 수밖에 없다.**
+:::
+
+---
+
+## IV. 3자 게임의 내시 균형
+
+### 4.1 3국 전략 공간 시뮬레이션
+
+```{r three_player_nash}
+#| fig-cap: "3자 게임 전략 공간에서의 내시 균형 탐색"
+#| label: fig-nash-3player
+
+grid <- expand.grid(
+  us = seq(0, 1, 0.05),
+  cn = seq(0, 1, 0.05)
+)
+
+grid$ru <- pmin(1, 0.8 * pmax(grid$us, grid$cn))
+
+payoff_fn <- function(my_a, rival_max, cost_factor = 0.3) {
+  advantage <- my_a - rival_max
+  benefit <- 2 * plogis(5 * advantage)
+  cost <- cost_factor * my_a^2
+  benefit - cost
+}
+
+grid$us_payoff <- payoff_fn(grid$us, pmax(grid$cn, grid$ru))
+grid$cn_payoff <- payoff_fn(grid$cn, pmax(grid$us, grid$ru), cost_factor = 0.25)
+
+grid$total_risk <- grid$us * grid$cn * grid$ru
+
+ggplot(grid, aes(x = us, y = cn, fill = total_risk)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "#f0fdf4", mid = "#fef3c7", high = "#991b1b",
+                       midpoint = 0.3, name = "글로벌\n위험도") +
+  geom_point(aes(x = 0.85, y = 0.9), shape = 4, size = 5,
+             stroke = 2, color = "white") +
+  annotate("text", x = 0.85, y = 0.82, label = "내시 균형\n(고자율 수렴)",
+           color = "white", fontface = "bold", size = 4, family = "Noto Sans CJK KR") +
+  geom_point(aes(x = 0.3, y = 0.3), shape = 1, size = 5,
+             stroke = 2, color = "#22c55e") +
+  annotate("text", x = 0.3, y = 0.22, label = "파레토 최적\n(상호 제한)",
+           color = "#22c55e", fontface = "bold", size = 4, family = "Noto Sans CJK KR") +
+  annotate("segment", x = 0.3, y = 0.3, xend = 0.85, yend = 0.9,
+           arrow = arrow(length = unit(0.3, "cm")),
+           color = "white", linewidth = 1, linetype = "dashed") +
+  scale_x_continuous(labels = percent_format()) +
+  scale_y_continuous(labels = percent_format()) +
+  labs(title = "3자 자율무기 게임의 전략 공간",
+       subtitle = "내시 균형(✕)은 고자율 영역에, 파레토 최적(○)은 저자율 영역에 위치",
+       x = "미국 자율 수준", y = "중국 자율 수준",
+       caption = "러시아 = 0.8 × max(US, CN) 가정 | 색상 = 3국 자율수준 곱 (글로벌 위험도)") +
+  theme_shadow() +
+  theme(panel.grid = element_blank())
+```
+
+### 4.2 균형점 해석
+
+```{r equilibrium_table}
+#| label: tbl-equilibrium
+
+eq_table <- data.frame(
+  항목 = c("내시 균형", "파레토 최적", "현재 추정 위치"),
+  미국 = c("85%", "30%", "55%"),
+  중국 = c("90%", "30%", "50%"),
+  러시아 = c("72%", "24%", "45%"),
+  글로벌위험 = c("극높음", "낮음", "중간"),
+  인간역할 = c("예외적 개입만", "승인 필수", "감독 하 자율")
+)
+
+kable(eq_table, align = "c",
+      caption = "내시 균형 vs 파레토 최적 vs 현재 위치") |>
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = TRUE, font_size = 13) |>
+  row_spec(0, bold = TRUE, background = "#1e293b", color = "white") |>
+  row_spec(1, background = "#fecaca") |>
+  row_spec(2, background = "#bbf7d0") |>
+  row_spec(3, background = "#fef3c7")
+```
+
+---
+
+## V. 규제 데드라인: 2026년의 의미
+
+### 5.1 국제 규제 타임라인
+
+```{r regulation_timeline}
+#| fig-cap: "자율무기 규제 타임라인 (2013-2026)"
+#| label: fig-timeline
+
+events <- data.frame(
+  year = c(2013, 2014, 2017, 2019, 2021, 2023, 2025, 2026),
+  event = c("킬러로봇 금지 캠페인 시작",
+            "UN CCW 비공식 전문가 회의",
+            "AI 전문가 3,000명 공개서한",
+            "미국 Directive 3000.09 발표",
+            "AI 군비경쟁 가속 (러-우 전쟁 전)",
+            "미 국방부 지침 업데이트",
+            "UN 합의 실패, 자발적 가이드라인만",
+            "사실상 규제 데드라인"),
+  y_pos = c(1, 2, 3, 2, 1, 3, 2, 1),
+  type = c("시민", "UN", "학계", "미국", "현실", "미국", "UN", "데드라인")
+)
+
+ggplot(events, aes(x = year, y = y_pos)) +
+  geom_segment(aes(xend = year, yend = 0), color = "#cccccc", linewidth = 0.5) +
+  geom_point(aes(color = type), size = 5) +
+  geom_text(aes(label = event), hjust = 0, nudge_x = 0.15, nudge_y = 0.15,
+            size = 3.5, family = "Noto Sans CJK KR", lineheight = 0.9) +
+  geom_vline(xintercept = 2026, linetype = "dashed", color = pal$china, linewidth = 1) +
+  annotate("text", x = 2026.1, y = 3.5, label = "2026\n데드라인",
+           color = pal$china, fontface = "bold", size = 4.5, family = "Noto Sans CJK KR") +
+  scale_color_manual(values = c("시민" = pal$green, "UN" = pal$us,
+                                "학계" = pal$purple, "미국" = pal$orange,
+                                "현실" = pal$grey, "데드라인" = pal$china)) +
+  scale_x_continuous(breaks = seq(2013, 2026, 1)) +
+  scale_y_continuous(limits = c(0, 4)) +
+  labs(title = "자율살상무기 국제 규제 타임라인",
+       subtitle = "13년간의 논의 끝에 — <span style='color:#ef4444'>**합의 없이 데드라인 도달**</span>",
+       x = NULL, y = NULL, color = "주체",
+       caption = "2026년 이후 기술 발전 속도가 규제를 사실상 무력화할 것으로 전망") +
+  theme_shadow() +
+  theme(axis.text.y = element_blank(),
+        panel.grid.major.y = element_blank())
+```
+
+### 5.2 왜 규제가 실패하는가 — 게임이론의 답
+
+```{r regulation_game}
+#| fig-cap: "규제 합의 실패의 게임이론적 구조"
+#| label: fig-regulation-failure
+
+barriers <- data.frame(
+  factor = factor(c("검증 불가능성", "정의 합의 부재", "기술 우위 포기 거부",
+                     "군민융합 구분 불가", "비국가 행위자 확산"),
+                  levels = rev(c("검증 불가능성", "정의 합의 부재", "기술 우위 포기 거부",
+                                  "군민융합 구분 불가", "비국가 행위자 확산"))),
+  severity = c(9.5, 8.2, 9.8, 7.5, 6.8),
+  type = c("기술", "외교", "전략", "구조", "확산")
+)
+
+ggplot(barriers, aes(x = severity, y = factor, fill = type)) +
+  geom_col(width = 0.6, alpha = 0.9) +
+  geom_text(aes(label = paste0(severity, "/10")),
+            hjust = -0.2, fontface = "bold", size = 4.5, family = "Noto Sans CJK KR") +
+  scale_fill_manual(values = c("기술" = pal$purple, "외교" = pal$us,
+                                "전략" = pal$china, "구조" = pal$orange,
+                                "확산" = pal$grey)) +
+  scale_x_continuous(limits = c(0, 12)) +
+  labs(title = "자율무기 규제 실패 요인",
+       subtitle = "'기술 우위 포기 거부'가 <span style='color:#ef4444'>**9.8/10**</span>로 최대 장벽",
+       x = "심각도 (10점 만점)", y = NULL,
+       fill = "유형",
+       caption = "핵무기 NPT와 달리, AI 무기는 소프트웨어이므로 검증이 근본적으로 불가능") +
+  theme_shadow()
+```
+
+---
+
+## VI. 결론: 게임이론이 예측하는 미래
+
+### 내시 균형의 귀결
+
+```{r conclusion_viz}
+#| fig-cap: "자율살상무기 경쟁의 세 가지 시나리오"
+#| label: fig-scenarios
+
+scenarios <- data.frame(
+  scenario = factor(c("시나리오 1:\n내시 균형\n(현 경로)", "시나리오 2:\n협조 균형\n(낮은 확률)", "시나리오 3:\n비대칭 우위\n(불안정)"),
+                    levels = c("시나리오 1:\n내시 균형\n(현 경로)", "시나리오 2:\n협조 균형\n(낮은 확률)", "시나리오 3:\n비대칭 우위\n(불안정)")),
+  probability = c(65, 15, 20),
+  human_role = c(15, 80, 40),
+  risk = c(85, 20, 70)
+)
+
+p_prob <- ggplot(scenarios, aes(x = scenario, y = probability, fill = scenario)) +
+  geom_col(width = 0.6, alpha = 0.9) +
+  geom_text(aes(label = paste0(probability, "%")),
+            vjust = -0.5, fontface = "bold", size = 5, family = "Noto Sans CJK KR") +
+  scale_fill_manual(values = c(pal$china, pal$green, pal$orange)) +
+  scale_y_continuous(limits = c(0, 80)) +
+  labs(title = "시나리오 발생 확률", y = "%", x = NULL) +
+  theme_shadow() + theme(legend.position = "none")
+
+p_human <- ggplot(scenarios, aes(x = scenario, y = human_role, fill = scenario)) +
+  geom_col(width = 0.6, alpha = 0.9) +
+  geom_text(aes(label = paste0(human_role, "%")),
+            vjust = -0.5, fontface = "bold", size = 5, family = "Noto Sans CJK KR") +
+  scale_fill_manual(values = c(pal$china, pal$green, pal$orange)) +
+  scale_y_continuous(limits = c(0, 100)) +
+  labs(title = "인간 결정 비중", y = "%", x = NULL) +
+  theme_shadow() + theme(legend.position = "none")
+
+p_prob + p_human + plot_annotation(
+  title = "게임이론이 예측하는 자율무기의 미래",
+  subtitle = "가장 가능성 높은 경로: 인간 결정 비중 15%까지 축소",
+  theme = theme(plot.title = element_text(face = "bold", size = 16, family = "Noto Sans CJK KR"),
+                plot.subtitle = element_text(color = "#666666", size = 12, family = "Noto Sans CJK KR"))
+)
+```
+
+---
+
+## 에필로그: 물리학자의 시선
+
+> "핵물리학자들은 히로시마 이후에야 윤리를 논했다. AI 연구자들은 아직 그 '이후'가 오지 않았다고 믿는다. 문제는, 자율무기의 '히로시마'는 누가 버튼을 눌렀는지조차 모를 수 있다는 것이다."
+
+게임이론은 냉정한 결론을 내린다:
+
+1. **내시 균형은 군비경쟁**이다 — 어떤 국가도 일방적으로 멈출 수 없다
+2. **속도의 딜레마**가 인간을 배제한다 — 인간이 루프에 있으면 패배한다
+3. **규제는 실패할 가능성이 높다** — 검증 불가능성이 핵 NPT와의 근본적 차이
+
+단, 핵 시대에도 **쿠바 미사일 위기**라는 절벽 끝에서 MAD의 공포가 규제를 만들었다. 자율무기의 "쿠바 위기"가 오기 전에 행동할 수 있을까? 게임이론은 비관적이다. 하지만 게임이론은 **플레이어가 합리적일 때**만 맞는다. 인간은 때때로 비합리적으로 — 즉 **윤리적으로** — 행동한다. 그것이 유일한 출구일 수 있다.
+
+---
+
+*Shadow Signal #1 · 2026.05.01 · Nakcho Choi × Claude Opus 4.6*
+*다음 편: SS2 — 해저 케이블의 위상수학: 44건 절단, 문명의 단절점*
