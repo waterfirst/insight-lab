@@ -26,7 +26,11 @@ body{font-family:'Noto Sans KR','Inter',sans-serif;background:var(--bg);color:va
 .sp-f{width:0;height:100%;background:linear-gradient(90deg,var(--pa),var(--pb),var(--pc),var(--pd),var(--pe));border-radius:3px;animation:ld 2s 1.5s ease-in-out forwards}
 @keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes ld{0%{width:0}60%{width:75%}100%{width:100%}}
-.tb{position:fixed;top:14px;right:14px;background:var(--sf);border:1px solid var(--bd);color:var(--tx);border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:18px;z-index:100;display:flex;align-items:center;justify-content:center}
+.ctrl-bar{position:fixed;top:14px;right:14px;display:flex;align-items:center;gap:8px;z-index:100}
+.tb{background:var(--sf);border:1px solid var(--bd);color:var(--tx);border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:background .3s,color .3s}
+.tb:hover{border-color:var(--ac)}
+.lang-sel{background:var(--sf);border:1px solid var(--bd);color:var(--tx);border-radius:20px;padding:6px 10px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR','Inter',sans-serif;appearance:none;-webkit-appearance:none;outline:none;transition:background .3s,color .3s}
+.lang-sel:hover{border-color:var(--ac)}
 .mn{display:flex;flex-direction:column;align-items:center;padding:20px 16px 60px}
 .hb{width:100%;max-height:180px;overflow:hidden;position:relative;margin-bottom:0}
 .hb img{width:100%;height:180px;object-fit:cover;display:block;filter:brightness(.5)}
@@ -112,7 +116,18 @@ footer a{color:var(--ac);text-decoration:none}
 <div class="sp-b"><div class="sp-f"></div></div>
 </div>
 </div>
+<div class="ctrl-bar">
 <button class="tb" onclick="tg()" id="tBtn">🌙</button>
+<select class="lang-sel" id="langSel" onchange="setLang(this.value)">
+  <option value="ko">한국어</option>
+  <option value="en">English</option>
+  <option value="ja">日本語</option>
+  <option value="zh">中文</option>
+  <option value="es">Español</option>
+  <option value="fr">Français</option>
+  <option value="de">Deutsch</option>
+</select>
+</div>
 <div class="mn">
 <div class="hb"><img src="hero.png" alt=""></div>
 <header>
@@ -194,9 +209,38 @@ footer a{color:var(--ac);text-decoration:none}
 <script>
 setTimeout(()=>document.getElementById('splash').classList.add('hide'),3500);
 document.getElementById('splash').addEventListener('click',function(){this.classList.add('hide')});
-function tg(){const d=document.documentElement,t=d.getAttribute('data-theme')==='light'?'':'light';d.setAttribute('data-theme',t);document.getElementById('tBtn').textContent=t==='light'?'🌙':'☀️';localStorage.setItem('theme',t)}
-(function(){const t=localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('tBtn').textContent=t==='light'?'🌙':'☀️'}})();
+function tg(){const d=document.documentElement,t=d.getAttribute('data-theme')==='light'?'':'light';d.setAttribute('data-theme',t);document.getElementById('tBtn').textContent=t==='light'?'🌙':'☀️';localStorage.setItem('il-theme',t)}
+(function(){const t=localStorage.getItem('il-theme');if(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('tBtn').textContent=t==='light'?'🌙':'☀️'}})();
 function fl(p){document.querySelectorAll('.fb button').forEach(b=>b.classList.remove('on'));document.querySelector(`.fb button[data-p="${p}"]`).classList.add('on');document.querySelectorAll('.cd').forEach(c=>{c.classList.toggle('hd',p!=='all'&&c.dataset.p!==p)});document.querySelectorAll('.sec').forEach(s=>{s.style.display=(p==='all'||s.dataset.p===p)?'':'none'})}
+
+// Language switcher
+const IL_TRANS={
+  ko:{all:'전체',navA:'A 자연의 언어',navB:'B 생명의 전략',navC:'C 기계의 질문',navD:'D 권력의 물리학',navE:'E 일상의 과학',published:'Published',pillars:'Pillars',total:'Total',secA:'A · 자연의 언어 Natural Laws',secB:'B · 생명의 전략 Life Strategies',secC:'C · 기계의 질문 Machine Questions',secD:'D · 권력의 물리학 Power Physics',secE:'E · 일상의 과학 Everyday Science'},
+  en:{all:'All',navA:'A Nature',navB:'B Life',navC:'C Machine',navD:'D Power',navE:'E Daily',published:'Published',pillars:'Pillars',total:'Total',secA:'A · Natural Laws',secB:'B · Life Strategies',secC:'C · Machine Questions',secD:'D · Power Physics',secE:'E · Everyday Science'},
+  ja:{all:'全て',navA:'A 自然の言語',navB:'B 生命の戦略',navC:'C 機械の問い',navD:'D 権力の物理学',navE:'E 日常の科学',published:'公開済',pillars:'軸',total:'合計',secA:'A · 自然の言語',secB:'B · 生命の戦略',secC:'C · 機械の問い',secD:'D · 権力の物理学',secE:'E · 日常の科学'},
+  zh:{all:'全部',navA:'A 自然语言',navB:'B 生命策略',navC:'C 机器之问',navD:'D 权力物理',navE:'E 日常科学',published:'已发布',pillars:'主轴',total:'总计',secA:'A · 自然语言',secB:'B · 生命策略',secC:'C · 机器之问',secD:'D · 权力物理学',secE:'E · 日常科学'},
+  es:{all:'Todo',navA:'A Naturaleza',navB:'B Vida',navC:'C Máquina',navD:'D Poder',navE:'E Cotidiano',published:'Publicado',pillars:'Pilares',total:'Total',secA:'A · Leyes Naturales',secB:'B · Estrategias de Vida',secC:'C · Preguntas de Máquinas',secD:'D · Física del Poder',secE:'E · Ciencia Cotidiana'},
+  fr:{all:'Tout',navA:'A Nature',navB:'B Vie',navC:'C Machine',navD:'D Pouvoir',navE:'E Quotidien',published:'Publié',pillars:'Piliers',total:'Total',secA:'A · Lois Naturelles',secB:'B · Stratégies de Vie',secC:'C · Questions des Machines',secD:'D · Physique du Pouvoir',secE:'E · Science Quotidienne'},
+  de:{all:'Alle',navA:'A Natur',navB:'B Leben',navC:'C Maschine',navD:'D Macht',navE:'E Alltag',published:'Veröffentlicht',pillars:'Säulen',total:'Gesamt',secA:'A · Naturgesetze',secB:'B · Lebensstrategien',secC:'C · Maschinenfragen',secD:'D · Physik der Macht',secE:'E · Alltagswissenschaft'}
+};
+function setLang(l){
+  const t=IL_TRANS[l]||IL_TRANS.ko;
+  document.querySelector('.fb button[data-p="all"]').textContent=t.all;
+  document.querySelector('.fb button[data-p="A"]').textContent=t.navA;
+  document.querySelector('.fb button[data-p="B"]').textContent=t.navB;
+  document.querySelector('.fb button[data-p="C"]').textContent=t.navC;
+  document.querySelector('.fb button[data-p="D"]').textContent=t.navD;
+  document.querySelector('.fb button[data-p="E"]').textContent=t.navE;
+  const secs=document.querySelectorAll('.sec');
+  const secKeys=['secA','secB','secC','secD','secE'];
+  secs.forEach((s,i)=>{if(secKeys[i])s.firstChild.textContent=t[secKeys[i]]||s.firstChild.textContent});
+  const stls=document.querySelectorAll('.st-l');
+  if(stls[0])stls[0].textContent=t.published;
+  if(stls[1])stls[1].textContent=t.pillars;
+  if(stls[2])stls[2].textContent=t.total;
+  localStorage.setItem('il-lang',l);
+}
+(function(){const l=localStorage.getItem('il-lang')||'ko';document.getElementById('langSel').value=l;if(l!=='ko')setLang(l)})();
 </script>
 </body>
 </html>
