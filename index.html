@@ -77,8 +77,8 @@ header h1{font-family:'Playfair Display',serif;font-size:2em;font-weight:900;mar
 .tn{background:rgba(239,68,68,.12);color:#ef4444;animation:bl 2s infinite}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:.5}}
 .dt{font-size:10px;color:var(--mt);margin-left:auto;font-family:'Inter',sans-serif}
-.cd h3{font-size:14px;margin:5px 0 3px;font-weight:700;line-height:1.4}
-.cd .su{font-size:11.5px;color:var(--mt);line-height:1.5}
+.cd h3{font-size:14px;margin:5px 0 3px;font-weight:700;line-height:1.4;word-wrap:break-word;overflow-wrap:anywhere}
+.cd .su{font-size:11.5px;color:var(--mt);line-height:1.5;word-wrap:break-word;overflow-wrap:anywhere}
 .cr{font-size:10px;font-weight:600;margin-top:4px}
 .audio-btn{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;padding:4px 12px;border-radius:16px;background:rgba(99,102,241,.12);color:var(--ac);border:1px solid rgba(99,102,241,.25);cursor:pointer;text-decoration:none;transition:all .2s;margin-left:8px}
 .audio-btn:hover{background:rgba(99,102,241,.25);border-color:var(--ac);transform:scale(1.05)}
@@ -98,6 +98,10 @@ footer a{color:var(--ac);text-decoration:none}
 .mp{background:rgba(99,102,241,.05);color:var(--mt)}
 .me{color:rgba(255,255,255,.1)}
 @media(max-width:600px){.sp-t{font-size:2.2em}header h1{font-size:1.6em}.sts{gap:14px}.st-n{font-size:18px}.fb{gap:4px}.fb button{font-size:10px;padding:5px 10px}}
+.cd h3:lang(en),.cd h3:lang(de),.cd h3:lang(fr),.cd h3:lang(es){font-size:13px}
+.cd .su:lang(en),.cd .su:lang(de),.cd .su:lang(fr),.cd .su:lang(es){font-size:11px}
+html[lang=en] .cd h3,html[lang=de] .cd h3,html[lang=fr] .cd h3,html[lang=es] .cd h3{font-size:13px}
+html[lang=en] .cd .su,html[lang=de] .cd .su,html[lang=fr] .cd .su,html[lang=es] .cd .su{font-size:11px}
 </style>
 </head>
 <body>
