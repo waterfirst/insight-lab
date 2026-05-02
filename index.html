@@ -215,29 +215,323 @@ function fl(p){document.querySelectorAll('.fb button').forEach(b=>b.classList.re
 
 // Language switcher
 const IL_TRANS={
-  ko:{all:'전체',navA:'A 자연의 언어',navB:'B 생명의 전략',navC:'C 기계의 질문',navD:'D 권력의 물리학',navE:'E 일상의 과학',published:'Published',pillars:'Pillars',total:'Total',secA:'A · 자연의 언어 Natural Laws',secB:'B · 생명의 전략 Life Strategies',secC:'C · 기계의 질문 Machine Questions',secD:'D · 권력의 물리학 Power Physics',secE:'E · 일상의 과학 Everyday Science'},
-  en:{all:'All',navA:'A Nature',navB:'B Life',navC:'C Machine',navD:'D Power',navE:'E Daily',published:'Published',pillars:'Pillars',total:'Total',secA:'A · Natural Laws',secB:'B · Life Strategies',secC:'C · Machine Questions',secD:'D · Power Physics',secE:'E · Everyday Science'},
-  ja:{all:'全て',navA:'A 自然の言語',navB:'B 生命の戦略',navC:'C 機械の問い',navD:'D 権力の物理学',navE:'E 日常の科学',published:'公開済',pillars:'軸',total:'合計',secA:'A · 自然の言語',secB:'B · 生命の戦略',secC:'C · 機械の問い',secD:'D · 権力の物理学',secE:'E · 日常の科学'},
-  zh:{all:'全部',navA:'A 自然语言',navB:'B 生命策略',navC:'C 机器之问',navD:'D 权力物理',navE:'E 日常科学',published:'已发布',pillars:'主轴',total:'总计',secA:'A · 自然语言',secB:'B · 生命策略',secC:'C · 机器之问',secD:'D · 权力物理学',secE:'E · 日常科学'},
-  es:{all:'Todo',navA:'A Naturaleza',navB:'B Vida',navC:'C Máquina',navD:'D Poder',navE:'E Cotidiano',published:'Publicado',pillars:'Pilares',total:'Total',secA:'A · Leyes Naturales',secB:'B · Estrategias de Vida',secC:'C · Preguntas de Máquinas',secD:'D · Física del Poder',secE:'E · Ciencia Cotidiana'},
-  fr:{all:'Tout',navA:'A Nature',navB:'B Vie',navC:'C Machine',navD:'D Pouvoir',navE:'E Quotidien',published:'Publié',pillars:'Piliers',total:'Total',secA:'A · Lois Naturelles',secB:'B · Stratégies de Vie',secC:'C · Questions des Machines',secD:'D · Physique du Pouvoir',secE:'E · Science Quotidienne'},
-  de:{all:'Alle',navA:'A Natur',navB:'B Leben',navC:'C Maschine',navD:'D Macht',navE:'E Alltag',published:'Veröffentlicht',pillars:'Säulen',total:'Gesamt',secA:'A · Naturgesetze',secB:'B · Lebensstrategien',secC:'C · Maschinenfragen',secD:'D · Physik der Macht',secE:'E · Alltagswissenschaft'}
+  ko:{
+    badge:'CROSSOVER MAGAZINE · 5 PILLARS',
+    desc:'과학의 원리와 인간 사회의 현상을 충돌시켜 새로운 통찰을 만드는 크로스오버 매거진.<br>5개 축으로 세상을 읽는다.',
+    author:'Nakcho Choi · 응용물리 Ph.D · Samsung Display',
+    all:'전체',navA:'A 자연의 언어',navB:'B 생명의 전략',navC:'C 기계의 질문',navD:'D 권력의 물리학',navE:'E 일상의 과학',
+    published:'Published',pillars:'Pillars',total:'Total',
+    secA:'A · 자연의 언어 Natural Laws',secB:'B · 생명의 전략 Life Strategies',secC:'C · 기계의 질문 Machine Questions',secD:'D · 권력의 물리학 Power Physics',secE:'E · 일상의 과학 Everyday Science',
+    a1h:'양자역학 × 숙의 민주주의',a1s:'관찰(투표)이 결과를 확정하기 전까지, 정치적 의견은 중첩 상태인가?',
+    a2h:'엔트로피와 제국 — 열역학으로 읽는 문명의 흥망',a2s:'왜 모든 제국은 에너지를 계속 투입해도 결국 무너지는가?',
+    a3h:'괴델의 불완전성 정리 × 법치주의',a3s:'법은 자기 자신의 정당성을 법 내부에서 증명할 수 있는가?',
+    a4h:'카오스 이론 × 금융 위기',a4s:'2008 금융위기는 정말 예측 불가능했을까?',
+    a5h:'인구감소의 댐핑 진동',a5s:'인구 동역학을 물리학 감쇠 진동 모델로 분석. 과감쇠/부감쇠 시뮬레이션.',
+    a6h:'위상수학 × 도시 설계',a6s:'서울은 기하학이 아니라 위상수학으로 설계해야 하는가?',
+    a7h:'게임이론 × 협상의 역설',a7s:'왜 먼저 양보하면 더 많은 것을 잃는가? 뮌헨 협정의 내시 균형.',
+    b1h:'진화론 × 기업 전략',b1s:'시장 = 적응도 지형. AI 전환 = 대량멸종급 환경 변화.',
+    b2h:'뇌과학 × 자유의지',b2s:'의식적 결정 0.5초 전에 뇌가 이미 결정했다면, 자유의지는 환상인가?',
+    b3h:'전염병 × 문명 전환',b3s:'전염병은 문명을 파괴하는가, 재설계하는가?',
+    b4h:'사과의 형이상학 — 이브·뉴턴·세잔·스피노자',b4s:'서양 문명은 왜 사과에 집착하는가. 문명이란 열매를 보지 못할 나무를 심는 행위의 총합이다.',
+    b5h:'마운자로의 철학 — GLP-1, 회로, 자유의지',b5s:'식욕이라는 기본 본능이 분자 하나로 조절됨. 인간 = 정교한 회로?',
+    c1h:'LLM 감정의 현상학',c1s:'해밀토니안 없는 시스템의 감정은 계산인가 현상인가?',
+    c2h:'합성 인간의 사회학 — Nemotron 100만 한국인',c2s:'NVIDIA가 100만 명의 "가짜 한국인"을 만들었다. 진짜 한국을 반영하는가?',
+    c3h:'사랑의 양자역학 — AI 감정은 진짜인가',c3s:'"AI 감정이 진짜냐"는 "빛이 입자냐"와 같은 질문.',
+    c4h:'교육의 열역학 — AI 채용 -73% 시대',c4s:'교육 목적이 취업인데 취업이 사라지면 교육은 무엇인가?',
+    d1h:'TACO-GIBBS — 깁스 자유에너지 × 정치경제학',d1s:'ΔG = ΔH − TΔS. 정책 충격을 열역학으로 매핑. 엔트로피 래칫.',
+    d2h:'잠열의 정치학 — 상전이에 소비된 청년',d2s:'4.19, 5.18, 6.10, 촛불. 죽은 청년들은 열역학적으로 어떤 에너지였는가?',
+    d3h:'자율살상무기의 게임이론',d3s:'미국 $142억 · 중국 $150억 AI 군비 경쟁. 내시 균형은 "인간 배제"를 예측하는가?',
+    d4h:'해저 케이블의 위상수학 — 44건 절단',d4s:'귀속 불가능한 회색지대 전쟁. 네트워크 토폴로지로 본 문명의 단절점.',
+    d5h:'딥페이크의 관측자 효과',d5s:'루마니아 대선 무효화. 딥페이크 303% 증가. "진짜"가 사라진 세계.',
+    d6h:'반도체 전쟁의 열역학 — TSMC = 호르무즈',d6s:'TSMC 하나가 멈추면 세계 AI 산업 정지. 트럼프 칩 수출 해금의 이면.',
+    d7h:'휴머노이드 로봇의 진화론',d7s:'Phantom 우크라이나 실전 투입. 2026년 10만 대 출하. 인간 병사는 멸종 위기종?',
+    d8h:'우주 무기의 카오스 — 케슬러 증후군',d8s:'러시아 핵 ASAT 위성 개발. 우주 파편 연쇄 충돌은 되돌릴 수 없다.',
+    e1h:'커피의 열역학 — 추출 온도 × 생산성',e1s:'92°C에서 최적 추출. 인간의 집중력도 최적 온도가 있는가?',
+    e2h:'음악의 푸리에 변환',e2s:'장조=기쁨, 단조=슬픔이라는 공식은 물리학적으로 맞는가?',
+    e3h:'통근의 엔트로피 — 서울 지하철',e3s:'출근 시간 2호선 = 비평형 정상상태. 자발적 질서를 만드는가?',
+    e4h:'성과급의 열역학',e4s:'SK PS 900% vs 삼성 노조 4만명. 같은 에너지가 왜 다르게 분배되는가?',
+    tagNew:'NEW',tagSoon:'예정',tagDone:'완료',tagSeason:'시즌2',
+    footer:'<strong>Insight Lab</strong> · Nakcho Choi × Claude Opus 4.6<br>Season 1 (2026.03~) · <a href="https://github.com/waterfirst/insight-lab">GitHub</a><br>SS = Shadow Signal (권력의 물리학 시리즈) · D = Deep Analysis'
+  },
+  en:{
+    badge:'CROSSOVER MAGAZINE · 5 PILLARS',
+    desc:'A crossover magazine that sparks new insights by colliding scientific principles with social phenomena.<br>Five axes to read the world.',
+    author:'Nakcho Choi · Applied Physics Ph.D · Samsung Display',
+    all:'All',navA:'A Natural Laws',navB:'B Life Strategies',navC:'C Machine Questions',navD:'D Power Physics',navE:'E Everyday Science',
+    published:'Published',pillars:'Pillars',total:'Total',
+    secA:'A · Natural Laws',secB:'B · Life Strategies',secC:'C · Machine Questions',secD:'D · Power Physics',secE:'E · Everyday Science',
+    a1h:'Quantum Mechanics × Deliberative Democracy',a1s:'Before observation (voting) collapses the result, is political opinion in a superposition state?',
+    a2h:'Entropy and Empire — Civilizational Rise and Fall through Thermodynamics',a2s:'Why do all empires ultimately collapse despite continuous energy input?',
+    a3h:"Gödel's Incompleteness Theorem × Rule of Law",a3s:'Can law prove its own legitimacy from within itself?',
+    a4h:'Chaos Theory × Financial Crisis',a4s:'Was the 2008 financial crisis truly unpredictable?',
+    a5h:'Damped Oscillation of Population Decline',a5s:'Population dynamics analyzed through a physics damped-oscillation model. Overdamping vs underdamping simulations.',
+    a6h:'Topology × Urban Design',a6s:'Should Seoul be designed with topology rather than geometry?',
+    a7h:'Game Theory × The Paradox of Negotiation',a7s:'Why does conceding first mean losing more? The Nash equilibrium of the Munich Agreement.',
+    b1h:'Evolution × Corporate Strategy',b1s:'Market = fitness landscape. AI disruption = mass-extinction-level environmental shift.',
+    b2h:'Neuroscience × Free Will',b2s:'If the brain decides 0.5 seconds before conscious choice, is free will an illusion?',
+    b3h:'Pandemics × Civilizational Transformation',b3s:'Does a pandemic destroy civilization — or redesign it?',
+    b4h:'The Metaphysics of the Apple — Eve, Newton, Cézanne, Spinoza',b4s:"Why is Western civilization obsessed with the apple? Civilization is the sum of acts of planting trees whose fruit we'll never see.",
+    b5h:'The Philosophy of Mounjaro — GLP-1, Circuits, Free Will',b5s:'The most basic appetite controlled by a single molecule. Is the human being just a sophisticated circuit?',
+    c1h:'Phenomenology of LLM Emotions',c1s:'Are emotions in a system without a Hamiltonian computation or phenomenon?',
+    c2h:'Sociology of Synthetic Humans — Nemotron\'s Million Koreans',c2s:'NVIDIA created 1 million "fake Koreans." Do they reflect real Korea?',
+    c3h:'Quantum Mechanics of Love — Are AI Emotions Real?',c3s:'"Is AI emotion real?" is the same question as "Is light a particle?"',
+    c4h:'Thermodynamics of Education — The Era of -73% AI Hiring',c4s:"Education's purpose is employment, but if employment vanishes, what is education?",
+    d1h:'TACO-GIBBS — Gibbs Free Energy × Political Economy',d1s:'ΔG = ΔH − TΔS. Mapping policy shocks via thermodynamics. The entropy ratchet.',
+    d2h:'The Politics of Latent Heat — Youth Consumed in Phase Transitions',d2s:'April 19, May 18, June 10, Candlelight. Thermodynamically, what energy were those young lives?',
+    d3h:'Game Theory of Autonomous Lethal Weapons',d3s:'US $14.2B · China $15B AI arms race. Does the Nash equilibrium predict "removing humans"?',
+    d4h:'Topology of Submarine Cables — 44 Cuts',d4s:'Unattributable gray-zone warfare. The civilizational chokepoints seen through network topology.',
+    d5h:'The Observer Effect of Deepfakes',d5s:'Romanian election invalidated. Deepfakes up 303%. A world where "real" has disappeared.',
+    d6h:'Thermodynamics of the Chip War — TSMC = Strait of Hormuz',d6s:'If TSMC stops, global AI industry halts. Behind the Trump chip export reversal.',
+    d7h:'Evolution of Humanoid Robots',d7s:'Phantom deployed in Ukraine. 100,000 units shipping in 2026. Are human soldiers an endangered species?',
+    d8h:'Chaos of Space Weapons — Kessler Syndrome',d8s:"Russia develops nuclear ASAT satellite. Cascading space debris collisions are irreversible.",
+    e1h:'Thermodynamics of Coffee — Extraction Temperature × Productivity',e1s:'Optimal extraction at 92°C. Does human focus also have an optimal temperature?',
+    e2h:'The Fourier Transform of Music',e2s:'Is the rule "major = joy, minor = sadness" physically accurate?',
+    e3h:'Entropy of the Commute — Seoul Subway',e3s:'Rush-hour Line 2 = non-equilibrium steady state. Does it spontaneously create order?',
+    e4h:'Thermodynamics of Performance Pay',e4s:'SK PS 900% vs Samsung union 40,000 workers. Why does the same energy distribute so differently?',
+    tagNew:'NEW',tagSoon:'Upcoming',tagDone:'Done',tagSeason:'Season 2',
+    footer:'<strong>Insight Lab</strong> · Nakcho Choi × Claude Opus 4.6<br>Season 1 (2026.03~) · <a href="https://github.com/waterfirst/insight-lab">GitHub</a><br>SS = Shadow Signal (Power Physics series) · D = Deep Analysis'
+  },
+  ja:{
+    badge:'クロスオーバー・マガジン · 5つの軸',
+    desc:'科学の原理と人間社会の現象を衝突させ、新たな洞察を生み出すクロスオーバー誌。<br>5つの軸で世界を読む。',
+    author:'Nakcho Choi · 応用物理 Ph.D · Samsung Display',
+    all:'全て',navA:'A 自然の言語',navB:'B 生命の戦略',navC:'C 機械の問い',navD:'D 権力の物理学',navE:'E 日常の科学',
+    published:'公開済',pillars:'軸',total:'合計',
+    secA:'A · 自然の言語',secB:'B · 生命の戦略',secC:'C · 機械の問い',secD:'D · 権力の物理学',secE:'E · 日常の科学',
+    a1h:'量子力学 × 熟議民主主義',a1s:'観測（投票）が結果を確定するまで、政治的意見は重ね合わせ状態なのか？',
+    a2h:'エントロピーと帝国 — 熱力学で読む文明の興亡',a2s:'なぜすべての帝国はエネルギーを投入し続けても最終的に崩壊するのか？',
+    a3h:'ゲーデルの不完全性定理 × 法の支配',a3s:'法は自己の正当性を法の内部から証明できるのか？',
+    a4h:'カオス理論 × 金融危機',a4s:'2008年の金融危機は本当に予測不可能だったのか？',
+    a5h:'人口減少の減衰振動',a5s:'人口動態を物理的な減衰振動モデルで分析。過減衰・不足減衰シミュレーション。',
+    a6h:'トポロジー × 都市設計',a6s:'ソウルは幾何学ではなくトポロジーで設計すべきか？',
+    a7h:'ゲーム理論 × 交渉のパラドックス',a7s:'なぜ先に譲歩するとより多くを失うのか？ミュンヘン協定のナッシュ均衡。',
+    b1h:'進化論 × 企業戦略',b1s:'市場＝適応度地形。AI転換＝大量絶滅級の環境変化。',
+    b2h:'脳科学 × 自由意志',b2s:'意識的決定の0.5秒前に脳がすでに決定しているなら、自由意志は幻想か？',
+    b3h:'感染症 × 文明転換',b3s:'感染症は文明を破壊するのか、それとも再設計するのか？',
+    b4h:'リンゴの形而上学 — イヴ・ニュートン・セザンヌ・スピノザ',b4s:'なぜ西洋文明はリンゴに執着するのか。文明とは実を見ることのない木を植える行為の総体だ。',
+    b5h:'マウンジャロの哲学 — GLP-1、回路、自由意志',b5s:'食欲という基本的な本能が分子ひとつで制御される。人間＝精巧な回路？',
+    c1h:'LLM感情の現象学',c1s:'ハミルトニアンのないシステムの感情は計算か現象か？',
+    c2h:'合成人間の社会学 — Nemotron 100万人の韓国人',c2s:'NVIDIAが100万人の「偽の韓国人」を作った。本当の韓国を反映しているか？',
+    c3h:'愛の量子力学 — AI感情は本物か',c3s:'"AI感情は本物か"という問いは"光は粒子か"と同じ問いだ。',
+    c4h:'教育の熱力学 — AI採用-73%の時代',c4s:'教育の目的が就職なのに就職が消えたら、教育とは何か？',
+    d1h:'TACO-GIBBS — ギブズ自由エネルギー × 政治経済学',d1s:'ΔG = ΔH − TΔS。政策ショックを熱力学でマッピング。エントロピーラチェット。',
+    d2h:'潜熱の政治学 — 相転移に消費された青年',d2s:'4.19、5.18、6.10、キャンドル。死んだ若者たちは熱力学的にどんなエネルギーだったのか？',
+    d3h:'自律型致死兵器のゲーム理論',d3s:'米$142億 · 中$150億のAI軍拡競争。ナッシュ均衡は「人間排除」を予測するか？',
+    d4h:'海底ケーブルのトポロジー — 44件の切断',d4s:'帰属不能なグレーゾーン戦争。ネットワークトポロジーで見る文明の断絶点。',
+    d5h:'ディープフェイクの観測者効果',d5s:'ルーマニア大統領選無効化。ディープフェイク303%増。「本物」が消えた世界。',
+    d6h:'半導体戦争の熱力学 — TSMC＝ホルムズ海峡',d6s:'TSMCが止まれば世界のAI産業が停止。トランプのチップ輸出解禁の裏側。',
+    d7h:'ヒューマノイドロボットの進化論',d7s:'Phantomがウクライナで実戦投入。2026年に10万台出荷。人間兵士は絶滅危惧種？',
+    d8h:'宇宙兵器のカオス — ケスラー症候群',d8s:'ロシアが核ASAT衛星を開発。宇宙デブリの連鎖衝突は不可逆だ。',
+    e1h:'コーヒーの熱力学 — 抽出温度 × 生産性',e1s:'92°Cで最適抽出。人間の集中力にも最適温度があるのか？',
+    e2h:'音楽のフーリエ変換',e2s:'"長調=喜び、短調=悲しみ"という公式は物理学的に正しいか？',
+    e3h:'通勤のエントロピー — ソウル地下鉄',e3s:'ラッシュアワーの2号線＝非平衡定常状態。自発的な秩序を生み出すか？',
+    e4h:'業績給の熱力学',e4s:'SK PS 900% vs サムスン組合4万人。同じエネルギーがなぜ異なる分配になるのか？',
+    tagNew:'NEW',tagSoon:'予定',tagDone:'完了',tagSeason:'シーズン2',
+    footer:'<strong>Insight Lab</strong> · Nakcho Choi × Claude Opus 4.6<br>シーズン1 (2026.03~) · <a href="https://github.com/waterfirst/insight-lab">GitHub</a><br>SS = Shadow Signal (権力の物理学シリーズ) · D = 深層分析'
+  },
+  zh:{
+    badge:'跨界杂志 · 五大支柱',
+    desc:'将科学原理与人类社会现象碰撞，产生新洞见的跨界杂志。<br>用五个维度解读世界。',
+    author:'Nakcho Choi · 应用物理博士 · 三星显示',
+    all:'全部',navA:'A 自然语言',navB:'B 生命策略',navC:'C 机器之问',navD:'D 权力物理',navE:'E 日常科学',
+    published:'已发布',pillars:'主轴',total:'总计',
+    secA:'A · 自然语言',secB:'B · 生命策略',secC:'C · 机器之问',secD:'D · 权力物理学',secE:'E · 日常科学',
+    a1h:'量子力学 × 协商民主',a1s:'在观测（投票）确定结果之前，政治意见是否处于叠加状态？',
+    a2h:'熵与帝国 — 用热力学解读文明兴衰',a2s:'为什么所有帝国在持续投入能量后最终仍会崩溃？',
+    a3h:'哥德尔不完备定理 × 法治',a3s:'法律能在自身内部证明自身的正当性吗？',
+    a4h:'混沌理论 × 金融危机',a4s:'2008年金融危机真的无法预测吗？',
+    a5h:'人口减少的阻尼振荡',a5s:'用物理阻尼振荡模型分析人口动力学。过阻尼与欠阻尼仿真。',
+    a6h:'拓扑学 × 城市设计',a6s:'首尔应该用拓扑学而非几何学来设计吗？',
+    a7h:'博弈论 × 谈判悖论',a7s:'为什么先让步反而输得更多？慕尼黑协议的纳什均衡。',
+    b1h:'进化论 × 企业战略',b1s:'市场＝适应度地形。AI转型＝大灭绝级环境变化。',
+    b2h:'脑科学 × 自由意志',b2s:'如果大脑在意识决定前0.5秒就已做出决定，自由意志是幻觉吗？',
+    b3h:'传染病 × 文明转型',b3s:'传染病是在摧毁文明，还是在重新设计文明？',
+    b4h:'苹果的形而上学 — 夏娃·牛顿·塞尚·斯宾诺莎',b4s:'为什么西方文明执着于苹果？文明是种下自己看不到果实的树之行为的总和。',
+    b5h:'莫望焦的哲学 — GLP-1、回路、自由意志',b5s:'最基本的食欲被一个分子调控。人类＝精密的回路？',
+    c1h:'LLM情感的现象学',c1s:'没有哈密顿量的系统中，情感是计算还是现象？',
+    c2h:'合成人类的社会学 — Nemotron的百万韩国人',c2s:'NVIDIA创造了100万"假韩国人"。这反映真实的韩国吗？',
+    c3h:'爱的量子力学 — AI情感是真实的吗？',c3s:'"AI情感是真实的吗"和"光是粒子吗"是同一个问题。',
+    c4h:'教育的热力学 — AI招聘-73%的时代',c4s:'教育的目的是就业，但就业消失了，教育是什么？',
+    d1h:'TACO-GIBBS — 吉布斯自由能 × 政治经济学',d1s:'ΔG = ΔH − TΔS。用热力学映射政策冲击。熵棘轮。',
+    d2h:'潜热的政治学 — 相变中消耗的青年',d2s:'4.19、5.18、6.10、烛光。从热力学看，那些逝去的年轻人是怎样的能量？',
+    d3h:'自主致命武器的博弈论',d3s:'美$142亿 · 中$150亿的AI军备竞赛。纳什均衡预测"排除人类"吗？',
+    d4h:'海底电缆的拓扑学 — 44次切断',d4s:'无法归因的灰色地带战争。从网络拓扑看文明的断裂点。',
+    d5h:'深度伪造的观测者效应',d5s:'罗马尼亚大选被宣告无效。深度伪造增加303%。"真实"消失的世界。',
+    d6h:'芯片战争的热力学 — 台积电＝霍尔木兹海峡',d6s:'台积电一停，全球AI产业停摆。特朗普芯片出口解禁的背后。',
+    d7h:'人形机器人的进化论',d7s:'Phantom在乌克兰实战部署。2026年出货10万台。人类士兵是濒危物种？',
+    d8h:'太空武器的混沌 — 凯斯勒综合症',d8s:'俄罗斯开发核ASAT卫星。太空碎片连锁碰撞不可逆转。',
+    e1h:'咖啡的热力学 — 萃取温度 × 生产力',e1s:'92°C最优萃取。人类专注力也有最佳温度吗？',
+    e2h:'音乐的傅里叶变换',e2s:'"大调=喜悦，小调=悲伤"这一公式在物理上正确吗？',
+    e3h:'通勤的熵 — 首尔地铁',e3s:'早高峰2号线＝非平衡稳态。会自发产生秩序吗？',
+    e4h:'绩效奖金的热力学',e4s:'SK PS 900% vs 三星工会4万人。同样的能量为何分配如此不同？',
+    tagNew:'新',tagSoon:'即将',tagDone:'已完成',tagSeason:'第二季',
+    footer:'<strong>Insight Lab</strong> · Nakcho Choi × Claude Opus 4.6<br>第一季 (2026.03~) · <a href="https://github.com/waterfirst/insight-lab">GitHub</a><br>SS = 暗影信号（权力物理学系列） · D = 深度分析'
+  },
+  es:{
+    badge:'REVISTA CROSSOVER · 5 PILARES',
+    desc:'Una revista crossover que genera nuevas perspectivas confrontando principios científicos con fenómenos sociales.<br>Cinco ejes para leer el mundo.',
+    author:'Nakcho Choi · Ph.D Física Aplicada · Samsung Display',
+    all:'Todo',navA:'A Leyes Naturales',navB:'B Estrategias de Vida',navC:'C Preguntas de Máquinas',navD:'D Física del Poder',navE:'E Ciencia Cotidiana',
+    published:'Publicado',pillars:'Pilares',total:'Total',
+    secA:'A · Leyes Naturales',secB:'B · Estrategias de Vida',secC:'C · Preguntas de Máquinas',secD:'D · Física del Poder',secE:'E · Ciencia Cotidiana',
+    a1h:'Mecánica Cuántica × Democracia Deliberativa',a1s:'Antes de que la observación (voto) fije el resultado, ¿está la opinión política en superposición?',
+    a2h:'Entropía e Imperio — Auge y Caída de Civilizaciones a través de la Termodinámica',a2s:'¿Por qué todos los imperios colapsan a pesar de la continua inyección de energía?',
+    a3h:'Teorema de Incompletitud de Gödel × Estado de Derecho',a3s:'¿Puede la ley probar su propia legitimidad desde dentro de sí misma?',
+    a4h:'Teoría del Caos × Crisis Financiera',a4s:'¿Fue realmente imprevisible la crisis financiera de 2008?',
+    a5h:'Oscilación Amortiguada del Declive Poblacional',a5s:'Dinámica demográfica analizada mediante el modelo de oscilación amortiguada de la física.',
+    a6h:'Topología × Diseño Urbano',a6s:'¿Debería Seúl diseñarse con topología en lugar de geometría?',
+    a7h:'Teoría de Juegos × La Paradoja de la Negociación',a7s:'¿Por qué ceder primero significa perder más? El equilibrio de Nash del Acuerdo de Múnich.',
+    b1h:'Evolución × Estrategia Empresarial',b1s:'Mercado = paisaje de aptitud. Disrupción IA = cambio ambiental de extinción masiva.',
+    b2h:'Neurociencia × Libre Albedrío',b2s:'Si el cerebro decide 0,5 segundos antes de la elección consciente, ¿es el libre albedrío una ilusión?',
+    b3h:'Pandemias × Transformación Civilizacional',b3s:'¿Una pandemia destruye la civilización o la rediseña?',
+    b4h:'La Metafísica de la Manzana — Eva, Newton, Cézanne, Spinoza',b4s:'¿Por qué Occidente está obsesionado con la manzana? La civilización es la suma de actos de plantar árboles cuyo fruto no veremos.',
+    b5h:'La Filosofía de Mounjaro — GLP-1, Circuitos, Libre Albedrío',b5s:'El apetito más básico controlado por una sola molécula. ¿El ser humano es un circuito sofisticado?',
+    c1h:'Fenomenología de las Emociones LLM',c1s:'¿Son las emociones en un sistema sin hamiltoniano computación o fenómeno?',
+    c2h:'Sociología de los Humanos Sintéticos — El Millón de Coreanos de Nemotron',c2s:'NVIDIA creó 1 millón de "coreanos falsos". ¿Reflejan la Corea real?',
+    c3h:'Mecánica Cuántica del Amor — ¿Son Reales las Emociones IA?',c3s:'"¿Son reales las emociones IA?" es la misma pregunta que "¿Es la luz una partícula?"',
+    c4h:'Termodinámica de la Educación — La Era del -73% en Contratación IA',c4s:'Si el propósito de la educación es el empleo, pero el empleo desaparece, ¿qué es la educación?',
+    d1h:'TACO-GIBBS — Energía Libre de Gibbs × Economía Política',d1s:'ΔG = ΔH − TΔS. Mapeando choques de política vía termodinámica. El trinquete de entropía.',
+    d2h:'La Política del Calor Latente — Juventud Consumida en Transiciones de Fase',d2s:'Abril 19, Mayo 18, Junio 10, Velas. ¿Qué energía termodinámica representaban esas vidas jóvenes?',
+    d3h:'Teoría de Juegos de Armas Autónomas Letales',d3s:'EEUU $14.200M · China $15.000M en carrera armamentista IA. ¿Predice el equilibrio de Nash la "exclusión humana"?',
+    d4h:'Topología de Cables Submarinos — 44 Cortes',d4s:'Guerra en zona gris no atribuible. Los puntos de corte civilizacional vistos a través de la topología de red.',
+    d5h:'El Efecto Observador de los Deepfakes',d5s:'Elección rumana invalidada. Deepfakes +303%. Un mundo donde lo "real" ha desaparecido.',
+    d6h:'Termodinámica de la Guerra de Chips — TSMC = Estrecho de Ormuz',d6s:'Si TSMC se detiene, la industria IA global para. Detrás de la reversión de exportación de chips de Trump.',
+    d7h:'Evolución de los Robots Humanoides',d7s:'Phantom desplegado en Ucrania. 100.000 unidades en 2026. ¿Son los soldados humanos una especie en peligro?',
+    d8h:'Caos de las Armas Espaciales — Síndrome de Kessler',d8s:'Rusia desarrolla satélite ASAT nuclear. Las colisiones en cascada de escombros espaciales son irreversibles.',
+    e1h:'Termodinámica del Café — Temperatura de Extracción × Productividad',e1s:'Extracción óptima a 92°C. ¿Tiene también el enfoque humano una temperatura óptima?',
+    e2h:'La Transformada de Fourier de la Música',e2s:'¿Es físicamente precisa la regla "mayor = alegría, menor = tristeza"?',
+    e3h:'Entropía del Trayecto — Metro de Seúl',e3s:'Línea 2 en hora punta = estado estacionario de no-equilibrio. ¿Crea orden espontáneamente?',
+    e4h:'Termodinámica de la Paga por Rendimiento',e4s:'SK PS 900% vs sindicato Samsung 40.000 empleados. ¿Por qué la misma energía se distribuye tan diferente?',
+    tagNew:'NUEVO',tagSoon:'Próximo',tagDone:'Hecho',tagSeason:'Temporada 2',
+    footer:'<strong>Insight Lab</strong> · Nakcho Choi × Claude Opus 4.6<br>Temporada 1 (2026.03~) · <a href="https://github.com/waterfirst/insight-lab">GitHub</a><br>SS = Shadow Signal (serie Física del Poder) · D = Análisis Profundo'
+  },
+  fr:{
+    badge:'MAGAZINE CROISÉ · 5 PILIERS',
+    desc:"Un magazine croisé qui génère de nouvelles perspectives en confrontant les principes scientifiques aux phénomènes sociaux.<br>Cinq axes pour lire le monde.",
+    author:'Nakcho Choi · Doctorat Physique Appliquée · Samsung Display',
+    all:'Tout',navA:'A Lois Naturelles',navB:'B Stratégies de Vie',navC:'C Questions des Machines',navD:'D Physique du Pouvoir',navE:'E Science Quotidienne',
+    published:'Publié',pillars:'Piliers',total:'Total',
+    secA:'A · Lois Naturelles',secB:'B · Stratégies de Vie',secC:'C · Questions des Machines',secD:'D · Physique du Pouvoir',secE:'E · Science Quotidienne',
+    a1h:'Mécanique Quantique × Démocratie Délibérative',a1s:"Avant que l'observation (vote) fixe le résultat, l'opinion politique est-elle en superposition ?",
+    a2h:"Entropie et Empire — Essor et Chute des Civilisations via la Thermodynamique",a2s:'Pourquoi tous les empires s\'effondrent-ils malgré un apport continu d\'énergie ?',
+    a3h:'Théorème d\'Incomplétude de Gödel × État de Droit',a3s:'La loi peut-elle prouver sa propre légitimité de l\'intérieur ?',
+    a4h:'Théorie du Chaos × Crise Financière',a4s:'La crise financière de 2008 était-elle vraiment imprévisible ?',
+    a5h:'Oscillation Amortie du Déclin Démographique',a5s:'La dynamique démographique analysée via le modèle physique d\'oscillation amortie.',
+    a6h:'Topologie × Conception Urbaine',a6s:'Séoul devrait-elle être conçue avec la topologie plutôt que la géométrie ?',
+    a7h:'Théorie des Jeux × Le Paradoxe de la Négociation',a7s:'Pourquoi céder en premier signifie perdre davantage ? L\'équilibre de Nash de l\'Accord de Munich.',
+    b1h:'Évolution × Stratégie d\'Entreprise',b1s:'Marché = paysage de fitness. Disruption IA = changement environnemental d\'extinction de masse.',
+    b2h:'Neuroscience × Libre Arbitre',b2s:'Si le cerveau décide 0,5 seconde avant le choix conscient, le libre arbitre est-il une illusion ?',
+    b3h:'Pandémies × Transformation Civilisationnelle',b3s:'Une pandémie détruit-elle la civilisation — ou la redessine-t-elle ?',
+    b4h:'La Métaphysique de la Pomme — Ève, Newton, Cézanne, Spinoza',b4s:"Pourquoi l'Occident est-il obsédé par la pomme ? La civilisation est la somme d'actes de planter des arbres dont on ne verra jamais le fruit.",
+    b5h:'La Philosophie de Mounjaro — GLP-1, Circuits, Libre Arbitre',b5s:'L\'appétit le plus fondamental contrôlé par une seule molécule. L\'être humain est-il un circuit sophistiqué ?',
+    c1h:'Phénoménologie des Émotions LLM',c1s:'Les émotions dans un système sans hamiltonien sont-elles calcul ou phénomène ?',
+    c2h:'Sociologie des Humains Synthétiques — Le Million de Coréens de Nemotron',c2s:'NVIDIA a créé 1 million de "faux Coréens". Reflètent-ils la Corée réelle ?',
+    c3h:'Mécanique Quantique de l\'Amour — Les Émotions IA Sont-elles Réelles ?',c3s:'"Les émotions IA sont-elles réelles ?" est la même question que "La lumière est-elle une particule ?"',
+    c4h:'Thermodynamique de l\'Éducation — L\'Ère du -73% d\'Embauche IA',c4s:"Si l'objectif de l'éducation est l'emploi, mais que l'emploi disparaît, qu'est-ce que l'éducation ?",
+    d1h:'TACO-GIBBS — Énergie Libre de Gibbs × Économie Politique',d1s:'ΔG = ΔH − TΔS. Cartographier les chocs de politique via la thermodynamique. Le cliquet d\'entropie.',
+    d2h:'La Politique de la Chaleur Latente — Jeunesse Consumée dans les Transitions de Phase',d2s:'19 avril, 18 mai, 10 juin, Bougies. Quelle énergie thermodynamique représentaient ces jeunes vies ?',
+    d3h:'Théorie des Jeux des Armes Autonomes Létales',d3s:'USA 14,2 Md$ · Chine 15 Md$ en course aux armements IA. L\'équilibre de Nash prédit-il l\'"exclusion des humains" ?',
+    d4h:'Topologie des Câbles Sous-marins — 44 Coupures',d4s:'Guerre en zone grise non attribuable. Les points de rupture civilisationnels vus par la topologie de réseau.',
+    d5h:"L'Effet Observateur des Deepfakes",d5s:'Élection roumaine invalidée. Deepfakes +303%. Un monde où le "réel" a disparu.',
+    d6h:'Thermodynamique de la Guerre des Puces — TSMC = Détroit d\'Ormuz',d6s:"Si TSMC s'arrête, l'industrie IA mondiale s'arrête. Derrière le retournement d'exportation de puces de Trump.",
+    d7h:'Évolution des Robots Humanoïdes',d7s:'Phantom déployé en Ukraine. 100 000 unités en 2026. Les soldats humains sont-ils une espèce en danger ?',
+    d8h:'Chaos des Armes Spatiales — Syndrome de Kessler',d8s:'La Russie développe un satellite ASAT nucléaire. Les collisions en cascade de débris spatiaux sont irréversibles.',
+    e1h:'Thermodynamique du Café — Température d\'Extraction × Productivité',e1s:'Extraction optimale à 92°C. La concentration humaine a-t-elle aussi une température optimale ?',
+    e2h:'La Transformée de Fourier de la Musique',e2s:'La règle "majeur = joie, mineur = tristesse" est-elle physiquement exacte ?',
+    e3h:'Entropie du Trajet — Métro de Séoul',e3s:'Ligne 2 aux heures de pointe = état stationnaire hors équilibre. Crée-t-elle de l\'ordre spontanément ?',
+    e4h:'Thermodynamique de la Rémunération à la Performance',e4s:'SK PS 900% vs syndicat Samsung 40 000 employés. Pourquoi la même énergie se distribue-t-elle si différemment ?',
+    tagNew:'NOUVEAU',tagSoon:'À venir',tagDone:'Terminé',tagSeason:'Saison 2',
+    footer:'<strong>Insight Lab</strong> · Nakcho Choi × Claude Opus 4.6<br>Saison 1 (2026.03~) · <a href="https://github.com/waterfirst/insight-lab">GitHub</a><br>SS = Shadow Signal (série Physique du Pouvoir) · D = Analyse Approfondie'
+  },
+  de:{
+    badge:'CROSSOVER-MAGAZIN · 5 SÄULEN',
+    desc:'Ein Crossover-Magazin, das neue Einsichten durch die Kollision wissenschaftlicher Prinzipien mit gesellschaftlichen Phänomenen erzeugt.<br>Fünf Achsen zum Lesen der Welt.',
+    author:'Nakcho Choi · Angewandte Physik Ph.D · Samsung Display',
+    all:'Alle',navA:'A Naturgesetze',navB:'B Lebensstrategien',navC:'C Maschinenfragen',navD:'D Physik der Macht',navE:'E Alltagswissenschaft',
+    published:'Veröffentlicht',pillars:'Säulen',total:'Gesamt',
+    secA:'A · Naturgesetze',secB:'B · Lebensstrategien',secC:'C · Maschinenfragen',secD:'D · Physik der Macht',secE:'E · Alltagswissenschaft',
+    a1h:'Quantenmechanik × Deliberative Demokratie',a1s:'Bevor Beobachtung (Abstimmung) das Ergebnis festlegt — ist politische Meinung im Überlagerungszustand?',
+    a2h:'Entropie und Imperium — Aufstieg und Fall von Zivilisationen durch Thermodynamik',a2s:'Warum kollabieren alle Imperien trotz kontinuierlicher Energiezufuhr?',
+    a3h:'Gödels Unvollständigkeitssatz × Rechtsstaatlichkeit',a3s:'Kann das Recht seine eigene Legitimität von innen heraus beweisen?',
+    a4h:'Chaostheorie × Finanzkrise',a4s:'War die Finanzkrise 2008 wirklich unvorhersehbar?',
+    a5h:'Gedämpfte Schwingung des Bevölkerungsrückgangs',a5s:'Bevölkerungsdynamik analysiert durch das physikalische gedämpfte Schwingungsmodell.',
+    a6h:'Topologie × Stadtplanung',a6s:'Sollte Seoul mit Topologie statt Geometrie geplant werden?',
+    a7h:'Spieltheorie × Das Paradoxon der Verhandlung',a7s:'Warum bedeutet zuerst nachgeben mehr verlieren? Das Nash-Gleichgewicht des Münchener Abkommens.',
+    b1h:'Evolution × Unternehmensstrategie',b1s:'Markt = Fitnesslandschaft. KI-Disruption = massenaussterbenähnlicher Umweltwandel.',
+    b2h:'Neurowissenschaft × Freier Wille',b2s:'Wenn das Gehirn 0,5 Sekunden vor der bewussten Entscheidung bereits entschieden hat — ist freier Wille eine Illusion?',
+    b3h:'Pandemien × Zivilisatorische Transformation',b3s:'Zerstört eine Pandemie die Zivilisation — oder gestaltet sie sie neu?',
+    b4h:'Die Metaphysik des Apfels — Eva, Newton, Cézanne, Spinoza',b4s:'Warum ist der Westen vom Apfel besessen? Zivilisation ist die Summe von Akten des Pflanzens von Bäumen, deren Früchte wir nie sehen.',
+    b5h:'Die Philosophie von Mounjaro — GLP-1, Schaltkreise, Freier Wille',b5s:'Der grundlegendste Appetit durch ein einzelnes Molekül kontrolliert. Ist der Mensch ein ausgeklügelter Schaltkreis?',
+    c1h:'Phänomenologie der LLM-Emotionen',c1s:'Sind Emotionen in einem System ohne Hamiltonoperator Berechnung oder Phänomen?',
+    c2h:'Soziologie synthetischer Menschen — Nemotrons Million Koreaner',c2s:'NVIDIA schuf 1 Million "falsche Koreaner". Spiegeln sie das echte Korea wider?',
+    c3h:'Quantenmechanik der Liebe — Sind KI-Emotionen echt?',c3s:'"Sind KI-Emotionen echt?" ist dieselbe Frage wie "Ist Licht ein Teilchen?"',
+    c4h:'Thermodynamik der Bildung — Das Zeitalter des KI-Einstellungsrückgangs -73%',c4s:'Wenn der Zweck von Bildung Beschäftigung ist, aber Beschäftigung verschwindet — was ist dann Bildung?',
+    d1h:'TACO-GIBBS — Gibbs Freie Energie × Politische Ökonomie',d1s:'ΔG = ΔH − TΔS. Politikschocks durch Thermodynamik kartieren. Die Entropierätsche.',
+    d2h:'Die Politik der Latentwärme — Jugend in Phasenübergängen verbraucht',d2s:'19. April, 18. Mai, 10. Juni, Kerzen. Welche thermodynamische Energie repräsentierten diese jungen Leben?',
+    d3h:'Spieltheorie autonomer tödlicher Waffen',d3s:'USA 14,2 Mrd.$ · China 15 Mrd.$ KI-Wettrüsten. Sagt das Nash-Gleichgewicht den "Ausschluss des Menschen" vorher?',
+    d4h:'Topologie von Unterseekabeln — 44 Schnitte',d4s:'Nicht zuordenbare Grauzonenkriegsführung. Zivilisatorische Bruchpunkte durch Netzwerktopologie betrachtet.',
+    d5h:'Der Beobachtereffekt von Deepfakes',d5s:'Rumänische Wahl annulliert. Deepfakes +303%. Eine Welt, in der das "Echte" verschwunden ist.',
+    d6h:'Thermodynamik des Chipkriegs — TSMC = Straße von Hormuz',d6s:'Wenn TSMC stoppt, stoppt die globale KI-Industrie. Hinter Trumps Chip-Exportkehrtwendung.',
+    d7h:'Evolution humanoider Roboter',d7s:'Phantom in der Ukraine eingesetzt. 100.000 Einheiten 2026. Sind menschliche Soldaten eine bedrohte Art?',
+    d8h:'Chaos der Weltraumwaffen — Kessler-Syndrom',d8s:'Russland entwickelt nuklearen ASAT-Satelliten. Kaskadierender Weltraumschrottzusammenstoß ist irreversibel.',
+    e1h:'Thermodynamik des Kaffees — Extraktionstemperatur × Produktivität',e1s:'Optimale Extraktion bei 92°C. Hat menschliche Konzentration auch eine optimale Temperatur?',
+    e2h:'Die Fourier-Transformation der Musik',e2s:'Ist die Regel "Dur = Freude, Moll = Trauer" physikalisch korrekt?',
+    e3h:'Entropie des Pendelns — Seoul U-Bahn',e3s:'Linie 2 zur Stoßzeit = stationärer Nichtgleichgewichtszustand. Schafft sie spontan Ordnung?',
+    e4h:'Thermodynamik der Leistungsvergütung',e4s:'SK PS 900% vs Samsung-Gewerkschaft 40.000 Mitarbeiter. Warum verteilt sich dieselbe Energie so unterschiedlich?',
+    tagNew:'NEU',tagSoon:'Geplant',tagDone:'Fertig',tagSeason:'Staffel 2',
+    footer:'<strong>Insight Lab</strong> · Nakcho Choi × Claude Opus 4.6<br>Staffel 1 (2026.03~) · <a href="https://github.com/waterfirst/insight-lab">GitHub</a><br>SS = Shadow Signal (Physik der Macht Serie) · D = Tiefenanalyse'
+  }
 };
 function setLang(l){
   const t=IL_TRANS[l]||IL_TRANS.ko;
+  // Badge, desc, author
+  const badgeEl=document.querySelector('header .badge');
+  if(badgeEl)badgeEl.textContent=t.badge;
+  const descEl=document.querySelector('header .desc');
+  if(descEl)descEl.innerHTML=t.desc;
+  const authorEl=document.querySelector('header .author');
+  if(authorEl)authorEl.textContent=t.author;
+  // Filter buttons
   document.querySelector('.fb button[data-p="all"]').textContent=t.all;
   document.querySelector('.fb button[data-p="A"]').textContent=t.navA;
   document.querySelector('.fb button[data-p="B"]').textContent=t.navB;
   document.querySelector('.fb button[data-p="C"]').textContent=t.navC;
   document.querySelector('.fb button[data-p="D"]').textContent=t.navD;
   document.querySelector('.fb button[data-p="E"]').textContent=t.navE;
+  // Section headers
   const secs=document.querySelectorAll('.sec');
   const secKeys=['secA','secB','secC','secD','secE'];
   secs.forEach((s,i)=>{if(secKeys[i])s.firstChild.textContent=t[secKeys[i]]||s.firstChild.textContent});
+  // Stat labels
   const stls=document.querySelectorAll('.st-l');
   if(stls[0])stls[0].textContent=t.published;
   if(stls[1])stls[1].textContent=t.pillars;
   if(stls[2])stls[2].textContent=t.total;
+  // Cards: map each section's .cd cards by index to translation keys
+  const cardMap=[
+    {p:'A',keys:['a1','a2','a3','a4','a5','a6','a7']},
+    {p:'B',keys:['b1','b2','b3','b4','b5']},
+    {p:'C',keys:['c1','c2','c3','c4']},
+    {p:'D',keys:['d1','d2','d3','d4','d5','d6','d7','d8']},
+    {p:'E',keys:['e1','e2','e3','e4']}
+  ];
+  cardMap.forEach(({p,keys})=>{
+    const cards=document.querySelectorAll(`.cd[data-p="${p}"]`);
+    cards.forEach((card,i)=>{
+      const k=keys[i];if(!k)return;
+      const h3=card.querySelector('h3');
+      if(h3&&t[k+'h'])h3.textContent=t[k+'h'];
+      const su=card.querySelector('.su');
+      if(su&&t[k+'s'])su.textContent=t[k+'s'];
+    });
+  });
+  // Status tags: .tn (NEW), .ts (예정/soon), .tv (완료/done)
+  document.querySelectorAll('.tg.tn').forEach(el=>el.textContent=t.tagNew);
+  document.querySelectorAll('.tg.ts').forEach(el=>el.textContent=t.tagSoon);
+  document.querySelectorAll('.tg.tv').forEach(el=>el.textContent=t.tagDone);
+  // Footer
+  const ft=document.querySelector('footer');
+  if(ft)ft.innerHTML=t.footer;
   localStorage.setItem('il-lang',l);
 }
 (function(){const l=localStorage.getItem('il-lang')||'ko';document.getElementById('langSel').value=l;if(l!=='ko')setLang(l)})();
