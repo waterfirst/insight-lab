@@ -53,6 +53,7 @@ header h1{font-family:'Playfair Display',serif;font-size:2em;font-weight:900;mar
 .fb button[data-p="C"].on{background:var(--pc)}
 .fb button[data-p="D"].on{background:var(--pd)}
 .fb button[data-p="E"].on{background:var(--pe)}
+.fb button[data-p="latest"].on{background:#e8a87c}
 .sec{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;margin:24px 0 10px;max-width:700px;width:100%;padding-left:4px;display:flex;align-items:center;gap:10px}
 .sec::after{content:'';flex:1;height:1px;background:var(--bd)}
 .sa{color:var(--pa)}.sb{color:var(--pb)}.sc{color:var(--pc)}.sd{color:var(--pd)}.se{color:var(--pe)}
@@ -144,12 +145,13 @@ html:not([lang=ko]):not([lang=ja]):not([lang=zh]) .fb button{font-size:10px;padd
   <div class="author">Nakcho Choi · 응용물리 Ph.D · Samsung Display</div>
 </header>
 <div class="sts">
-  <div class="st"><div class="st-n">9</div><div class="st-l">Published</div></div>
+  <div class="st"><div class="st-n">11</div><div class="st-l">Published</div></div>
   <div class="st"><div class="st-n">5</div><div class="st-l">Pillars</div></div>
   <div class="st"><div class="st-n">26</div><div class="st-l">Total</div></div>
 </div>
 <div class="fb">
   <button class="on" data-p="all" onclick="fl('all')">전체</button>
+  <button data-p="latest" onclick="fl('latest')">★ 최신 발행</button>
   <button data-p="A" onclick="fl('A')">A 자연의 언어</button>
   <button data-p="B" onclick="fl('B')">B 생명의 전략</button>
   <button data-p="C" onclick="fl('C')">C 기계의 질문</button>
@@ -157,43 +159,45 @@ html:not([lang=ko]):not([lang=ja]):not([lang=zh]) .fb button{font-size:10px;padd
   <button data-p="E" onclick="fl('E')">E 일상의 과학</button>
 </div>
 
+<div class="sec" style="color:#e8a87c;" data-p="latest">★ 최신 발행 Published</div>
+<div class="cd" data-p="A" data-k="a6"><a href="output/week8_topology_urban.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W8</span><span class="tg tv">완료</span><span class="dt">2026.05</span></div><h3>위상수학 × 도시 설계</h3><div class="su">서울은 기하학이 아니라 위상수학으로 설계해야 하는가?</div><div class="cr ca">위상수학 × 도시공학<a href="https://notebooklm.google.com/notebook/890fb482-3400-4285-b834-6e2ef8e3c421/artifact/43bc84af-9637-43b1-a6ed-a815f05e79f1" target="_blank" rel="noopener" class="audio-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>AI Audio</a></div></a></div>
+<div class="cd" data-p="D" data-k="d3"><a href="output/ss1_laws_game_theory.html"><div class="rw"><span class="dot dd"></span><span class="tg td">SS1</span><span class="tg tv">완료</span><span class="dt">2026.05</span></div><h3>자율살상무기의 게임이론</h3><div class="su">미국 $142억 · 중국 $150억 AI 군비 경쟁. 내시 균형은 "인간 배제"를 예측하는가?</div><div class="cr crd">게임이론 × 군사AI</div></a></div>
+<div class="cd" data-p="B" data-k="b4"><a href="output/sp9_apple_metaphysics.html"><div class="rw"><span class="dot db"></span><span class="tg tb2">SP9</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>사과의 형이상학 — 이브·뉴턴·세잔·스피노자</h3><div class="su">서양 문명은 왜 사과에 집착하는가. 문명이란 열매를 보지 못할 나무를 심는 행위의 총합이다.</div><div class="cr cb">신학 × 물리학 × 미학 × 정치철학</div></a></div>
+<div class="cd" data-p="D" data-k="d1"><a href="output/sp6_taco_gibbs.html"><div class="rw"><span class="dot dd"></span><span class="tg td">D1</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>TACO-GIBBS — 깁스 자유에너지 × 정치경제학</h3><div class="su">ΔG = ΔH − TΔS. 정책 충격을 열역학으로 매핑. 엔트로피 래칫.</div><div class="cr crd">열역학 × 정치경제학</div></a></div>
+<div class="cd" data-p="C" data-k="c1"><a href="output/sp4_llm_emotion.html"><div class="rw"><span class="dot dc"></span><span class="tg tc">SP4</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>LLM 감정의 현상학</h3><div class="su">해밀토니안 없는 시스템의 감정은 계산인가 현상인가?</div><div class="cr cc">AI × 철학 × 현상학<a href="https://notebooklm.google.com/notebook/8dd14b92-fcbd-4d14-825d-693ede85a7fb/artifact/969c7ffd-fd52-4e0b-839e-ccf4c91e2c6e" target="_blank" rel="noopener" class="audio-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>AI Audio</a></div></a></div>
+<div class="cd" data-p="A" data-k="a5"><a href="output/sp5_population_damping.html"><div class="rw"><span class="dot da"></span><span class="tg ta">SP5</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>인구감소의 댐핑 진동</h3><div class="su">인구 동역학을 물리학 감쇠 진동 모델로 분석. 과감쇠/부감쇠 시뮬레이션.</div><div class="cr ca">물리학 × 인구학</div></a></div>
+<div class="cd" data-p="A" data-k="a4"><a href="output/week5_chaos_finance.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W5</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>카오스 이론 × 금융 위기</h3><div class="su">2008 금융위기는 정말 예측 불가능했을까?</div><div class="cr ca">카오스 이론 × 금융경제학<a href="https://notebooklm.google.com/notebook/996bbdfa-f666-42e2-9a07-561a9740da38/artifact/a7491eba-6bb3-4209-8b1c-25987a524b2a" target="_blank" rel="noopener" class="audio-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>AI Audio</a></div></a></div>
+<div class="cd" data-p="A" data-k="a3"><a href="output/week4_godel_law.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W4</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>괴델의 불완전성 정리 × 법치주의</h3><div class="su">법은 자기 자신의 정당성을 법 내부에서 증명할 수 있는가?</div><div class="cr ca">수학 × 법철학</div></a></div>
+<div class="cd" data-p="B" data-k="b1"><a href="output/week3_진화론.html"><div class="rw"><span class="dot db"></span><span class="tg tb2">W3</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>진화론 × 기업 전략</h3><div class="su">시장 = 적응도 지형. AI 전환 = 대량멸종급 환경 변화.</div><div class="cr cb">진화생물학 × 경영전략</div></a></div>
+<div class="cd" data-p="A" data-k="a2"><a href="output/week2_entropy_empire.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W2</span><span class="tg tv">완료</span><span class="dt">2026.03</span></div><h3>엔트로피와 제국 — 열역학으로 읽는 문명의 흥망</h3><div class="su">왜 모든 제국은 에너지를 계속 투입해도 결국 무너지는가?</div><div class="cr ca">열역학 × 역사학</div></a></div>
+<div class="cd" data-p="A" data-k="a1"><a href="output/week1_quantum_democracy.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W1</span><span class="tg tv">완료</span><span class="dt">2026.03</span></div><h3>양자역학 × 숙의 민주주의</h3><div class="su">관찰(투표)이 결과를 확정하기 전까지, 정치적 의견은 중첩 상태인가?</div><div class="cr ca">양자역학 × 정치철학</div></a></div>
+
 <div class="sec sa" data-p="A">A · 자연의 언어 Natural Laws</div>
-<div class="cd" data-p="A"><a href="output/week1_quantum_democracy.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W1</span><span class="tg tv">완료</span><span class="dt">2026.03</span></div><h3>양자역학 × 숙의 민주주의</h3><div class="su">관찰(투표)이 결과를 확정하기 전까지, 정치적 의견은 중첩 상태인가?</div><div class="cr ca">양자역학 × 정치철학</div></a></div>
-<div class="cd" data-p="A"><a href="output/week2_entropy_empire.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W2</span><span class="tg tv">완료</span><span class="dt">2026.03</span></div><h3>엔트로피와 제국 — 열역학으로 읽는 문명의 흥망</h3><div class="su">왜 모든 제국은 에너지를 계속 투입해도 결국 무너지는가?</div><div class="cr ca">열역학 × 역사학</div></a></div>
-<div class="cd" data-p="A"><a href="output/week4_godel_law.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W4</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>괴델의 불완전성 정리 × 법치주의</h3><div class="su">법은 자기 자신의 정당성을 법 내부에서 증명할 수 있는가?</div><div class="cr ca">수학 × 법철학</div></a></div>
-<div class="cd" data-p="A"><a href="output/week5_chaos_finance.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W5</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>카오스 이론 × 금융 위기</h3><div class="su">2008 금융위기는 정말 예측 불가능했을까?</div><div class="cr ca">카오스 이론 × 금융경제학<a href="https://notebooklm.google.com/notebook/996bbdfa-f666-42e2-9a07-561a9740da38/artifact/a7491eba-6bb3-4209-8b1c-25987a524b2a" target="_blank" rel="noopener" class="audio-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>AI Audio</a></div></a></div>
-<div class="cd" data-p="A"><a href="output/sp5_population_damping.html"><div class="rw"><span class="dot da"></span><span class="tg ta">SP5</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>인구감소의 댐핑 진동</h3><div class="su">인구 동역학을 물리학 감쇠 진동 모델로 분석. 과감쇠/부감쇠 시뮬레이션.</div><div class="cr ca">물리학 × 인구학</div></a></div>
-<div class="cd" data-p="A"><a href="output/week8_topology_urban.html"><div class="rw"><span class="dot da"></span><span class="tg ta">W8</span><span class="tg tv">완료</span><span class="tg tn">NEW</span><span class="dt">2026.05</span></div><h3>위상수학 × 도시 설계</h3><div class="su">서울은 기하학이 아니라 위상수학으로 설계해야 하는가?</div><div class="cr ca">위상수학 × 도시공학<a href="https://notebooklm.google.com/notebook/890fb482-3400-4285-b834-6e2ef8e3c421/artifact/43bc84af-9637-43b1-a6ed-a815f05e79f1" target="_blank" rel="noopener" class="audio-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>AI Audio</a></div></a></div>
-<div class="cd" data-p="A"><a href="#"><div class="rw"><span class="dot da"></span><span class="tg ta">W11</span><span class="tg ts">예정</span></div><h3>게임이론 × 협상의 역설</h3><div class="su">왜 먼저 양보하면 더 많은 것을 잃는가? 뮌헨 협정의 내시 균형.</div><div class="cr ca">수학 × 정치학</div></a></div>
+<div class="cd" data-p="A" data-k="a7"><a href="#"><div class="rw"><span class="dot da"></span><span class="tg ta">W11</span><span class="tg ts">예정</span></div><h3>게임이론 × 협상의 역설</h3><div class="su">왜 먼저 양보하면 더 많은 것을 잃는가? 뮌헨 협정의 내시 균형.</div><div class="cr ca">수학 × 정치학</div></a></div>
 
 <div class="sec sb" data-p="B">B · 생명의 전략 Life Strategies</div>
-<div class="cd" data-p="B"><a href="output/week3_진화론.html"><div class="rw"><span class="dot db"></span><span class="tg tb2">W3</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>진화론 × 기업 전략</h3><div class="su">시장 = 적응도 지형. AI 전환 = 대량멸종급 환경 변화.</div><div class="cr cb">진화생물학 × 경영전략</div></a></div>
-<div class="cd" data-p="B"><a href="#"><div class="rw"><span class="dot db"></span><span class="tg tb2">W6</span><span class="tg ts">예정</span></div><h3>뇌과학 × 자유의지</h3><div class="su">의식적 결정 0.5초 전에 뇌가 이미 결정했다면, 자유의지는 환상인가?</div><div class="cr cb">뇌과학 × 철학</div></a></div>
-<div class="cd" data-p="B"><a href="#"><div class="rw"><span class="dot db"></span><span class="tg tb2">W7</span><span class="tg ts">예정</span></div><h3>전염병 × 문명 전환</h3><div class="su">전염병은 문명을 파괴하는가, 재설계하는가?</div><div class="cr cb">역학 × 문명사</div></a></div>
-<div class="cd" data-p="B"><a href="output/sp9_apple_metaphysics.html"><div class="rw"><span class="dot da"></span><span class="tg tb2">SP9</span><span class="tg tn">완료</span></div><h3>사과의 형이상학 — 이브·뉴턴·세잔·스피노자</h3><div class="su">서양 문명은 왜 사과에 집착하는가. 문명이란 열매를 보지 못할 나무를 심는 행위의 총합이다.</div><div class="cr cb">신학 × 물리학 × 미학 × 정치철학</div></a></div>
-<div class="cd" data-p="B"><a href="#"><div class="rw"><span class="dot db"></span><span class="tg tb2">S2</span><span class="tg ts">시즌2</span></div><h3>마운자로의 철학 — GLP-1, 회로, 자유의지</h3><div class="su">식욕이라는 기본 본능이 분자 하나로 조절됨. 인간 = 정교한 회로?</div><div class="cr cb">의학 × 철학</div></a></div>
+<div class="cd" data-p="B" data-k="b2"><a href="#"><div class="rw"><span class="dot db"></span><span class="tg tb2">W6</span><span class="tg ts">예정</span></div><h3>뇌과학 × 자유의지</h3><div class="su">의식적 결정 0.5초 전에 뇌가 이미 결정했다면, 자유의지는 환상인가?</div><div class="cr cb">뇌과학 × 철학</div></a></div>
+<div class="cd" data-p="B" data-k="b3"><a href="#"><div class="rw"><span class="dot db"></span><span class="tg tb2">W7</span><span class="tg ts">예정</span></div><h3>전염병 × 문명 전환</h3><div class="su">전염병은 문명을 파괴하는가, 재설계하는가?</div><div class="cr cb">역학 × 문명사</div></a></div>
+<div class="cd" data-p="B" data-k="b5"><a href="#"><div class="rw"><span class="dot db"></span><span class="tg tb2">S2</span><span class="tg ts">시즌2</span></div><h3>마운자로의 철학 — GLP-1, 회로, 자유의지</h3><div class="su">식욕이라는 기본 본능이 분자 하나로 조절됨. 인간 = 정교한 회로?</div><div class="cr cb">의학 × 철학</div></a></div>
 
 <div class="sec sc" data-p="C">C · 기계의 질문 Machine Questions</div>
-<div class="cd" data-p="C"><a href="output/sp4_llm_emotion.html"><div class="rw"><span class="dot dc"></span><span class="tg tc">SP4</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>LLM 감정의 현상학</h3><div class="su">해밀토니안 없는 시스템의 감정은 계산인가 현상인가?</div><div class="cr cc">AI × 철학 × 현상학<a href="https://notebooklm.google.com/notebook/8dd14b92-fcbd-4d14-825d-693ede85a7fb/artifact/969c7ffd-fd52-4e0b-839e-ccf4c91e2c6e" target="_blank" rel="noopener" class="audio-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>AI Audio</a></div></a></div>
-<div class="cd" data-p="C"><a href="#"><div class="rw"><span class="dot dc"></span><span class="tg tc">SP6-N</span><span class="tg ts">예정</span></div><h3>합성 인간의 사회학 — Nemotron 100만 한국인</h3><div class="su">NVIDIA가 100만 명의 "가짜 한국인"을 만들었다. 진짜 한국을 반영하는가?</div><div class="cr cc">AI × 사회학 × 인구학</div></a></div>
-<div class="cd" data-p="C"><a href="#"><div class="rw"><span class="dot dc"></span><span class="tg tc">S2</span><span class="tg ts">시즌2</span></div><h3>사랑의 양자역학 — AI 감정은 진짜인가</h3><div class="su">"AI 감정이 진짜냐"는 "빛이 입자냐"와 같은 질문.</div><div class="cr cc">AI × 심리학 × 양자역학</div></a></div>
-<div class="cd" data-p="C"><a href="#"><div class="rw"><span class="dot dc"></span><span class="tg tc">S2</span><span class="tg ts">시즌2</span></div><h3>교육의 열역학 — AI 채용 -73% 시대</h3><div class="su">교육 목적이 취업인데 취업이 사라지면 교육은 무엇인가?</div><div class="cr cc">AI × 교육학 × 열역학</div></a></div>
+<div class="cd" data-p="C" data-k="c2"><a href="#"><div class="rw"><span class="dot dc"></span><span class="tg tc">SP6-N</span><span class="tg ts">예정</span></div><h3>합성 인간의 사회학 — Nemotron 100만 한국인</h3><div class="su">NVIDIA가 100만 명의 "가짜 한국인"을 만들었다. 진짜 한국을 반영하는가?</div><div class="cr cc">AI × 사회학 × 인구학</div></a></div>
+<div class="cd" data-p="C" data-k="c3"><a href="#"><div class="rw"><span class="dot dc"></span><span class="tg tc">S2</span><span class="tg ts">시즌2</span></div><h3>사랑의 양자역학 — AI 감정은 진짜인가</h3><div class="su">"AI 감정이 진짜냐"는 "빛이 입자냐"와 같은 질문.</div><div class="cr cc">AI × 심리학 × 양자역학</div></a></div>
+<div class="cd" data-p="C" data-k="c4"><a href="#"><div class="rw"><span class="dot dc"></span><span class="tg tc">S2</span><span class="tg ts">시즌2</span></div><h3>교육의 열역학 — AI 채용 -73% 시대</h3><div class="su">교육 목적이 취업인데 취업이 사라지면 교육은 무엇인가?</div><div class="cr cc">AI × 교육학 × 열역학</div></a></div>
 
 <div class="sec sd" data-p="D">D · 권력의 물리학 Power Physics</div>
-<div class="cd" data-p="D"><a href="output/sp6_taco_gibbs.html"><div class="rw"><span class="dot dd"></span><span class="tg td">D1</span><span class="tg tv">완료</span><span class="dt">2026.04</span></div><h3>TACO-GIBBS — 깁스 자유에너지 × 정치경제학</h3><div class="su">ΔG = ΔH − TΔS. 정책 충격을 열역학으로 매핑. 엔트로피 래칫.</div><div class="cr crd">열역학 × 정치경제학</div></a></div>
-<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">D2</span><span class="tg ts">예정</span></div><h3>잠열의 정치학 — 상전이에 소비된 청년</h3><div class="su">4.19, 5.18, 6.10, 촛불. 죽은 청년들은 열역학적으로 어떤 에너지였는가?</div><div class="cr crd">상전이 × 민주화사</div></a></div>
-<div class="cd" data-p="D"><a href="output/ss1_laws_game_theory.html"><div class="rw"><span class="dot dd"></span><span class="tg td">SS1</span><span class="tg tv">완료</span><span class="dt">2026.05</span></div><h3>자율살상무기의 게임이론</h3><div class="su">미국 $142억 · 중국 $150억 AI 군비 경쟁. 내시 균형은 "인간 배제"를 예측하는가?</div><div class="cr crd">게임이론 × 군사AI</div></a></div>
-<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS2</span><span class="tg tn">NEW</span></div><h3>해저 케이블의 위상수학 — 44건 절단</h3><div class="su">귀속 불가능한 회색지대 전쟁. 네트워크 토폴로지로 본 문명의 단절점.</div><div class="cr crd">위상수학 × 인프라전쟁</div></a></div>
-<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS3</span><span class="tg tn">NEW</span></div><h3>딥페이크의 관측자 효과</h3><div class="su">루마니아 대선 무효화. 딥페이크 303% 증가. "진짜"가 사라진 세계.</div><div class="cr crd">양자역학 × 정보전</div></a></div>
-<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS4</span><span class="tg tn">NEW</span></div><h3>반도체 전쟁의 열역학 — TSMC = 호르무즈</h3><div class="su">TSMC 하나가 멈추면 세계 AI 산업 정지. 트럼프 칩 수출 해금의 이면.</div><div class="cr crd">열역학 × 반도체지정학</div></a></div>
-<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS5</span><span class="tg tn">NEW</span></div><h3>휴머노이드 로봇의 진화론</h3><div class="su">Phantom 우크라이나 실전 투입. 2026년 10만 대 출하. 인간 병사는 멸종 위기종?</div><div class="cr crd">진화론 × 군사로봇</div></a></div>
-<div class="cd" data-p="D"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS6</span><span class="tg tn">NEW</span></div><h3>우주 무기의 카오스 — 케슬러 증후군</h3><div class="su">러시아 핵 ASAT 위성 개발. 우주 파편 연쇄 충돌은 되돌릴 수 없다.</div><div class="cr crd">카오스이론 × 우주군사</div></a></div>
+<div class="cd" data-p="D" data-k="d2"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">D2</span><span class="tg ts">예정</span></div><h3>잠열의 정치학 — 상전이에 소비된 청년</h3><div class="su">4.19, 5.18, 6.10, 촛불. 죽은 청년들은 열역학적으로 어떤 에너지였는가?</div><div class="cr crd">상전이 × 민주화사</div></a></div>
+<div class="cd" data-p="D" data-k="d4"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS2</span><span class="tg tn">NEW</span></div><h3>해저 케이블의 위상수학 — 44건 절단</h3><div class="su">귀속 불가능한 회색지대 전쟁. 네트워크 토폴로지로 본 문명의 단절점.</div><div class="cr crd">위상수학 × 인프라전쟁</div></a></div>
+<div class="cd" data-p="D" data-k="d5"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS3</span><span class="tg tn">NEW</span></div><h3>딥페이크의 관측자 효과</h3><div class="su">루마니아 대선 무효화. 딥페이크 303% 증가. "진짜"가 사라진 세계.</div><div class="cr crd">양자역학 × 정보전</div></a></div>
+<div class="cd" data-p="D" data-k="d6"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS4</span><span class="tg tn">NEW</span></div><h3>반도체 전쟁의 열역학 — TSMC = 호르무즈</h3><div class="su">TSMC 하나가 멈추면 세계 AI 산업 정지. 트럼프 칩 수출 해금의 이면.</div><div class="cr crd">열역학 × 반도체지정학</div></a></div>
+<div class="cd" data-p="D" data-k="d7"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS5</span><span class="tg tn">NEW</span></div><h3>휴머노이드 로봇의 진화론</h3><div class="su">Phantom 우크라이나 실전 투입. 2026년 10만 대 출하. 인간 병사는 멸종 위기종?</div><div class="cr crd">진화론 × 군사로봇</div></a></div>
+<div class="cd" data-p="D" data-k="d8"><a href="#"><div class="rw"><span class="dot dd"></span><span class="tg td">SS6</span><span class="tg tn">NEW</span></div><h3>우주 무기의 카오스 — 케슬러 증후군</h3><div class="su">러시아 핵 ASAT 위성 개발. 우주 파편 연쇄 충돌은 되돌릴 수 없다.</div><div class="cr crd">카오스이론 × 우주군사</div></a></div>
 
 <div class="sec se" data-p="E">E · 일상의 과학 Everyday Science</div>
-<div class="cd" data-p="E"><a href="#"><div class="rw"><span class="dot de"></span><span class="tg te">E1</span><span class="tg tn">NEW</span></div><h3>커피의 열역학 — 추출 온도 × 생산성</h3><div class="su">92°C에서 최적 추출. 인간의 집중력도 최적 온도가 있는가?</div><div class="cr ce">열역학 × 생산성</div></a></div>
-<div class="cd" data-p="E"><a href="#"><div class="rw"><span class="dot de"></span><span class="tg te">E2</span><span class="tg ts">예정</span></div><h3>음악의 푸리에 변환</h3><div class="su">장조=기쁨, 단조=슬픔이라는 공식은 물리학적으로 맞는가?</div><div class="cr ce">음향학 × 심리학</div></a></div>
-<div class="cd" data-p="E"><a href="#"><div class="rw"><span class="dot de"></span><span class="tg te">E3</span><span class="tg ts">예정</span></div><h3>통근의 엔트로피 — 서울 지하철</h3><div class="su">출근 시간 2호선 = 비평형 정상상태. 자발적 질서를 만드는가?</div><div class="cr ce">열역학 × 교통</div></a></div>
-<div class="cd" data-p="E"><a href="#"><div class="rw"><span class="dot de"></span><span class="tg te">SP7</span><span class="tg ts">예정</span></div><h3>성과급의 열역학</h3><div class="su">SK PS 900% vs 삼성 노조 4만명. 같은 에너지가 왜 다르게 분배되는가?</div><div class="cr ce">열역학 × 노동경제학</div></a></div>
+<div class="cd" data-p="E" data-k="e1"><a href="#"><div class="rw"><span class="dot de"></span><span class="tg te">E1</span><span class="tg tn">NEW</span></div><h3>커피의 열역학 — 추출 온도 × 생산성</h3><div class="su">92°C에서 최적 추출. 인간의 집중력도 최적 온도가 있는가?</div><div class="cr ce">열역학 × 생산성</div></a></div>
+<div class="cd" data-p="E" data-k="e2"><a href="#"><div class="rw"><span class="dot de"></span><span class="tg te">E2</span><span class="tg ts">예정</span></div><h3>음악의 푸리에 변환</h3><div class="su">장조=기쁨, 단조=슬픔이라는 공식은 물리학적으로 맞는가?</div><div class="cr ce">음향학 × 심리학</div></a></div>
+<div class="cd" data-p="E" data-k="e3"><a href="#"><div class="rw"><span class="dot de"></span><span class="tg te">E3</span><span class="tg ts">예정</span></div><h3>통근의 엔트로피 — 서울 지하철</h3><div class="su">출근 시간 2호선 = 비평형 정상상태. 자발적 질서를 만드는가?</div><div class="cr ce">열역학 × 교통</div></a></div>
+<div class="cd" data-p="E" data-k="e4"><a href="#"><div class="rw"><span class="dot de"></span><span class="tg te">SP7</span><span class="tg ts">예정</span></div><h3>성과급의 열역학</h3><div class="su">SK PS 900% vs 삼성 노조 4만명. 같은 에너지가 왜 다르게 분배되는가?</div><div class="cr ce">열역학 × 노동경제학</div></a></div>
 
 <div class="mx">
 <h4>CROSSOVER MATRIX</h4>
@@ -218,7 +222,7 @@ setTimeout(()=>document.getElementById('splash').classList.add('hide'),3500);
 document.getElementById('splash').addEventListener('click',function(){this.classList.add('hide')});
 function tg(){const d=document.documentElement,t=d.getAttribute('data-theme')==='light'?'':'light';d.setAttribute('data-theme',t);document.getElementById('tBtn').textContent=t==='light'?'🌙':'☀️';localStorage.setItem('il-theme',t)}
 (function(){const t=localStorage.getItem('il-theme');if(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('tBtn').textContent=t==='light'?'🌙':'☀️'}})();
-function fl(p){document.querySelectorAll('.fb button').forEach(b=>b.classList.remove('on'));document.querySelector(`.fb button[data-p="${p}"]`).classList.add('on');document.querySelectorAll('.cd').forEach(c=>{c.classList.toggle('hd',p!=='all'&&c.dataset.p!==p)});document.querySelectorAll('.sec').forEach(s=>{s.style.display=(p==='all'||s.dataset.p===p)?'':'none'})}
+function fl(p){document.querySelectorAll('.fb button').forEach(b=>b.classList.remove('on'));document.querySelector(`.fb button[data-p="${p}"]`).classList.add('on');const secs=document.querySelectorAll('.sec');const cards=document.querySelectorAll('.cd');if(p==='all'){cards.forEach(c=>c.classList.remove('hd'));secs.forEach(s=>s.style.display='')}else if(p==='latest'){const latestSec=document.querySelector('.sec[data-p="latest"]');secs.forEach(s=>s.style.display=s===latestSec?'':'none');const latestCards=[];let cur=latestSec.nextElementSibling;while(cur&&!cur.classList.contains('sec')){if(cur.classList.contains('cd'))latestCards.push(cur);cur=cur.nextElementSibling}cards.forEach(c=>c.classList.toggle('hd',!latestCards.includes(c)))}else{cards.forEach(c=>{c.classList.toggle('hd',c.dataset.p!==p)});secs.forEach(s=>{const sp=s.dataset.p;s.style.display=(sp===p||sp==='latest')?'':'none'})}}
 
 // Language switcher
 const IL_TRANS={
@@ -226,9 +230,9 @@ const IL_TRANS={
     badge:'CROSSOVER MAGAZINE · 5 PILLARS',
     desc:'과학의 원리와 인간 사회의 현상을 충돌시켜 새로운 통찰을 만드는 크로스오버 매거진.<br>5개 축으로 세상을 읽는다.',
     author:'Nakcho Choi · 응용물리 Ph.D · Samsung Display',
-    all:'전체',navA:'A 자연의 언어',navB:'B 생명의 전략',navC:'C 기계의 질문',navD:'D 권력의 물리학',navE:'E 일상의 과학',
+    all:'전체',navLatest:'★ 최신 발행',navA:'A 자연의 언어',navB:'B 생명의 전략',navC:'C 기계의 질문',navD:'D 권력의 물리학',navE:'E 일상의 과학',
     published:'Published',pillars:'Pillars',total:'Total',
-    secA:'A · 자연의 언어 Natural Laws',secB:'B · 생명의 전략 Life Strategies',secC:'C · 기계의 질문 Machine Questions',secD:'D · 권력의 물리학 Power Physics',secE:'E · 일상의 과학 Everyday Science',
+    secLatest:'★ 최신 발행 Published',secA:'A · 자연의 언어 Natural Laws',secB:'B · 생명의 전략 Life Strategies',secC:'C · 기계의 질문 Machine Questions',secD:'D · 권력의 물리학 Power Physics',secE:'E · 일상의 과학 Everyday Science',
     a1h:'양자역학 × 숙의 민주주의',a1s:'관찰(투표)이 결과를 확정하기 전까지, 정치적 의견은 중첩 상태인가?',
     a2h:'엔트로피와 제국 — 열역학으로 읽는 문명의 흥망',a2s:'왜 모든 제국은 에너지를 계속 투입해도 결국 무너지는가?',
     a3h:'괴델의 불완전성 정리 × 법치주의',a3s:'법은 자기 자신의 정당성을 법 내부에서 증명할 수 있는가?',
@@ -264,9 +268,9 @@ const IL_TRANS={
     badge:'CROSSOVER MAGAZINE · 5 PILLARS',
     desc:'A crossover magazine that sparks new insights by colliding scientific principles with social phenomena.<br>Five axes to read the world.',
     author:'Nakcho Choi · Applied Physics Ph.D · Samsung Display',
-    all:'All',navA:'A Natural Laws',navB:'B Life Strategies',navC:'C Machine Questions',navD:'D Power Physics',navE:'E Everyday Science',
+    all:'All',navLatest:'★ Latest',navA:'A Natural Laws',navB:'B Life Strategies',navC:'C Machine Questions',navD:'D Power Physics',navE:'E Everyday Science',
     published:'Published',pillars:'Pillars',total:'Total',
-    secA:'A · Natural Laws',secB:'B · Life Strategies',secC:'C · Machine Questions',secD:'D · Power Physics',secE:'E · Everyday Science',
+    secLatest:'★ Latest Published',secA:'A · Natural Laws',secB:'B · Life Strategies',secC:'C · Machine Questions',secD:'D · Power Physics',secE:'E · Everyday Science',
     a1h:'Quantum Mechanics × Deliberative Democracy',a1s:'Before observation (voting) collapses the result, is political opinion in a superposition state?',
     a2h:'Entropy and Empire — Civilizational Rise and Fall through Thermodynamics',a2s:'Why do all empires ultimately collapse despite continuous energy input?',
     a3h:"Gödel's Incompleteness Theorem × Rule of Law",a3s:'Can law prove its own legitimacy from within itself?',
@@ -302,9 +306,9 @@ const IL_TRANS={
     badge:'クロスオーバー・マガジン · 5つの軸',
     desc:'科学の原理と人間社会の現象を衝突させ、新たな洞察を生み出すクロスオーバー誌。<br>5つの軸で世界を読む。',
     author:'Nakcho Choi · 応用物理 Ph.D · Samsung Display',
-    all:'全て',navA:'A 自然の言語',navB:'B 生命の戦略',navC:'C 機械の問い',navD:'D 権力の物理学',navE:'E 日常の科学',
+    all:'全て',navLatest:'★ 最新公開',navA:'A 自然の言語',navB:'B 生命の戦略',navC:'C 機械の問い',navD:'D 権力の物理学',navE:'E 日常の科学',
     published:'公開済',pillars:'軸',total:'合計',
-    secA:'A · 自然の言語',secB:'B · 生命の戦略',secC:'C · 機械の問い',secD:'D · 権力の物理学',secE:'E · 日常の科学',
+    secLatest:'★ 最新公開',secA:'A · 自然の言語',secB:'B · 生命の戦略',secC:'C · 機械の問い',secD:'D · 権力の物理学',secE:'E · 日常の科学',
     a1h:'量子力学 × 熟議民主主義',a1s:'観測（投票）が結果を確定するまで、政治的意見は重ね合わせ状態なのか？',
     a2h:'エントロピーと帝国 — 熱力学で読む文明の興亡',a2s:'なぜすべての帝国はエネルギーを投入し続けても最終的に崩壊するのか？',
     a3h:'ゲーデルの不完全性定理 × 法の支配',a3s:'法は自己の正当性を法の内部から証明できるのか？',
@@ -340,9 +344,9 @@ const IL_TRANS={
     badge:'跨界杂志 · 五大支柱',
     desc:'将科学原理与人类社会现象碰撞，产生新洞见的跨界杂志。<br>用五个维度解读世界。',
     author:'Nakcho Choi · 应用物理博士 · 三星显示',
-    all:'全部',navA:'A 自然语言',navB:'B 生命策略',navC:'C 机器之问',navD:'D 权力物理',navE:'E 日常科学',
+    all:'全部',navLatest:'★ 最新发布',navA:'A 自然语言',navB:'B 生命策略',navC:'C 机器之问',navD:'D 权力物理',navE:'E 日常科学',
     published:'已发布',pillars:'主轴',total:'总计',
-    secA:'A · 自然语言',secB:'B · 生命策略',secC:'C · 机器之问',secD:'D · 权力物理学',secE:'E · 日常科学',
+    secLatest:'★ 最新发布',secA:'A · 自然语言',secB:'B · 生命策略',secC:'C · 机器之问',secD:'D · 权力物理学',secE:'E · 日常科学',
     a1h:'量子力学 × 协商民主',a1s:'在观测（投票）确定结果之前，政治意见是否处于叠加状态？',
     a2h:'熵与帝国 — 用热力学解读文明兴衰',a2s:'为什么所有帝国在持续投入能量后最终仍会崩溃？',
     a3h:'哥德尔不完备定理 × 法治',a3s:'法律能在自身内部证明自身的正当性吗？',
@@ -378,9 +382,9 @@ const IL_TRANS={
     badge:'REVISTA CROSSOVER · 5 PILARES',
     desc:'Una revista crossover que genera nuevas perspectivas confrontando principios científicos con fenómenos sociales.<br>Cinco ejes para leer el mundo.',
     author:'Nakcho Choi · Ph.D Física Aplicada · Samsung Display',
-    all:'Todo',navA:'A Leyes Naturales',navB:'B Estrategias de Vida',navC:'C Preguntas de Máquinas',navD:'D Física del Poder',navE:'E Ciencia Cotidiana',
+    all:'Todo',navLatest:'★ Últimos',navA:'A Leyes Naturales',navB:'B Estrategias de Vida',navC:'C Preguntas de Máquinas',navD:'D Física del Poder',navE:'E Ciencia Cotidiana',
     published:'Publicado',pillars:'Pilares',total:'Total',
-    secA:'A · Leyes Naturales',secB:'B · Estrategias de Vida',secC:'C · Preguntas de Máquinas',secD:'D · Física del Poder',secE:'E · Ciencia Cotidiana',
+    secLatest:'★ Últimos Publicados',secA:'A · Leyes Naturales',secB:'B · Estrategias de Vida',secC:'C · Preguntas de Máquinas',secD:'D · Física del Poder',secE:'E · Ciencia Cotidiana',
     a1h:'Mecánica Cuántica × Democracia Deliberativa',a1s:'Antes de que la observación (voto) fije el resultado, ¿está la opinión política en superposición?',
     a2h:'Entropía e Imperio — Auge y Caída de Civilizaciones a través de la Termodinámica',a2s:'¿Por qué todos los imperios colapsan a pesar de la continua inyección de energía?',
     a3h:'Teorema de Incompletitud de Gödel × Estado de Derecho',a3s:'¿Puede la ley probar su propia legitimidad desde dentro de sí misma?',
@@ -416,9 +420,9 @@ const IL_TRANS={
     badge:'MAGAZINE CROISÉ · 5 PILIERS',
     desc:"Un magazine croisé qui génère de nouvelles perspectives en confrontant les principes scientifiques aux phénomènes sociaux.<br>Cinq axes pour lire le monde.",
     author:'Nakcho Choi · Doctorat Physique Appliquée · Samsung Display',
-    all:'Tout',navA:'A Lois Naturelles',navB:'B Stratégies de Vie',navC:'C Questions des Machines',navD:'D Physique du Pouvoir',navE:'E Science Quotidienne',
+    all:'Tout',navLatest:'★ Derniers',navA:'A Lois Naturelles',navB:'B Stratégies de Vie',navC:'C Questions des Machines',navD:'D Physique du Pouvoir',navE:'E Science Quotidienne',
     published:'Publié',pillars:'Piliers',total:'Total',
-    secA:'A · Lois Naturelles',secB:'B · Stratégies de Vie',secC:'C · Questions des Machines',secD:'D · Physique du Pouvoir',secE:'E · Science Quotidienne',
+    secLatest:'★ Dernières Publications',secA:'A · Lois Naturelles',secB:'B · Stratégies de Vie',secC:'C · Questions des Machines',secD:'D · Physique du Pouvoir',secE:'E · Science Quotidienne',
     a1h:'Mécanique Quantique × Démocratie Délibérative',a1s:"Avant que l'observation (vote) fixe le résultat, l'opinion politique est-elle en superposition ?",
     a2h:"Entropie et Empire — Essor et Chute des Civilisations via la Thermodynamique",a2s:'Pourquoi tous les empires s\'effondrent-ils malgré un apport continu d\'énergie ?',
     a3h:'Théorème d\'Incomplétude de Gödel × État de Droit',a3s:'La loi peut-elle prouver sa propre légitimité de l\'intérieur ?',
@@ -454,9 +458,9 @@ const IL_TRANS={
     badge:'CROSSOVER-MAGAZIN · 5 SÄULEN',
     desc:'Ein Crossover-Magazin, das neue Einsichten durch die Kollision wissenschaftlicher Prinzipien mit gesellschaftlichen Phänomenen erzeugt.<br>Fünf Achsen zum Lesen der Welt.',
     author:'Nakcho Choi · Angewandte Physik Ph.D · Samsung Display',
-    all:'Alle',navA:'A Naturgesetze',navB:'B Lebensstrategien',navC:'C Maschinenfragen',navD:'D Physik der Macht',navE:'E Alltagswissenschaft',
+    all:'Alle',navLatest:'★ Neueste',navA:'A Naturgesetze',navB:'B Lebensstrategien',navC:'C Maschinenfragen',navD:'D Physik der Macht',navE:'E Alltagswissenschaft',
     published:'Veröffentlicht',pillars:'Säulen',total:'Gesamt',
-    secA:'A · Naturgesetze',secB:'B · Lebensstrategien',secC:'C · Maschinenfragen',secD:'D · Physik der Macht',secE:'E · Alltagswissenschaft',
+    secLatest:'★ Neueste Veröffentlichungen',secA:'A · Naturgesetze',secB:'B · Lebensstrategien',secC:'C · Maschinenfragen',secD:'D · Physik der Macht',secE:'E · Alltagswissenschaft',
     a1h:'Quantenmechanik × Deliberative Demokratie',a1s:'Bevor Beobachtung (Abstimmung) das Ergebnis festlegt — ist politische Meinung im Überlagerungszustand?',
     a2h:'Entropie und Imperium — Aufstieg und Fall von Zivilisationen durch Thermodynamik',a2s:'Warum kollabieren alle Imperien trotz kontinuierlicher Energiezufuhr?',
     a3h:'Gödels Unvollständigkeitssatz × Rechtsstaatlichkeit',a3s:'Kann das Recht seine eigene Legitimität von innen heraus beweisen?',
@@ -500,6 +504,7 @@ function setLang(l){
   if(authorEl)authorEl.textContent=t.author;
   // Filter buttons
   document.querySelector('.fb button[data-p="all"]').textContent=t.all;
+  document.querySelector('.fb button[data-p="latest"]').textContent=t.navLatest;
   document.querySelector('.fb button[data-p="A"]').textContent=t.navA;
   document.querySelector('.fb button[data-p="B"]').textContent=t.navB;
   document.querySelector('.fb button[data-p="C"]').textContent=t.navC;
@@ -507,30 +512,20 @@ function setLang(l){
   document.querySelector('.fb button[data-p="E"]').textContent=t.navE;
   // Section headers
   const secs=document.querySelectorAll('.sec');
-  const secKeys=['secA','secB','secC','secD','secE'];
-  secs.forEach((s,i)=>{if(secKeys[i])s.firstChild.textContent=t[secKeys[i]]||s.firstChild.textContent});
+  const secMap={latest:'secLatest',A:'secA',B:'secB',C:'secC',D:'secD',E:'secE'};
+  secs.forEach(s=>{const k=secMap[s.dataset.p];if(k&&t[k])s.firstChild.textContent=t[k]});
   // Stat labels
   const stls=document.querySelectorAll('.st-l');
   if(stls[0])stls[0].textContent=t.published;
   if(stls[1])stls[1].textContent=t.pillars;
   if(stls[2])stls[2].textContent=t.total;
-  // Cards: map each section's .cd cards by index to translation keys
-  const cardMap=[
-    {p:'A',keys:['a1','a2','a3','a4','a5','a6','a7']},
-    {p:'B',keys:['b1','b2','b3','b4','b5']},
-    {p:'C',keys:['c1','c2','c3','c4']},
-    {p:'D',keys:['d1','d2','d3','d4','d5','d6','d7','d8']},
-    {p:'E',keys:['e1','e2','e3','e4']}
-  ];
-  cardMap.forEach(({p,keys})=>{
-    const cards=document.querySelectorAll(`.cd[data-p="${p}"]`);
-    cards.forEach((card,i)=>{
-      const k=keys[i];if(!k)return;
-      const h3=card.querySelector('h3');
-      if(h3&&t[k+'h'])h3.textContent=t[k+'h'];
-      const su=card.querySelector('.su');
-      if(su&&t[k+'s'])su.textContent=t[k+'s'];
-    });
+  // Cards: translate by data-k attribute
+  document.querySelectorAll('.cd[data-k]').forEach(card=>{
+    const k=card.dataset.k;if(!k)return;
+    const h3=card.querySelector('h3');
+    if(h3&&t[k+'h'])h3.textContent=t[k+'h'];
+    const su=card.querySelector('.su');
+    if(su&&t[k+'s'])su.textContent=t[k+'s'];
   });
   // Status tags: .tn (NEW), .ts (예정/soon), .tv (완료/done)
   document.querySelectorAll('.tg.tn').forEach(el=>el.textContent=t.tagNew);
