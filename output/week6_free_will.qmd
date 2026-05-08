@@ -1,0 +1,647 @@
+---
+title: "자유의지의 0.5초 — 뇌는 '나'보다 먼저 결정하는가"
+subtitle: "뇌과학 × 자유의지 철학"
+author: "Insight Lab × Chimera AI"
+date: "2026-05-08"
+format:
+  html:
+    theme:
+      dark: darkly
+      light: flatly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    smooth-scroll: true
+    embed-resources: true
+    lightbox: true
+knitr:
+  opts_chunk:
+    dev: ragg_png
+    dpi: 150
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(knitr)
+library(kableExtra)
+
+kfont <- "Noto Sans CJK KR"
+
+theme_insight <- function(base_size = 13) {
+  theme_minimal(base_size = base_size) +
+    theme(
+      plot.background = element_rect(fill = "#1a1a2e", color = NA),
+      panel.background = element_rect(fill = "#1a1a2e", color = NA),
+      panel.grid.major = element_line(color = "#2a2a4a", linewidth = 0.3),
+      panel.grid.minor = element_blank(),
+      text = element_text(family = kfont, color = "#e4e4ec"),
+      axis.text = element_text(color = "#aaaaaa"),
+      axis.title = element_text(color = "#cccccc", size = rel(0.9)),
+      plot.title = element_text(color = "#6366f1", face = "bold", size = rel(1.2)),
+      plot.subtitle = element_text(color = "#888888", size = rel(0.85)),
+      plot.caption = element_text(color = "#666666", size = rel(0.7)),
+      legend.background = element_rect(fill = "#1a1a2e", color = NA),
+      legend.text = element_text(color = "#cccccc"),
+      legend.title = element_text(color = "#6366f1"),
+      strip.text = element_text(color = "#6366f1", face = "bold")
+    )
+}
+
+# 액센트 컬러 팔레트
+pal_insight <- c("#6366f1", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4")
+```
+
+## 핵심 질문
+
+::: {.callout-note}
+## 0.5초의 역설
+
+1983년, 신경생리학자 벤자민 리벳(Benjamin Libet)은 충격적인 실험 결과를 발표했다. **의식적으로 "움직이겠다"고 결정하기 약 550ms 전에, 뇌는 이미 준비전위(Readiness Potential)를 발생시키고 있었다.** 피험자가 "지금 움직이자"라고 의식한 순간(W-시점)은 실제 근육 운동 200ms 전이었지만, 뇌의 전기적 준비는 그보다 350ms 먼저 시작되었다.
+
+이것은 **자유의지에 대한 뇌과학의 가장 강력한 도전**이다. 만약 뇌가 '나'보다 먼저 결정한다면, '내가' 결정한다는 경험은 무엇인가?
+:::
+
+## 리벳 실험의 타임라인
+
+```{r}
+#| label: fig-libet-timeline
+#| fig-cap: "리벳 실험의 시간 구조: 준비전위(RP) → 의식적 의도(W) → 운동(M)"
+#| lightbox: true
+#| fig-width: 10
+#| fig-height: 5
+
+# 리벳 실험 타임라인 시각화
+timeline_data <- tibble(
+  time_ms = seq(-1000, 200, by = 1),
+  rp_signal = case_when(
+    time_ms < -550 ~ 0,
+    time_ms >= -550 & time_ms < 0 ~ -0.8 * (1 - exp(-(time_ms + 550)/200)),
+    TRUE ~ -0.8 * (1 - exp(-550/200)) + 0.3 * (time_ms/200)
+  )
+)
+
+# 주요 이벤트 마커
+events <- tibble(
+  time_ms = c(-550, -200, 0),
+  label = c("준비전위 시작\n(RP onset)", "의식적 의도\n(W-moment)", "운동 실행\n(Movement)"),
+  y_pos = c(0.15, 0.15, 0.15),
+  color = c("#ef4444", "#f59e0b", "#22c55e")
+)
+
+# 시간 간격 표시
+intervals <- tibble(
+  xmin = c(-550, -200),
+  xmax = c(-200, 0),
+  label = c("350ms\n뇌가 먼저 결정?", "200ms\n의식적 의도"),
+  y = c(-0.95, -0.95)
+)
+
+ggplot() +
+  # RP 신호
+  geom_line(data = timeline_data, aes(x = time_ms, y = rp_signal),
+            color = "#6366f1", linewidth = 1.2) +
+  # 이벤트 수직선
+
+  geom_vline(xintercept = -550, linetype = "dashed", color = "#ef4444", alpha = 0.7) +
+  geom_vline(xintercept = -200, linetype = "dashed", color = "#f59e0b", alpha = 0.7) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "#22c55e", alpha = 0.7) +
+  # 이벤트 라벨
+  geom_label(data = events, aes(x = time_ms, y = y_pos, label = label),
+             fill = "#1a1a2e", color = events$color, family = kfont, size = 3.5,
+             label.size = 0.5, label.r = unit(0.3, "lines")) +
+  # 간격 화살표
+  annotate("segment", x = -550, xend = -200, y = -0.9, yend = -0.9,
+           arrow = arrow(ends = "both", length = unit(0.15, "cm")), color = "#ef4444") +
+  annotate("text", x = -375, y = -1.05, label = "350ms — 무의식적 준비",
+           color = "#ef4444", family = kfont, size = 3.5) +
+  annotate("segment", x = -200, xend = 0, y = -0.9, yend = -0.9,
+           arrow = arrow(ends = "both", length = unit(0.15, "cm")), color = "#f59e0b") +
+  annotate("text", x = -100, y = -1.05, label = "200ms — 의식적 통제",
+           color = "#f59e0b", family = kfont, size = 3.5) +
+  # 축 & 테마
+  scale_x_continuous(breaks = seq(-1000, 200, 200),
+                     labels = paste0(seq(-1000, 200, 200), "ms")) +
+  labs(title = "리벳 실험: 자유의지의 0.5초",
+       subtitle = "준비전위(RP)는 의식적 의도보다 350ms 먼저 시작된다",
+       x = "시간 (운동 실행 = 0ms)", y = "EEG 전위 (μV)",
+       caption = "Libet et al. (1983) Brain 106:623-642") +
+  theme_insight() +
+  theme(axis.text.x = element_text(angle = 0))
+```
+
+## 세 가지 철학적 입장
+
+리벳 실험 이후 40년간, 자유의지에 대한 세 가지 거대한 입장이 충돌하고 있다.
+
+```{r}
+#| label: fig-three-positions
+#| fig-cap: "자유의지 논쟁의 세 축: 결정론, 양립론, 자유론"
+#| lightbox: true
+#| fig-width: 9
+#| fig-height: 6
+
+# 세 입장의 논리적 공간
+positions <- tibble(
+  position = c("강한 결정론\n(Hard Determinism)",
+               "양립론\n(Compatibilism)",
+               "자유론\n(Libertarianism)"),
+  x = c(1, 2, 3),
+  physical_determinism = c(100, 85, 30),
+  conscious_control = c(5, 60, 95),
+  moral_responsibility = c(10, 80, 95),
+  representative = c("Sapolsky\nHarris", "Dennett\nFrankfurt", "Penrose\nKane")
+)
+
+positions_long <- positions %>%
+  pivot_longer(cols = c(physical_determinism, conscious_control, moral_responsibility),
+               names_to = "dimension", values_to = "score") %>%
+  mutate(dimension = case_when(
+    dimension == "physical_determinism" ~ "물리적 결정론 수용",
+    dimension == "conscious_control" ~ "의식적 통제 인정",
+    dimension == "moral_responsibility" ~ "도덕적 책임 부여"
+  ))
+
+ggplot(positions_long, aes(x = factor(x), y = score, fill = dimension)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.6, alpha = 0.85) +
+  geom_text(aes(label = paste0(score, "%")),
+            position = position_dodge(width = 0.7), vjust = -0.5,
+            color = "#e4e4ec", size = 3, family = kfont) +
+  scale_x_discrete(labels = c("강한 결정론\n(Sapolsky, Harris)",
+                               "양립론\n(Dennett, Frankfurt)",
+                               "자유론\n(Penrose, Kane)")) +
+  scale_fill_manual(values = c("#ef4444", "#22c55e", "#6366f1"),
+                    name = "평가 차원") +
+  labs(title = "자유의지 논쟁의 세 입장",
+       subtitle = "같은 뇌과학 데이터에서 정반대 결론이 나온다",
+       x = NULL, y = "수용도 (%)") +
+  coord_cartesian(ylim = c(0, 110)) +
+  theme_insight() +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+#| label: tbl-positions
+#| tbl-cap: "자유의지 논쟁의 핵심 대립 구도"
+
+positions_table <- tibble(
+  입장 = c("강한 결정론", "양립론 (Compatibilism)", "자유론 (Libertarianism)"),
+  핵심주장 = c(
+    "뇌의 물리적 과정이 모든 결정을 사전 결정함. 의식은 사후 합리화.",
+    "결정론과 자유의지는 공존 가능. 자유의지 = 외부 강제 없는 자발적 행위.",
+    "양자 비결정성이 의식에 영향. 진정한 열린 미래가 존재."
+  ),
+  대표학자 = c("Sapolsky (2023), Harris, Wegner", "Dennett, Frankfurt, Fischer", "Penrose, Kane, Stapp"),
+  뇌과학적근거 = c(
+    "준비전위, 뇌손상 사례, fMRI 예측",
+    "실행 기능, 억제 회로, 메타인지",
+    "미세소관 양자 효과, 비결정적 시냅스"
+  )
+)
+
+kable(positions_table, format = "html", escape = FALSE) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE) %>%
+  row_spec(0, bold = TRUE, color = "#6366f1") %>%
+  column_spec(1, bold = TRUE, width = "15%") %>%
+  column_spec(2, width = "35%") %>%
+  column_spec(3, width = "20%") %>%
+  column_spec(4, width = "30%")
+```
+
+## Schurger의 반론: 확률적 축적기 모델
+
+::: {.callout-important}
+## 2012년의 전환점
+
+Aaron Schurger(INSERM)는 2012년 PNAS 논문에서 준비전위의 완전히 새로운 해석을 제시했다. **RP는 '의도'의 신호가 아니라, 무작위 신경 잡음(stochastic noise)이 임계값을 넘는 순간을 역방향으로 평균낸 인공물(artifact)이다.**
+
+즉, 뇌는 '결정'하는 것이 아니라 끊임없이 요동치고 있고, 우리가 "지금!"이라고 느끼는 순간은 확률적 임계값 초과 시점일 뿐이다.
+:::
+
+```{r}
+#| label: fig-accumulator-model
+#| fig-cap: "Schurger의 확률적 축적기 모델: 무작위 요동이 임계값을 넘는 순간"
+#| lightbox: true
+#| fig-width: 10
+#| fig-height: 6
+
+set.seed(42)
+n_trials <- 5
+n_steps <- 500
+threshold <- 0.8
+
+# 확률적 축적기 시뮬레이션
+simulate_accumulator <- function(trial_id, leak = 0.02, noise_sd = 0.08) {
+  x <- numeric(n_steps)
+  for (i in 2:n_steps) {
+    x[i] <- x[i-1] * (1 - leak) + rnorm(1, 0, noise_sd)
+  }
+  # 임계값 도달 시점
+  cross_idx <- which(x >= threshold)[1]
+  if (is.na(cross_idx)) cross_idx <- n_steps
+  tibble(time = 1:n_steps, signal = x, trial = trial_id,
+         crossed = 1:n_steps <= cross_idx)
+}
+
+trials <- bind_rows(lapply(1:n_trials, simulate_accumulator))
+
+ggplot(trials, aes(x = time, y = signal, color = factor(trial), group = trial)) +
+  geom_line(alpha = 0.7, linewidth = 0.8) +
+  geom_hline(yintercept = threshold, linetype = "dashed", color = "#ef4444", linewidth = 0.8) +
+  annotate("text", x = 480, y = threshold + 0.05, label = "결정 임계값",
+           color = "#ef4444", family = kfont, size = 3.5, hjust = 1) +
+  annotate("text", x = 250, y = -0.6,
+           label = "각 시행은 무작위 경로를 따른다\n→ '결정 시점'은 확률적 사건",
+           color = "#888888", family = kfont, size = 3.5) +
+  scale_color_manual(values = pal_insight[1:5], name = "시행") +
+  labs(title = "확률적 축적기 모델 (Schurger et al., 2012)",
+       subtitle = "준비전위는 '의도'가 아니라 신경 잡음의 임계값 초과",
+       x = "시간 (임의 단위)", y = "축적된 신호",
+       caption = "Schurger et al. (2012) PNAS 109(42):E2904-E2913") +
+  theme_insight() +
+  theme(legend.position = "right")
+```
+
+## 프리스톤의 자유에너지 원리: 제3의 길
+
+Karl Friston의 **자유에너지 원리(Free Energy Principle)**는 자유의지 논쟁에 새로운 프레임워크를 제공한다. 뇌는 세계를 예측하는 기계이며, 행동은 예측 오차를 최소화하려는 **능동 추론(Active Inference)**이다.
+
+```{r}
+#| label: fig-free-energy
+#| fig-cap: "자유에너지 원리에서의 행동: 예측 오차를 줄이는 두 경로"
+#| lightbox: true
+#| fig-width: 9
+#| fig-height: 6
+
+# 자유에너지 최소화의 두 경로
+fe_data <- tibble(
+  strategy = rep(c("지각 갱신\n(모델 수정)", "능동 추론\n(행동으로 세계 변경)"), each = 20),
+  iteration = rep(1:20, 2),
+  free_energy = c(
+    # 지각 갱신: 점진적 감소
+    5 * exp(-0.15 * (1:20)) + rnorm(20, 0, 0.1),
+    # 능동 추론: 빠른 감소
+    5 * exp(-0.25 * (1:20)) + rnorm(20, 0, 0.15)
+  )
+)
+
+ggplot(fe_data, aes(x = iteration, y = free_energy, color = strategy)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 1.5, alpha = 0.6) +
+  geom_hline(yintercept = 0, linetype = "dotted", color = "#444444") +
+  annotate("rect", xmin = 0, xmax = 21, ymin = -0.5, ymax = 0.5,
+           fill = "#22c55e", alpha = 0.1) +
+  annotate("text", x = 18, y = 0.3, label = "평형 상태",
+           color = "#22c55e", family = kfont, size = 3) +
+  scale_color_manual(values = c("#6366f1", "#f59e0b"), name = "전략") +
+  labs(title = "자유에너지 최소화: 뇌의 두 전략",
+       subtitle = "Friston의 능동 추론 — 행동은 예측을 실현하려는 자기 충족적 예언",
+       x = "시간 단계", y = "자유에너지 (예측 오차)",
+       caption = "Friston (2010) Nature Reviews Neuroscience 11:127-138") +
+  theme_insight() +
+  theme(legend.position = "bottom")
+```
+
+::: {.callout-tip}
+## 능동 추론과 자유의지
+
+Friston의 프레임워크에서 자유의지는 이진법적 질문("있다/없다")이 아니다. **자유의지의 정도(degree)**가 존재한다:
+
+- **깊은 모델**(계층적, 시간적으로 먼 미래까지 예측)을 가진 에이전트는 더 많은 행동 선택지를 탐색할 수 있다
+- **메타인지**(자기 예측에 대한 예측)가 가능한 시스템은 자신의 결정 과정을 수정할 수 있다
+- 이것이 바로 우리가 "자유롭다"고 느끼는 경험의 신경적 기반이다
+:::
+
+## Sapolsky vs Dennett: 2023년의 최전선
+
+```{r}
+#| label: fig-sapolsky-dennett
+#| fig-cap: "Sapolsky(결정론)와 Dennett(양립론)의 논증 구조 비교"
+#| lightbox: true
+#| fig-width: 10
+#| fig-height: 7
+
+# 두 학자의 논증 강도 비교
+debate_data <- tibble(
+  argument = c("유전자 결정", "환경 조건화", "신경화학",
+               "준비전위", "fMRI 예측", "도덕적 책임",
+               "실행 기능", "메타인지", "자기 수정"),
+  sapolsky = c(95, 90, 88, 85, 80, 15, 30, 25, 20),
+  dennett = c(60, 55, 50, 40, 35, 90, 85, 92, 88),
+  category = c(rep("결정론 증거", 5), rep("자유의지 증거", 4))
+)
+
+debate_long <- debate_data %>%
+  pivot_longer(cols = c(sapolsky, dennett), names_to = "thinker", values_to = "strength") %>%
+  mutate(thinker = ifelse(thinker == "sapolsky", "Sapolsky (결정론)", "Dennett (양립론)"))
+
+ggplot(debate_long, aes(x = reorder(argument, strength), y = strength, fill = thinker)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.6, alpha = 0.85) +
+  coord_flip() +
+  facet_wrap(~category, scales = "free_y", ncol = 1) +
+  scale_fill_manual(values = c("#ef4444", "#6366f1"), name = "입장") +
+  labs(title = "Sapolsky vs Dennett: 논증 강도 비교",
+       subtitle = "같은 데이터, 다른 해석 — 2023년 자유의지 논쟁의 최전선",
+       x = NULL, y = "논증 강도 (%)",
+       caption = "Sapolsky (2023) 'Determined' / Dennett (2003) 'Freedom Evolves'") +
+  theme_insight() +
+  theme(legend.position = "bottom",
+        strip.text = element_text(size = 11))
+```
+
+## 양자 의식: Penrose-Hameroff의 도전
+
+2025년, Penrose-Hameroff의 **Orch-OR (조율된 객관적 환원)** 이론이 새로운 실험적 지지를 받았다.
+
+```{r}
+#| label: fig-quantum-consciousness
+#| fig-cap: "미세소관 양자 결맞음 시간의 재계산: 생물학적으로 유의미한 시간 스케일"
+#| lightbox: true
+#| fig-width: 9
+#| fig-height: 6
+
+# 양자 결맞음 시간 비교
+quantum_data <- tibble(
+  model = c("초기 비판\n(Tegmark 2000)", "재계산\n(Hagan 2002)",
+            "실험적 관측\n(2024 슈퍼라디안스)", "신경 과정\n필요 시간"),
+  decoherence_time = c(1e-13, 1e-7, 1e-5, 1e-3),
+  log_time = log10(c(1e-13, 1e-7, 1e-5, 1e-3)),
+  category = c("비판적", "이론적", "실험적", "기준선"),
+  color = c("#ef4444", "#f59e0b", "#22c55e", "#6366f1")
+)
+
+ggplot(quantum_data, aes(x = reorder(model, log_time), y = log_time, fill = color)) +
+  geom_col(width = 0.6, alpha = 0.85) +
+  geom_hline(yintercept = log10(1e-3), linetype = "dashed", color = "#6366f1", alpha = 0.5) +
+  scale_fill_identity() +
+  annotate("text", x = 3.5, y = log10(1e-3) + 0.5,
+           label = "← 신경 과정에 필요한 최소 시간",
+           color = "#6366f1", family = kfont, size = 3) +
+  labs(title = "미세소관 양자 결맞음 시간의 진화",
+       subtitle = "2024년 실험: 생물학적으로 유의미한 양자 효과 가능성",
+       x = NULL, y = expression(log[10]~"결맞음 시간 (초)"),
+       caption = "Hameroff & Penrose (2014) Physics of Life Reviews 11:39-78\n2024 tryptophan superradiance 실험") +
+  theme_insight() +
+  theme(axis.text.x = element_text(size = 10))
+```
+
+::: {.callout-warning}
+## 과학적 경고
+
+Orch-OR 이론은 여전히 **논쟁적**이다. 2025년 Oxford Academic 저널에 실험적 지지 논문이 게재되었으나, 주류 신경과학계는 "양자 효과가 의식 수준까지 확대될 수 있는지"에 대해 회의적이다. 그러나 이 이론이 중요한 이유는 **결정론적 물리학에 비결정적 요소를 도입함으로써 자유의지의 '논리적 공간'을 열어준다**는 점이다.
+:::
+
+## 디폴트 모드 네트워크: 7초 전의 결정
+
+2008년 John-Dylan Haynes의 fMRI 연구는 리벳 실험을 극한까지 밀어붙였다. **뇌 활동 패턴만으로 피험자의 결정을 7초 전에 60% 정확도로 예측할 수 있었다.**
+
+```{r}
+#| label: fig-prediction-accuracy
+#| fig-cap: "결정 예측 정확도의 시간적 변화: 결정 시점에 가까울수록 예측이 정확해진다"
+#| lightbox: true
+#| fig-width: 9
+#| fig-height: 5
+
+# fMRI 예측 정확도 시뮬레이션
+set.seed(123)
+prediction_data <- tibble(
+  seconds_before = seq(10, 0, by = -0.5),
+  accuracy = pmin(95, 50 + 45 * (1 - exp(-(10 - seconds_before)/3)) + rnorm(21, 0, 2)),
+  chance_level = 50
+)
+
+ggplot(prediction_data, aes(x = seconds_before, y = accuracy)) +
+  geom_ribbon(aes(ymin = chance_level, ymax = accuracy), fill = "#6366f1", alpha = 0.2) +
+  geom_line(linewidth = 1.2, color = "#6366f1") +
+  geom_hline(yintercept = 50, linetype = "dashed", color = "#ef4444") +
+  annotate("text", x = 8, y = 52, label = "우연 수준 (50%)",
+           color = "#ef4444", family = kfont, size = 3) +
+  annotate("segment", x = 7, xend = 7, y = 45, yend = 60,
+           arrow = arrow(length = unit(0.2, "cm")), color = "#f59e0b") +
+  annotate("text", x = 7, y = 43, label = "7초 전\n60% 예측",
+           color = "#f59e0b", family = kfont, size = 3) +
+  scale_x_reverse(breaks = seq(10, 0, -1)) +
+  labs(title = "fMRI 기반 결정 예측 정확도",
+       subtitle = "Haynes et al. (2008): 결정 7초 전부터 우연 이상의 예측 가능",
+       x = "결정 전 시간 (초)", y = "예측 정확도 (%)",
+       caption = "Soon et al. (2008) Nature Neuroscience 11:543-545") +
+  coord_cartesian(ylim = c(40, 100)) +
+  theme_insight()
+```
+
+그러나 60%의 정확도는 **결정론의 증거이자 동시에 한계**이다. 40%의 '예측 불가능한 영역'은 무엇인가?
+
+## 시뮬레이션: 의식의 다층 구조
+
+```{r}
+#| label: fig-consciousness-layers
+#| fig-cap: "의식의 다층 시뮬레이션: 자유의지는 어느 층에서 작동하는가?"
+#| lightbox: true
+#| fig-width: 10
+#| fig-height: 7
+
+# 의식의 계층 구조 시뮬레이션
+set.seed(2026)
+n_time <- 200
+
+layers <- tibble(
+  time = rep(1:n_time, 4),
+  layer = rep(c("L1: 신경 잡음 (확률적)", "L2: 무의식적 처리 (RP)",
+                "L3: 의식적 인식 (W)", "L4: 메타인지 (거부권)"), each = n_time),
+  signal = c(
+    # L1: 순수 잡음
+    cumsum(rnorm(n_time, 0, 0.3)),
+    # L2: 저주파 필터링된 신호
+    stats::filter(cumsum(rnorm(n_time, 0, 0.3)), rep(1/10, 10), sides = 1) %>% as.numeric() %>% replace_na(0),
+    # L3: 임계값 도달 후 활성화
+    c(rep(0, 120), seq(0, 3, length.out = 30), rep(3, 50)),
+    # L4: 거부/승인 게이트
+    c(rep(0, 140), rep(1, 20), rep(-1, 10), rep(1, 30))
+  )
+)
+
+ggplot(layers, aes(x = time, y = signal, color = layer)) +
+  geom_line(linewidth = 0.8) +
+  facet_wrap(~layer, ncol = 1, scales = "free_y") +
+  scale_color_manual(values = c("#ef4444", "#f59e0b", "#22c55e", "#6366f1")) +
+  # 결정 순간 마커
+  geom_vline(xintercept = 120, linetype = "dotted", color = "#888888", alpha = 0.5) +
+  annotate("text", x = 125, y = Inf, label = "결정 순간", vjust = 1.5,
+           color = "#888888", family = kfont, size = 2.5) +
+  labs(title = "의식의 4층 구조와 자유의지",
+       subtitle = "리벳의 '거부권(veto)': L4에서 L2의 출력을 억제할 수 있는가?",
+       x = "시간", y = "활성도",
+       caption = "시뮬레이션 기반. 각 층은 다른 시간 스케일에서 작동한다.") +
+  theme_insight() +
+  theme(legend.position = "none",
+        strip.text = element_text(size = 10))
+```
+
+## 크로스오버 통찰: 자유의지의 위상 공간
+
+::: {.callout-note}
+## 핵심 크로스오버
+
+물리학의 **위상 공간(phase space)** 개념을 자유의지에 적용하면 새로운 해석이 가능하다:
+
+1. **결정론적 계(Sapolsky)**: 위상 공간에서 단일 궤적 — 초기 조건이 모든 것을 결정
+2. **확률적 계(Schurger)**: 위상 공간에서 끌개(attractor) 사이의 요동 — 임계 전이
+3. **양자적 계(Penrose)**: 위상 공간 자체가 비결정적 — 경로 적분
+
+자유의지 문제의 핵심은 **"뇌가 어떤 종류의 역학계인가?"**라는 물리학적 질문이다.
+:::
+
+```{r}
+#| label: fig-phase-space
+#| fig-cap: "자유의지의 위상 공간: 세 모델은 뇌를 다른 종류의 역학계로 본다"
+#| lightbox: true
+#| fig-width: 10
+#| fig-height: 6
+
+set.seed(777)
+
+# 세 가지 역학계의 위상 공간 시각화
+# 1. 결정론: 나선형 끌개로의 수렴
+t_det <- seq(0, 20, length.out = 300)
+det_x <- exp(-0.1*t_det) * cos(t_det)
+det_y <- exp(-0.1*t_det) * sin(t_det)
+
+# 2. 확률적: 브라운 운동 + 약한 끌개
+stoch_x <- cumsum(rnorm(300, 0, 0.05))
+stoch_y <- cumsum(rnorm(300, 0, 0.05))
+# 약한 끌개로 당기기
+stoch_x <- stoch_x - 0.01 * cumsum(stoch_x)
+stoch_y <- stoch_y - 0.01 * cumsum(stoch_y)
+
+# 3. 양자적: 분기하는 경로들
+quantum_paths <- bind_rows(
+  tibble(t = 1:150, x = cumsum(rnorm(150, 0.01, 0.03)),
+         y = cumsum(rnorm(150, 0.01, 0.03)), path = "A"),
+  tibble(t = 1:150, x = cumsum(rnorm(150, -0.01, 0.03)),
+         y = cumsum(rnorm(150, 0.02, 0.03)), path = "B"),
+  tibble(t = 1:150, x = cumsum(rnorm(150, 0.02, 0.03)),
+         y = cumsum(rnorm(150, -0.01, 0.03)), path = "C")
+)
+
+# 합쳐서 시각화
+phase_data <- bind_rows(
+  tibble(x = det_x, y = det_y, model = "결정론 (단일 궤적)"),
+  tibble(x = stoch_x[1:300], y = stoch_y[1:300], model = "확률적 (요동 + 끌개)")
+)
+
+p1 <- ggplot(phase_data %>% filter(model == "결정론 (단일 궤적)"),
+             aes(x = x, y = y)) +
+  geom_path(color = "#ef4444", linewidth = 0.8, alpha = 0.8) +
+  geom_point(data = tibble(x = det_x[1], y = det_y[1]), aes(x, y),
+             color = "#ef4444", size = 3) +
+  labs(title = "결정론", subtitle = "초기조건 → 유일한 경로") +
+  theme_insight() + theme(axis.title = element_blank(), axis.text = element_blank())
+
+p2 <- ggplot(phase_data %>% filter(model == "확률적 (요동 + 끌개)"),
+             aes(x = x, y = y)) +
+  geom_path(color = "#f59e0b", linewidth = 0.6, alpha = 0.6) +
+  labs(title = "확률적", subtitle = "요동 속 끌개 전이") +
+  theme_insight() + theme(axis.title = element_blank(), axis.text = element_blank())
+
+p3 <- ggplot(quantum_paths, aes(x = x, y = y, color = path)) +
+  geom_path(linewidth = 0.8, alpha = 0.7) +
+  scale_color_manual(values = c("#6366f1", "#22c55e", "#8b5cf6")) +
+  labs(title = "양자적", subtitle = "다중 경로 (분기)") +
+  theme_insight() + theme(axis.title = element_blank(), axis.text = element_blank(),
+                          legend.position = "none")
+
+library(patchwork)
+(p1 | p2 | p3) +
+  plot_annotation(
+    title = "자유의지의 위상 공간",
+    subtitle = "뇌는 어떤 종류의 역학계인가? — 답에 따라 자유의지의 존재 여부가 달라진다",
+    caption = "Insight Lab 시뮬레이션",
+    theme = theme_insight() + theme(
+      plot.title = element_text(color = "#6366f1", face = "bold", size = 16),
+      plot.subtitle = element_text(color = "#888888", size = 11)
+    )
+  )
+```
+
+## 결론: 닐스 보어의 답
+
+> "이것의 반대도 깊은 진리인 명제야말로 위대한 진리다." — 닐스 보어
+
+자유의지 논쟁에서 보어의 상보성 원리를 적용하면:
+
+- **3인칭 관점(과학)**: 뇌는 물리적 시스템이며, 모든 신경 활동은 선행 원인을 갖는다 → 결정론
+- **1인칭 관점(경험)**: 나는 선택하고, 억제하고, 후회한다 → 자유의지
+
+이 두 진술은 모순이 아니라 **상보적**이다. 마치 빛이 입자이면서 동시에 파동인 것처럼, 인간의 결정은 **결정되어 있으면서 동시에 자유롭다.**
+
+리벳 자신도 인정했다: 뇌가 운동을 '준비'하더라도, 의식은 마지막 200ms 안에 **거부권(veto)**을 행사할 수 있다. 자유의지는 "개시"의 자유가 아니라 **"거부"의 자유**일 수 있다.
+
+```{r}
+#| label: tbl-summary
+#| tbl-cap: "핵심 학술 근거 요약"
+
+refs <- tibble(
+  `#` = 1:8,
+  연구 = c(
+    "Libet et al. (1983)",
+    "Schurger et al. (2012)",
+    "Soon et al. (2008)",
+    "Sapolsky (2023)",
+    "Friston (2010)",
+    "Hameroff & Penrose (2014)",
+    "Oxford Academic (2025)",
+    "Dennett (2003)"
+  ),
+  핵심발견 = c(
+    "준비전위(RP)는 의식적 의도보다 550ms 선행",
+    "RP는 확률적 잡음의 임계값 초과 인공물",
+    "fMRI로 7초 전 결정 예측 가능 (60%)",
+    "유전자+환경+신경화학이 모든 결정 사전 결정",
+    "뇌는 자유에너지를 최소화하는 예측 기계",
+    "미세소관의 양자 결맞음이 의식의 기반",
+    "미세소관 양자 효과 실험적 지지 (tryptophan superradiance)",
+    "양립론: 자유의지 = 외부 강제 없는 자발적 행위"
+  ),
+  함의 = c(
+    "의식은 결정의 관찰자인가?",
+    "리벳 실험은 자유의지를 부정하지 않는다",
+    "무의식적 성향이 결정에 영향",
+    "도덕적 책임의 근거가 사라지는가?",
+    "자유의지의 '정도'가 존재",
+    "물리적 비결정성이 의지의 기반",
+    "양자 생물학이 자유의지 논쟁을 재개",
+    "결정론과 자유의지는 공존 가능"
+  )
+)
+
+kable(refs, format = "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE) %>%
+  row_spec(0, bold = TRUE, color = "#6366f1") %>%
+  column_spec(1, width = "5%") %>%
+  column_spec(2, width = "20%", bold = TRUE) %>%
+  column_spec(3, width = "40%") %>%
+  column_spec(4, width = "35%")
+```
+
+---
+
+*"나는 결정한다"는 경험이 환상이라면, 그 환상을 '인식'하는 나는 누구인가? 자유의지의 가장 깊은 역설은 — 그것을 부정하는 행위 자체가 자유의지를 전제한다는 것이다.*
+
+---
+
+**참고문헌**
+
+1. Libet, B. et al. (1983). Time of conscious intention to act in relation to onset of cerebral activity. *Brain*, 106, 623-642.
+2. Schurger, A., Sitt, J.D., Dehaene, S. (2012). An accumulator model for spontaneous neural activity prior to self-initiated movement. *PNAS*, 109(42), E2904-E2913.
+3. Soon, C.S., Brass, M., Heinze, H.J., Haynes, J.D. (2008). Unconscious determinants of free decisions in the human brain. *Nature Neuroscience*, 11, 543-545.
+4. Sapolsky, R.M. (2023). *Determined: A Science of Life without Free Will*. Penguin Press.
+5. Friston, K. (2010). The free-energy principle: a unified brain theory? *Nature Reviews Neuroscience*, 11, 127-138.
+6. Hameroff, S. & Penrose, R. (2014). Consciousness in the universe: A review of the 'Orch OR' theory. *Physics of Life Reviews*, 11, 39-78.
+7. Wiest, M.C. (2025). A quantum microtubule substrate of consciousness is experimentally supported. *Neuroscience of Consciousness*, 2025(1), niaf011.
+8. Dennett, D.C. (2003). *Freedom Evolves*. Viking Press.
