@@ -1,6 +1,6 @@
 ---
 title: "계면의 보편 물리학"
-subtitle: "OLED 임피던스 매칭에서 인공 신경망까지 — 전기공학 × AI × 뉴로모픽"
+subtitle: "OLED 임피던스 매칭에서 인공 신경망, 그리고 AI 반도체까지 — 전기공학 × AI × 뉴로모픽 × 반도체"
 author: "Insight Lab × Chimera AI"
 date: "2026-05-24"
 format:
@@ -376,6 +376,195 @@ ggplot(df_map, aes(x = x, y = y)) +
 
 2021년 Nature Communications에 발표된 Ag 나노와이어 네트워크 연구는 이 연결을 극적으로 보여준다. PVP 절연막으로 코팅된 Ag 나노와이어가 memristive junction을 형성하고, 이 네트워크가 **edge of chaos**에서 최적의 연산 성능을 보였다. Avalanche 임계성은 뇌 피질 뉴런의 power-law 분포와 동일했다.
 
+# AI 반도체 — 임피던스 매칭이 산업의 병목이다
+
+여기서 이야기는 학술적 아날로지를 넘어 **반도체 산업의 현실**로 들어간다.
+
+## HBM: 16장 적층의 임피던스 전쟁
+
+AI GPU의 심장인 HBM(High Bandwidth Memory)은 DRAM 다이를 8~16장 수직으로 쌓고, TSV(Through-Silicon Via)로 연결한다. 2025년 현재 HBM3E는 1024개 병렬 레인에서 **1.2 TB/s** 대역폭을 달성했다.
+
+이것이 가능한 조건은 단 하나: **TSV 임피던스 매칭.**
+
+- 각 다이 간 TSV의 RC 지연이 다르면 → 신호 왜곡, 데이터 에러
+- 인터포저 배선의 임피던스: **40~50Ω 정밀 제어** 필수
+- 1024개 레인의 skew: **100ps 미만** 요구
+- Signal integrity 95% 이상 달성이 양산의 조건
+
+OLED 게이트 스택에서 SiOx/poly-Si 층의 ε·ρ를 맞추는 것과, HBM에서 다이 간 TSV의 임피던스를 맞추는 것은 **같은 Maxwell-Wagner 물리의 다른 스케일**이다.
+
+```{r hbm-stack, fig.width=9, fig.height=5.5}
+#| lightbox: true
+#| fig-cap: "적층 수 증가에 따른 임피던스 매칭 난이도: HBM과 OLED 모두 같은 도전에 직면한다"
+
+layers <- 2:16
+# Signal integrity degrades with stacking if not matched
+si_matched <- 99.5 - 0.2 * (layers - 2)
+si_moderate <- 99.5 - 0.8 * (layers - 2) - 0.05 * (layers - 2)^2
+si_poor <- 99.5 - 2.5 * (layers - 2) - 0.1 * (layers - 2)^2
+si_poor[si_poor < 50] <- 50
+
+df_hbm <- data.frame(
+  layers = rep(layers, 3),
+  si = c(si_matched, pmax(si_moderate, 70), si_poor),
+  matching = rep(c("정밀 매칭 (< 1% 편차)",
+                   "보통 매칭 (5% 편차)",
+                   "미스매칭 (> 10% 편차)"), each = length(layers))
+)
+
+ggplot(df_hbm, aes(x = layers, y = si, color = matching)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  geom_hline(yintercept = 95, linetype = "dashed", color = "#ef4444", linewidth = 0.5) +
+  annotate("text", x = 14, y = 96.5, label = "양산 기준 (95%)",
+           color = "#ef4444", size = 3, family = kfont) +
+  annotate("text", x = 8, y = 65, label = "HBM2: 4-8층", color = "#888888",
+           size = 2.8, family = kfont) +
+  annotate("text", x = 12, y = 60, label = "HBM3E: 8-12층", color = "#888888",
+           size = 2.8, family = kfont) +
+  annotate("text", x = 16, y = 55, label = "HBM4: 16층", color = "#888888",
+           size = 2.8, family = kfont) +
+  scale_color_manual(values = c("#22c55e", "#f59e0b", "#ef4444")) +
+  labs(
+    title = "적층 수 vs Signal Integrity",
+    subtitle = "임피던스 매칭 정밀도가 적층 한계를 결정한다",
+    x = "적층 다이 수", y = "Signal Integrity (%)",
+    color = NULL
+  ) +
+  theme_insight() +
+  theme(legend.position = "bottom",
+        legend.key = element_rect(fill = "#1a1a2e"))
+```
+
+SK하이닉스가 HBM4에서 11Gbps를 달성한 것도, TSMC가 CoWoS 인터포저 capacity를 월 10만장으로 끌어올리는 것도, 본질은 **"계면 임피던스를 얼마나 정밀하게 맞출 수 있느냐"**의 공학이다.
+
+## 멤리스터 크로스바: 기생 RC가 AI 정확도를 결정한다
+
+멤리스터 크로스바 어레이는 AI의 핵심 연산인 행렬 곱(MAC)을 **아날로그로** 수행한다. 전력 효율이 디지털 대비 100~1000배. 그러나 치명적 문제가 있다:
+
+**배선의 기생 저항(parasitic R)과 기생 용량(parasitic C)**이 연산 정확도를 망친다.
+
+```{r crossbar-parasitic, fig.width=9, fig.height=5.5}
+#| lightbox: true
+#| fig-cap: "크로스바 어레이 크기에 따른 연산 정확도 저하: 기생 RC 미스매칭이 원인"
+
+array_size <- seq(16, 1024, by = 16)
+
+accuracy_ideal <- rep(99.9, length(array_size))
+accuracy_compensated <- 99.9 - 0.005 * array_size + 0.000002 * array_size^2
+accuracy_compensated <- pmax(accuracy_compensated, 85)
+accuracy_raw <- 99.9 - 0.02 * array_size + 0.00001 * array_size^2
+accuracy_raw <- pmax(accuracy_raw, 60)
+
+df_xbar <- data.frame(
+  size = rep(array_size, 3),
+  accuracy = c(accuracy_ideal, accuracy_compensated, accuracy_raw),
+  condition = rep(c("이상적 (기생 효과 없음)",
+                    "RC 보상 프로그래밍 적용",
+                    "보상 없음 (기생 RC 방치)"), each = length(array_size))
+)
+
+ggplot(df_xbar, aes(x = size, y = accuracy, color = condition)) +
+  geom_line(linewidth = 1.2) +
+  geom_hline(yintercept = 90, linetype = "dashed", color = "#ef4444", linewidth = 0.5) +
+  annotate("text", x = 800, y = 91.5, label = "실용 정확도 하한 (90%)",
+           color = "#ef4444", size = 3, family = kfont) +
+  scale_color_manual(values = c("#22c55e", "#6366f1", "#ef4444")) +
+  labs(
+    title = "멤리스터 크로스바: 기생 RC vs 연산 정확도",
+    subtitle = "배열이 커질수록 임피던스 미스매칭이 누적되어 정확도가 급락한다",
+    x = "어레이 크기 (N × N)", y = "MAC 연산 정확도 (%)",
+    color = NULL
+  ) +
+  theme_insight() +
+  theme(legend.position = "bottom",
+        legend.key = element_rect(fill = "#1a1a2e"))
+```
+
+2024년 *Science*에 발표된 연구는 이 문제에 우아한 해결책을 제시했다. 저정밀 멤리스터를 **여러 개 직렬로 조합**하여 고정밀 연산을 수행하는 것이다. 핵심 원리는 — "뒤에 프로그래밍하는 소자가 앞 소자의 오차를 보상한다."
+
+이것은 OLED 논문에서 제안한 **PECVD 가스비 튜닝으로 ε·ρ를 맞추는 전략**과 본질적으로 같다. 공정 파라미터로 계면 특성을 조절하여 매칭을 달성한다.
+
+## CoWoS 인터포저: 같은 팹, 같은 물리
+
+여기서 원이 닫힌다.
+
+삼성디스플레이의 OLED 패널과 SK하이닉스의 HBM은 **같은 반도체 공정 기반** 위에 있다. PECVD로 SiOx를 증착하고, 계면의 전기적 특성을 제어한다. TSMC의 CoWoS 인터포저도 실리콘 위에 배선을 쌓는 구조다.
+
+```{r full-map, fig.width=10, fig.height=7}
+#| lightbox: true
+#| fig-cap: "계면 임피던스 매칭의 완전한 지도: 디스플레이 → AI 소프트웨어 → AI 반도체"
+
+df_fullmap <- data.frame(
+  x = c(1.5, 4, 6.5,    1, 4, 7,    2.5, 5.5),
+  y = c(5, 5, 5,         3, 3, 3,    1, 1),
+  label = c(
+    "OLED TFT\nSiOx/poly-Si\nε·ρ 매칭",
+    "딥 뉴럴넷\n가중치 초기화\nσ²w 매칭",
+    "HBM 적층\nTSV 임피던스\nZ₀ 매칭",
+    "LCD CC셀\n정렬막/LC\nε·ρ 매칭",
+    "멤리스터\n크로스바 어레이\n기생 RC 보상",
+    "CoWoS\n인터포저\n배선 임피던스",
+    "뉴로모픽\n나노와이어\nEdge of Chaos",
+    "Analog\nIn-Memory\nComputing"
+  ),
+  domain = c("디스플레이", "AI 소프트웨어", "AI 패키징",
+             "디스플레이", "AI 하드웨어", "AI 패키징",
+             "뉴로모픽", "AI 하드웨어"),
+  era = c("2018", "2017", "2024", "1990s", "2025", "2025", "2021", "2024")
+)
+
+ggplot(df_fullmap, aes(x = x, y = y)) +
+  # Connection arrows - top row
+  geom_segment(aes(x = 1.5, xend = 4, y = 5, yend = 5),
+               arrow = arrow(length = unit(0.15, "cm"), ends = "both"),
+               color = "#6366f1", linewidth = 0.6) +
+  geom_segment(aes(x = 4, xend = 6.5, y = 5, yend = 5),
+               arrow = arrow(length = unit(0.15, "cm"), ends = "both"),
+               color = "#6366f1", linewidth = 0.6) +
+  # Vertical connections
+  geom_segment(aes(x = 1.5, xend = 1, y = 5, yend = 3),
+               color = "#888888", linewidth = 0.3, linetype = "dotted") +
+  geom_segment(aes(x = 4, xend = 4, y = 5, yend = 3),
+               color = "#888888", linewidth = 0.3, linetype = "dotted") +
+  geom_segment(aes(x = 6.5, xend = 7, y = 5, yend = 3),
+               color = "#888888", linewidth = 0.3, linetype = "dotted") +
+  # Bottom connections
+  geom_segment(aes(x = 4, xend = 2.5, y = 3, yend = 1),
+               color = "#888888", linewidth = 0.3, linetype = "dotted") +
+  geom_segment(aes(x = 4, xend = 5.5, y = 3, yend = 1),
+               color = "#888888", linewidth = 0.3, linetype = "dotted") +
+  # Points
+  geom_point(aes(fill = domain), shape = 21, size = 20, alpha = 0.25, color = NA) +
+  geom_text(aes(label = label), color = "#e4e4ec", size = 2.6,
+            family = kfont, lineheight = 1.15) +
+  # Annotations
+  annotate("text", x = 2.75, y = 5.35, label = "수학적 동형",
+           color = "#6366f1", size = 2.8, family = kfont, fontface = "bold") +
+  annotate("text", x = 5.25, y = 5.35, label = "물리적 동일",
+           color = "#6366f1", size = 2.8, family = kfont, fontface = "bold") +
+  # Row labels
+  annotate("text", x = 0.2, y = 5, label = "핵심\n적층 구조",
+           color = "#888888", size = 2.5, family = kfont, hjust = 0) +
+  annotate("text", x = 0.2, y = 3, label = "선행\n기술",
+           color = "#888888", size = 2.5, family = kfont, hjust = 0) +
+  annotate("text", x = 0.2, y = 1, label = "차세대\n응용",
+           color = "#888888", size = 2.5, family = kfont, hjust = 0) +
+  scale_fill_manual(values = c("#ef4444", "#6366f1", "#22c55e",
+                               "#f59e0b", "#8b5cf6")) +
+  xlim(-0.3, 8) + ylim(0, 6) +
+  labs(
+    title = "계면 임피던스 매칭의 완전한 지도",
+    subtitle = "디스플레이 → AI 소프트웨어 → AI 반도체: 같은 물리, 같은 방정식, 같은 팹"
+  ) +
+  theme_insight() +
+  theme(axis.text = element_blank(), axis.title = element_blank(),
+        panel.grid = element_blank(),
+        legend.position = "none")
+```
+
+같은 삼성 용인 캠퍼스에서 OLED 패널의 게이트 절연막 레시피를 최적화하는 엔지니어와, HBM의 TSV 임피던스를 튜닝하는 엔지니어는 — 서로 모르지만 — **같은 방정식의 같은 해**를 찾고 있다.
+
 # ReZero — 매칭이 기본 상태다
 
 2020년 Bachlechner 등이 제안한 ReZero는 단순하면서 심오한 아이디어다:
@@ -444,15 +633,18 @@ ggplot(df_ushape, aes(x = x, y = y, color = system)) +
 
 > **계면 임피던스 매칭은 직렬 적층 시스템에서 신호 전파의 보편 조건이다.**
 
-이 조건은 OLED 게이트 스택에서도, 10,000층 CNN에서도, 멤리스터 시냅스 어레이에서도, LSTM의 시간 방향 전파에서도 동일하게 작동한다.
+이 조건은 OLED 게이트 스택에서도, 10,000층 CNN에서도, HBM 16-다이 적층에서도, 멤리스터 크로스바 어레이에서도 동일하게 작동한다.
 
 차이는 목적뿐이다:
 
 - **디스플레이 엔지니어**는 계면 전하를 **없앤다** (매칭 → 잔상 제거)
-- **AI 연구자**는 계면 전하를 **안정화한다** (매칭 → 학습 안정)
+- **AI 연구자**는 계면 신호를 **안정화한다** (매칭 → 학습 안정)
+- **AI 패키징 엔지니어**는 계면 임피던스를 **정밀 제어한다** (매칭 → signal integrity)
 - **뉴로모픽 엔지니어**는 계면 전하를 **활용한다** (의도적 비매칭 → 메모리)
 
-Maxwell-Wagner가 1892년에 쓴 방정식이, 130년 뒤 AI 시대에도 유효하다. 좋은 물리학은 시대를 고르지 않는다.
+그리고 이 네 분야의 엔지니어들은 같은 팹에서, 같은 장비로, 같은 SiOx를 깐다.
+
+Maxwell-Wagner가 1892년에 쓴 방정식이, 130년 뒤 AI 반도체 시대에도 유효하다. 좋은 물리학은 시대를 고르지 않는다.
 
 ---
 
@@ -465,8 +657,12 @@ Maxwell-Wagner가 1892년에 쓴 방정식이, 130년 뒤 AI 시대에도 유효
 5. Loeffler et al., "Dynamical Isometry for Residual Networks," arXiv:2210.02411
 6. Behrens et al., "Avalanches and edge-of-chaos learning in neuromorphic nanowire networks," Nature Comms, 2021
 7. Xiao et al., "Interface engineering for enhanced memristive devices," Int. Materials Reviews, 2025
-8. Choi, N., "Impedance matching at poly-Si/SiOx interface in OLED TFTs," Working paper, 2026
-9. Choi, N., Ph.D. Thesis, Korea University, 2018
+8. Jeong et al., "Programming memristor arrays with arbitrarily high precision for analog computing," Science, 2024
+9. Liu et al., "A Parasitic Resistance-Adapted Programming Scheme for Memristor Crossbar-Based Neuromorphic Computing Systems," Sensors, 2019
+10. Jang et al., "Recent Progress in Memristor Array-Based Neuromorphic Computing for On-Chip VMM," Adv. Mater. Technol., 2026
+11. Siemens EDA, "HBM3e and HBM4: IC Design Guide for Next-Generation High Bandwidth Memory," 2026
+12. Choi, N., "Impedance matching at poly-Si/SiOx interface in OLED TFTs," Working paper, 2026
+13. Choi, N., Ph.D. Thesis, Korea University, 2018
 :::
 
 ::: {.callout-note appearance="minimal"}
