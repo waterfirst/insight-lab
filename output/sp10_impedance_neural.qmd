@@ -376,6 +376,92 @@ ggplot(df_map, aes(x = x, y = y)) +
 
 2021년 Nature Communications에 발표된 Ag 나노와이어 네트워크 연구는 이 연결을 극적으로 보여준다. PVP 절연막으로 코팅된 Ag 나노와이어가 memristive junction을 형성하고, 이 네트워크가 **edge of chaos**에서 최적의 연산 성능을 보였다. Avalanche 임계성은 뇌 피질 뉴런의 power-law 분포와 동일했다.
 
+# 경계를 긋다 — 같은 것과 다른 것
+
+여기서 한 발 멈추고, 정직해지자. 지금까지의 연결이 모두 같은 수준의 동형은 아니다. 과장하면 신뢰를 잃는다.
+
+## 연결의 세 가지 수준
+
+**Level 1: 수학적 동형 (같은 방정식)**
+
+OLED의 Maxwell-Wagner 재귀 관계와 DNN의 mean field 분산 전파는 같은 수학적 형태다. 둘 다 "층 l의 상태 → 층 l+1의 상태"를 결정하는 재귀식이고, 매칭 조건에서 고정점이 안정하다. 이것은 비유가 아니라 증명할 수 있는 구조적 동치다.
+
+**Level 2: 같은 물리 (같은 소자, 같은 현상)**
+
+OLED의 SiOx/poly-Si 계면 전하 트래핑과 멤리스터의 산화물 계면 저항 스위칭은 같은 재료, 같은 현상이다. HBM의 TSV 임피던스 매칭도 같은 전자기학이다. 여기서는 방정식뿐 아니라 물리적 메커니즘 자체가 동일하다.
+
+**Level 3: 관련된 물리 (같은 계면, 다른 메커니즘)**
+
+여기에 **플래시 메모리**가 들어간다.
+
+## 플래시 메모리 — 정직한 구분
+
+플래시 메모리(NAND Flash)의 게이트 스택을 OLED TFT 옆에 놓으면 겉보기에 비슷하다:
+
+- OLED TFT: Gate — **SiOx** — poly-Si Channel
+- Flash CTF: Control Gate — **Al₂O₃** — **Si₃N₄** — **SiO₂** — Channel
+
+둘 다 산화물/반도체 적층이고, 둘 다 계면 전하가 ΔV~th~를 만든다. 하지만 **1차 메커니즘이 다르다:**
+
+```{r mechanism-comparison, fig.width=9, fig.height=5.5}
+#| lightbox: true
+#| fig-cap: "플래시 메모리와 OLED 잔상: 결과(ΔVth)는 같지만 1차 메커니즘이 다르다"
+
+ggplot() +
+  # OLED box
+  annotate("rect", xmin = -0.1, xmax = 2.1, ymin = 1.25, ymax = 4.75,
+           fill = NA, color = "#6366f1", linewidth = 1.2) +
+  annotate("text", x = 1, y = 3,
+           label = "OLED 순간잔상\n\n1차: Maxwell-Wagner\n계면 분극\n(고전 전기역학)\n\nε·ρ 미스매칭\n→ 계면 전하 축적\n→ ΔVth",
+           color = "#e4e4ec", size = 3, family = kfont, lineheight = 1.3) +
+  # Flash box
+  annotate("rect", xmin = 2.9, xmax = 5.1, ymin = 1.25, ymax = 4.75,
+           fill = NA, color = "#f59e0b", linewidth = 1.2) +
+  annotate("text", x = 4, y = 3,
+           label = "Flash Memory\n\n1차: 양자 터널링\nFowler-Nordheim\n(양자역학)\n\nE-field → 전자가\ntunnel oxide 관통\n→ ΔVth",
+           color = "#e4e4ec", size = 3, family = kfont, lineheight = 1.3) +
+  # Overlap box (bottom)
+  annotate("rect", xmin = 0.3, xmax = 4.7, ymin = -0.5, ymax = 1,
+           fill = NA, color = "#22c55e", linewidth = 0.8, linetype = "dashed") +
+  annotate("text", x = 2.5, y = 0.25,
+           label = "공통 영역: 2차 효과\nRetention 실패 → PF leakage / Disturb → RC coupling / 적층 → 전하 재분배",
+           color = "#22c55e", size = 2.6, family = kfont, lineheight = 1.3) +
+  # Arrows to overlap
+  geom_segment(aes(x = 1, xend = 1.5, y = 1.25, yend = 1),
+               arrow = arrow(length = unit(0.15, "cm")),
+               color = "#6366f1", linewidth = 0.4) +
+  geom_segment(aes(x = 4, xend = 3.5, y = 1.25, yend = 1),
+               arrow = arrow(length = unit(0.15, "cm")),
+               color = "#f59e0b", linewidth = 0.4) +
+  # Top labels
+  annotate("text", x = 1, y = 5.1, label = "고전 전기역학",
+           color = "#6366f1", size = 3.5, fontface = "bold", family = kfont) +
+  annotate("text", x = 4, y = 5.1, label = "양자역학",
+           color = "#f59e0b", size = 3.5, fontface = "bold", family = kfont) +
+  annotate("text", x = 2.5, y = 5.1, label = "=/=",
+           color = "#ef4444", size = 5, fontface = "bold") +
+  xlim(-0.5, 5.5) + ylim(-0.8, 5.5) +
+  labs(title = "OLED 잔상 vs Flash 메모리: 같은 것과 다른 것",
+       subtitle = "결과(ΔVth)는 같지만, 1차 메커니즘은 다르다. 2차 효과에서 만난다.") +
+  theme_insight() +
+  theme(axis.text = element_blank(), axis.title = element_blank(),
+        panel.grid = element_blank())
+```
+
+**OLED 잔상**: 두 유전체층의 ε·ρ 미스매치 → 전류 연속 조건 불일치 → 계면에 전하가 고전적으로 축적. **고전 전기역학.**
+
+**Flash 메모리**: 높은 전계(~10 MV/cm) 하에서 전자가 tunnel oxide(~8nm)를 **양자역학적으로 관통**. 저장된 전하는 SiO₂ 장벽(φ~B~ ≈ 3.1 eV)에 의해 갇힘. **양자역학.**
+
+이 둘을 "같은 원리"라고 하면 과장이다.
+
+**그러나 만나는 지점이 있다:**
+
+- Flash의 **retention 실패**(데이터 소실) — SiO₂/Si₃N₄ transition layer의 결함을 통한 Poole-Frenkel assisted leakage. 이것은 OLED 논문의 통합 프레임워크(Section 5.5)와 같은 물리.
+- **Program/Read disturb** — 인접 셀에 의도치 않은 전하가 RC coupling으로 유입. 이것은 계면 임피던스 미스매칭의 효과.
+- **3D NAND 200+ 적층의 신뢰성** — 층간 전하 재분배. Maxwell-Wagner 계면 분극과 관련.
+
+즉, Flash의 **핵심 동작**은 RC 미스매칭이 아니지만, Flash의 **신뢰성 한계**는 같은 계면 물리로 설명된다. 이 구분이 중요하다.
+
 # AI 반도체 — 임피던스 매칭이 산업의 병목이다
 
 여기서 이야기는 학술적 아날로지를 넘어 **반도체 산업의 현실**로 들어간다.
@@ -491,71 +577,83 @@ ggplot(df_xbar, aes(x = size, y = accuracy, color = condition)) +
 
 삼성디스플레이의 OLED 패널과 SK하이닉스의 HBM은 **같은 반도체 공정 기반** 위에 있다. PECVD로 SiOx를 증착하고, 계면의 전기적 특성을 제어한다. TSMC의 CoWoS 인터포저도 실리콘 위에 배선을 쌓는 구조다.
 
-```{r full-map, fig.width=10, fig.height=7}
+```{r full-map, fig.width=10, fig.height=7.5}
 #| lightbox: true
-#| fig-cap: "계면 임피던스 매칭의 완전한 지도: 디스플레이 → AI 소프트웨어 → AI 반도체"
+#| fig-cap: "계면 임피던스 매칭의 완전한 지도 — 연결 수준별 구분"
 
-df_fullmap <- data.frame(
-  x = c(1.5, 4, 6.5,    1, 4, 7,    2.5, 5.5),
-  y = c(5, 5, 5,         3, 3, 3,    1, 1),
-  label = c(
-    "OLED TFT\nSiOx/poly-Si\nε·ρ 매칭",
-    "딥 뉴럴넷\n가중치 초기화\nσ²w 매칭",
-    "HBM 적층\nTSV 임피던스\nZ₀ 매칭",
-    "LCD CC셀\n정렬막/LC\nε·ρ 매칭",
-    "멤리스터\n크로스바 어레이\n기생 RC 보상",
-    "CoWoS\n인터포저\n배선 임피던스",
-    "뉴로모픽\n나노와이어\nEdge of Chaos",
-    "Analog\nIn-Memory\nComputing"
-  ),
-  domain = c("디스플레이", "AI 소프트웨어", "AI 패키징",
-             "디스플레이", "AI 하드웨어", "AI 패키징",
-             "뉴로모픽", "AI 하드웨어"),
-  era = c("2018", "2017", "2024", "1990s", "2025", "2025", "2021", "2024")
-)
-
-ggplot(df_fullmap, aes(x = x, y = y)) +
-  # Connection arrows - top row
-  geom_segment(aes(x = 1.5, xend = 4, y = 5, yend = 5),
-               arrow = arrow(length = unit(0.15, "cm"), ends = "both"),
-               color = "#6366f1", linewidth = 0.6) +
-  geom_segment(aes(x = 4, xend = 6.5, y = 5, yend = 5),
-               arrow = arrow(length = unit(0.15, "cm"), ends = "both"),
-               color = "#6366f1", linewidth = 0.6) +
-  # Vertical connections
-  geom_segment(aes(x = 1.5, xend = 1, y = 5, yend = 3),
-               color = "#888888", linewidth = 0.3, linetype = "dotted") +
-  geom_segment(aes(x = 4, xend = 4, y = 5, yend = 3),
-               color = "#888888", linewidth = 0.3, linetype = "dotted") +
-  geom_segment(aes(x = 6.5, xend = 7, y = 5, yend = 3),
-               color = "#888888", linewidth = 0.3, linetype = "dotted") +
-  # Bottom connections
-  geom_segment(aes(x = 4, xend = 2.5, y = 3, yend = 1),
-               color = "#888888", linewidth = 0.3, linetype = "dotted") +
-  geom_segment(aes(x = 4, xend = 5.5, y = 3, yend = 1),
-               color = "#888888", linewidth = 0.3, linetype = "dotted") +
-  # Points
-  geom_point(aes(fill = domain), shape = 21, size = 20, alpha = 0.25, color = NA) +
-  geom_text(aes(label = label), color = "#e4e4ec", size = 2.6,
-            family = kfont, lineheight = 1.15) +
-  # Annotations
-  annotate("text", x = 2.75, y = 5.35, label = "수학적 동형",
-           color = "#6366f1", size = 2.8, family = kfont, fontface = "bold") +
-  annotate("text", x = 5.25, y = 5.35, label = "물리적 동일",
-           color = "#6366f1", size = 2.8, family = kfont, fontface = "bold") +
-  # Row labels
-  annotate("text", x = 0.2, y = 5, label = "핵심\n적층 구조",
-           color = "#888888", size = 2.5, family = kfont, hjust = 0) +
-  annotate("text", x = 0.2, y = 3, label = "선행\n기술",
-           color = "#888888", size = 2.5, family = kfont, hjust = 0) +
-  annotate("text", x = 0.2, y = 1, label = "차세대\n응용",
-           color = "#888888", size = 2.5, family = kfont, hjust = 0) +
-  scale_fill_manual(values = c("#ef4444", "#6366f1", "#22c55e",
-                               "#f59e0b", "#8b5cf6")) +
-  xlim(-0.3, 8) + ylim(0, 6) +
+ggplot() +
+  # Level labels (left side)
+  annotate("text", x = -0.3, y = 5.5, label = "Level 1\n수학적 동형",
+           color = "#6366f1", size = 2.8, family = kfont, hjust = 0, fontface = "bold") +
+  annotate("text", x = -0.3, y = 3.5, label = "Level 2\n같은 물리",
+           color = "#22c55e", size = 2.8, family = kfont, hjust = 0, fontface = "bold") +
+  annotate("text", x = -0.3, y = 1.5, label = "Level 3\n관련된 물리",
+           color = "#f59e0b", size = 2.8, family = kfont, hjust = 0, fontface = "bold") +
+  # Level 1: Mathematical isomorphism
+  annotate("rect", xmin = 0.8, xmax = 5.2, ymin = 4.8, ymax = 6.2,
+           fill = NA, color = "#6366f1", linewidth = 0.8, linetype = "solid") +
+  annotate("point", x = c(1.5, 3.5, 5), y = c(5.5, 5.5, 5.5),
+           size = 14, alpha = 0.2, color = "#6366f1") +
+  annotate("text", x = 1.5, y = 5.5, label = "OLED TFT\nε·ρ 매칭",
+           color = "#e4e4ec", size = 2.5, family = kfont, lineheight = 1.2) +
+  annotate("text", x = 3.5, y = 5.5, label = "DNN 초기화\nσ²w 매칭",
+           color = "#e4e4ec", size = 2.5, family = kfont, lineheight = 1.2) +
+  annotate("text", x = 5, y = 5.5, label = "LSTM Gate\nτ 전환",
+           color = "#e4e4ec", size = 2.5, family = kfont, lineheight = 1.2) +
+  annotate("segment", x = 1.5, xend = 3.5, y = 5.5, yend = 5.5,
+           color = "#6366f1", linewidth = 0.5,
+           arrow = arrow(length = unit(0.12, "cm"), ends = "both")) +
+  annotate("segment", x = 3.5, xend = 5, y = 5.5, yend = 5.5,
+           color = "#6366f1", linewidth = 0.5,
+           arrow = arrow(length = unit(0.12, "cm"), ends = "both")) +
+  annotate("text", x = 2.5, y = 5.9, label = "같은 재귀식",
+           color = "#6366f1", size = 2.2, family = kfont) +
+  # Level 2: Same physics
+  annotate("rect", xmin = 0.8, xmax = 7.2, ymin = 2.8, ymax = 4.2,
+           fill = NA, color = "#22c55e", linewidth = 0.8, linetype = "solid") +
+  annotate("point", x = c(1.5, 3, 4.5, 6, 7), y = c(3.5, 3.5, 3.5, 3.5, 3.5),
+           size = 14, alpha = 0.2, color = "#22c55e") +
+  annotate("text", x = 1.5, y = 3.5, label = "LCD CC셀\nε·ρ 매칭",
+           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+  annotate("text", x = 3, y = 3.5, label = "멤리스터\n계면 트래핑",
+           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+  annotate("text", x = 4.5, y = 3.5, label = "나노와이어\nReservoir",
+           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+  annotate("text", x = 6, y = 3.5, label = "HBM TSV\nZ₀ 매칭",
+           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+  annotate("text", x = 7, y = 3.5, label = "CoWoS\n배선 임피던스",
+           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+  # Level 3: Related physics (different primary mechanism)
+  annotate("rect", xmin = 0.8, xmax = 5.2, ymin = 0.8, ymax = 2.2,
+           fill = NA, color = "#f59e0b", linewidth = 0.8, linetype = "dashed") +
+  annotate("point", x = c(2, 4), y = c(1.5, 1.5),
+           size = 14, alpha = 0.2, color = "#f59e0b") +
+  annotate("text", x = 2, y = 1.5,
+           label = "Flash Memory\n1차: 양자 터널링\n2차: 계면 PF leakage",
+           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+  annotate("text", x = 4, y = 1.5,
+           label = "3D NAND 적층\n1차: FN tunneling\n2차: 층간 전하 재분배",
+           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+  # Cross-level connections
+  annotate("segment", x = 1.5, xend = 1.5, y = 4.8, yend = 4.2,
+           color = "#888888", linewidth = 0.3, linetype = "dotted") +
+  annotate("segment", x = 1.5, xend = 3, y = 4.8, yend = 4.2,
+           color = "#888888", linewidth = 0.3, linetype = "dotted") +
+  annotate("segment", x = 3, xend = 2, y = 2.8, yend = 2.2,
+           color = "#888888", linewidth = 0.3, linetype = "dotted") +
+  annotate("segment", x = 6, xend = 4, y = 2.8, yend = 2.2,
+           color = "#888888", linewidth = 0.3, linetype = "dotted") +
+  # Legend text
+  annotate("text", x = 6.5, y = 6, label = "━ 같은 방정식 (증명 가능)",
+           color = "#6366f1", size = 2.3, family = kfont, hjust = 0) +
+  annotate("text", x = 6.5, y = 5.7, label = "━ 같은 물리적 메커니즘",
+           color = "#22c55e", size = 2.3, family = kfont, hjust = 0) +
+  annotate("text", x = 6.5, y = 5.4, label = "╌ 2차 효과에서 연결",
+           color = "#f59e0b", size = 2.3, family = kfont, hjust = 0) +
+  xlim(-0.5, 8.5) + ylim(0.5, 6.5) +
   labs(
     title = "계면 임피던스 매칭의 완전한 지도",
-    subtitle = "디스플레이 → AI 소프트웨어 → AI 반도체: 같은 물리, 같은 방정식, 같은 팹"
+    subtitle = "연결의 수준을 구분한다 — 같은 방정식, 같은 물리, 관련된 물리"
   ) +
   theme_insight() +
   theme(axis.text = element_blank(), axis.title = element_blank(),
@@ -563,7 +661,7 @@ ggplot(df_fullmap, aes(x = x, y = y)) +
         legend.position = "none")
 ```
 
-같은 삼성 용인 캠퍼스에서 OLED 패널의 게이트 절연막 레시피를 최적화하는 엔지니어와, HBM의 TSV 임피던스를 튜닝하는 엔지니어는 — 서로 모르지만 — **같은 방정식의 같은 해**를 찾고 있다.
+같은 삼성 용인 캠퍼스에서 OLED 패널의 게이트 절연막 레시피를 최적화하는 엔지니어와, HBM의 TSV 임피던스를 튜닝하는 엔지니어는 — 서로 모르지만 — **같은 방정식의 같은 해**를 찾고 있다. 한편 Flash 메모리의 셀 엔지니어는 **다른 방정식(터널링)**을 풀고 있지만, 그의 **신뢰성 문제(retention, disturb)**는 다시 같은 계면 물리로 돌아온다.
 
 # ReZero — 매칭이 기본 상태다
 
@@ -631,20 +729,28 @@ ggplot(df_ushape, aes(x = x, y = y, color = system)) +
 
 이 글의 핵심을 한 문장으로:
 
-> **계면 임피던스 매칭은 직렬 적층 시스템에서 신호 전파의 보편 조건이다.**
+> **계면 임피던스 매칭은 직렬 적층 시스템에서 신호 전파의 보편 조건이다. 단, 모든 적층 시스템이 같은 물리는 아니다.**
 
-이 조건은 OLED 게이트 스택에서도, 10,000층 CNN에서도, HBM 16-다이 적층에서도, 멤리스터 크로스바 어레이에서도 동일하게 작동한다.
+**같은 방정식** (Level 1):
 
-차이는 목적뿐이다:
+- OLED의 ε·ρ 매칭과 DNN의 σ²~w~ 매칭은 수학적으로 동형인 재귀 관계다
+- LSTM gate의 시간상수 전환은 TFT ON/OFF 비대칭과 같은 구조다
 
-- **디스플레이 엔지니어**는 계면 전하를 **없앤다** (매칭 → 잔상 제거)
-- **AI 연구자**는 계면 신호를 **안정화한다** (매칭 → 학습 안정)
-- **AI 패키징 엔지니어**는 계면 임피던스를 **정밀 제어한다** (매칭 → signal integrity)
-- **뉴로모픽 엔지니어**는 계면 전하를 **활용한다** (의도적 비매칭 → 메모리)
+**같은 물리** (Level 2):
 
-그리고 이 네 분야의 엔지니어들은 같은 팹에서, 같은 장비로, 같은 SiOx를 깐다.
+- 멤리스터의 계면 전하 트래핑 = OLED의 계면 전하 축적. 같은 소자, 다른 목적
+- HBM TSV / CoWoS 인터포저의 임피던스 매칭 = 같은 전자기학의 다른 스케일
 
-Maxwell-Wagner가 1892년에 쓴 방정식이, 130년 뒤 AI 반도체 시대에도 유효하다. 좋은 물리학은 시대를 고르지 않는다.
+**관련된 물리** (Level 3):
+
+- Flash 메모리의 1차 동작은 양자 터널링으로, RC 미스매칭이 아니다
+- 그러나 Flash의 신뢰성 한계(retention fail, disturb, 적층 한계)는 같은 계면 물리로 돌아온다
+
+이 구분이 중요하다. 모든 것을 하나의 원리로 환원하면 깔끔하지만 정직하지 않다. **연결의 수준을 명시하는 것**이 과학의 자세다.
+
+그 위에서 여전히 놀라운 것은 — Level 1과 Level 2만으로도 디스플레이, AI 소프트웨어, AI 하드웨어, 뉴로모픽 네 분야가 하나의 물리학으로 연결된다는 사실이다.
+
+Maxwell-Wagner가 1892년에 쓴 방정식이, 130년 뒤 AI 반도체 시대에도 유효하다. 좋은 물리학은 시대를 고르지 않는다. 다만, 좋은 과학자는 그 유효 범위를 정직하게 긋는다.
 
 ---
 
@@ -661,8 +767,9 @@ Maxwell-Wagner가 1892년에 쓴 방정식이, 130년 뒤 AI 반도체 시대에
 9. Liu et al., "A Parasitic Resistance-Adapted Programming Scheme for Memristor Crossbar-Based Neuromorphic Computing Systems," Sensors, 2019
 10. Jang et al., "Recent Progress in Memristor Array-Based Neuromorphic Computing for On-Chip VMM," Adv. Mater. Technol., 2026
 11. Siemens EDA, "HBM3e and HBM4: IC Design Guide for Next-Generation High Bandwidth Memory," 2026
-12. Choi, N., "Impedance matching at poly-Si/SiOx interface in OLED TFTs," Working paper, 2026
-13. Choi, N., Ph.D. Thesis, Korea University, 2018
+12. Chen et al., "Charge Loss Induced by Defects of Transition Layer in Charge-Trap 3D NAND Flash Memory," IEEE TED, 2021
+13. Choi, N., "Impedance matching at poly-Si/SiOx interface in OLED TFTs," Working paper, 2026
+14. Choi, N., Ph.D. Thesis, Korea University, 2018
 :::
 
 ::: {.callout-note appearance="minimal"}
