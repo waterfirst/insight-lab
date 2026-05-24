@@ -73,10 +73,11 @@ execute:
 
 <chart_theme>
 
-## ggplot2 다크 테마
+## ggplot2 라이트 테마
 
 각 차트 청크에 `#| lightbox: true`를 추가한다.
 Insight Lab의 액센트 컬러는 보라(#6366f1)로, Chimera AI의 금색(#f59e0b)과 구분한다.
+**모든 차트의 바탕색은 반드시 흰색(#ffffff)**이다. 다크 배경 사용 금지.
 
 ```r
 kfont <- "Noto Sans CJK KR"
@@ -84,18 +85,18 @@ kfont <- "Noto Sans CJK KR"
 theme_insight <- function(base_size = 13) {
   theme_minimal(base_size = base_size) +
     theme(
-      plot.background = element_rect(fill = "#1a1a2e", color = NA),
-      panel.background = element_rect(fill = "#1a1a2e", color = NA),
-      panel.grid.major = element_line(color = "#2a2a4a", linewidth = 0.3),
+      plot.background = element_rect(fill = "#ffffff", color = NA),
+      panel.background = element_rect(fill = "#ffffff", color = NA),
+      panel.grid.major = element_line(color = "#e0e0e0", linewidth = 0.3),
       panel.grid.minor = element_blank(),
-      text = element_text(family = kfont, color = "#e4e4ec"),
-      axis.text = element_text(color = "#aaaaaa"),
-      axis.title = element_text(color = "#cccccc", size = rel(0.9)),
+      text = element_text(family = kfont, color = "#1a1a2e"),
+      axis.text = element_text(color = "#555555"),
+      axis.title = element_text(color = "#333333", size = rel(0.9)),
       plot.title = element_text(color = "#6366f1", face = "bold", size = rel(1.2)),
-      plot.subtitle = element_text(color = "#888888", size = rel(0.85)),
-      plot.caption = element_text(color = "#666666", size = rel(0.7)),
-      legend.background = element_rect(fill = "#1a1a2e", color = NA),
-      legend.text = element_text(color = "#cccccc"),
+      plot.subtitle = element_text(color = "#666666", size = rel(0.85)),
+      plot.caption = element_text(color = "#999999", size = rel(0.7)),
+      legend.background = element_rect(fill = "#ffffff", color = NA),
+      legend.text = element_text(color = "#333333"),
       legend.title = element_text(color = "#6366f1"),
       strip.text = element_text(color = "#6366f1", face = "bold")
     )

@@ -32,18 +32,18 @@ kfont <- "Noto Sans CJK KR"
 theme_insight <- function(base_size = 13) {
   theme_minimal(base_size = base_size) +
     theme(
-      plot.background = element_rect(fill = "#1a1a2e", color = NA),
-      panel.background = element_rect(fill = "#1a1a2e", color = NA),
-      panel.grid.major = element_line(color = "#2a2a4a", linewidth = 0.3),
+      plot.background = element_rect(fill = "#ffffff", color = NA),
+      panel.background = element_rect(fill = "#ffffff", color = NA),
+      panel.grid.major = element_line(color = "#e0e0e0", linewidth = 0.3),
       panel.grid.minor = element_blank(),
-      text = element_text(family = kfont, color = "#e4e4ec"),
-      axis.text = element_text(color = "#aaaaaa"),
-      axis.title = element_text(color = "#cccccc", size = rel(0.9)),
+      text = element_text(family = kfont, color = "#1a1a2e"),
+      axis.text = element_text(color = "#555555"),
+      axis.title = element_text(color = "#333333", size = rel(0.9)),
       plot.title = element_text(color = "#6366f1", face = "bold", size = rel(1.2)),
-      plot.subtitle = element_text(color = "#888888", size = rel(0.85)),
-      plot.caption = element_text(color = "#666666", size = rel(0.7)),
-      legend.background = element_rect(fill = "#1a1a2e", color = NA),
-      legend.text = element_text(color = "#cccccc"),
+      plot.subtitle = element_text(color = "#666666", size = rel(0.85)),
+      plot.caption = element_text(color = "#999999", size = rel(0.7)),
+      legend.background = element_rect(fill = "#ffffff", color = NA),
+      legend.text = element_text(color = "#333333"),
       legend.title = element_text(color = "#6366f1"),
       strip.text = element_text(color = "#6366f1", face = "bold")
     )
@@ -112,7 +112,7 @@ ggplot(df_mw, aes(x = t, y = V_int, color = Case)) +
   ) +
   theme_insight() +
   theme(legend.position = "bottom",
-        legend.key = element_rect(fill = "#1a1a2e"))
+        legend.key = element_rect(fill = "#ffffff"))
 ```
 
 핵심은 **매칭 조건**이다:
@@ -250,7 +250,7 @@ ggplot(df_sv, aes(x = sv, fill = condition)) +
   ) +
   theme_insight() +
   theme(legend.position = "bottom",
-        legend.key = element_rect(fill = "#1a1a2e"))
+        legend.key = element_rect(fill = "#ffffff"))
 ```
 
 # LSTM Gate = TFT ON/OFF
@@ -307,7 +307,7 @@ ggplot(df_cycle, aes(x = t, y = value, color = signal)) +
   ) +
   theme_insight() +
   theme(legend.position = "bottom",
-        legend.key = element_rect(fill = "#1a1a2e"))
+        legend.key = element_rect(fill = "#ffffff"))
 ```
 
 Chen et al. (2019)은 LSTM/GRU의 mean field theory를 전개하면서, 게이트의 **시간상수가 상태-상태 Jacobian의 스펙트럼을 결정**한다는 것을 보였다. 고유값이 1 근처에 모여야 안정적 학습이 가능하다 — 이것은 τ 매칭 조건과 같다.
@@ -342,7 +342,7 @@ df_map <- data.frame(
 
 ggplot(df_map, aes(x = x, y = y)) +
   geom_point(aes(color = role), size = 18, alpha = 0.3) +
-  geom_text(aes(label = label), color = "#e4e4ec", size = 3.2,
+  geom_text(aes(label = label), color = "#1a1a2e", size = 3.2,
             family = kfont, lineheight = 1.2) +
   geom_segment(aes(x = 1, xend = 3, y = 3, yend = 3),
                arrow = arrow(length = unit(0.2, "cm"), ends = "both"),
@@ -371,7 +371,7 @@ ggplot(df_map, aes(x = x, y = y)) +
   theme(axis.text = element_blank(), axis.title = element_blank(),
         panel.grid = element_blank(),
         legend.position = "bottom",
-        legend.key = element_rect(fill = "#1a1a2e"))
+        legend.key = element_rect(fill = "#ffffff"))
 ```
 
 2021년 Nature Communications에 발표된 Ag 나노와이어 네트워크 연구는 이 연결을 극적으로 보여준다. PVP 절연막으로 코팅된 Ag 나노와이어가 memristive junction을 형성하고, 이 네트워크가 **edge of chaos**에서 최적의 연산 성능을 보였다. Avalanche 임계성은 뇌 피질 뉴런의 power-law 분포와 동일했다.
@@ -413,13 +413,13 @@ ggplot() +
            fill = NA, color = "#6366f1", linewidth = 1.2) +
   annotate("text", x = 1, y = 3,
            label = "OLED 순간잔상\n\n1차: Maxwell-Wagner\n계면 분극\n(고전 전기역학)\n\nε·ρ 미스매칭\n→ 계면 전하 축적\n→ ΔVth",
-           color = "#e4e4ec", size = 3, family = kfont, lineheight = 1.3) +
+           color = "#1a1a2e", size = 3, family = kfont, lineheight = 1.3) +
   # Flash box
   annotate("rect", xmin = 2.9, xmax = 5.1, ymin = 1.25, ymax = 4.75,
            fill = NA, color = "#f59e0b", linewidth = 1.2) +
   annotate("text", x = 4, y = 3,
            label = "Flash Memory\n\n1차: 양자 터널링\nFowler-Nordheim\n(양자역학)\n\nE-field → 전자가\ntunnel oxide 관통\n→ ΔVth",
-           color = "#e4e4ec", size = 3, family = kfont, lineheight = 1.3) +
+           color = "#1a1a2e", size = 3, family = kfont, lineheight = 1.3) +
   # Overlap box (bottom)
   annotate("rect", xmin = 0.3, xmax = 4.7, ymin = -0.5, ymax = 1,
            fill = NA, color = "#22c55e", linewidth = 0.8, linetype = "dashed") +
@@ -519,7 +519,7 @@ ggplot(df_hbm, aes(x = layers, y = si, color = matching)) +
   ) +
   theme_insight() +
   theme(legend.position = "bottom",
-        legend.key = element_rect(fill = "#1a1a2e"))
+        legend.key = element_rect(fill = "#ffffff"))
 ```
 
 SK하이닉스가 HBM4에서 11Gbps를 달성한 것도, TSMC가 CoWoS 인터포저 capacity를 월 10만장으로 끌어올리는 것도, 본질은 **"계면 임피던스를 얼마나 정밀하게 맞출 수 있느냐"**의 공학이다.
@@ -564,7 +564,7 @@ ggplot(df_xbar, aes(x = size, y = accuracy, color = condition)) +
   ) +
   theme_insight() +
   theme(legend.position = "bottom",
-        legend.key = element_rect(fill = "#1a1a2e"))
+        legend.key = element_rect(fill = "#ffffff"))
 ```
 
 2024년 *Science*에 발표된 연구는 이 문제에 우아한 해결책을 제시했다. 저정밀 멤리스터를 **여러 개 직렬로 조합**하여 고정밀 연산을 수행하는 것이다. 핵심 원리는 — "뒤에 프로그래밍하는 소자가 앞 소자의 오차를 보상한다."
@@ -595,11 +595,11 @@ ggplot() +
   annotate("point", x = c(1.5, 3.5, 5), y = c(5.5, 5.5, 5.5),
            size = 14, alpha = 0.2, color = "#6366f1") +
   annotate("text", x = 1.5, y = 5.5, label = "OLED TFT\nε·ρ 매칭",
-           color = "#e4e4ec", size = 2.5, family = kfont, lineheight = 1.2) +
+           color = "#1a1a2e", size = 2.5, family = kfont, lineheight = 1.2) +
   annotate("text", x = 3.5, y = 5.5, label = "DNN 초기화\nσ²w 매칭",
-           color = "#e4e4ec", size = 2.5, family = kfont, lineheight = 1.2) +
+           color = "#1a1a2e", size = 2.5, family = kfont, lineheight = 1.2) +
   annotate("text", x = 5, y = 5.5, label = "LSTM Gate\nτ 전환",
-           color = "#e4e4ec", size = 2.5, family = kfont, lineheight = 1.2) +
+           color = "#1a1a2e", size = 2.5, family = kfont, lineheight = 1.2) +
   annotate("segment", x = 1.5, xend = 3.5, y = 5.5, yend = 5.5,
            color = "#6366f1", linewidth = 0.5,
            arrow = arrow(length = unit(0.12, "cm"), ends = "both")) +
@@ -614,15 +614,15 @@ ggplot() +
   annotate("point", x = c(1.5, 3, 4.5, 6, 7), y = c(3.5, 3.5, 3.5, 3.5, 3.5),
            size = 14, alpha = 0.2, color = "#22c55e") +
   annotate("text", x = 1.5, y = 3.5, label = "LCD CC셀\nε·ρ 매칭",
-           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+           color = "#1a1a2e", size = 2.3, family = kfont, lineheight = 1.2) +
   annotate("text", x = 3, y = 3.5, label = "멤리스터\n계면 트래핑",
-           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+           color = "#1a1a2e", size = 2.3, family = kfont, lineheight = 1.2) +
   annotate("text", x = 4.5, y = 3.5, label = "나노와이어\nReservoir",
-           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+           color = "#1a1a2e", size = 2.3, family = kfont, lineheight = 1.2) +
   annotate("text", x = 6, y = 3.5, label = "HBM TSV\nZ₀ 매칭",
-           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+           color = "#1a1a2e", size = 2.3, family = kfont, lineheight = 1.2) +
   annotate("text", x = 7, y = 3.5, label = "CoWoS\n배선 임피던스",
-           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+           color = "#1a1a2e", size = 2.3, family = kfont, lineheight = 1.2) +
   # Level 3: Related physics (different primary mechanism)
   annotate("rect", xmin = 0.8, xmax = 5.2, ymin = 0.8, ymax = 2.2,
            fill = NA, color = "#f59e0b", linewidth = 0.8, linetype = "dashed") +
@@ -630,10 +630,10 @@ ggplot() +
            size = 14, alpha = 0.2, color = "#f59e0b") +
   annotate("text", x = 2, y = 1.5,
            label = "Flash Memory\n1차: 양자 터널링\n2차: 계면 PF leakage",
-           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+           color = "#1a1a2e", size = 2.3, family = kfont, lineheight = 1.2) +
   annotate("text", x = 4, y = 1.5,
            label = "3D NAND 적층\n1차: FN tunneling\n2차: 층간 전하 재분배",
-           color = "#e4e4ec", size = 2.3, family = kfont, lineheight = 1.2) +
+           color = "#1a1a2e", size = 2.3, family = kfont, lineheight = 1.2) +
   # Cross-level connections
   annotate("segment", x = 1.5, xend = 1.5, y = 4.8, yend = 4.2,
            color = "#888888", linewidth = 0.3, linetype = "dotted") +
@@ -712,7 +712,7 @@ ggplot(df_ushape, aes(x = x, y = y, color = system)) +
   ) +
   theme_insight() +
   theme(legend.position = "bottom",
-        legend.key = element_rect(fill = "#1a1a2e"))
+        legend.key = element_rect(fill = "#ffffff"))
 ```
 
 2024년 Frontiers in Complex Systems에 발표된 연구는 신경망 학습률(η)에 따른 세 가지 동적 체제를 확인했다:
