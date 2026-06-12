@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시장의 임피던스 불일치 — SP11 | Insight Lab</title>
+<meta name="description" content="주식시장 충격 전달의 맥스웰-바그너 이론 — 회복 비대칭과 투자자 정체성의 통일 이론">
+<meta property="og:title" content="시장의 임피던스 불일치 | Insight Lab SP11">
+<meta property="og:description" content="KOSPI 회복 시간상수가 S&P 500의 3.7배인 이유, 외국인 25일 연속 순매도의 물리학적 필연성">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+:root {
+  --bg: #0d0d1a;
+  --sf: #151527;
+  --bd: #252540;
+  --ac: #6366f1;
+  --ac2: #f59e0b;
+  --ac3: #22c55e;
+  --ac4: #ef4444;
+  --tx: #e4e4ec;
+  --mt: #888;
+  --link: #818cf8;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans KR', 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--tx);
+  line-height: 1.75;
+  font-size: 16px;
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Header */
+.site-header {
+  background: var(--sf);
+  border-bottom: 1px solid var(--bd);
+  padding: 12px 0;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.site-header a {
+  color: var(--mt);
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.site-header a:hover { color: var(--ac); }
+
+/* Article container */
+.article {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+/* Hero / Title section */
+.article-hero {
+  padding: 60px 0 40px;
+  border-bottom: 1px solid var(--bd);
+  margin-bottom: 40px;
+}
+.tag-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.tag-sp { background: rgba(99,102,241,0.2); color: #818cf8; border: 1px solid rgba(99,102,241,0.4); }
+.tag-cat { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+.tag-new { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+.tag-draft { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+
+.article-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4em;
+  font-weight: 900;
+  line-height: 1.25;
+  color: #fff;
+  margin-bottom: 14px;
+}
+.article-subtitle {
+  font-size: 1.1em;
+  color: var(--mt);
+  margin-bottom: 20px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+.meta-row {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+  color: var(--mt);
+  flex-wrap: wrap;
+  align-items: center;
+}
+.meta-row .author { color: var(--tx); font-weight: 500; }
+.audio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(99,102,241,0.15);
+  border: 1px solid rgba(99,102,241,0.4);
+  color: #818cf8;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.audio-btn:hover { background: rgba(99,102,241,0.3); text-decoration: none; }
+.audio-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+/* Content styles */
+h1 { font-family: 'Playfair Display', serif; font-size: 1.7em; color: #fff; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--bd); }
+h2 { font-size: 1.25em; color: var(--ac); margin: 32px 0 12px; font-weight: 600; }
+h3 { font-size: 1.05em; color: #a5b4fc; margin: 24px 0 8px; font-weight: 600; }
+p { margin-bottom: 16px; }
+ul, ol { margin: 12px 0 16px 24px; }
+li { margin-bottom: 8px; }
+
+/* Epigraph */
+.epigraph {
+  font-style: italic;
+  border-left: 3px solid var(--mt);
+  padding: 12px 0 12px 20px;
+  margin: 28px 0;
+  color: #aaa;
+  font-size: 0.95em;
+}
+.epigraph cite { display: block; margin-top: 8px; font-size: 0.88em; color: #666; }
+
+/* Callout boxes */
+.callout {
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 24px 0;
+}
+.callout-summary {
+  background: rgba(99,102,241,0.08);
+  border: 1px solid rgba(99,102,241,0.25);
+}
+.callout-warning {
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.25);
+}
+.callout-important {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.25);
+}
+.callout-success {
+  background: rgba(34,197,94,0.08);
+  border: 1px solid rgba(34,197,94,0.25);
+}
+.callout-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+.callout-summary .callout-title { color: var(--ac); }
+.callout-warning .callout-title { color: var(--ac2); }
+.callout-important .callout-title { color: var(--ac4); }
+.callout-success .callout-title { color: var(--ac3); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; margin: 20px 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+th {
+  background: var(--sf);
+  color: var(--ac);
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 2px solid var(--bd);
+  font-weight: 600;
+  white-space: nowrap;
+}
+td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--bd);
+  vertical-align: top;
+}
+tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* Math blocks */
+.math-block {
+  background: var(--sf);
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  overflow-x: auto;
+  text-align: center;
+}
+
+/* Prediction items */
+.prediction {
+  background: var(--sf);
+  border-left: 3px solid var(--ac);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin: 16px 0;
+}
+.prediction.p2 { border-left-color: #22c55e; }
+.prediction.p3 { border-left-color: #f59e0b; }
+.prediction.p4 { border-left-color: #ef4444; }
+.pred-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--mt); margin-bottom: 6px; }
+
+/* Verification result badges */
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+.badge-ok { background: rgba(34,197,94,0.2); color: #4ade80; }
+.badge-no { background: rgba(239,68,68,0.2); color: #f87171; }
+.badge-wait { background: rgba(245,158,11,0.2); color: #fbbf24; }
+
+/* Footer */
+.article-footer {
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--bd);
+  font-size: 13px;
+  color: var(--mt);
+}
+.footer-nav {
+  text-align: center;
+  margin-top: 24px;
+}
+.footer-nav a {
+  color: var(--ac);
+  font-size: 13px;
+}
+
+/* TOC */
+.toc {
+  background: var(--sf);
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 32px 0;
+  font-size: 14px;
+}
+.toc-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--mt); margin-bottom: 10px; }
+.toc ol { margin: 0 0 0 16px; }
+.toc li { margin-bottom: 4px; }
+.toc a { color: var(--mt); }
+.toc a:hover { color: var(--ac); text-decoration: none; }
+
+/* Abstract box */
+.abstract-box {
+  background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(245,158,11,0.04));
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin: 32px 0;
+}
+.abstract-box h3 { margin-top: 0; color: var(--mt); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+.abstract-box p { color: #ccc; font-size: 0.95em; margin-bottom: 0; }
+.keywords {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--mt);
+}
+.keywords span { color: #818cf8; margin-right: 8px; }
+
+/* Highlight span */
+mark { background: rgba(245,158,11,0.2); color: var(--tx); padding: 1px 4px; border-radius: 3px; }
+
+/* Back button */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--mt);
+  font-size: 13px;
+  padding: 6px 0;
+  text-decoration: none;
+}
+.back-btn:hover { color: var(--ac); text-decoration: none; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .article-title { font-size: 1.8em; }
+  h1 { font-size: 1.4em; }
+  .math-block { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <a href="https://waterfirst.github.io/insight-lab/">← Insight Lab</a>
+</div>
+
+<div class="article">
+
+  <!-- Hero -->
+  <div class="article-hero">
+    <div class="tag-row">
+      <span class="tag tag-sp">SP11</span>
+      <span class="tag tag-cat">A. 자연의 언어</span>
+      <span class="tag tag-new">NEW</span>
+      <span class="tag tag-draft">Working Draft</span>
+    </div>
+    <h1 class="article-title">시장의 임피던스 불일치</h1>
+    <div class="article-subtitle">맥스웰–바그너 이론으로 보는 주식시장 충격 전달, 회복 비대칭, 투자자 정체성<br>
+      <em>A Maxwell–Wagner Theory of Cross-Market Shock Transmission, Recovery Asymmetry, and Investor Identity</em>
+    </div>
+    <div class="meta-row">
+      <span class="author">최낙초 (Nakcho Choi, Samsung Display) · 김영철 (Youngchul Kim, Sogang Univ., Economics)*</span>
+      <span>2026년 6월 12일</span>
+      <a href="https://notebooklm.google.com/notebook/6f6bf053-c92a-45f3-a619-7e80dfa33ec7" target="_blank" rel="noopener" class="audio-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        AI Audio (NotebookLM)
+      </a>
+    </div>
+    <p style="font-size:12px; color: var(--mt); margin-top: 12px;">
+      *공저자 표기는 김영철 교수의 검토·기여·명시적 동의를 전제로 한 잠정 표기임.<br>
+      Working Draft v0.1 — 사전등록 실시간 검증 시스템(Mythos)의 산출물. 본문 §5의 수치는 2026-06-12 장마감 기준.
+    </p>
+  </div>
+
+  <!-- Abstract -->
+  <div class="abstract-box">
+    <h3>Abstract</h3>
+    <p>
+      서로 다른 유동성 깊이를 가진 두 주식시장 간의 충격 전달은,
+      두 층의 유전체 계면에서 전하 완화를 지배하는 물리(맥스웰–바그너)와 동일한 방정식으로
+      기술된다. 각 시장은 전도율 σ(국경 간 거래 자금), 유전율 ε(충격을 평가손익으로 저장하는
+      속박 자본), 그리고 완화시간 τ = ε/σ 로 특성화된다. 세 가지 예측이 도출된다:
+      (i) 저σ 시장에서의 충격 진폭 증폭,
+      (ii) τ₁ ≠ τ₂ 이고 지속 글로벌 장이 있을 때 계면 자유전하 축적 — 외국인의 지속 단방향 순매도로 관측 —,
+      (iii) 주파수 의존적 취약성 — 느린 충격은 얕은 시장에 불균형하게 부하된다.
+      본 프레임은 두 개의 독립 실증 결과 — KOSPI vs S&P 500의 3.7× 회복 시간 비대칭, 그리고 기록적 외국인 순매도 연속 — 를
+      하나의 부정합 파라미터(τ 차이)의 필연적 귀결로 통일한다.
+    </p>
+    <div class="keywords">
+      <strong>Keywords</strong>:
+      <span>market microstructure</span>
+      <span>Maxwell–Wagner polarization</span>
+      <span>shock transmission</span>
+      <span>investor identity</span>
+      <span>KOSPI</span>
+      <span>liquidity depth</span><br>
+      <strong>JEL</strong>: G12, G14, G15 &nbsp;·&nbsp; <strong>PACS</strong>: 77.22.-d (cross-listing intentional)
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">목차</div>
+    <ol>
+      <li><a href="#s1">동기: 두 연구의 수렴</a></li>
+      <li><a href="#s2">사전(辭典): 회로량 ↔ 시장량 대응</a></li>
+      <li><a href="#s3">모델 스케치</a></li>
+      <li><a href="#s4">예측 — 검정 가능 형태</a></li>
+      <li><a href="#s5">2026년 6월 에피소드: 사전등록 실측 대조</a></li>
+      <li><a href="#s6">검정 설계 (H12 — 사전등록 예정)</a></li>
+      <li><a href="#s7">연구 A 결과의 재해석</a></li>
+      <li><a href="#s8">한계와 정직성 조항</a></li>
+    </ol>
+  </div>
+
+  <!-- 0. Opening -->
+  <div class="callout callout-summary">
+    <div class="callout-title">핵심 명제</div>
+    KOSPI의 회복이 S&P 500보다 3.7배 느린 이유와, 외국인이 25거래일 연속 순매도한 이유는 <mark>같은 방정식의 두 가지 출력</mark>이다. 그 방정식은 100년 전 전자기학에서 나왔다.
+  </div>
+
+  <!-- Section 1 -->
+  <h1 id="s1">1. 동기: 두 연구의 수렴</h1>
+
+  <div class="epigraph">
+    "좋은 이론은 겉으로 다른 현상들이 하나의 원인에서 온다는 것을 보여준다."
+    <cite>— Richard Feynman (변형 인용)</cite>
+  </div>
+
+  <p>
+    이 논문은 두 개의 독립적으로 진행된 연구가 하나의 이론으로 닫힌다는 관찰에서 출발한다.
+  </p>
+
+  <p>
+    <strong>연구 A (라운드넘버/투자자 정체성, PBFJ 투고 준비본)</strong>: 코스피 지수 레벨 임계 행동의 핵심 동인은 라운드넘버 자체가 아니라 수급 — 외국인·기관의 프로그램 매도와 개인의 흡수(scale inversion) — 이며, 코스피의 회복 시간상수는 S&amp;P 500의 약 3.7배로 느리다.
+  </p>
+
+  <p>
+    <strong>연구 B (RC Mismatch / Maxwell–Wagner, 디스플레이 물리)</strong>: 서로 다른 유전완화시간 τ = ε/σ 를 갖는 두 매질의 계면에서는, 지속 전기장 하에서 계면 자유전하 축적이 필연적으로 발생하며(σ_s ∝ τ₁ − τ₂), 응답은 주파수 의존적이다.
+  </p>
+
+  <div class="callout callout-summary">
+    <div class="callout-title">핵심 주장</div>
+    연구 A가 측정한 두 "별개의" 현상 — <strong>(1) 회복 속도 비대칭</strong>과 <strong>(2) 외국인의 기록적 단방향 누적 순매도</strong> — 는 연구 B의 단일 부정합 파라미터(τ 차이)가 만들어내는 <strong>한 쌍의 필연적 귀결</strong>이다.
+  </div>
+
+  <!-- Section 2 -->
+  <h1 id="s2">2. 사전(辭典): 회로량 ↔ 시장량 대응</h1>
+
+  <p>비유가 아니라 조작적으로 측정 가능한 대응을 제시한다.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>물리량</th>
+          <th>시장 대응</th>
+          <th>조작적 측정</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>전기장 <em>E</em></td><td>글로벌 정보/리스크 충격</td><td>공통 팩터 수익률 압력</td></tr>
+        <tr><td>전도전류 $J = \sigma E$</td><td>국경 간 거래 자금</td><td>외국인·프로그램 순매매 (KRX)</td></tr>
+        <tr><td>비저항 $\rho = 1/\sigma$</td><td>단위 자금당 가격충격 (Kyle's λ)</td><td>$|\Delta p|$ / 순매수액</td></tr>
+        <tr><td>유전율 $\varepsilon$</td><td>속박자본의 분극 능력 (평가손익으로 충격 저장)</td><td>개인·연기금 등 비거래성 보유</td></tr>
+        <tr><td>완화시간 $\tau = \varepsilon/\sigma$</td><td>충격 소화 시간상수</td><td>회복 시간 실측</td></tr>
+        <tr><td>계면 전하 $\sigma_s$</td><td>외국인 누적 순포지션 불균형</td><td>연속 순매도/순매수 누적액</td></tr>
+        <tr><td>DC 바이어스</td><td>구조적 자본유출장 (환율·국제수지)</td><td>환율 레벨 / 자본수지</td></tr>
+        <tr><td>항복 (breakdown)</td><td>서킷브레이커/사이드카</td><td>KRX 발동 기록</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-summary">
+    <div class="callout-title">투자자 정체성의 회로 번역</div>
+    <strong>외국인 = 자유전하 (전도)</strong> · <strong>개인 = 속박전하 (분극)</strong><br>
+    연구 A의 scale inversion(개인의 역방향 흡수)은 전도 채널과 분극 채널의 분리에 해당한다.
+  </div>
+
+  <!-- Section 3 -->
+  <h1 id="s3">3. 모델 스케치</h1>
+
+  <p>
+    직렬 2층 유전체 (층 1 = 미국: ε₁, σ₁ 大 / 층 2 = 코스피: σ₂ 小)에 공통 충격장 E(t)를 인가한다.
+  </p>
+
+  <h2>3.1 계면 전하 축적 (맥스웰–바그너)</h2>
+
+  <div class="math-block">
+    $$\sigma_s \propto (\tau_1 - \tau_2) \cdot E_0$$
+  </div>
+
+  <p>
+    τ 부정합이 있으면 지속장 하에서 단방향 흐름 누적은 <strong>선택이 아니라 필연</strong>이다.
+    외국인의 25거래일 연속 순매도는 바로 이 계면 전하 σ_s의 시장 현현이다.
+  </p>
+
+  <h2>3.2 맥스웰–바그너 특성 주파수</h2>
+
+  <div class="math-block">
+    $$f_{MW} = \frac{1}{2\pi \tau_{MW}}, \quad \tau_{MW} = \frac{\varepsilon_1 + \varepsilon_2}{\sigma_1 + \sigma_2}$$
+  </div>
+
+  <h2>3.3 주파수 의존적 충격 분배</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>주파수 영역</th><th>전기장 분배</th><th>시장 해석</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>$f \gg f_{MW}$ (고주파)</td>
+          <td>$E \propto 1/\varepsilon$ (용량성)</td>
+          <td>일중·단기 충격: 양 시장 공평 분담</td>
+        </tr>
+        <tr>
+          <td>$f \ll f_{MW}$ (저주파)</td>
+          <td>$E \propto \rho$ (저항성)</td>
+          <td>장기·추세 충격: <strong>고저항(KOSPI)에 집중</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>3.4 진폭 증폭 (그린 법칙 유사)</h2>
+
+  <div class="math-block">
+    $$A \propto Z^{-1/2} \sim (\text{유동성 깊이})^{-1/4}$$
+  </div>
+  <p style="text-align:center; font-size:13px; color:var(--mt);">점진적 임피던스 변화에서의 충격 증폭 — "유동성 깊이"의 문자적 구현</p>
+
+  <!-- Section 4 -->
+  <h1 id="s4">4. 예측 — 검정 가능 형태</h1>
+
+  <div class="prediction">
+    <div class="pred-label">P1 · 진폭 증폭</div>
+    동일 글로벌 충격에 대한 최대 낙폭 비는 1을 상회하며 유동성 깊이 비에 단조 의존한다.
+  </div>
+
+  <div class="prediction p2">
+    <div class="pred-label">P2 · 계면 전하 (외국인 연속 순매도)</div>
+    지속적 글로벌 스트레스 구간에서 외국인 순매매는 단방향 장기 연속(streak)을 형성하고, 그 해소(전도 복원)가 가격 회복의 필요조건에 근접한다.
+  </div>
+
+  <div class="prediction p3">
+    <div class="pred-label">P3 · 주파수 의존성 — 핵심 신규 예측 (H12로 사전등록 예정)</div>
+    S&P → KOSPI 전달함수 이득 |H(f)|는 저주파에서 크고 고주파에서 작으며, 교차 주파수가 f_MW 근방에 위치한다.
+  </div>
+
+  <div class="prediction p4">
+    <div class="pred-label">P4 · 바이어스 비선형성</div>
+    구조적 유출장(DC) 하에서 상승·하락 충격에 대한 λ(가격충격계수)가 비대칭이다 (하방 λ ≫ 상방 λ).
+  </div>
+
+  <!-- Section 5 -->
+  <h1 id="s5">5. 2026년 6월 에피소드 — 사전등록 실측 대조</h1>
+
+  <p>
+    검증 프로토콜 (2026-06-10 등록, 기각 조건 포함)에 따른 실시간 관찰.
+    지수·수급은 공개 데이터 (KRX/네이버 장마감), 일부 KRX 공식 확정 대기.
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>일자</th>
+          <th>코스피 종가</th>
+          <th>등락</th>
+          <th>외국인(억)</th>
+          <th>기관(억)</th>
+          <th>개인(억)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>6/5</td><td>8,160.59</td><td>−5.54%</td>
+          <td>매도</td><td>매도</td><td>매수</td>
+        </tr>
+        <tr style="background: rgba(239,68,68,0.06);">
+          <td>6/8 (CB)</td><td>7,484.41</td><td>−8.29%</td>
+          <td>−9,693</td><td>−6,597</td><td>+14,222</td>
+        </tr>
+        <tr>
+          <td>6/9</td><td>8,096.93</td><td>+8.18%</td>
+          <td>−20,064</td><td>+25,048</td><td>−6,167</td>
+        </tr>
+        <tr>
+          <td>6/10</td><td>7,730.82</td><td>−4.52%</td>
+          <td>−27,748</td><td>−22,661</td><td>+48,631</td>
+        </tr>
+        <tr>
+          <td>6/11 (만기)</td><td>7,748.86</td><td>+0.23%</td>
+          <td colspan="3" style="color:var(--mt);">KRX 공식 확정 대기</td>
+        </tr>
+        <tr style="background: rgba(34,197,94,0.06);">
+          <td>6/12</td><td>8,123.62</td><td>+4.63%</td>
+          <td>+21,165*</td><td>+23,770*</td><td>−43,199*</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:12px; color:var(--mt);">* 장마감 집계 기준, KRX 공식 확정 대기.</p>
+
+  <h2>5.1 프레임 대조 결과</h2>
+
+  <div class="callout callout-success">
+    <div class="callout-title">P1 지지 <span class="badge badge-ok">✓ 지지</span></div>
+    동일 충격 최대 낙폭 — KOSPI −16.2% (종가 기준, 8,933.62→7,484.41; 장중 저점 7,394 기준 −17.2%) vs S&amp;P 500 −4.6% (7,620.90→7,266.99)
+    → <mark>증폭비 ≈ 3.5×</mark> (장중 기준 시 더 큼)<br>
+    연구 A의 τ 비 3.7×와 근접 — 우연인지 구조인지가 검정 대상.
+  </div>
+
+  <div class="callout callout-success">
+    <div class="callout-title">P2 지지 <span class="badge badge-ok">✓ 지지</span></div>
+    외국인 <strong>25~26거래일 연속 순매도</strong>(기록적) → 6/12 전도 복원(+2.1조)과 동일 주의 가격 회복 개시 동조.
+    단 n=1 에피소드임을 명기.
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">P3 정성 지지 <span class="badge badge-wait">⏳ 정량 미완</span></div>
+    일중·일간 진동(고주파)은 당일 흡수·양 시장 분담 (6/11 일중 ±4%→+0.2% / 6/12 +8.3%→+4.6%);
+    누적 저주파 변위는 한국에 잔류 (고점 대비 KOSPI −9% vs S&amp;P −3% 이내, 6/12 기준).
+    정량 검정은 §6 (H12).
+  </div>
+
+  <div class="callout callout-success">
+    <div class="callout-title">P4 지지 <span class="badge badge-ok">✓ 지지</span></div>
+    하락일 λ ≈ 5.1%/조 (6/8) vs 상승일 λ ≈ 1.0%/조 (6/12) — <mark>약 5배 비대칭</mark>.
+  </div>
+
+  <div class="callout callout-important">
+    <div class="callout-title">경쟁 모델 기각 <span class="badge badge-no">✗ 기각</span></div>
+    단일시장 감쇠진동자(H8)는 사전등록 기각선 (7,800 종가 + 기관 매도)을 6/10에 충족, 기각.
+    회복은 이완(확산)이 아니라 외생 바이어스 제거(휴전→유가→유출압 완화) 후 전도 복원으로 발생 — 본 프레임과 정합, 진동자 프레임과 비정합.
+  </div>
+
+  <!-- Section 6 -->
+  <h1 id="s6">6. 검정 설계 (H12 — 사전등록 예정)</h1>
+
+  <h2>6.1 데이터 및 방법</h2>
+  <ul>
+    <li><strong>데이터</strong>: S&amp;P 500·KOSPI 일별 수익률 10년+, FinanceDataReader</li>
+    <li><strong>방법</strong>: 대역 분해 (일/주/월/분기) 후 대역별 전달 이득 추정 — cross-spectral density (<code>scipy.signal.csd</code>) 기반 |H(f)|, 또는 대역별 회귀 β_band</li>
+  </ul>
+
+  <h2>6.2 가설 및 기각 조건</h2>
+  <ul>
+    <li><strong>가설</strong>: β_월·분기 &gt; β_주 &gt; β_일, 단조 감소; 교차점 f_MW의 함의된 τ_MW가 연구 A의 실측 τ 스케일(주 단위)과 정합</li>
+    <li><strong>기각 조건</strong>: |H(f)| 단조성 부재 또는 역방향</li>
+  </ul>
+
+  <h2>6.3 보조 검정</h2>
+  <p>
+    WGBI 채권자금 유입 전후 σ(전도) 증가 → τ·증폭비 동시 감소 예측 (자연 실험).
+    한국의 WGBI 편입(2026년 이후)은 σ₂ 증가, 즉 τ₂ 감소 → 두 시장의 τ 부정합 축소를 의미한다.
+    이 경우 본 이론은 <mark>회복 비대칭과 외국인 streak 길이의 동시 감소</mark>를 예측한다.
+  </p>
+
+  <!-- Section 7 -->
+  <h1 id="s7">7. 연구 A 결과의 재해석</h1>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>연구 A의 결과</th>
+          <th>본 프레임에서의 위치</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>회복 τ 비대칭 3.7×</td>
+          <td>τ = ε/σ 부정합의 직접 측정</td>
+        </tr>
+        <tr>
+          <td>외국인 기록적 연속 매도</td>
+          <td>계면 전하 $\sigma_s \propto (\tau_1 - \tau_2)$ 축적</td>
+        </tr>
+        <tr>
+          <td>scale inversion (개인 흡수)</td>
+          <td>분극(속박전하) 채널 — 전도 아님</td>
+        </tr>
+        <tr>
+          <td>라운드넘버: 방향 아닌 변동성 신호</td>
+          <td>attention window — 항복 근방의 국소 비선형</td>
+        </tr>
+        <tr>
+          <td>사이드카 로지스틱 (σ_5d 지배)</td>
+          <td>항복은 국소 장 세기(변동성)의 함수</td>
+        </tr>
+        <tr>
+          <td>정의 민감성 (상대 vs 절대)</td>
+          <td>측정 스케일 의존 — 본 프레임은 무차원화 제공</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 8 -->
+  <h1 id="s8">8. 한계와 정직성 조항</h1>
+
+  <ol>
+    <li>2026년 6월 에피소드는 <strong>n=1 사례 증거</strong> — "consistent with"까지만 주장한다.</li>
+    <li>비유의 한계: 시장 주체는 전하가 아니라 전략적 행위자다. 선형 응답 가정은 평시 근사이며 위기 시 비선형(P4)이 지배한다.</li>
+    <li>증폭비(3.5×)와 τ비(3.7×)의 근접은 현 단계에서 시사적 관찰일 뿐이다. 이것이 구조적 동일성인지 우연의 일치인지가 검정 대상이다.</li>
+    <li>H12 검정 전까지 본 프레임은 "메커니즘 설명 후보"이지 검증된 이론이 아님을 명시한다.</li>
+    <li>모든 가설은 기각 조건과 함께 사전등록 — 6월 검증에서 H8(진동자)이 기각된 것과 동일한 기준을 본 프레임에도 적용한다.</li>
+  </ol>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">투고 전 필수 과제</div>
+    <ul style="margin:0; padding-left:20px;">
+      <li>김영철 교수: 공저 의사 공식 확인 + 계량 설계(§6) 자문</li>
+      <li>서지 정리: Bloomfield et al. 인용 버전 불일치 해소, Yu et al. 서지 완성</li>
+      <li>6/11 수급 KRX 공식 확정치 입력, 외국인 연속일수(25 vs 26) 확정</li>
+      <li>H12 사전등록문 작성 → 코드/데이터 공개 (waterfirst GitHub)</li>
+      <li>AI-assisted verification methodology 섹션 포함 여부 — 김 교수와 협의</li>
+    </ul>
+  </div>
+
+  <!-- Footer -->
+  <div class="article-footer">
+    <p>
+      이 초안은 사전등록 검증 시스템(Mythos)의 산출물이며, 본문 §5의 수치는 2026-06-12 장마감 기준이다.<br>
+      작성: 최낙초 + Claude (cross-model verified via Opus×Sonnet 재귀 교차검증).
+    </p>
+    <p style="margin-top:10px;">
+      <strong>관련 아티클</strong>:
+      <a href="sp10_impedance_neural.html">SP10 — 계면의 보편 물리학 (OLED × AI)</a>
+    </p>
+    <div class="footer-nav">
+      <a href="https://waterfirst.github.io/insight-lab/">← 목록으로 돌아가기</a>
+    </div>
+  </div>
+
+</div><!-- /article -->
+
+</body>
+</html>
