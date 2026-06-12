@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시장 쓰나미 — 파동방정식으로 본 충격 전파</title>
+<style>
+  :root{--bezel:#0c1a1d;--panel:#11262b;--line:#1f3a40;--ivory:#e9e4d6;--dim:#8aa0a0;
+    --amber:#ffb454;--red:#e4584b;--green:#63c193;--blue:#6db3c9;
+    --mono:'Consolas','D2Coding',monospace;
+    --sans:'Pretendard','Malgun Gothic',-apple-system,sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bezel);color:var(--ivory);font-family:var(--sans);padding:4vh 6vw}
+  .eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.22em;color:var(--amber);margin-bottom:.8rem}
+  h1{font-size:clamp(1.4rem,3.2vw,2.2rem);font-weight:800;line-height:1.3}
+  h1 em{color:var(--amber);font-style:normal}
+  .eq{font-family:var(--mono);color:var(--amber);font-size:.95rem;background:#0f2024;border:1px solid var(--line);
+    border-radius:8px;padding:.6rem 1rem;display:inline-block;margin:.8rem 0}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1rem 1.2rem;margin:.6rem 0}
+  canvas{width:100%;height:auto;display:block;border-radius:6px}
+  .ctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;align-items:end}
+  label{display:block;font-family:var(--mono);font-size:.76rem;color:var(--dim);margin-bottom:.3rem}
+  input[type=range]{width:100%;accent-color:var(--amber)}
+  button{background:#0f2024;border:1px solid var(--amber);color:var(--amber);font-family:var(--mono);
+    font-size:.85rem;letter-spacing:.1em;padding:.55em 1.2em;border-radius:6px;cursor:pointer}
+  button:hover{background:var(--amber);color:#0c1a1d}
+  .read{font-family:var(--mono);font-size:.85rem;line-height:1.9}
+  .read b{color:var(--amber)}
+  .lead{color:var(--dim);line-height:1.7;max-width:62em;font-size:.97rem}
+  .lead b{color:var(--ivory)}
+  .warn{border-left:3px solid var(--red);padding-left:1rem;color:var(--dim);font-size:.88rem;line-height:1.65;margin-top:1rem}
+</style>
+</head>
+<body>
+<div class="eyebrow">WAVE EQUATION FIELD MODEL · 2026-W24 사후 시각화</div>
+<h1>시장 쓰나미 — <em>유동성 깊이</em>를 수심으로 둔 충격 전파</h1>
+<div class="eq">∂²u/∂t² = ∂/∂x[ c(x)² ∂u/∂x ] − γ(x)·∂u/∂t , &nbsp; c(x)=√(g·h(x)) , &nbsp; Green: A ∝ h<sup>−1/4</sup></div>
+<p class="lead">깊은 바다(미국 시장, 유동성 깊음)에서 발생한 충격(6/4 AI 캐펙스 쇼크)이 얕은 연안(코스피)으로
+전파되면 에너지 보존 때문에 <b>진폭이 증폭</b>된다. 해안벽 = 서킷브레이커. 반사파의 중첩 = 여진(6/10 재하락).
+감쇠 γ = 시장의 매물 소화력. 실측: S&P 최대 낙폭 -3.1% vs 코스피 -16.2% — <b>증폭비 5.2배</b>.</p>
+
+<div class="panel"><canvas id="cv" width="1200" height="420"></canvas></div>
+
+<div class="panel ctl">
+  <div><label>수심비 h(미국)/h(코스피): <span id="dv" style="color:var(--amber)">700</span></label>
+    <input type="range" id="depth" min="1" max="3" step="0.01" value="2.845"></div>
+  <div><label>감쇠 γ (매물 소화력): <span id="gv" style="color:var(--amber)">0.012</span></label>
+    <input type="range" id="gam" min="0" max="0.06" step="0.001" value="0.012"></div>
+  <div><button id="fire">⚡ 쇼크 발사 (6/4)</button></div>
+  <div class="read" id="read"></div>
+</div>
+
+<p class="warn">정직성 각주: 이것은 검증된 예측 모델이 아니라 <b style="color:var(--ivory)">직관 펌프</b>다.
+감쇠진동자(H8)가 어떻게 기각됐는지 기억하라 — 이 모델로 무언가 주장하려면 먼저 사전등록하라.
+다만 증폭 메커니즘(임피던스 부정합)은 1차 물리이고, 낙폭 비대칭의 정성적 설명으로는 감쇠진동자보다 견고하다.
+같은 수학이 SiNx 계면의 RC 부정합(Maxwell-Wagner)을 설명한다 — 매질 경계에서 에너지가 하는 일은 어디서나 같다.</p>
+
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const N=600, dx=1.0; let u=new Float64Array(N),up=new Float64Array(N),un=new Float64Array(N);
+let h=new Float64Array(N), gam=new Float64Array(N), env=new Float64Array(N);
+let depthRatio=700, gBase=0.012, running=true;
+const xBoundary=0.52, xCoast=0.97; // 비율 위치
+
+function buildMedium(){
+  for(let i=0;i<N;i++){
+    const x=i/N;
+    let hh;
+    if(x<xBoundary) hh=1.0;
+    else if(x<xBoundary+0.18) hh=1.0-(1.0-1.0/depthRatio)*( (x-xBoundary)/0.18 );
+    else hh=1.0/depthRatio;
+    h[i]=hh;
+    gam[i]=gBase*(x>xBoundary?1.0:0.6); // 연안이 약간 더 감쇠? 동일 수준
+  }
+}
+function fire(){
+  u.fill(0);up.fill(0);env.fill(0);
+  const c0=Math.floor(N*0.18), w=N*0.045;
+  for(let i=0;i<N;i++){const d=(i-c0)/w; u[i]=Math.exp(-d*d);}
+  up.set(u);
+}
+function step(){
+  const dt=0.55; // CFL: c_max=1
+  for(let i=1;i<N-1;i++){
+    const cR=0.5*(h[i]+h[i+1]), cL=0.5*(h[i]+h[i-1]); // c² ∝ h
+    const lap=cR*(u[i+1]-u[i])-cL*(u[i]-u[i-1]);
+    un[i]=2*u[i]-up[i]+dt*dt*lap/(dx*dx)-gam[i]*dt*(u[i]-up[i]);
+  }
+  un[0]=un[1]*0.98;        // 좌측 준흡수 (외해)
+  un[N-1]=0;               // 해안벽 고정단 (CB)
+  [up,u,un]=[u,un,up];
+  for(let i=0;i<N;i++) if(Math.abs(u[i])>env[i]) env[i]=Math.abs(u[i]);
+}
+function draw(){
+  ctx.fillStyle='#0c1a1d';ctx.fillRect(0,0,cv.width,cv.height);
+  const W=cv.width,H=cv.height,mid=H*0.52,scale=H*0.30;
+  // 매질 배경
+  for(let i=0;i<N;i++){
+    const x=i/N*W;
+    const depth=h[i];
+    ctx.fillStyle=`rgba(109,179,201,${0.04+0.10*(1-depth)})`;
+    ctx.fillRect(x,0,W/N+1,H);
+  }
+  // 경계 라벨
+  ctx.font='12px Consolas';ctx.fillStyle='#8aa0a0';
+  ctx.fillText('미국 시장 (유동성 깊음 · 임피던스 高)',W*0.06,24);
+  ctx.fillText('전파 경계',W*xBoundary+6,24);
+  ctx.fillText('KOSPI (유동성 얕음)',W*0.72,24);
+  ctx.fillStyle='#e4584b';ctx.fillText('CB 해안벽',W*xCoast-78,44);
+  ctx.strokeStyle='#e4584b';ctx.setLineDash([5,4]);
+  ctx.beginPath();ctx.moveTo(W*xCoast,0);ctx.lineTo(W*xCoast,H);ctx.stroke();
+  ctx.strokeStyle='#1f3a40';
+  ctx.beginPath();ctx.moveTo(W*xBoundary,0);ctx.lineTo(W*xBoundary,H);ctx.stroke();
+  ctx.setLineDash([]);
+  // 포락선
+  ctx.strokeStyle='rgba(255,180,84,.45)';ctx.lineWidth=1;
+  ctx.beginPath();for(let i=0;i<N;i++){const x=i/N*W;i?ctx.lineTo(x,mid-env[i]*scale):ctx.moveTo(x,mid-env[i]*scale);}ctx.stroke();
+  ctx.beginPath();for(let i=0;i<N;i++){const x=i/N*W;i?ctx.lineTo(x,mid+env[i]*scale):ctx.moveTo(x,mid+env[i]*scale);}ctx.stroke();
+  // 파동 본체
+  ctx.strokeStyle='#6db3c9';ctx.lineWidth=2.2;
+  ctx.beginPath();for(let i=0;i<N;i++){const x=i/N*W;i?ctx.lineTo(x,mid-u[i]*scale):ctx.moveTo(x,mid-u[i]*scale);}ctx.stroke();
+  // 기준선
+  ctx.strokeStyle='rgba(233,228,214,.25)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(0,mid);ctx.lineTo(W,mid);ctx.stroke();
+}
+function readout(){
+  let aDeep=0,aShallow=0;
+  for(let i=0;i<N;i++){const x=i/N;
+    if(x<xBoundary&&env[i]>aDeep)aDeep=env[i];
+    if(x>xBoundary+0.18&&env[i]>aShallow)aShallow=env[i];}
+  const amp=aDeep>0?(aShallow/aDeep):0;
+  const green=Math.pow(depthRatio,0.25);
+  document.getElementById('read').innerHTML=
+    '시뮬 증폭비: <b>'+amp.toFixed(2)+'×</b><br>'+
+    'Green 법칙 예측 (h비)<sup>1/4</sup>: <b>'+green.toFixed(2)+'×</b><br>'+
+    '실측 (코스피/S&P 낙폭): <b style="color:#e4584b">5.2×</b>';
+}
+let t=0;
+function loop(){
+  if(running){for(let k=0;k<3;k++)step(); t++;}
+  draw(); if(t%10===0)readout();
+  requestAnimationFrame(loop);
+}
+document.getElementById('depth').addEventListener('input',e=>{
+  depthRatio=Math.round(Math.pow(10,+e.target.value));
+  document.getElementById('dv').textContent=depthRatio;
+  buildMedium();});
+document.getElementById('gam').addEventListener('input',e=>{
+  gBase=+e.target.value;document.getElementById('gv').textContent=gBase.toFixed(3);
+  buildMedium();});
+document.getElementById('fire').addEventListener('click',fire);
+buildMedium();fire();loop();
+</script>
+</body>
+</html>
