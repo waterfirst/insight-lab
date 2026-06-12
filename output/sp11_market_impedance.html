@@ -141,6 +141,29 @@ mark { background: rgba(245,158,11,.2); color: var(--bs-body-color); padding: 1p
   .article-title { font-size: 1.7em; }
   .page-wrap { padding: 0 12px 60px; }
 }
+/* simulation link boxes */
+.sim-link-box {
+  display: flex; align-items: center; gap: 16px;
+  background: rgba(99,102,241,.08); border: 1px solid rgba(99,102,241,.35);
+  border-left: 4px solid #818cf8;
+  border-radius: 8px; padding: 14px 18px; margin: 18px 0 24px;
+}
+.sim-icon { font-size: 1.8rem; flex-shrink: 0; }
+.sim-title { font-size: .78rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: #818cf8; margin-bottom: 4px; }
+.sim-desc { font-size: .88rem; color: var(--text-muted, #94a3b8); line-height: 1.55; }
+.sim-btn {
+  flex-shrink: 0; white-space: nowrap;
+  background: rgba(99,102,241,.15); border: 1px solid #818cf8;
+  color: #818cf8; padding: .45em 1.1em; border-radius: 6px;
+  font-size: .82rem; font-weight: 600; text-decoration: none;
+  transition: background .18s;
+}
+.sim-btn:hover { background: #818cf8; color: #fff; }
+@media(max-width:600px) {
+  .sim-link-box { flex-wrap: wrap; }
+  .sim-btn { width: 100%; text-align: center; }
+}
 </style>
 </head>
 <body>
@@ -331,6 +354,15 @@ mark { background: rgba(245,158,11,.2); color: var(--bs-body-color); padding: 1p
       <div class="fig-caption"><strong>Figure 2.</strong> 맥스웰–바그너 계면 전하 σ_s 축적 시뮬레이션. τ 부정합이 클수록 (KOSPI-미국 시나리오) 계면 전하의 정상상태 값이 크고 해소도 느리다. 외국인의 단방향 순매도 누적은 이 σ_s의 시장 현현이다. τ₁ = 1일(미국), τ₂ = 3.7일(코스피) 사용.</div>
     </div>
 
+    <div class="sim-link-box">
+      <span class="sim-icon">⚡</span>
+      <div>
+        <div class="sim-title">인터랙티브 시뮬레이션</div>
+        <div class="sim-desc">RC 파라미터(τ₁, τ₂, ε, σ)를 직접 조작하며 계면 전하 축적과 임피던스 부정합을 실시간으로 확인할 수 있습니다.</div>
+      </div>
+      <a href="market-equivalent-circuit.html" target="_blank" class="sim-btn">시장 등가회로 열기 →</a>
+    </div>
+
     <h3 id="s3-2">3.2 충격 분배의 주파수 의존성</h3>
 
     <div class="math-box">
@@ -351,6 +383,15 @@ mark { background: rgba(245,158,11,.2); color: var(--bs-body-color); padding: 1p
       $$A \propto Z^{-1/2} \sim \left(\frac{\text{유동성 깊이}}{1}\right)^{-1/4}$$
     </div>
     <div class="math-label">Eq. (3): 점진적 임피던스 변화 구간에서의 충격 진폭 증폭 — "유동성 깊이"의 문자적 구현</div>
+
+    <div class="sim-link-box">
+      <span class="sim-icon">🌊</span>
+      <div>
+        <div class="sim-title">인터랙티브 시뮬레이션</div>
+        <div class="sim-desc">수심비·감쇠 슬라이더로 파동방정식을 실시간 시뮬레이션. 미국→KOSPI 충격 전파와 Green 법칙 증폭비(실측 5.2×)를 직접 확인할 수 있습니다.</div>
+      </div>
+      <a href="market-tsunami-wave.html" target="_blank" class="sim-btn">시장 쓰나미 파동 열기 →</a>
+    </div>
 
     <!-- ── SECTION 4 ── -->
     <h2 class="section-heading" id="s4"><span class="sec-num">4.</span> 검정 가능 예측</h2>
