@@ -1,0 +1,68 @@
+---
+title: "토큰의 열역학"
+subtitle: "컨텍스트·캐시·재시도·출력이 만드는 AI 비용의 실제 구조"
+author: "Insight Lab"
+date: "2026-08-02"
+lang: ko
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-title: "목차"
+    embed-resources: true
+    smooth-scroll: true
+    css: journal-202608.css
+---
+
+![](cover_token_thermodynamics.webp){.hero width=100% fig-alt="열과 냉각 흐름으로 표현한 토큰 컨텍스트와 캐시"}
+
+::: {.callout-note}
+## 한 방 진단
+비싼 것은 답변 길이만이 아니다. **매 호출마다 다시 보내는 긴 문맥, 캐시를 깨는 앞부분 변경, 실패한 도구 재시도**가 토큰의 주 발열원이다.
+:::
+
+# 실제 장애 로그가 말한 것
+
+2026년 8월 2일 Claude 세션 장애 기록은 `429 session limit`로 끝났다. 같은 실행의 계측값은 다음과 같다.
+
+```{=html}
+<svg viewBox="0 0 760 330" role="img" aria-label="Claude 세션 토큰 사용량" style="width:100%;background:#fff;border-radius:14px"><g font-family="system-ui,sans-serif"><text x="22" y="32" font-size="19" font-weight="700" fill="#5f3c8c">한 세션에서 어디에 열이 났나</text><text x="22" y="82" font-size="13">캐시 생성 입력</text><rect x="165" y="64" width="520" height="26" rx="6" fill="#6d42a6"/><text x="695" y="82" font-size="13">312,105</text><text x="22" y="137" font-size="13">캐시 읽기 입력</text><rect x="165" y="119" width="29" height="26" rx="6" fill="#44a8b3"/><text x="206" y="137" font-size="13">17,477</text><text x="22" y="192" font-size="13">출력</text><rect x="165" y="174" width="4" height="26" rx="3" fill="#e8a34f"/><text x="181" y="192" font-size="13">1,446</text><text x="22" y="247" font-size="13">실측 비용</text><text x="165" y="247" font-size="24" font-weight="700" fill="#5f3c8c">$3.1659</text><text x="22" y="300" font-size="11" fill="#766e80">로컬 세션 결과 JSON 기준. 모델별 가격 비교가 아니라 해당 호출의 관측치.</text></g></svg>
+```
+
+출력은 1,446토큰뿐인데 캐시 생성 입력은 312,105토큰이었다. 병목은 “말을 많이 해서”가 아니라 **대형 컨텍스트를 새로 구성해서** 생겼다.
+
+# 열역학은 비유다
+
+<div class="eq"><b>총비용 ≈ 신규 입력 × 입력단가 + 캐시 쓰기 × 쓰기계수 + 캐시 읽기 × 읽기단가 + 출력 × 출력단가 + 도구 재시도</b></div>
+
+여기서 열·저장고·난류는 설명을 위한 비유다. 물리적 에너지 보존법칙과 API 과금 사이에 인과적 동형이 있다는 뜻은 아니다.
+
+Anthropic 문서의 캐시 계수는 5분 쓰기 1.25배, 1시간 쓰기 2배, 읽기 0.1배다. 동일한 접두부를 반복하면 이득이지만 한 번만 쓰는 거대한 컨텍스트라면 캐시 생성비만 남는다. [Anthropic prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching), [Anthropic pricing](https://docs.anthropic.com/en/docs/about-claude/pricing)
+
+OpenAI의 자동 프롬프트 캐싱 역시 정확히 일치하는 접두부를 활용한다. 따라서 고정 지침은 앞에, 매번 바뀌는 요청은 뒤에 두는 편이 캐시 친화적이다. [OpenAI Prompt Caching](https://openai.com/index/api-prompt-caching/)
+
+# 소모원 우선순위
+
+1. **거대한 고정 문서의 반복 주입** — 필요한 섹션만 검색해 넣는다.
+2. **세션을 끝없이 연장** — 작업 단위별 새 세션과 짧은 바톤 문서를 쓴다.
+3. **캐시 접두부 흔들기** — 시스템 지침과 도구 정의 순서를 안정화한다.
+4. **실패한 도구의 무한 재시도** — 상태코드별 중단 조건과 대체 경로를 둔다.
+5. **원시 로그 전체 출력** — 집계 후 이상 행만 본다.
+
+# Claude 장애에 적용한 처방
+
+- 312K 입력이 들어간 장기 세션은 종료하고 저널별 실행 세션을 분리한다.
+- `CLAUDE.md`에는 역할·보안·완료조건만 남기고 상세 자료는 필요할 때 검색한다.
+- Claude는 지시·검수, Codex는 구현·렌더·발행으로 역할을 분리한다.
+- `429`는 재시도하지 않고 다른 실행자에게 바톤을 넘긴다.
+- 바톤에는 결정·파일·남은 작업·검증 명령만 기록한다.
+
+# 감시 지표
+
+- 신규 입력 / 캐시 읽기 비율
+- 도구 호출당 실패·재시도 횟수
+- 세션 JSONL 크기와 턴 수
+- 산출물 1개당 토큰·비용
+- 429 발생 전 최근 5회 입력 증가율
+
+좋은 토큰 절약은 답을 짧게 만드는 기술이 아니다. **같은 사실을 다시 읽히지 않고, 실패를 반복하지 않으며, 검증 가능성을 보존하는 설계**다.

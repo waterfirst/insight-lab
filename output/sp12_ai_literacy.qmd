@@ -1,0 +1,72 @@
+---
+title: "AI 사용능력의 탄생"
+subtitle: "코딩 × 외국어 × 도메인 지식이 하나의 실행력으로 합쳐지는 시대"
+author: "Insight Lab"
+date: "2026-08-02"
+lang: ko
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-title: "목차"
+    embed-resources: true
+    smooth-scroll: true
+    css: journal-202608.css
+---
+
+![](cover_ai_literacy.webp){.hero width=100% fig-alt="코드·언어·도메인 지식이 AI 프리즘으로 합쳐지는 모습"}
+
+::: {.callout-note}
+## 한 줄 결론
+AI 사용능력은 프롬프트 묘기가 아니다. **문제를 구조화하고, 근거를 찾고, 도구를 실행하고, 결과를 검증하는 복합 문해력**이다.
+:::
+
+# 왜 지금 ‘새 문해력’인가
+
+과거에는 프로그램 능력과 외국어 구사능력이 세계에 접속하는 두 개의 열쇠였다. 지금은 여기에 도메인 판단이 결합되고, AI가 세 능력 사이의 번역 비용을 낮춘다. 중요한 변화는 사람이 덜 알아도 된다는 것이 아니라, **서로 다른 지식을 한 작업 흐름으로 묶을 수 있게 됐다**는 데 있다.
+
+EU AI Act 제4조는 제공자와 배포자가 직원의 기술 지식·경험·교육과 사용 맥락을 고려해 충분한 AI 리터러시를 확보하도록 조치할 것을 요구한다. 의무는 2025년 2월부터 적용됐고 감독·집행은 2026년 8월부터 시작된다. 이는 AI 리터러시가 선택적 교양에서 조직 운영 역량으로 이동했음을 뜻한다. [EU 집행위원회 AI literacy Q&A](https://digital-strategy.ec.europa.eu/en/faqs/ai-literacy-questions-answers)
+
+# 노동시장이 요구하는 조합
+
+2025 세계경제포럼 조사에서 핵심 역량으로 꼽힌 비율을 재구성하면 단일 기술보다 조합의 중요성이 보인다.
+
+```{=html}
+<svg viewBox="0 0 760 330" role="img" aria-label="WEF 핵심 역량 응답 비율" style="width:100%;background:white;border-radius:14px"><g font-family="system-ui,sans-serif"><text x="20" y="30" font-size="19" font-weight="700" fill="#5b3f8c">2030 노동시장의 핵심 역량</text><g font-size="13" fill="#40364f"><text x="20" y="78">분석적 사고</text><rect x="160" y="60" width="483" height="24" rx="6" fill="#6542a6"/><text x="655" y="78">69%</text><text x="20" y="123">기술 문해력</text><rect x="160" y="105" width="357" height="24" rx="6" fill="#7d5bbb"/><text x="529" y="123">51%</text><text x="20" y="168">AI·빅데이터</text><rect x="160" y="150" width="315" height="24" rx="6" fill="#9877ca"/><text x="487" y="168">45%</text><text x="20" y="213">다언어 능력</text><rect x="160" y="195" width="161" height="24" rx="6" fill="#b59bd8"/><text x="333" y="213">23%</text><text x="20" y="258">프로그래밍</text><rect x="160" y="240" width="119" height="24" rx="6" fill="#cbb9e6"/><text x="291" y="258">17%</text></g><text x="20" y="305" font-size="11" fill="#71677e">출처: WEF Future of Jobs Report 2025, 고용주 응답 비율</text></g></svg>
+```
+
+<div class="metric"><div><b>77%</b>AI와 함께 일하도록 재교육 계획</div><div><b>69%</b>AI 도구 설계 인재 채용 계획</div><div><b>62%</b>AI 협업 숙련자 채용 계획</div></div>
+
+출처: [WEF Future of Jobs Report 2025](https://www.weforum.org/publications/the-future-of-jobs-report-2025/in-full/4-workforce-strategies/). 수치는 능력의 우열이 아니라 고용주가 해당 역량을 핵심으로 본 비율이다.
+
+# 네 단계로 정의하기
+
+1. **문제 번역** — 모호한 요구를 목적·제약·성공조건으로 바꾼다.
+2. **근거 연결** — 검색 언어, 논문 언어, 현장 언어 사이를 오간다.
+3. **도구 실행** — 코드·에이전트·업무시스템을 실제 산출물까지 연결한다.
+4. **검증과 책임** — 출처, 재현성, 보안, 실패 조건을 확인한다.
+
+프롬프트는 이 네 단계의 인터페이스일 뿐이다. 유창한 문장을 쓰면서 틀린 데이터를 발행한다면 AI 사용능력이 높다고 할 수 없다.
+
+# FDE 관점의 실전 평가
+
+FDE는 코딩량으로 평가되지 않는다. 고객의 언어를 시스템 요구사항으로 바꾸고, 보안 경계를 지키며, 성과지표를 개선하는지가 핵심이다. 가장 좋은 포트폴리오는 “어떤 모델을 썼는가”보다 다음을 보여준다.
+
+- 문제 전후의 시간·비용·오류율
+- 사람과 AI의 승인 경계
+- 실패했을 때 되돌리는 방법
+- 다른 팀이 재사용할 수 있는 문서와 자동화
+
+::: {.callout-warning}
+## 오해하지 말 것
+AI가 코딩·번역을 보조한다고 해서 기초 지식이 사라지는 것은 아니다. 기초는 결과의 이상 징후를 알아채는 **검증 센서**로 역할이 바뀐다.
+:::
+
+# 실천 체크리스트
+
+- 오늘의 문제를 한 문장과 성공지표 하나로 썼는가?
+- AI가 접근한 데이터와 외부 전송 경계를 기록했는가?
+- 최소 한 번 독립 출처 또는 테스트로 결과를 재현했는가?
+- 다음 사람이 이어받을 수 있는 원본·로그·결정문을 남겼는가?
+
+AI 사용능력은 사람을 대체하는 능력이 아니다. **사람의 의도를 검증 가능한 변화로 바꾸는 능력**이다.
