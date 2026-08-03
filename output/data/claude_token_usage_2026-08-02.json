@@ -1,0 +1,25 @@
+{
+  "source": "redacted audit excerpt from local Claude CLI session JSONL",
+  "session_id": "c45028cf-9464-408e-b5b9-81b66f8ec17c",
+  "usage_event": {
+    "source_line": 652,
+    "request_id": "req_011CddRZN9Eh3kfGYKFuhnuv",
+    "model": "claude-opus-4-8",
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 312105,
+    "cache_creation_ephemeral_1h_input_tokens": 312105,
+    "cache_read_input_tokens": 17477,
+    "output_tokens": 1446,
+    "cost_usd": 3.1659485,
+    "cache_miss_reason": "messages_changed",
+    "cache_missed_input_tokens": 234048
+  },
+  "limit_event": {
+    "source_line": 658,
+    "request_id": "req_011CddRbhPRjZuUn37iCbLY8",
+    "api_error_status": 429,
+    "error": "rate_limit",
+    "message": "You've hit your session limit · resets 7:40pm (Asia/Pyongyang)"
+  },
+  "privacy": "Conversation content, user text, local absolute paths, and thinking blocks were excluded."
+}
