@@ -385,4 +385,5 @@ _생성: 2026-04-11 · 최종 업데이트: 2026-04-25 · Nakcho Choi × Claude 
 6. **공공 AI 헌법** — 최소 이용권, 복수 모델, 데이터 이동성, 검증 교육, 인간 재심, AI 자본 분산소유, 독립 감사를 제안한다.
 
 **재현 자료**: https://github.com/waterfirst/public-ai-inequality-economics
-**오디오**: https://notebook.google.com/notebook/2981c6a3-ac3b-45ee-8342-dd3e7c6b8d0b/artifact/cd775ec8-8ace-4bd4-842c-46a8faecf455
+**오디오 1**: https://notebook.google.com/notebook/2981c6a3-ac3b-45ee-8342-dd3e7c6b8d0b/artifact/cd775ec8-8ace-4bd4-842c-46a8faecf455
+**오디오 2**: https://notebook.google.com/notebook/2981c6a3-ac3b-45ee-8342-dd3e7c6b8d0b/artifact/f342da63-5c93-4f08-8f32-68b3e16f7901

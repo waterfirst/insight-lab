@@ -82,14 +82,18 @@ policy$policy <- factor(policy$policy, levels = policy_order)
 <style>
 .audio-hero{display:flex;gap:14px;align-items:center;margin:1.3rem 0 1.8rem;padding:1rem 1.2rem;border:1px solid rgba(99,102,241,.28);border-radius:14px;background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(139,92,246,.05))}
 .audio-hero .play{width:46px;height:46px;display:grid;place-items:center;border-radius:50%;background:#6366f1;color:#fff;font-size:20px;flex:0 0 auto}
-.audio-hero strong{display:block;margin-bottom:3px}.audio-hero small{color:#777}.audio-hero a{color:#6366f1;font-weight:700;text-decoration:none}
+.audio-hero strong{display:block;margin-bottom:5px}.audio-hero small{color:#777}.audio-hero a{color:#6366f1;font-weight:700;text-decoration:none}.audio-track+.audio-track{margin-top:6px}
 .thesis{margin:1.6rem 0;padding:1.25rem 1.4rem;border-left:5px solid #6366f1;background:rgba(99,102,241,.08);font-size:1.08rem;line-height:1.85}
 .warning{margin:1.4rem 0;padding:1rem 1.2rem;border:1px solid #f59e0b;border-radius:10px;background:rgba(245,158,11,.08)}
 .equation{font-size:1.18rem;text-align:center;padding:1rem;margin:1rem 0;border-radius:10px;background:rgba(99,102,241,.06)}
 </style>
 <div class="audio-hero">
   <div class="play">▶</div>
-  <div><strong>AI 오디오 해설</strong><a href="https://notebook.google.com/notebook/2981c6a3-ac3b-45ee-8342-dd3e7c6b8d0b/artifact/cd775ec8-8ace-4bd4-842c-46a8faecf455?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1" target="_blank" rel="noopener">AI 무료 배포가 중산층을 붕괴시키는 이유 ↗</a><br><small>NotebookLM 공개 오디오 · 새 창에서 재생</small></div>
+  <div><strong>AI 오디오 리뷰</strong>
+    <div class="audio-track"><a href="https://notebook.google.com/notebook/2981c6a3-ac3b-45ee-8342-dd3e7c6b8d0b/artifact/cd775ec8-8ace-4bd4-842c-46a8faecf455?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1" target="_blank" rel="noopener">1 · AI 무료 배포가 중산층을 붕괴시키는 이유 ↗</a></div>
+    <div class="audio-track"><a href="https://notebook.google.com/notebook/2981c6a3-ac3b-45ee-8342-dd3e7c6b8d0b/artifact/f342da63-5c93-4f08-8f32-68b3e16f7901?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1" target="_blank" rel="noopener">2 · AI 양극화 89%를 막는 4단계 해법 ↗</a></div>
+    <small>NotebookLM 공개 오디오 · 새 창에서 재생</small>
+  </div>
 </div>
 ```
 
@@ -320,6 +324,7 @@ AI 시대의 평등은 모두에게 같은 답변창을 주는 일이 아니다.
 - [영문 경제학 워킹페이퍼·코드·전체 결과](https://github.com/waterfirst/public-ai-inequality-economics)
 - [영문 PDF 직접 보기](https://github.com/waterfirst/public-ai-inequality-economics/raw/main/Public_AI_Social_Infrastructure_Economics_Working_Paper_2026-08-09.pdf)
 - [AI 오디오 해설 — AI 무료 배포가 중산층을 붕괴시키는 이유](https://notebook.google.com/notebook/2981c6a3-ac3b-45ee-8342-dd3e7c6b8d0b/artifact/cd775ec8-8ace-4bd4-842c-46a8faecf455?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1)
+- [AI 오디오 리뷰 2 — AI 양극화 89%를 막는 4단계 해법](https://notebook.google.com/notebook/2981c6a3-ac3b-45ee-8342-dd3e7c6b8d0b/artifact/f342da63-5c93-4f08-8f32-68b3e16f7901?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1)
 - [OECD AI 이용 격차](https://www.oecd.org/en/about/news/announcements/2026/01/ai-use-by-individuals-surges-across-the-oecd-as-adoption-by-firms-continues-to-expand.html)
 - [OECD Digital Education Outlook 2026](https://www.oecd.org/en/publications/oecd-digital-education-outlook-2026_062a7394-en.html)
 - [IMF, AI Adoption and Inequality](https://www.imf.org/en/publications/wp/issues/2025/04/04/ai-adoption-and-inequality-565729)
