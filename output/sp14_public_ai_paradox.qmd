@@ -1,0 +1,329 @@
+---
+title: "공공 AI의 역설"
+subtitle: "무료 배포는 왜 중산층을 구하지 못하는가 — 경제학 × 정치철학 × 교육학 × 디지털 공공재"
+author: "Nakcho Choi · Insight Lab"
+date: "2026-08-09"
+lang: ko
+format:
+  html:
+    theme:
+      dark: darkly
+      light: flatly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    code-summary: "재현 코드 보기"
+    smooth-scroll: true
+    embed-resources: true
+    lightbox: true
+knitr:
+  opts_chunk:
+    dev: png
+    dpi: 150
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(ggplot2)
+library(dplyr)
+library(scales)
+options(bitmapType = "cairo")
+
+kfont <- "Noto Sans CJK KR"
+theme_insight <- function(base_size = 13) {
+  theme_minimal(base_size = base_size) +
+    theme(
+      plot.background = element_rect(fill = "#ffffff", color = NA),
+      panel.background = element_rect(fill = "#ffffff", color = NA),
+      panel.grid.major = element_line(color = "#e5e7eb", linewidth = 0.35),
+      panel.grid.minor = element_blank(),
+      text = element_text(family = kfont, color = "#1a1a2e"),
+      axis.text = element_text(color = "#555555"),
+      axis.title = element_text(color = "#333333", size = rel(0.9)),
+      plot.title = element_text(color = "#6366f1", face = "bold", size = rel(1.18)),
+      plot.subtitle = element_text(color = "#666666", size = rel(0.85)),
+      plot.caption = element_text(color = "#777777", size = rel(0.68), hjust = 0),
+      legend.position = "bottom",
+      legend.background = element_rect(fill = "#ffffff", color = NA),
+      strip.text = element_text(color = "#6366f1", face = "bold")
+    )
+}
+
+commit <- "66a28c0a477cbd2f516e083a257199b2ee724401"
+raw_base <- paste0(
+  "https://raw.githubusercontent.com/waterfirst/public-ai-inequality-economics/",
+  commit, "/results/"
+)
+policy <- read.csv(
+  paste0(raw_base, "public_ai_full4/policy_summary.csv"),
+  check.names = FALSE, fileEncoding = "UTF-8-BOM"
+)
+robust <- read.csv(
+  paste0(raw_base, "economics_robustness_full/robustness_summary.csv"),
+  check.names = FALSE, fileEncoding = "UTF-8-BOM"
+)
+phase <- read.csv(
+  paste0(raw_base, "public_ai_full4/phase_grid.csv"),
+  check.names = FALSE, fileEncoding = "UTF-8-BOM"
+)
+
+policy_order <- c(
+  "시장·고가AI", "전국민 공공AI", "공공AI+공교육",
+  "공공AI+돌봄", "공공AI 종합안", "공공AI 실패"
+)
+policy$policy <- factor(policy$policy, levels = policy_order)
+```
+
+```{=html}
+<style>
+.audio-hero{display:flex;gap:14px;align-items:center;margin:1.3rem 0 1.8rem;padding:1rem 1.2rem;border:1px solid rgba(99,102,241,.28);border-radius:14px;background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(139,92,246,.05))}
+.audio-hero .play{width:46px;height:46px;display:grid;place-items:center;border-radius:50%;background:#6366f1;color:#fff;font-size:20px;flex:0 0 auto}
+.audio-hero strong{display:block;margin-bottom:3px}.audio-hero small{color:#777}.audio-hero a{color:#6366f1;font-weight:700;text-decoration:none}
+.thesis{margin:1.6rem 0;padding:1.25rem 1.4rem;border-left:5px solid #6366f1;background:rgba(99,102,241,.08);font-size:1.08rem;line-height:1.85}
+.warning{margin:1.4rem 0;padding:1rem 1.2rem;border:1px solid #f59e0b;border-radius:10px;background:rgba(245,158,11,.08)}
+.equation{font-size:1.18rem;text-align:center;padding:1rem;margin:1rem 0;border-radius:10px;background:rgba(99,102,241,.06)}
+</style>
+<div class="audio-hero">
+  <div class="play">▶</div>
+  <div><strong>AI 오디오 해설</strong><a href="https://notebook.google.com/notebook/2981c6a3-ac3b-45ee-8342-dd3e7c6b8d0b/artifact/cd775ec8-8ace-4bd4-842c-46a8faecf455?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1" target="_blank" rel="noopener">AI 무료 배포가 중산층을 붕괴시키는 이유 ↗</a><br><small>NotebookLM 공개 오디오 · 새 창에서 재생</small></div>
+</div>
+```
+
+::: {.warning}
+**자료 성격 고지.** 아래 수치는 한국 사회의 예측값이나 실제 정책효과 추정치가 아니다. 서로 다른 제도 설계가 어떤 경로로 양극화를 키우거나 줄이는지 비교한 **이론 기반 합성 모의실험**이다. 실험 코드·원자료·영문 경제학 논문은 [공개 저장소](https://github.com/waterfirst/public-ai-inequality-economics)에서 재현할 수 있다.
+:::
+
+# 무료 AI라는 직관
+
+공공 와이파이는 연결 비용을 낮췄다. 공교육은 부모의 소득과 무관하게 최소한의 학습 기회를 보장하려 했다. 그렇다면 AI 시대의 다음 사회 인프라는 **전 국민 AI 이용권**이어야 하지 않을까? 복지 신청을 돕고, 공무원이 취약계층을 더 빨리 발견하고, 누구나 개인 교사와 법률·세무 길잡이를 갖게 하는 공공 또는 소버린 AI 말이다.
+
+이 직관은 옳다. 그러나 절반만 옳다.
+
+2025년 OECD 회원국의 생성형 AI 이용률 격차는 연령 집단 사이에서 **53.6%포인트**, 학력과 소득 집단 사이에서 각각 약 **21%포인트**였다. 접속 격차부터 이미 크다. 하지만 계정만 나눠 준 뒤에는 더 어려운 두 번째 격차가 나타난다. 같은 AI를 받아도 누군가는 질문을 만들고, 데이터를 연결하고, 결과를 검증해 사업과 자산으로 바꾼다. 다른 누군가는 한 번 검색하고 떠난다. [OECD의 2026년 AI 이용 현황](https://www.oecd.org/en/about/news/announcements/2026/01/ai-use-by-individuals-surges-across-the-oecd-as-adoption-by-firms-continues-to-expand.html)
+
+::: {.thesis}
+**이 글의 중심 명제**<br>
+AI는 독립적인 생산요소라기보다 기술·데이터·직업 유연성·자본과 결합할 때 가치가 커지는 **보완재의 증폭기**다. 따라서 동일한 접속권은 동일한 경제적 능력이 아니다.
+:::
+
+# 접속이 아니라 ‘유효 AI’가 문제다
+
+한 개인이 실제로 사용할 수 있는 AI 서비스 (E_i)를 다음처럼 생각해 보자.
+
+$$
+E_i=A_i\times Q_i\times T_i\times H_i\times F_i
+$$
+
+- (A_i): 접속 가능성
+- (Q_i): 모델 품질과 사용량
+- (T_i): 신뢰와 안전성
+- (H_i): AI를 다룰 기술·도메인 지식
+- (F_i): 직업과 조직이 AI를 받아들일 유연성
+
+곱셈 구조의 의미는 잔인하다. 공공 AI가 (A_i)를 1에 가깝게 올려도, 나머지 한 항이 0에 가까우면 유효 능력은 작다. 반대로 고소득층은 고가 모델, 더 긴 추론 예산, 사유 데이터, 전문가 네트워크와 자본을 동시에 결합한다. 격차는 ‘무료 사용자 대 유료 사용자’에서 끝나지 않고 **AI를 자산으로 전환하는 사람과 소비로 끝내는 사람** 사이로 이동한다.
+
+아마르티아 센의 역량 접근은 이 문제를 오래전에 예고했다. 같은 자원을 배분해도 개인이 그것을 실질적 자유로 전환하는 능력은 다르다. 공공 AI의 목표가 공정한 기회라면, 보급률이 아니라 **누가 더 나은 선택과 소득·시간·권리를 얻었는가**를 측정해야 한다.
+
+# 4,728개의 가상 사회
+
+이를 확인하기 위해 서로 다른 소득·기술·직업 노출·적응력·돌봄 부담·AI 자본 소유를 가진 합성 가구를 만들고, 15기간 동안 여섯 제도를 비교했다.
+
+1. 시장과 고가 AI 중심
+2. 전 국민 공공 AI
+3. 공공 AI와 공교육
+4. 공공 AI와 돌봄 서비스
+5. 교육·돌봄·AI 자본배당·노동자 소유를 결합한 종합안
+6. 품질과 신뢰가 낮은 명목상 공공 AI
+
+기준·임계조건 실험 **1,128회**, 기술과 비용 변수를 바꾼 몬테카를로 실험 **3,600회**를 합쳐 총 **4,728회**다. 양극화는 단순한 소득격차와 구분하기 위해 Wolfson 지수를 사용했다. 이 지수는 분포가 중위소득 주변에서 두 극단으로 갈라지는 현상, 즉 **중산층 공동화**에 민감하다.
+
+## 무료 접속은 증가폭만 낮췄다
+
+```{r fig-baseline}
+#| fig-cap: "그림 1. 기준 모의실험의 Wolfson 양극화 증가폭. 공공 AI는 증가를 늦추지만 현실적 기준 조건에서는 되돌리지 못한다."
+#| fig-alt: "여섯 AI 정책별 Wolfson 양극화 지수 증가폭 막대그래프"
+#| lightbox: true
+
+ggplot(policy, aes(x = reorder(policy, delta_wolfson), y = delta_wolfson, fill = policy)) +
+  geom_col(width = 0.72, show.legend = FALSE) +
+  geom_text(aes(label = sprintf("%+.3f", delta_wolfson)), hjust = -0.08,
+            family = kfont, size = 3.4, color = "#1a1a2e") +
+  coord_flip(clip = "off") +
+  scale_fill_manual(values = c(
+    "시장·고가AI" = "#ef4444", "전국민 공공AI" = "#8b5cf6",
+    "공공AI+공교육" = "#6366f1", "공공AI+돌봄" = "#22c55e",
+    "공공AI 종합안" = "#312e81", "공공AI 실패" = "#9ca3af"
+  )) +
+  scale_y_continuous(expand = expansion(mult = c(0, .16))) +
+  labs(title = "무료 접속은 양극화를 없애지 못했다",
+       subtitle = "값이 작을수록 양극화 증가가 덜함 · 모든 현실적 기준안은 0보다 큼",
+       x = NULL, y = "Wolfson 지수 변화",
+       caption = paste0("자료: Public AI inequality model, 고정 커밋 ", substr(commit, 1, 8),
+                        " · 합성 모의실험이며 실증 추정치가 아님")) +
+  theme_insight()
+```
+
+시장·고가 AI 조건에서 Wolfson 지수는 **0.1105** 증가했다. 전 국민 공공 AI는 증가폭을 **11.4%** 줄였지만 양극화 방향 자체는 바꾸지 못했다. 공공교육 결합은 **23.5%**, 종합안은 **29.0%** 낮췄다. 품질·신뢰가 낮은 공공 AI는 겨우 **3.6%** 줄였다. ‘무료’라는 가격표보다 **무엇을 할 수 있는 품질인가**가 중요하다는 뜻이다.
+
+## 성장과 분배는 같은 축이 아니다
+
+```{r fig-frontier}
+#| fig-cap: "그림 2. 비용 차감 후 산출 증가와 양극화 증가의 관계. 오른쪽 아래가 더 유리하지만 어떤 정책도 기준 조건에서 양극화를 역전하지 못한다."
+#| fig-alt: "정책별 순산출 변화와 Wolfson 양극화 변화 산점도"
+#| lightbox: true
+
+ggplot(policy, aes(x = delta_net_output, y = delta_wolfson, color = policy)) +
+  geom_hline(yintercept = 0, color = "#94a3b8", linetype = 2) +
+  geom_point(size = 4.2) +
+  geom_text(aes(label = policy), nudge_y = 0.003, family = kfont, size = 3,
+            show.legend = FALSE) +
+  scale_color_manual(values = c(
+    "시장·고가AI" = "#ef4444", "전국민 공공AI" = "#8b5cf6",
+    "공공AI+공교육" = "#6366f1", "공공AI+돌봄" = "#22c55e",
+    "공공AI 종합안" = "#312e81", "공공AI 실패" = "#9ca3af"
+  )) +
+  labs(title = "더 성장하면서 더 갈라질 수 있다",
+       subtitle = "비용을 차감한 산출은 늘어도 중산층 공동화는 계속될 수 있음",
+       x = "비용 차감 후 평균 산출 변화", y = "Wolfson 지수 변화",
+       caption = "자료·주의: 그림 1과 동일. 축의 단위는 모형 내부 정규화 단위다.") +
+  theme_insight() + theme(legend.position = "none")
+```
+
+가장 중요한 결과는 성장과 복지가 갈라졌다는 점이다. 시장 조건에서도 평균 산출은 늘었지만 불평등을 반영한 동등분배소득(EDE)은 감소했다. 종합안만 기준 비용에서 순 EDE가 소폭 플러스였다. **GDP가 늘었다는 사실은 중간층이 살아남았다는 증거가 아니다.**
+
+# 왜 공교육이 접속권보다 강했나
+
+공공교육은 AI 계정을 더 배포하지 않는다. 대신 (H_i), 즉 결과를 검증하고 작업 흐름에 연결하는 능력을 바꾼다. 그래서 기준 실험에서 공공 AI+교육은 단순 보급보다 양극화 억제와 순산출 모두에서 앞섰다.
+
+이 결과는 교육을 ‘프롬프트 요령’으로 축소하라는 뜻이 아니다. OECD는 범용 생성형 AI가 과제 성과를 높여도 교육적 설계가 없으면 실제 학습으로 이어지지 않을 수 있다고 경고한다. 필요한 것은 답을 대신 쓰는 기술이 아니라 다음의 순환이다. [OECD Digital Education Outlook 2026](https://www.oecd.org/en/publications/oecd-digital-education-outlook-2026_062a7394-en.html)
+
+> 문제를 정의한다 → 자료의 출처를 묻는다 → AI가 만든 가설을 반증한다 → 도메인 지식으로 오류를 찾는다 → 결과와 책임을 사람이 승인한다.
+
+그러나 공교육과 공공 AI 사이에는 결정적 차이가 있다. 교과서는 개정 주기가 길지만 AI 모델은 수개월마다 능력과 위험이 바뀐다. 국가는 하나의 ‘정답 모델’을 지정할 수 없고, 정권이 바뀔 때마다 가치와 금지어가 바뀌어서도 안 된다. 따라서 공공 AI는 국영 챗봇 하나가 아니라 **법으로 보장된 최소 이용권과 복수 운영자 구조**여야 한다.
+
+# 돌봄 AI: 작은 평균, 큰 삶
+
+돌봄 정책은 전체 평균에서는 교육보다 작았다. 하지만 취약집단 고용에는 달랐다. 기준 실험에서 공공교육 결합은 취약집단 고용을 **2.05%포인트**, 돌봄 결합은 **2.46%포인트**, 종합안은 **5.49%포인트** 높였다.
+
+돌봄 AI의 가치는 거창한 생산성보다 행정 마찰을 줄이는 데 있다. 복지 자격을 찾고, 제출 서류를 설명하고, 예약과 이동을 조정하고, 담당 공무원에게 위험 신호를 보여주는 일이다. 단, 의료·법률·세무 판단과 급여 거절은 사람이 책임져야 한다. 자동화된 편의가 자동화된 배제가 되지 않도록 **인간 이관과 이의신청권**이 제도 안에 있어야 한다.
+
+# 200개의 미래에서도 살아남은 것
+
+기술의 속도, 고가 모델의 우위, AI 자본수익, 누적 피드백, 공공서비스 비용을 바꾼 200개 환경에서 각 정책을 같은 조건으로 비교했다.
+
+```{r fig-robustness}
+#| fig-cap: "그림 3. 200개 불확실한 기술·비용 환경에서 시장안보다 나아질 확률. 양극화 감소와 순효율 개선은 서로 다른 판정이다."
+#| fig-alt: "공공 AI 정책별 양극화 감소와 순산출 및 EDE 개선 비율"
+#| lightbox: true
+
+plot_robust <- reshape(
+  robust[, c("policy", "share_lower_polarization", "share_higher_output", "share_higher_ede")],
+  varying = c("share_lower_polarization", "share_higher_output", "share_higher_ede"),
+  v.names = "share", timevar = "metric",
+  times = c("양극화 감소", "순산출 증가", "순 EDE 증가"),
+  direction = "long"
+) %>%
+  mutate(
+    policy = recode(policy,
+      "Universal public AI" = "전 국민 공공 AI",
+      "Public AI + education" = "공공 AI+교육",
+      "Public AI + care" = "공공 AI+돌봄",
+      "Comprehensive public option" = "종합 공공안",
+      "Low-quality public AI" = "저품질 공공 AI"
+    )
+  )
+
+ggplot(plot_robust, aes(x = share, y = policy, color = metric)) +
+  geom_point(size = 3.2, position = position_dodge(width = .5)) +
+  scale_x_continuous(labels = percent_format(accuracy = 1), limits = c(0, 1.03)) +
+  scale_color_manual(values = c("양극화 감소" = "#6366f1", "순산출 증가" = "#22c55e", "순 EDE 증가" = "#f59e0b")) +
+  labs(title = "분배 개선은 견고했지만 비용효율은 불확실했다",
+       subtitle = "200개 매개변수 환경 × 환경당 3개 시드 · 시장/고가 AI 대비",
+       x = "시장안보다 개선된 환경의 비율", y = NULL, color = NULL,
+       caption = paste0("자료: Monte Carlo 3,600 runs · 고정 커밋 ", substr(commit, 1, 8))) +
+  theme_insight()
+```
+
+모든 실질적 공공안은 표본화한 환경 전부에서 시장안보다 양극화를 낮췄다. 그러나 비용까지 빼면 순산출을 함께 높인 비율은 교육 결합 **53.5%**, 종합안 **43.5%**, 단순 보급 **27.5%**, 돌봄 **19.0%**였다. 분배상 유리한 정책이 항상 비용효율에서도 우월하지는 않다.
+
+여기서 ‘교육이 무조건 정답’이라는 결론을 내리면 안 된다. 이 순위는 모형 구조와 비용 범위 안에서 나온다. 돌봄은 작은 집단을 깊게 돕기 때문에 총산출 지표에서 불리할 수 있다. 공공서비스의 가치를 평균 생산성 하나로만 평가하면, 원래 보호하려던 사람을 다시 지표 밖으로 밀어낸다.
+
+# 경계면: 언제 공공 AI도 무너지는가
+
+```{r fig-phase}
+#| fig-cap: "그림 4. 고가 모델의 품질 우위와 직업 재편 속도가 커질수록 공공 AI 아래에서도 양극화가 확대된다."
+#| fig-alt: "고가 AI 품질격차와 직업재편 속도에 따른 양극화 변화 열지도"
+#| lightbox: true
+
+phase$policy <- factor(phase$policy, levels = c("전국민 공공AI", "공공AI 종합안"))
+ggplot(phase, aes(x = premium_gap, y = rearrangement_speed, fill = delta_wolfson)) +
+  geom_tile() +
+  facet_wrap(~policy) +
+  scale_fill_gradient2(low = "#22c55e", mid = "#f8fafc", high = "#ef4444", midpoint = 0,
+                       name = "Δ Wolfson") +
+  labs(title = "프리미엄 격차와 직업 재편이 공공 AI를 추월한다",
+       subtitle = "오른쪽 위일수록 고가 모델 우위와 재편 속도가 동시에 큼",
+       x = "고가 AI의 품질 우위", y = "직업 재편 속도",
+       caption = "자료: 600개 임계조건 조합 · 단위는 모형 내부 매개변수이며 실제 정책 임계값이 아님") +
+  theme_insight()
+```
+
+공공 AI의 적은 단순히 예산 부족이 아니다. **프리미엄 능력의 발전 속도**와 **직업이 재편되는 속도**가 교육과 제도 적응보다 빠르면, 공공서비스는 늘 한 세대 뒤처진다. 저소득층에게 어제의 모델을 무료로 주고 부유층이 내일의 모델을 사는 체계는 디지털 복지가 아니라 지연된 계층화다.
+
+# 반대도 깊은 진리다
+
+Insight Lab의 질문은 늘 반대편까지 가야 완성된다. AI가 반드시 양극화를 만든다는 명제는 사실이 아니다.
+
+미국 고객지원 현장실험에서는 생성형 AI가 평균 생산성을 높였고, 특히 경험이 적은 노동자의 향상이 더 컸다. 숙련자의 암묵지를 시스템이 전달했기 때문이다. AI는 격차의 증폭기인 동시에 **숙련 확산기**가 될 수 있다. [Brynjolfsson·Li·Raymond, *Generative AI at Work*](https://www.nber.org/papers/w31161)
+
+그래서 강한 가설—‘AI는 언제나 양극화를 만든다’—은 기각되어야 한다. 더 정확한 조건부 명제는 다음과 같다.
+
+::: {.thesis}
+AI가 기존 자원과 결합해 차등 수익을 만들고, 비적응 노동에 대체 손실을 주며, 그 이득이 기술·데이터·자본으로 재투자될 때 양극화는 누적된다. 반대로 AI가 낮은 초기 역량에 더 큰 한계생산성 향상을 주고, 재교육과 직업 이동이 재편 속도를 따라가며, AI 자본수익이 넓게 소유되면 격차는 줄어들 수 있다.
+:::
+
+# 공공 AI 헌법은 무엇이어야 하나
+
+공교육 논쟁은 정권이 바뀔 때마다 반복된다. 자유와 평등, 선택과 표준화, 국가 책임과 사적 혁신이 충돌하기 때문이다. AI 이용권도 같은 논쟁을 피할 수 없다. 오히려 AI는 사용자의 질문·기록·취약성을 축적하고 실시간으로 답을 생성하기 때문에 더 민감하다.
+
+정권과 기술 유행을 넘어 유지될 원칙은 서비스 이름이 아니라 **권리 구조**여야 한다.
+
+1. **최소 AI 이용권** — 일정 수준 이상의 품질·사용량·접근성을 법적 권리로 보장한다.
+2. **복수 모델 선택권** — 단일 국영 모델이 아니라 인증된 공공·민간·오픈·온디바이스 모델 사이 이동을 허용한다.
+3. **데이터 이동성과 최소수집** — 시민이 대화와 작업 기록을 이전·삭제할 수 있어야 한다.
+4. **검증 가능한 공교육** — 질문법보다 출처 확인, 반증, 도메인 검토, 책임 있는 승인에 투자한다.
+5. **인간에게 이의제기할 권리** — 복지·채용·의료·법률·세무의 고위험 결정에는 설명과 사람의 재심을 보장한다.
+6. **AI 자본의 분산 소유** — 노동자 지분, 연기금, 지역펀드, 공공 배당으로 임금 밖의 자본수익 경로를 넓힌다.
+7. **독립 감사와 공개 평가** — 정권·조달업체와 분리된 기관이 편향·비용·오류·집단별 성과를 공개한다.
+
+세계은행은 디지털 공공 인프라의 핵심을 단일 앱이 아니라 신원·지급·데이터 교환 같은 재사용 가능한 공공 기반으로 본다. 공공 AI도 ‘정부가 만든 챗봇’보다 **시민이 여러 서비스에서 행사할 수 있는 상호운용 권리**에 가까워야 한다. [World Bank의 Digital Public Infrastructure](https://www.worldbank.org/en/results/2026/05/06/global-digital-public-infrastructure-program)
+
+# 결론: 배포가 아니라 전환 능력
+
+AI 시대의 평등은 모두에게 같은 답변창을 주는 일이 아니다. 누군가는 AI로 회사를 만들고 자본을 축적하는데, 누군가는 복지 신청 한 건을 마치는 데 그친다면 접속은 평등해도 결과를 만드는 자유는 평등하지 않다.
+
+모의실험의 가장 일관된 메시지는 단순하다.
+
+> **공공 AI는 필요조건이지만 충분조건이 아니다.**<br>
+> 접속권에 교육·돌봄·직업 이동·자본 소유를 결합해야 한다.
+
+공공 와이파이는 길을 열었다. 공교육은 읽고 판단하는 능력을 만들려 했다. 공공 AI는 그 둘 위에 서되, 한 단계 더 나아가야 한다. 시민에게 기계를 주는 것이 아니라 **기계가 바꾸는 사회에서 다시 선택할 능력**을 주어야 한다.
+
+---
+
+## 연구·재현 자료 {.unnumbered}
+
+- [영문 경제학 워킹페이퍼·코드·전체 결과](https://github.com/waterfirst/public-ai-inequality-economics)
+- [영문 PDF 직접 보기](https://github.com/waterfirst/public-ai-inequality-economics/raw/main/Public_AI_Social_Infrastructure_Economics_Working_Paper_2026-08-09.pdf)
+- [AI 오디오 해설 — AI 무료 배포가 중산층을 붕괴시키는 이유](https://notebook.google.com/notebook/2981c6a3-ac3b-45ee-8342-dd3e7c6b8d0b/artifact/cd775ec8-8ace-4bd4-842c-46a8faecf455?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1)
+- [OECD AI 이용 격차](https://www.oecd.org/en/about/news/announcements/2026/01/ai-use-by-individuals-surges-across-the-oecd-as-adoption-by-firms-continues-to-expand.html)
+- [OECD Digital Education Outlook 2026](https://www.oecd.org/en/publications/oecd-digital-education-outlook-2026_062a7394-en.html)
+- [IMF, AI Adoption and Inequality](https://www.imf.org/en/publications/wp/issues/2025/04/04/ai-adoption-and-inequality-565729)
+- [Acemoglu & Restrepo, Tasks, Automation, and the Rise in U.S. Wage Inequality](https://www.nber.org/papers/w28920)
+- [Brynjolfsson, Li & Raymond, Generative AI at Work](https://www.nber.org/papers/w31161)
+
+*모든 차트는 공개 CSV에서 R 코드로 재계산했다. 합성 모의실험은 가설의 구조와 반증 조건을 보여주는 도구이며, 실제 한국인의 행동·소득·정책효과를 추정하지 않는다.*
