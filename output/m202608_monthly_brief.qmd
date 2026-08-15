@@ -1,0 +1,119 @@
+---
+title: "2026년 8월 월간 브리프"
+subtitle: "AI 리터러시·토큰 비용·공공 AI 정책을 하나의 경계조건으로 묶은 Insight Lab 저널"
+author: "Nakcho Choi · Insight Lab"
+date: "2026-08-15"
+lang: ko
+format:
+  html:
+    theme:
+      dark: darkly
+      light: flatly
+    toc: true
+    toc-title: "목차"
+    toc-depth: 2
+    number-sections: true
+    smooth-scroll: true
+    embed-resources: true
+    code-fold: false
+    lightbox: true
+    css: journal-202608.css
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{=html}
+<style>
+.lead-note{margin:18px 0;padding:18px 20px;border-left:5px solid #6d42a6;border-radius:14px;background:rgba(109,66,166,.08)}
+.lead-note strong{color:#5b3b88}
+.issue-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:22px 0}
+.issue-grid>div{padding:18px;border:1px solid #ddd3ef;border-radius:16px;background:#faf8ff}
+.issue-grid h3{margin:0 0 8px;color:#62418f;font-size:1.05rem}
+.issue-grid p{margin:0;color:#475569;line-height:1.65}
+.ledger{margin:18px 0;padding-left:1.2rem}
+.ledger li{margin:8px 0}
+.next-box{margin:20px 0;padding:18px 20px;border-radius:16px;background:linear-gradient(180deg,#faf8ff,#f5f3ff);border:1px solid #ddd3ef}
+</style>
+```
+
+::: {.lead-note}
+**이번 달 한 줄 요약**  
+8월의 Insight Lab은 **“AI를 쓸 수 있는가”라는 질문을, 개인의 문해력·시스템의 비용 구조·사회의 분배 구조라는 세 층위에서 동시에 검증**했다.
+:::
+
+# 이번 달 발행 요약
+
+최근 `output/`의 핵심 결과물은 세 편이었다.
+
+::: {.metric}
+<div><b>3편</b>8월 핵심 발행물<small>SP12, SP13, SP14</small></div>
+<div><b>2편</b>최근 raw 메모 묶음<small>열역학·금융위기 리서치 노트 재참조</small></div>
+<div><b>1개</b>월간 브리프<small>이번 발행물로 아카이브 정리</small></div>
+:::
+
+## 1. AI 사용능력의 재정의
+
+`sp12_ai_literacy.qmd`는 AI 활용을 “프롬프트를 잘 쓰는 기술”이 아니라 **질문·검증·책임 배분을 관리하는 인식론적 자율성**으로 다시 규정했다.  
+이 글은 생산성 향상 사례만이 아니라, AI의 능력 경계 밖에서 정확성이 오히려 떨어질 수 있다는 점을 함께 묶어 **“속도를 얻는 능력”과 “속도를 거부하는 능력”을 동시에 요구**했다.
+
+## 2. 토큰 비용의 구조 해부
+
+`sp13_token_thermodynamics.qmd`는 실제 세션 기록을 바탕으로 **출력 길이보다 긴 접두부·캐시 생성·재시도가 비용을 좌우한다**는 점을 보여줬다.  
+즉 8월의 두 번째 축은 “AI를 사용할 줄 아는가”를 넘어 **어떤 구조가 비용과 한도를 태우는지 관측할 줄 아는가**였다.
+
+## 3. 공공 AI 정책의 경계조건
+
+`sp14_public_ai_paradox.qmd`는 무료 접근만으로는 양극화를 뒤집기 어렵고, **공교육·돌봄·자본 소유 구조가 함께 바뀌어야 효과가 커진다**는 점을 제시했다.  
+개인의 사용능력과 시스템 비용 구조를 지나, 마지막 글은 그 능력이 **사회적으로 누구에게 축적되는가**라는 분배 문제로 넘어갔다.
+
+# 세 편을 하나로 묶는 핵심 통찰
+
+::: {.issue-grid}
+<div>
+<h3>개인 층위</h3>
+<p>AI 리터러시는 답변을 빨리 받는 기술이 아니라, 무엇을 믿고 언제 개입할지 결정하는 판단력이다.</p>
+</div>
+<div>
+<h3>시스템 층위</h3>
+<p>좋은 판단도 비용 구조를 모르면 지속되지 않는다. 문맥 설계·캐시 안정성·재시도 제어가 운영 역량이 된다.</p>
+</div>
+<div>
+<h3>사회 층위</h3>
+<p>접근권만 열어도 성과는 균등하게 분배되지 않는다. 교육·돌봄·자본 소유가 결합돼야 능력이 힘으로 전환된다.</p>
+</div>
+:::
+
+이 세 층위를 연결하면 8월의 Insight Lab은 결국 다음 명제로 수렴한다.
+
+> **AI 시대의 격차는 모델 접근 여부보다, 판단·운영·제도 설계의 경계조건을 누가 더 잘 갖추는가에서 벌어진다.**
+
+# 최근 raw 메모에서 확인한 다음 후보
+
+`raw/`의 최근 메모는 모두 2026년 7월 31일에 정리돼 있었고, 아직 8월 발행물로 충분히 소화되지 않은 축을 보여준다.
+
+1. `raw/week2_research_thermodynamics_empire.md`  
+   → 거시 질서와 붕괴를 다루는 역사·열역학 축
+2. `raw/week5_research_chaos_finance.md`  
+   → 금융 시스템의 비선형성과 충격 전파 축
+3. `raw/special_edition_4_llm_emotion_hamiltonian.md`  
+   → AI와 감정·현상학 경계의 재확장 후보
+
+이 메모들은 8월 발행물의 후속선으로 볼 수 있다.  
+특히 **개인의 AI 사용능력 → 시스템 비용 구조 → 공공 배분 구조**로 올라온 이번 흐름 다음에는, 다시 **정치경제와 문명 차원의 비선형성**으로 확장하는 편이 자연스럽다.
+
+# 아카이브 정리 메모
+
+이번 월간 브리프 발행과 함께 저장소에는 다음 정리 원칙을 반영했다.
+
+- 최근 8월 핵심 발행물 3편을 하나의 월간 해설로 묶었다.
+- 별도 신규 raw 메모는 만들지 않고, 기존 raw 초안을 다음 후보군으로 명시했다.
+- `index.html`에 월간 브리프 카드를 추가해 메인 진입점에서 바로 접근 가능하게 했다.
+
+::: {.next-box}
+## 다음 발행 제안
+
+다음 달에는 `raw/week2_research_thermodynamics_empire.md` 또는 `raw/week5_research_chaos_finance.md`를 바탕으로,  
+**AI 이후 질서의 불안정성**을 역사·금융·지정학 축으로 확장하는 특별편이 가장 자연스럽다.
+:::
