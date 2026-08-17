@@ -10,6 +10,10 @@ Insight Lab은 서로 다른 학문 영역이 만나는 **경계**에서, 한 �
 
 **영감:** "입자설에서 파동설로"라는 한 줄이 PhilSci-Archive 논문이 된 경험.
 
+## 두 번째 단행본 제작
+
+성능이 좋은 새 PC에서 Codex로 Insight Lab 원고를 단행본으로 편집하려면 [BOOK_PRODUCTION_HANDOFF.md](BOOK_PRODUCTION_HANDOFF.md)를 가장 먼저 읽습니다. 이 문서에는 선행 출판에서 확정한 Quarto 조판, 삽화·표지, PDF·EPUB 검수, Scholar Bridge 브랜드, 추천사와 교보 제출 절차가 정리되어 있습니다.
+
 ## 방법론: 크로스오버 매트릭스
 
 두 분야를 교차시켜 질문을 던진다:
