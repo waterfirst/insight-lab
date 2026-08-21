@@ -1,0 +1,237 @@
+---
+title: "사다리 없는 전문가"
+subtitle: "AI가 신입의 일을 없애면 미래의 숙련자는 어디서 오는가 — 인구동역학 × 학습과학 × 노동경제학"
+author: "Insight Lab × Chimera AI"
+date: "2026-08-21"
+lang: ko
+jupyter: python3
+format:
+  html:
+    theme:
+      dark: darkly
+      light: flatly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    smooth-scroll: true
+    embed-resources: true
+    lightbox: true
+execute:
+  echo: false
+  warning: false
+---
+
+::: {.callout-note}
+## 핵심 문장
+기업이 AI로 신입의 반복 업무를 없애면서 신입 채용까지 줄이면, 당장의 생산성은 높아져도 미래의 숙련자 공급은 마른다. **초급 업무는 비용인 동시에 숙련을 생산하는 교육 인프라**다. 없애야 할 것은 신입이 아니라, 배우지 못한 채 반복만 하는 직무다.
+:::
+
+```{python}
+#| label: setup
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "Noto Sans CJK KR"
+plt.rcParams["axes.unicode_minus"] = False
+PURPLE, BLUE, GREEN, RED, GOLD, MUTED = "#6366f1", "#38bdf8", "#22c55e", "#ef4444", "#f59e0b", "#64748b"
+
+def finish(ax, title, subtitle=""):
+    ax.set_facecolor("#ffffff")
+    ax.figure.set_facecolor("#ffffff")
+    ax.grid(color="#e5e7eb", alpha=.8, linewidth=.7)
+    ax.tick_params(colors="#374151")
+    ax.set_title(title, loc="left", color=PURPLE, fontweight="bold", fontsize=15, pad=18)
+    if subtitle:
+        ax.text(0, 1.015, subtitle, transform=ax.transAxes, color=MUTED, fontsize=9)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+```
+
+# 사라지는 것은 직업인가, 입구인가
+
+AI와 고용을 둘러싼 논쟁은 흔히 “몇 개의 직업이 사라지는가”를 묻는다. 그러나 2026년 8월의 증거가 가리키는 더 미묘한 변화는 **직업 전체의 소멸보다 진입구의 축소**다.
+
+스탠퍼드 디지털경제연구소는 수백만 명의 미국 급여자료를 2026년 6월까지 분석했다. 경제 전체에서 광범위한 일자리 대체는 찾지 못했지만, AI 노출 직종의 22~25세 고용은 저노출 직종과 같은 속도로 성장했다고 가정한 경로보다 19% 낮았다. 차이는 해고 증가보다 **청년 채용 감소**에서 주로 생겼고, AI가 사람의 일을 대체하는 방식으로 쓰이는 직종에 집중됐다. 연구진은 이것을 인과효과가 확정된 결론이 아니라 조기 경보라고 명시한다. 교육수준을 통제하면 차이가 약해지고, 일부 격차는 생성형 AI 이전부터 시작됐기 때문이다.
+
+한국에서도 방향은 비슷하되 단정은 이르다. OECD의 《한국경제보고서 2026》은 AI 노출도가 높은 산업에서 30세 이상 고용은 늘어난 반면 29세 이하는 순감소했다고 정리한다. 2022년 전후 추세 단절은 보이지만 경기 둔화, 청년인구 감소, 대졸자 과잉 같은 대안 설명이 남아 있다. 그럼에도 OECD가 “기업은 신입 업무가 자동화되더라도 장기 인재 공급을 위해 청년을 계속 채용해야 한다”고 별도로 적은 것은 이 문제가 단기 고용률만의 문제가 아님을 보여준다.
+
+ILO의 세계지수는 또 다른 경고를 준다. 전 세계 노동자의 약 4분의 1이 생성형 AI에 어느 정도 노출되지만, 인간 입력이 계속 필요하므로 가장 가능성 높은 결과는 직업의 전면 소멸보다 **업무의 변형**이다. 노출과 대체는 같은 말이 아니다. 문제는 업무가 변형되는 과정에서 누가 학습 기회를 얻고 누가 입구에서 밀려나는가다.
+
+# 초급 업무는 인적자본을 만드는 공정이다
+
+반도체 공정에서 검사 단계는 당장 제품을 만들지 않는 것처럼 보인다. 그러나 검사를 없애면 수율을 학습할 수 없다. 조직의 초급 업무도 비슷하다. 로그를 읽고, 과거 사례를 찾고, 시험 코드를 만들고, 회의록을 정리하는 일은 생산성이 낮아 보인다. 동시에 그 과정은 신입이 조직의 언어와 예외, 암묵지와 책임경계를 배우는 **센서 훈련**이다.
+
+숙련 인력은 외부에서 완제품으로 도착하지 않는다. 이를 아주 단순한 재고-흐름 모형으로 쓰면 다음과 같다.
+
+$$J_{t+1}=(1-p-a_J)J_t+H_t$$
+
+$$S_{t+1}=(1-a_S)S_t+pJ_t$$
+
+$J$는 초급 인력, $S$는 숙련 인력, $H$는 신규채용, $p$는 초급에서 숙련으로 이동하는 비율, $a$는 이탈률이다. AI 도입 뒤 $H$를 줄이면 그해 손익에는 곧바로 이익이 보이지만, $S$의 감소는 승진에 필요한 시간만큼 늦게 나타난다. 지연 때문에 경영자는 원인과 결과를 서로 다른 사건으로 착각하기 쉽다.
+
+아래는 예측이 아니라 구조를 보기 위한 모의실험이다. 초기 초급 300명, 숙련 700명, 연간 숙련 전환 18%, 초급 이탈 12%, 숙련 이탈 7%를 공통으로 두고 채용만 달리했다. ‘19% 축소’는 스탠퍼드 관측치를 기업의 인과효과로 간주한 것이 아니라 충격 크기를 비교하기 위한 기준점이다.
+
+```{python}
+#| label: fig-talent-pipeline
+#| fig-cap: "그림 1. 신입 채용 축소가 숙련 인력 재고에 나타나는 지연. 가정 기반 모의실험이며 특정 기업의 예측치가 아니다."
+years = np.arange(0, 16)
+scenarios = {"채용 유지": 100, "채용 19% 축소": 81, "채용 50% 축소": 50}
+rows = []
+for name, hires in scenarios.items():
+    junior, senior = 300.0, 700.0
+    for year in years:
+        rows.append([year, name, junior, senior])
+        promoted = .18 * junior
+        junior = junior * (1 - .18 - .12) + hires
+        senior = senior * (1 - .07) + promoted
+sim = pd.DataFrame(rows, columns=["year", "scenario", "junior", "senior"])
+fig, ax = plt.subplots(figsize=(9, 5.2))
+colors = {"채용 유지": GREEN, "채용 19% 축소": PURPLE, "채용 50% 축소": RED}
+for name, group in sim.groupby("scenario"):
+    ax.plot(group.year, group.senior, lw=2.6, label=name, color=colors[name])
+finish(ax, "신입 입구를 줄인 효과는 숙련 재고에 늦게 도착한다", "같은 승진·이탈 구조에서 신규채용만 변경")
+ax.set_xlabel("도입 후 연도")
+ax.set_ylabel("숙련 인력 지수(명, 모의)")
+ax.legend(frameon=False)
+plt.tight_layout(); plt.show()
+```
+
+채용 축소 직후 숙련자는 오히려 늘 수 있다. 기존 초급 인력이 승진하기 때문이다. 이 짧은 호황이 함정이다. 파이프라인이 비고 나서야 승진 유입이 줄어든다. 그때 기업은 “요즘 쓸 만한 경력자가 없다”고 말하며 외부 채용 경쟁에 뛰어든다. 모든 기업이 같은 전략을 쓰면 시장 전체가 다른 회사가 훈련한 사람을 빼앗는 공유지의 비극이 된다.
+
+# AI는 사다리를 없애기도 하고 짧게 만들기도 한다
+
+비관론만으로는 충분하지 않다. 생성형 AI가 초급자의 학습을 가속한다는 증거도 있다. 고객지원 상담원 5,179명을 분석한 NBER 연구는 AI 보조 도입 뒤 생산성이 평균적으로 높아졌고, 효과가 저숙련·저경력자에게 더 크게 나타났다고 보고했다. AI가 우수 상담원의 표현과 문제해결 패턴을 초급자에게 전달하는 역할을 한 것이다. 이 경우 AI는 사다리를 걷어차는 기계가 아니라 **암묵지를 부분적으로 압축해 전달하는 교사**다.
+
+두 결과는 모순되지 않는다. 기업이 AI를 어떻게 배치하느냐가 다르다.
+
+- **대체형 배치:** 신입이 하던 업무량이 줄었다는 이유로 채용을 줄인다.
+- **증강형 배치:** 같은 수의 신입이 AI로 더 다양한 사례를 다루고, 선임은 판단과 피드백에 집중한다.
+- **유령형 배치:** 채용은 유지하지만 신입은 AI 결과를 복사할 뿐 원자료와 실패를 보지 못한다.
+
+증강형이 자동으로 학습을 보장하지는 않는다. GPS를 쓰면 빨리 도착하지만 길을 기억하지 못할 수 있듯, AI가 늘 정답 후보를 먼저 제시하면 초급자는 문제공간을 탐색하는 능력을 잃을 수 있다. 핵심은 처리량이 아니라 **노출되는 경험의 종류**다.
+
+다음 모형은 숙련을 네 요소—규칙 지식, 패턴 인식, 예외 경험, 책임 있는 판단—의 합으로 단순화한다. AI가 규칙 탐색을 크게 가속하지만 예외와 판단의 노출을 대신하지 못한다고 가정했다.
+
+```{python}
+#| label: fig-skill-composition
+#| fig-cap: "그림 2. AI 배치 방식에 따른 36개월 후 숙련 구성의 모의 비교. 계수는 설명용 가정이며 실증 추정치가 아니다."
+months = 36
+modes = {
+    "전통적 도제": np.array([.08, .060, .045, .035]),
+    "AI 복사형": np.array([.15, .075, .018, .010]),
+    "AI 증강형": np.array([.14, .095, .055, .045]),
+}
+components = ["규칙 지식", "패턴 인식", "예외 경험", "책임 판단"]
+vals = {}
+for mode, rate in modes.items():
+    # 학습 포화: 1-exp(-rate*time)
+    vals[mode] = 100 * (1 - np.exp(-rate * months))
+skill = pd.DataFrame(vals, index=components)
+fig, ax = plt.subplots(figsize=(9, 5.2))
+x = np.arange(len(components)); width = .24
+for idx, (mode, color) in enumerate(zip(skill.columns, [BLUE, RED, PURPLE])):
+    ax.bar(x + (idx-1)*width, skill[mode], width, label=mode, color=color, alpha=.9)
+finish(ax, "빨리 아는 것과 깊이 판단하는 것은 같은 학습이 아니다", "36개월 학습 포화 모형")
+ax.set_xticks(x, components)
+ax.set_ylabel("숙련 축적 지수(0~100, 모의)")
+ax.set_ylim(0, 105)
+ax.legend(frameon=False, ncol=3, loc="upper center")
+plt.tight_layout(); plt.show()
+```
+
+‘AI 복사형’은 규칙과 패턴에서 빠르게 올라가지만, 예외와 책임 판단이 비어 있다. 면접에서 유창하고 프롬프트는 잘 쓰지만 실제 장애 앞에서 멈추는 인력이 생길 수 있다. 반대로 ‘AI 증강형’은 원자료 확인, 대안가설, 실패 복기, 선임 피드백을 의도적으로 남겨 AI의 속도와 현장 경험을 함께 축적한다.
+
+# 한국의 병목: 학교보다 직장 안에서 덜 배운다
+
+한국 문제는 단지 신입 채용 수가 아니다. OECD는 일하면서 한 달에 한 번 이상 새로운 것을 배우는 한국 근로자가 절반을 조금 넘는 수준으로, OECD 평균 70% 이상보다 낮다고 지적한다. 특히 16~24세가 낮다. 한국의 15세 학생 중 사실과 의견을 정확히 구분한 비율이 25%로 OECD 평균 47%보다 낮았다는 결과도 함께 제시한다. 높은 학력과 시험성적이 원자료 검증, 자기주도학습, 현장 판단으로 자동 전환되지 않는다는 뜻이다.
+
+AI 시대에는 이 간극이 더 위험하다. 과거에는 반복 업무를 오래 하다 보면 우연히 예외를 만났고, 옆자리 선임에게 이유를 물었다. 이제 AI가 반복을 제거하면 우연한 학습도 사라진다. 기업은 학습을 부산물로 기대할 수 없고 **업무 시스템 안에 의도적으로 설계**해야 한다.
+
+다음은 채용과 학습 설계를 함께 바꿀 때 숙련 파이프라인이 어떻게 달라지는지를 보여주는 모의실험이다. AI 증강형은 채용을 19% 줄이되 초급자의 숙련 전환율을 18%에서 24%로 높이고 이탈을 낮춘다. 보호형 도제는 채용을 유지하고, 일부 초급 과업을 교육용으로 보존한다.
+
+```{python}
+#| label: fig-policy-scenarios
+#| fig-cap: "그림 3. 채용량과 학습 전환율을 함께 고려한 15년 숙련 인력 모의실험. 정책 효과의 예측이 아니라 설계 변수의 상호작용을 보이기 위한 계산이다."
+policies = {
+    "자동화만": dict(hires=81, promote=.15, jattr=.14),
+    "AI 증강 도제": dict(hires=81, promote=.24, jattr=.09),
+    "학습과업 보호": dict(hires=100, promote=.21, jattr=.10),
+}
+rows=[]
+for name, p in policies.items():
+    j,s=300.,700.
+    for year in years:
+        rows.append([year,name,j,s])
+        promoted=p["promote"]*j
+        j=j*(1-p["promote"]-p["jattr"])+p["hires"]
+        s=s*.93+promoted
+policy_df=pd.DataFrame(rows,columns=["year","policy","junior","senior"])
+fig,ax=plt.subplots(figsize=(9,5.2))
+for name,color in zip(policies,[RED,PURPLE,GREEN]):
+    g=policy_df[policy_df.policy==name]
+    ax.plot(g.year,g.senior,lw=2.7,label=name,color=color)
+finish(ax,"채용 축소보다 학습 전환율이 더 중요한 경우가 있다","입구·승진·이탈을 동시에 바꾼 시나리오")
+ax.set_xlabel("도입 후 연도"); ax.set_ylabel("숙련 인력(명, 모의)"); ax.legend(frameon=False)
+plt.tight_layout(); plt.show()
+```
+
+모형은 “채용을 줄여도 된다”는 면허가 아니다. 전환율을 실제로 높이지 못하면 자동화만 시나리오로 떨어진다. 승진 이름만 빨리 붙이거나 AI 결과를 잘 포장하는 능력을 숙련으로 세면 지표는 좋아져도 역량은 비어 있다. 따라서 전환율은 근속연수가 아니라 독립 문제해결, 반증, 위험판단, 타인 교육으로 측정해야 한다.
+
+# 반도체 회사라면 신입에게 무엇을 남겨야 하는가
+
+반도체 설계·공정·품질 업무에서 AI가 잘하는 일은 명확하다. 사양서 검색, 유사 로그 묶기, 코드 초안, 결함 후보 압축, 보고서 골격이다. 그래서 신입에게 문서 검색과 표 만들기만 시키던 조직은 채용 필요가 줄어든 것처럼 느낀다. 그러나 그 업무를 통째로 없애면 신입은 다음 연결고리를 배우지 못한다.
+
+1. **측정값이 어떤 조건에서 만들어졌는가**
+2. **같은 현상이 다른 원인으로도 생길 수 있는가**
+3. **분석 결과가 공정·일정·비용과 어떻게 충돌하는가**
+4. **틀렸을 때 어떤 손실이 생기며 누가 책임지는가**
+
+따라서 AI 시대의 초급 직무는 ‘AI 사용 경험’이 아니라 **AI에게 맡긴 일과 사람이 더 깊게 판단한 일을 분리해서 설명하는 구조**로 다시 설계해야 한다. 최근 SK하이닉스가 문제해결 PT에서 전용 LLM을 허용하려는 방향도 같은 질문을 던진다. 누가 더 긴 프롬프트를 쓰는지가 아니라, AI가 압축한 후보 중 무엇을 검증하고 어떤 트레이드오프를 책임졌는가를 봐야 한다.
+
+가상 반도체 실험실도 이 원칙을 따라야 한다. AI가 정답 원인을 알려주는 튜터가 되면 학생은 결과만 복사한다. 학생이 먼저 데이터의 축을 고르고, 대안가설을 세우고, AI에는 빠진 검증을 묻게 해야 한다. 최종 PT에는 정답뿐 아니라 최초 가설, 잘못된 판단, 반증, 수정된 가설이 남아야 한다. 이것이 실제 업무에서 사라진 초급 과업을 안전한 환경에 다시 만드는 **합성 도제(apprenticeship simulator)**다.
+
+# 기업이 측정해야 할 네 개의 계기판
+
+채용 인원만 보면 늦다. 다음 네 지표를 함께 봐야 한다.
+
+| 계기판 | 잘못된 대리지표 | 더 나은 질문 |
+|---|---|---|
+| 입구 | 신입 채용 수 | 어떤 배경의 신입이 실제 문제에 접근하는가 |
+| 학습 | 교육 이수시간 | 원자료·예외·실패에 얼마나 노출됐는가 |
+| 전환 | 승진자 수 | 감독 없이 문제를 정의·반증·종료할 수 있는가 |
+| 재생산 | 선임 1인당 산출 | 후배를 독립 판단자로 만든 선임이 누구인가 |
+
+마지막 지표가 특히 중요하다. AI가 선임의 개인 생산성을 두 배로 높여도 그 선임이 후배에게 맥락을 전하지 않으면 조직 생산성은 세대교체 순간 무너진다. 선임의 일은 더 이상 답을 대신 내는 것이 아니라, 신입이 AI와 함께 틀리고 수정할 수 있는 문제공간을 설계하는 것이다.
+
+# 반론: 기업이 왜 사회 전체의 훈련비를 부담해야 하는가
+
+기업 입장에서는 합리적 반론이 있다. 훈련한 신입이 곧 이직할 수 있고, AI가 즉시 비용을 줄이는데 미래의 인력난은 불확실하다. 특히 중소기업은 교육할 시간과 여유가 부족하다. 그러므로 모든 비용을 개별 기업의 선의에 맡길 수 없다.
+
+해법은 자동화를 늦추는 것이 아니라 훈련 투자의 수익을 나누는 제도다. 공동 실습 플랫폼, 산업별 평가기준, 이동 가능한 숙련 인증, 중소기업 훈련비 지원, 대학과 기업이 함께 운영하는 실제 데이터 기반 프로젝트가 필요하다. 단, 정부지원 교육이 기업의 실제 문제와 분리된 범용 강의로 끝나면 자격증만 늘어난다. OECD 역시 한국의 외부훈련 의존이 기업 특유의 생산 문제와 잘 맞지 않을 수 있다고 지적한다.
+
+노동자도 보호의 대상만은 아니다. AI가 초급 업무를 줄이는 만큼, 신입은 “AI를 써봤다”가 아니라 자신이 검증한 증거와 실패 기록을 포트폴리오로 보여줘야 한다. 기업은 그 기록을 채용 신호로 인정해야 한다. 학습의 책임을 개인에게만 넘기지 않되, 개인의 판단 흔적을 평가하는 시장을 만드는 것이다.
+
+# 결론: 첫 계단을 없애지 말고 높이를 바꿔라
+
+AI가 반복 업무를 대신하는 것은 바람직할 수 있다. 인간이 단순 검색과 복사에 시간을 덜 쓰고 더 중요한 판단을 배우게 할 수 있기 때문이다. 그러나 반복 업무와 신입을 같은 것으로 취급하면 기업은 교육 공정을 원가절감 항목으로 삭제한다.
+
+앞으로의 초급 직무는 더 어려워져야 한다. 단, 아무 도움 없이 어려운 일을 던지라는 뜻이 아니다. AI가 탐색과 정리를 돕고, 인간 선임이 경계조건과 책임을 가르치며, 신입이 원자료·반증·트레이드오프를 직접 다루는 구조여야 한다. **AI에게 무엇을 맡겼는가보다, 그 덕분에 사람이 무엇을 더 깊이 판단했는가**를 묻는 직무다.
+
+사다리의 낮은 칸을 없애면 사람은 더 빨리 오르지 않는다. 처음부터 점프할 수 있는 소수만 남는다. 기업이 해야 할 일은 첫 계단을 철거하는 것이 아니라, AI를 발판으로 바꾸고 그 위에서 배워야 할 판단의 높이를 올리는 것이다.
+
+## 근거와 한계
+
+- [Stanford Digital Economy Lab, *Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence*, 2026-08-12 개정](https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/)
+- [OECD, *OECD Economic Surveys: Korea 2026*, 특히 pp. 75–84](https://www.oecd.org/content/dam/oecd/en/publications/reports/2026/07/oecd-economic-surveys-korea-2026_17d6bf02/6b87f585-en.pdf)
+- [OECD·한국노동연구원, *Artificial Intelligence and the Labour Market in Korea*, 2025](https://www.oecd.org/en/publications/artificial-intelligence-and-the-labour-market-in-korea_68ab1a5a-en.html)
+- [ILO, *Generative AI and Jobs: A 2025 Update*](https://www.ilo.org/publications/generative-ai-and-jobs-2025-update)
+- [Brynjolfsson, Li & Raymond, *Generative AI at Work*, NBER Working Paper 31161](https://www.nber.org/papers/w31161)
+
+이 글은 노동시장 예측이나 개별 기업의 인력계획이 아니다. 그림 1~3은 공개연구에서 확인된 방향을 이해하기 위한 **가정 기반 구조 모형**이며, 계수는 인과 추정치가 아니다. 미국 ADP 표본의 19% 격차를 한국이나 특정 산업에 그대로 적용할 수 없다. 한국의 청년고용 변화 역시 경기, 인구, 교육과 노동시장 이중구조의 영향을 함께 받는다. 결론은 “AI가 이미 대량실업을 만들었다”가 아니라, **진입 채용과 현장학습의 동시 위축을 조기에 측정해야 한다**는 것이다.
+
+::: {.callout-warning}
+## 이 글이 틀릴 수 있는 조건
+AI가 암묵지와 예외 판단까지 신뢰성 있게 전달하고, 기업 간 숙련 인력 이동이 훈련 공백을 지속적으로 메우거나, 신규 직무가 사라진 초급 직무보다 더 많은 입구를 만든다면 숙련 파이프라인 고갈은 나타나지 않을 수 있다. 반대로 경기침체가 청년고용 감소의 대부분을 설명한다면 현재의 AI 경보는 과대평가된 것이다. 두 가능성은 향후 채용·승진·업무구성 자료로 계속 검증해야 한다.
+:::
