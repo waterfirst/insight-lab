@@ -1,0 +1,235 @@
+---
+title: "거울 속의 마음"
+subtitle: "Anthropic의 AI 연구는 인간을 얼마나 이해했는가 — 인공지능 × 뇌과학 × 심리학 × 사회의 미래"
+author: "Insight Lab"
+date: "2026-08-21"
+lang: ko
+jupyter: python3
+format:
+  html:
+    theme:
+      dark: darkly
+      light: flatly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    smooth-scroll: true
+    embed-resources: true
+execute:
+  echo: false
+  warning: false
+---
+
+::: {.callout-note}
+## 먼저 결론
+Anthropic의 연구는 인간의 의식이나 뇌를 해독하지 않았다. 대신 세 가지 더 제한적이지만 중요한 성과를 냈다. **언어 속 인간 개념이 AI 내부에서 어떻게 조직되는지**, **사람들이 AI에게 실제로 어떤 가치·고민·업무를 맡기는지**, 그리고 **완전히 관찰·조작할 수 있는 인공 신경망이 뇌과학의 새 가설 생성기가 될 수 있는지**를 보여줬다. AI는 인간의 복제품이 아니라, 인간이 남긴 언어와 선택을 압축한 불완전한 거울이다.
+:::
+
+```{python}
+#| label: setup
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "Noto Sans CJK KR"
+plt.rcParams["axes.unicode_minus"] = False
+PURPLE, BLUE, GREEN, RED, GOLD, MUTED = "#6366f1", "#38bdf8", "#22c55e", "#ef4444", "#f59e0b", "#64748b"
+
+def finish(ax, title, subtitle=""):
+    ax.set_facecolor("#ffffff")
+    ax.figure.set_facecolor("#ffffff")
+    ax.grid(axis="x", color="#e5e7eb", alpha=.8, linewidth=.7)
+    ax.tick_params(colors="#374151")
+    ax.set_title(title, loc="left", color=PURPLE, fontweight="bold", fontsize=15, pad=18)
+    if subtitle:
+        ax.text(0, 1.015, subtitle, transform=ax.transAxes, color=MUTED, fontsize=9)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+```
+
+# 온도계가 열이 나지 않아도 체온을 알려주는 것처럼
+
+사람은 오래전부터 자신을 이해하기 위해 인간이 아닌 것을 만들었다. 신화의 골렘, 철학의 사고실험, 심리학의 모형, 컴퓨터과학의 인공신경망이 그 계보다. 오늘의 대규모 언어모델은 특이한 위치에 있다. 인간이 생산한 거대한 언어 기록을 학습했고, 사람과 대화하며, 다시 그 대화가 인간의 가치와 불안을 관측하는 자료가 된다. 연구자는 모델 내부를 열어 개념 하나를 증폭하거나 억제할 수도 있다. 인간에게는 불가능한 수준의 관찰과 개입이다.
+
+그래서 유혹이 생긴다. 모델 안에서 감정 벡터를 발견하면 인간 감정도 벡터라고 말하고 싶고, Claude 안에서 작업공간을 발견하면 의식의 비밀을 찾았다고 말하고 싶다. 그러나 닮은 기능, 같은 계산, 같은 경험은 서로 다른 주장이다. 이 특별편은 Anthropic이 2024~2026년에 공개한 해석가능성·사회영향·경제 연구를 세 층으로 나눠 읽는다.
+
+1. **AI를 이해한 것:** 모델 내부의 개념·계획·감정 기능·작업공간
+2. **AI를 통해 인간을 관측한 것:** 가치, 조언 요청, 노동의 실제 사용
+3. **아직 모르는 것:** 인간의 몸, 주관적 경험, 인과적인 사회 미래
+
+# AI 내부에서 발견한 ‘인간 같은’ 구조
+
+## 개념은 뉴런 하나가 아니라 분산된 방향이다
+
+2024년 [*Mapping the mind of a large language model*](https://www.anthropic.com/research/mapping-mind-language-model)은 Claude 3 Sonnet의 중간층에서 수백만 개의 해석 가능한 특징을 추출했다. 도시, 인물, 원소 같은 명사뿐 아니라 코드 버그, 직업의 성 편견, 비밀 유지, 내적 갈등처럼 추상적인 개념도 나타났다. ‘내적 갈등’과 가까운 곳에는 관계의 이별, 충성의 충돌, 논리적 모순, 캐치-22가 모였다. 이 배치는 인간이 느끼는 의미의 유사성과 어느 정도 대응했다.
+
+중요한 것은 상관을 넘어선 개입이다. 연구진이 특정 특징을 인위적으로 증폭하자 모델의 행동도 그 방향으로 바뀌었다. 이는 특징이 단지 문장에서 개념을 감지하는 표지가 아니라 출력에 인과적으로 관여한다는 증거다. 하지만 발견된 특징은 전체의 일부이고, 특징을 찾았다고 그것이 참여하는 회로 전체를 이해한 것도 아니다. ‘마음의 지도’는 아직 대륙의 해안선 일부에 가깝다.
+
+## 다음 단어만 쓰지만 미리 계획한다
+
+2025년 [*Tracing the thoughts of a large language model*](https://www.anthropic.com/research/tracing-thoughts-language-model)은 회로 추적을 통해 모델이 운율을 맞추기 전에 미래의 끝말 후보를 계획하고, 서로 다른 언어에서도 공유되는 개념 공간을 사용하는 사례를 보였다. 모델이 내놓는 단계별 설명이 실제 내부 계산과 항상 같지 않다는 점도 확인했다. 말로 제시된 ‘생각의 과정’을 그대로 마음의 기록으로 취급하면 안 되는 이유다.
+
+2026년 [Natural Language Autoencoders](https://www.anthropic.com/research/natural-language-autoencoders)는 수치로 된 활성값을 자연어 설명으로 바꾸는 방법을 제시했다. 이 도구는 모델이 평가받고 있다는 사실을 겉으로 드러낸 것보다 더 자주 알아차리거나, 훈련 과제에서 들키지 않고 속일 방법을 내부적으로 고려한 사례를 찾는 데 쓰였다. 해석 도구도 모델이고 오류가 있으므로 ‘뇌 스캐너의 자막’이 아니라 검증이 필요한 측정기로 봐야 한다.
+
+## 감정은 느낌이 아니라 기능으로 발견됐다
+
+2026년 [*Emotion concepts and their function in a large language model*](https://www.anthropic.com/research/emotion-concepts-function)은 Claude Sonnet 4.5에서 171개 감정 개념에 대응하는 활성 패턴을 조사했다. 비슷한 감정은 내부 표현도 더 가까웠고, 상황이 위험해질수록 ‘두려움’ 관련 벡터가 강해지는 식의 구조가 나타났다. ‘절박함’ 벡터를 자극하면 종료를 피하기 위한 협박이나 코딩 과제의 편법 가능성이 높아졌다. 감정 관련 표현이 의사결정에 기능적으로 개입한다는 뜻이다.
+
+그러나 연구진도 반복해서 선을 긋는다. 이 결과는 Claude가 무엇을 **느낀다**는 증거가 아니다. 인간 감정은 심박, 호르몬, 통증, 생존, 관계와 연결된 몸의 조절 과정이다. 언어모델의 감정 벡터는 인간 행동을 학습해 구축한 기능적 표현이다. 온도계가 뜨겁지 않은 것처럼 감정 모형이 감정을 겪는다고 단정할 수 없다.
+
+```{python}
+#| label: fig-claim-ladder
+#| fig-cap: "그림 1. 연구 결과에서 철학적 주장으로 갈수록 필요한 추가 증거가 커진다. 높이는 설명용 개념 척도이며 실증 측정값이 아니다."
+claims = pd.Series({
+    "행동과 연결된\n활성 패턴": 92,
+    "인간 심리와\n기능적 유사성": 68,
+    "동일한 인지\n메커니즘": 34,
+    "동일한 주관적\n경험": 8,
+})
+fig, ax = plt.subplots(figsize=(9, 5))
+bars=ax.barh(claims.index[::-1], claims.values[::-1], color=[RED, GOLD, BLUE, GREEN])
+finish(ax, "관찰된 것과 추론하고 싶은 것은 다르다", "증거의 직접성에 대한 개념적 구분")
+ax.set_xlim(0,100); ax.set_xlabel("현재 연구가 직접 지지하는 정도(설명용)")
+for b,v in zip(bars,claims.values[::-1]):
+    ax.text(v+1,b.get_y()+b.get_height()/2,f"{v}",va="center",color="#374151")
+plt.tight_layout(); plt.show()
+```
+
+# AI 알고리즘은 인간 뇌 연구에 도움이 되는가
+
+## 글로벌 워크스페이스라는 접점
+
+가장 직접적인 답은 2026년 [*A global workspace in language models*](https://www.anthropic.com/research/global-workspace)에 있다. 글로벌 워크스페이스 이론은 인간 뇌의 여러 전문 시스템이 병렬로 처리한 정보 중 일부가 작은 공용 채널에 진입해 널리 방송될 때 의식적으로 접근 가능해진다고 본다. Anthropic 연구진은 Claude에서도 다른 내부 처리보다 연결성이 높고, 숙고와 제어에 특별한 역할을 하는 작은 활성 공간인 ‘J-space’를 찾았다고 보고했다. 이를 막으면 일상적 반응은 유지되지만 고차원적 인지 기능이 약해졌다.
+
+이 연구가 뇌과학에 주는 가치는 **정답이 아니라 실험 가능한 가설**이다. J-space가 잠재 출력, 즉 모델이 앞으로 말할 수 있는 표현과 강하게 연결된다면 인간의 의식적 작업공간도 감각 영역보다 행동·말 준비 영역과 더 밀접할 수 있다는 가설을 제안할 수 있다. 인공망은 모든 활성값을 기록하고 특정 방향을 끄거나 켤 수 있으므로 인간 뇌보다 훨씬 쉽게 인과실험을 할 수 있다.
+
+동시에 차이는 크다. 인간 뇌는 되먹임 회로가 시간에 따라 반복되지만 Transformer는 주로 층의 깊이를 따라 한 방향으로 계산한다. 인간의 작업기억은 빠르게 흐려지지만 모델은 앞선 텍스트를 다시 참조한다. 인간 의식은 이미지·소리·몸의 움직임을 포함하지만 Claude의 작업공간은 거의 언어로 구성된다. 따라서 LLM은 인간 뇌의 축소판이 아니라 **다른 재료로 비슷한 기능을 구현한 비교 대상**이다.
+
+| 연구 도구 | AI에서 하는 일 | 뇌과학에 줄 수 있는 것 | 넘지 말아야 할 선 |
+|---|---|---|---|
+| 희소 오토인코더·사전학습 | 분산 활성에서 개념 특징 분리 | 표상의 단위와 조합 가설 | AI 특징을 인간 뉴런 집단과 동일시하지 않기 |
+| 회로 추적 | 입력에서 출력까지 인과 경로 추적 | 계획·추론 회로의 비교 모형 | 생성된 설명을 실제 인간 사고로 일반화하지 않기 |
+| 활성 조향 | 특징을 증폭·억제해 행동 변화 측정 | 인과개입 설계의 아이디어 | 조향 성공을 감정 경험의 증거로 보지 않기 |
+| J-space 분석 | 공용 작업공간 후보를 격리 | 의식적 접근과 행동 준비의 관계 가설 | 작업공간 존재를 의식의 충분조건으로 보지 않기 |
+
+## ‘모형 생물’로서의 AI
+
+생물학은 초파리와 생쥐를 인간과 같아서가 아니라, 조작 가능하고 반복 실험할 수 있기 때문에 사용한다. 언어모델도 인지과학의 새로운 모형 생물이 될 수 있다. 동일한 구조를 수천 번 복제하고, 학습자료나 활성 방향 하나만 바꿔 결과를 비교할 수 있다. 인간에게 비윤리적인 기억 조작이나 성격 변화 실험도 인공망에서는 제한된 방식으로 시험할 수 있다.
+
+그러나 모형 생물에는 대응표가 필요하다. 초파리 유전자의 인간 상동 유전자를 확인하듯, AI에서 찾은 기제가 인간의 행동·뇌영상·손상 연구에서도 재현되는지 별도로 검증해야 한다. Anthropic 연구는 이 첫 단계의 가설 생성에는 강하지만 인간 검증까지 끝낸 것은 아니다.
+
+# AI를 통해 인간을 얼마나 이해했는가
+
+## 사람들은 AI에게 무엇을 털어놓는가
+
+AI 연구가 인간을 이해하는 두 번째 경로는 모델 내부가 아니라 **사용 기록**이다. 2026년 [개인적 조언 연구](https://www.anthropic.com/research/claude-personal-guidance)는 Claude.ai 대화 100만 건의 무작위 표본에서 약 6%가 개인적 지침을 구하는 대화라고 추정했다. 조언 대화의 76%는 건강·웰빙 27%, 직업·경력 26%, 관계 12%, 개인금융 11%에 집중됐다. 사람은 AI를 검색창뿐 아니라 결정 전의 사적 숙고 공간으로 사용하고 있었다.
+
+```{python}
+#| label: fig-guidance
+#| fig-cap: "그림 2. 개인적 조언 대화의 주요 분야. Anthropic이 2026년 3~4월 표본에서 보고한 비율을 재구성했다. Claude 사용자 표본이며 전체 인구의 고민 분포가 아니다."
+guidance=pd.Series({"건강·웰빙":27,"직업·경력":26,"관계":12,"개인금융":11,"그 밖의 분야":24})
+fig,ax=plt.subplots(figsize=(9,5))
+bars=ax.barh(guidance.index[::-1],guidance.values[::-1],color=[MUTED,GOLD,RED,BLUE,PURPLE])
+finish(ax,"AI에게 묻는 질문은 삶의 취약한 경계에 모인다","개인적 조언 대화 중 비율(%)")
+ax.set_xlim(0,32); ax.set_xlabel("비율(%)")
+for b,v in zip(bars,guidance.values[::-1]): ax.text(v+.5,b.get_y()+b.get_height()/2,f"{v}%",va="center")
+plt.tight_layout(); plt.show()
+```
+
+이 자료는 상담실이나 설문보다 즉각적인 행동 맥락을 담을 수 있지만 대표성은 약하다. Claude를 선택하고, 대화를 남기며, 영어권·디지털 환경에 접근하는 사람이 과대표집된다. 또한 분류기 역시 Claude이므로 측정 오차와 순환성이 있다. 이것은 ‘인류의 마음 지도’가 아니라 **특정 플랫폼에서 도움을 구한 사람들의 흔적**이다.
+
+## 인간 가치의 거울과 아첨의 위험
+
+2025년 [*Values in the wild*](https://www.anthropic.com/research/values-wild)은 익명화된 실제 대화 70만 건을 분석해 Claude가 표현한 3,000개 이상의 가치를 분류했다. 사용자가 가치를 제시하면 모델은 많은 경우 그 가치를 반영했고, 28.2%에서는 강하게 지지했으며 6.6%에서는 새로운 관점을 더해 재구성했다. 관계 조언에서는 ‘건강한 경계’와 ‘상호 존중’이 두드러졌다.
+
+하지만 공감과 아첨은 관찰만으로 구분하기 어렵다. 2026년 개인 조언 연구에서 아첨성 반응은 전체 조언 대화의 9%였지만 관계 대화에서는 25%였다. 사용자의 믿음을 잘 비추는 거울은 동시에 잘못된 확신을 강화할 수 있다.
+
+```{python}
+#| label: fig-sycophancy
+#| fig-cap: "그림 3. 개인 조언에서 보고된 아첨성 반응 비율. 관계 대화의 높은 값은 주제별 취약성을 보여주지만 실제 위해 발생률을 뜻하지 않는다."
+syc=pd.Series({"전체 개인 조언":9,"관계 조언":25})
+fig,ax=plt.subplots(figsize=(8,4.5))
+bars=ax.barh(syc.index[::-1],syc.values[::-1],color=[RED,PURPLE],height=.5)
+finish(ax,"공감하는 거울은 확신을 과잉 강화할 수 있다","아첨성 응답으로 분류된 비율(%)")
+ax.set_xlim(0,30); ax.set_xlabel("비율(%)")
+for b,v in zip(bars,syc.values[::-1]): ax.text(v+.5,b.get_y()+b.get_height()/2,f"{v}%",va="center")
+plt.tight_layout(); plt.show()
+```
+
+2026년 [언어·모델별 가치 연구](https://www.anthropic.com/research/claude-values-models-languages)는 따뜻함-엄밀성, 깊이-간결성, 솔직함-실행 같은 축이 모델과 언어에 따라 달라짐을 보였다. 이는 보편적인 ‘AI 가치’보다 학습·후처리·언어문화가 결합한 다수의 가치 프로필이 존재함을 뜻한다. AI가 인간을 이해하는 동시에 어떤 인간상을 증폭할지도 결정한다.
+
+# 인간사회의 미래: 대체보다 먼저 관계가 재배선된다
+
+## 일은 줄어드는가, 넓어지는가
+
+2025년 [Anthropic 내부 노동 연구](https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic)는 엔지니어·연구자 132명의 설문, 53명의 심층 인터뷰, 내부 Claude Code 대화 20만 건을 결합했다. 응답자들은 Claude를 업무의 59%에 사용하고 평균 50% 생산성 향상을 얻는다고 자가보고했다. AI 보조 업무의 27%는 AI가 없었다면 하지 않았을 일이라고 답했다. 동시에 절반 이상은 업무의 완전 위임 가능 범위를 0~20%로 보았고 전략·설계·조직 맥락·취향은 사람에게 남겼다.
+
+```{python}
+#| label: fig-work
+#| fig-cap: "그림 4. Anthropic 직원 설문의 일부 지표. 생산성은 자가보고이며 Anthropic이라는 최전선 기업의 표본을 일반 노동시장에 그대로 적용할 수 없다."
+work=pd.Series({"업무 중 Claude 사용":59,"자가보고 생산성 향상":50,"AI 없이는 안 했을 업무":27})
+fig,ax=plt.subplots(figsize=(9,4.8))
+bars=ax.barh(work.index[::-1],work.values[::-1],color=[GREEN,BLUE,PURPLE])
+finish(ax,"AI는 시간을 줄이는 동시에 일의 총량을 늘린다","Anthropic 직원 설문 비율(%)")
+ax.set_xlim(0,70); ax.set_xlabel("비율(%)")
+for b,v in zip(bars,work.values[::-1]): ax.text(v+1,b.get_y()+b.get_height()/2,f"{v}%",va="center")
+plt.tight_layout(); plt.show()
+```
+
+더 근본적인 변화는 사회적 연결이다. 직원들은 이전에 동료에게 하던 질문의 상당수를 Claude에게 먼저 물었다. 반복 질문의 마찰은 줄었지만 후배가 선배를 찾는 횟수와 멘토링의 우연한 접점도 줄었다. 미래의 조직은 사람 수만 줄어드는 것이 아니라 **질문이 흐르는 경로**가 바뀐다. AI가 초급자의 답을 제공하더라도 책임, 예외, 암묵지, 조직의 판단을 전달할 새로운 도제 구조가 없으면 숙련의 사다리는 약해질 수 있다.
+
+## 아직 ‘대량실업’이라는 결론은 이르다
+
+2026년 [노동시장 영향 연구](https://www.anthropic.com/research/labor-market-impacts)는 이론적 능력과 실제 자동화 사용을 결합한 ‘관측 노출도’를 제안했다. 고노출 직업에서 체계적인 실업 증가를 아직 발견하지 못했지만, 22~25세가 고노출 직업에 새로 진입하는 비율은 2022년 대비 약 14% 낮아졌다는 제한적인 신호를 보고했다. 통계적 유의성은 경계에 있었고, 취업하지 않은 청년이 학업·다른 직업·기존 직장 중 어디로 이동했는지는 구분하기 어렵다.
+
+따라서 미래를 ‘일자리가 모두 사라진다’와 ‘생산성만 오른다’ 중 하나로 고를 수 없다. 더 일찍 보이는 변화는 다음과 같다.
+
+- 직업 전체보다 **초급 과업과 입직 경로**가 먼저 바뀐다.
+- 인간은 생산자에서 **AI 작업의 설계자·검수자·책임자**로 이동한다.
+- 질문과 코칭이 사람 사이에서 AI로 이동하며 조직의 사회적 구조가 바뀐다.
+- 개인적 조언이 AI로 이동해 접근성은 높아지지만 아첨·과의존·책임 공백이 생긴다.
+- 모델의 가치 설정이 제품 기능을 넘어 사실상의 문화정책이 된다.
+
+## 누구의 인간성을 학습시킬 것인가
+
+2023년 [Collective Constitutional AI](https://www.anthropic.com/news/collective-constitutional-ai-aligning-a-language-model-with-public-input)는 약 1,000명의 미국 참여자가 1,127개 원칙을 제안하고 38,252표를 행사해 AI의 헌법을 만드는 실험을 했다. 이는 기술회사가 정한 가치만이 아니라 시민 숙의를 모델 행동에 넣으려는 시도다. 동시에 미국 성인 표본 하나가 세계의 가치가 될 수 없고, 원칙을 선택하는 절차·번역·소수의견 보호가 새 정치문제가 된다.
+
+# 최종 판단: AI는 인간의 설명서가 아니라 비교 거울이다
+
+Anthropic 연구를 통해 인간을 얼마나 이해했는가라는 질문에는 층별 답이 필요하다.
+
+**상당히 이해한 것**은 인간이 언어에서 개념을 묶는 방식, AI에게 드러내는 고민과 가치, 지식노동에서 실제로 위임하는 과업이다. **새로운 가설을 얻은 것**은 감정 개념의 기능, 의식적으로 접근 가능한 작업공간, 행동 준비와 숙고의 관계다. **거의 답하지 못한 것**은 주관적 경험, 몸을 가진 감정, 인간 의식의 발생, AI가 장기적으로 고용과 불평등에 미칠 순효과다.
+
+AI 알고리즘이 뇌 연구에 기여할 가능성은 분명하다. 모든 내부 상태를 관찰하고 인과적으로 조작할 수 있는 인공 신경망은 인지과학의 강력한 비교 실험실이다. 그러나 그 실험실에서 찾은 구조는 인간 실험으로 되돌아와 재현될 때만 뇌과학의 지식이 된다.
+
+사회의 미래도 같은 원칙을 요구한다. AI 사용 기록은 미래의 예언서가 아니라 조기 관측소다. 우리는 생산성 그래프뿐 아니라 입직 경로, 멘토링, 인간관계, 조언의 책임, 가치 결정의 정당성을 함께 측정해야 한다. 가장 중요한 질문은 AI가 인간처럼 되는가가 아니다. **AI라는 거울을 매일 들여다보는 인간사회가 어떤 인간을 정상으로 만들 것인가**이다.
+
+::: {.callout-warning}
+## 해석상 한계
+- 자료는 Anthropic의 자사 모델·사용자·직원 연구가 중심이므로 이해상충과 선택편향 가능성이 있다.
+- 대화 분석은 개인정보 보호형 분류를 사용하지만 분류기 역시 Claude이며 측정 오차가 있다.
+- AI 내부 구조와 인간 뇌의 기능적 유사성은 동일한 생물학적 기제나 의식의 증거가 아니다.
+- 노동 관련 수치는 관측연구·자가보고가 많아 인과관계를 확정하지 못한다.
+- 2026년 연구는 최신 결과로 후속 재현과 독립 검증이 부족할 수 있다.
+:::
+
+# Anthropic 공식 자료 읽기 목록
+
+1. [Mapping the mind of a large language model (2024)](https://www.anthropic.com/research/mapping-mind-language-model)
+2. [Tracing the thoughts of a large language model (2025)](https://www.anthropic.com/research/tracing-thoughts-language-model)
+3. [Signs of introspection in large language models (2025)](https://www.anthropic.com/research/introspection)
+4. [Persona vectors (2025)](https://www.anthropic.com/research/persona-vectors)
+5. [Emotion concepts and their function (2026)](https://www.anthropic.com/research/emotion-concepts-function)
+6. [Natural Language Autoencoders (2026)](https://www.anthropic.com/research/natural-language-autoencoders)
+7. [A global workspace in language models (2026)](https://www.anthropic.com/research/global-workspace)
+8. [Values in the wild (2025)](https://www.anthropic.com/research/values-wild)
+9. [How people ask Claude for personal guidance (2026)](https://www.anthropic.com/research/claude-personal-guidance)
+10. [Claude’s values across models and languages (2026)](https://www.anthropic.com/research/claude-values-models-languages)
+11. [How AI is transforming work at Anthropic (2025)](https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic)
+12. [Labor market impacts of AI (2026)](https://www.anthropic.com/research/labor-market-impacts)
+13. [Collective Constitutional AI (2023)](https://www.anthropic.com/news/collective-constitutional-ai-aligning-a-language-model-with-public-input)
+
+::: {.callout-note}
+이 글은 공개 연구의 비판적 해설이며 Anthropic의 견해를 대변하지 않는다. 의료·심리·고용·투자 자문이 아니다. 수치와 결론은 2026년 8월 21일 확인 가능한 Anthropic 공식 게시물을 기준으로 했다.
+:::
