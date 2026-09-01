@@ -2405,6 +2405,15 @@ font-family: inherit;
 </header>
 
 
+<style>
+
+.cell-output-display img, figure img, .quarto-figure img, .figure img { max-width: 100% !important; height: auto !important; }
+.cell-output-display, .quarto-figure { overflow-x: auto; }
+@media (max-width: 640px){
+.cell-output-display img, figure img { width: 100%; }
+figure.fig .ti, .figure-caption, figcaption { font-size: .82rem; }
+}
+</style>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

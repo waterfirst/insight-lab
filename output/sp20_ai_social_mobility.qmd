@@ -17,10 +17,23 @@ format:
     smooth-scroll: true
     embed-resources: true
     lightbox: true
+    fig-responsive: true
 execute:
   echo: false
   warning: false
 ---
+
+```{=html}
+<style>
+/* 모바일 그래프 자동 축소: 콘텐츠 폭에 맞춰 스케일 */
+.cell-output-display img, figure img, .quarto-figure img, .figure img { max-width: 100% !important; height: auto !important; }
+.cell-output-display, .quarto-figure { overflow-x: auto; }
+@media (max-width: 640px){
+  .cell-output-display img, figure img { width: 100%; }
+  figure.fig .ti, .figure-caption, figcaption { font-size: .82rem; }
+}
+</style>
+```
 
 ::: {.callout-note}
 ## 핵심 문장
