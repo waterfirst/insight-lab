@@ -1,0 +1,161 @@
+---
+title: "같은 기술이 봉건제도 되고 해방도 되는 이유"
+subtitle: "AI × 사회이동성 — 정치철학(능력주의) × 경제학(피케티 r>g) × 복잡계(헤테로에이전트 동학)"
+author: "Insight Lab × Claude"
+date: "2026-09-01"
+lang: ko
+jupyter: python3
+format:
+  html:
+    theme:
+      dark: darkly
+      light: flatly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    smooth-scroll: true
+    embed-resources: true
+    lightbox: true
+execute:
+  echo: false
+  warning: false
+---
+
+::: {.callout-note}
+## 핵심 문장
+AI는 사회이동성의 방향을 결정하지 않는다. 같은 기술이 **숙련 프런티어에서는 평등화기**로, **자본 프런티어에서는 집중기**로 동시에 작동한다. 어느 쪽이 이기는지는 AI의 속성이 아니라 제도가 정하는 제어변수(접근·보완자산·귀속·정책)의 값이다. 따라서 "AI가 양극화하는가"는 물리법칙이 아니라 **정책에 관한 질문**이다.
+:::
+
+```{python}
+#| label: setup
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "Noto Sans CJK KR"
+plt.rcParams["axes.unicode_minus"] = False
+plt.rcParams["figure.dpi"] = 130
+BLUE, GREEN, RED, GOLD, MUTED = "#38bdf8", "#22c55e", "#ef4444", "#f59e0b", "#64748b"
+
+def finish(ax, title, sub=""):
+    ax.set_title(title, fontsize=13, fontweight="bold", pad=14, loc="left")
+    if sub:
+        ax.annotate(sub, xy=(0,1.015), xycoords="axes fraction",
+                    fontsize=9.5, color=MUTED)
+    ax.spines[["top","right"]].set_visible(False)
+    ax.tick_params(labelsize=10)
+```
+
+2026년 8월 말, 프린스턴 정치학자 그레고리 콘티(Gregory Conti)의 한 문장이 이틀 만에 46만 조회를 넘겼다. "초지능은 사회적 이동성의 종말이다. 재능·노동으로 올라가는 대신, 자본이 많은 자가 연산(compute)을 더 사서 이겨버린다. 능력주의의 끝, 새로운 봉건제의 시작." 같은 시기, 노동경제학의 현장 실험들은 정반대를 가리켰다. 생성형 AI가 신입과 저성과자를 가장 크게 끌어올려 격차를 **압축**한다는 것이다.
+
+두 관찰은 모두 근거가 탄탄하다. 그리고 서로 정반대다. "이것의 반대도 깊은 진리인 명제야말로 위대한 진리다"라는 보어의 말처럼, 이 모순이야말로 문제의 핵심이다.
+
+# 봉건제 테제 — 정치철학과 피케티의 만남
+
+콘티의 직관은 낭만적 비관이 아니라 피케티의 부등식 **r > g**(자본수익률이 성장률을 앞선다)의 강화판이다.
+
+지금까지 자본의 한계는 분명했다. **돈으로 최고의 인재를 살 수 없었다.** 인간은 복제 불가능하고, 선호가 제각각이며, 충성은 불확실하다. 노동은 자본이 완전히 포섭하지 못하는 잔여였고, 그 잔여가 '재능으로 올라가는' 능력주의의 물리적 토대였다.
+
+노동을 대체하는 AI는 이 잔여를 지운다. AI 노동은 즉시 복제되고, 어떤 목표로든 정렬되며, 자본에 비례해 무한히 확장된다. 그러면 "돈으로 현실의 결과를 사는 능력"이 폭발한다. 자본→연산→성과가 복리로 돌고, 노동은 협상력을 잃는다. 능력주의(성취 기반 정당성)가 세습주의(소유 기반 정당성)로 회귀한다. 봉건제라는 은유는 그래서 정확하다 — 권력이 **행위**가 아니라 **소유**에서 나오는 체제.
+
+# 해방 테제 — 노동경제학의 반례
+
+그런데 현장 데이터는 반대 방향의 힘을 보여준다.
+
+```{python}
+#| label: fig-compression
+#| fig-cap: "생성형 AI 도입 후 콜센터 상담 생산성 향상폭. 격차가 벌어진 게 아니라 좁혀졌다. 출처: Brynjolfsson·Li·Raymond, Generative AI at Work(QJE 2025)."
+groups = ["신입·저성과자", "숙련자"]
+vals = [34, 1]
+fig, ax = plt.subplots(figsize=(7.6, 2.4))
+bars = ax.barh(groups, vals, color=[GREEN, MUTED], height=0.55)
+ax.invert_yaxis()
+for b, v in zip(bars, vals):
+    ax.text(v + 0.6, b.get_y()+b.get_height()/2, f"+{v}%", va="center", fontsize=11, fontweight="bold", color="#e5e7eb")
+ax.set_xlim(0, 40); ax.set_xlabel("생산성 향상 (%)", fontsize=10)
+finish(ax, "그림 1. AI의 생산성 향상은 하위 숙련자에게 집중된다", "숙련 프런티어의 '압축효과'")
+plt.tight_layout(); plt.show()
+```
+
+기전은 두 가지다. 첫째, **게이트키퍼의 붕괴** — 학벌·자격증·값비싼 전문가가 쥐고 있던 지식 독점을 AI가 우회시킨다. 둘째, **역량 하한의 상승** — 초보가 전문가의 80%를 즉시 흉내 낼 수 있게 되면 '아직 자격 없는 유능한 사람'이 올라올 통로가 열린다. 즉 숙련의 프런티어에서 AI는 **평등화기(leveller)**다. 인쇄술이 필경사 길드를, 인터넷이 신문사 편집국을 우회시켰듯이.
+
+# 경계의 문제 — 왜 둘 다 참인가
+
+두 테제는 모순처럼 보이지만 **서로 다른 프런티어를 말하고 있다.**
+
+- 해방 테제는 **숙련(skill) 프런티어**: AI가 개인의 *역량 격차*를 좁힌다.
+- 봉건 테제는 **자본(capital) 프런티어**: AI가 *이득의 귀속*을 자본으로 옮긴다.
+
+핵심 단절은 여기다. **과업의 압축(task compression) ≠ 사회적 이동성.** 초보의 생산성이 올라도, 그 잉여를 고용주·플랫폼이 회수하면 임금과 신분은 오르지 않는다. 평등화된 것은 *생산 능력*이고, 집중된 것은 *생산의 과실*이다. 두 층위가 반대로 움직이기 때문에 두 테제가 동시에 참이다.
+
+진짜 질문은 "AI가 이동성을 늘리나 줄이나"가 아니라 **무엇이 그 부호를 결정하는가**이다. 정치철학도 노동경제학도 단독으로는 답하지 못한다. 동학(dynamics)이 필요하다.
+
+# 복잡계의 해상도 — 부호를 뒤집는 제어변수
+
+경계의 질문을 풀려면 사람들이 이질적이고 시간에 따라 상호작용하는 모형이 필요하다. 헤테로에이전트 시뮬레이션이다. 필자의 계산실험(*Public AI as Social Infrastructure*, 200개 불확실 환경 반복, 1,272회)은 "AI가 양극화한다"를 확증 대상이 아니라 **반증 가능한 동학명제**로 바꿔 검증했다.
+
+양극화(중간층이 무너져 양끝으로 벌어지는 현상, Wolfson 지수)는 **네 요인이 겹칠 때만** 누적된다: ① 불균등한 접근 ② 보완자산 비례수익 ③ 비접근자 대체손실 ④ 이득의 재투자 피드백. 그런데 반증 영역이 모형 안에 실재한다 — 저기술층 증강수익이 더 크거나, 접근이 자원과 무관하거나, 피드백이 음수이면 양극화는 **감소**한다. "AI는 그 존재만으로 필연적으로 양극화한다"는 강한 명제는 모형 스스로 반증한다.
+
+```{python}
+#| label: fig-ablation
+#| fig-cap: "각 경로를 하나씩 제거한 뒤 남는 양극화(ΔWolfson). 바가 짧을수록 그 경로가 큰 증폭기다. 단일 경로만 꺼도 0이 되지 않아(여러 경로가 대체적) 결합정책이 필요하다."
+labels = ["전체모형", "− 피드백", "− 대체손실", "− 보완수익", "− 접근격차", "− 초기상관"]
+resid  = [0.00883, 0.00740, 0.00549, 0.00354, 0.00293, 0.00226]
+colors = [MUTED, BLUE, BLUE, BLUE, GREEN, GREEN]
+fig, ax = plt.subplots(figsize=(7.8, 3.4))
+bars = ax.barh(labels, resid, color=colors, height=0.62)
+ax.invert_yaxis()
+for b, v in zip(bars, resid):
+    ax.text(v + 0.00008, b.get_y()+b.get_height()/2, f"{v:.5f}", va="center", fontsize=9.5, color="#e5e7eb")
+ax.set_xlim(0, 0.0100); ax.set_xlabel("잔존 양극화 ΔWolfson", fontsize=10)
+finish(ax, "그림 2. 어떤 경로가 양극화를 키우는가 (ablation)", "초기상관·접근격차가 최대 증폭기")
+plt.tight_layout(); plt.show()
+```
+
+민감도 분석(ablation)이 스위치를 지목한다. 최대 증폭기는 **초기 자원–보완자산 상관과 접근격차**였다. 그리고 정책이 이 스위치를 실제로 뒤집는다.
+
+```{python}
+#| label: fig-policy
+#| fig-cap: "정책별 양극화 증가폭(ΔWolfson, 시장방임 대비). 계정만 주는 '보편접근'은 8.9%만 완화. 접근+교육+소유+지역을 묶은 '결합정책'은 89.2% 완화. 공공AI+교육은 200환경 100%에서 완화하며 순생산 53.5%↑. 출처: 최낙초, Public AI as Social Infrastructure(2026)."
+pol = ["시장방임", "AI배당", "보편접근", "표적교육", "결합정책"]
+dw  = [0.00883, 0.00875, 0.00804, 0.00152, 0.00096]
+cols = [RED, RED, GOLD, GREEN, GREEN]
+fig, ax = plt.subplots(figsize=(7.8, 3.0))
+bars = ax.barh(pol, dw, color=cols, height=0.6)
+ax.invert_yaxis()
+for b, v in zip(bars, dw):
+    ax.text(v + 0.00008, b.get_y()+b.get_height()/2, f"+{v:.5f}", va="center", fontsize=9.5, color="#e5e7eb")
+ax.set_xlim(0, 0.0100); ax.set_xlabel("양극화 증가폭 ΔWolfson (낮을수록 완화)", fontsize=10)
+finish(ax, "그림 3. 정책이 양극화의 부호를 뒤집는다", "'무료 계정 배포'만으론 거의 무력")
+plt.tight_layout(); plt.show()
+```
+
+한 문장으로: **부호는 AI의 속성이 아니라 제어변수의 값이다.**
+
+# 경계에서만 나오는 인사이트
+
+세 학문을 교차시키자 각 분야 단독으로는 나오지 않는 명제가 도출된다(위 **핵심 문장**). 이 명제는 세 분야를 각각 확장한다.
+
+- **정치철학**: 봉건제/능력주의는 AI의 운명이 아니라 *귀속 규칙*의 선택지다. 콘티의 필연론은 모든 제어변수가 최악인 하나의 극한일 뿐이다.
+- **경제학**: 피케티의 r>g가 성립하는 조건을 미시 동학으로 분해한다 — r을 키우는 건 자본 자체가 아니라 '보완자산 비례수익 × 재투자 피드백'이라는 특정 결합이다.
+- **복잡계**: 같은 초기조건에서 정책이라는 외생 파라미터가 상전이(양극화↔완화)를 유발하는 사례를 제공한다.
+
+실천적 따름정리: 흔히 "AI 격차 해소 = 무료 계정 배포"로 이해되지만 모형은 그것이 거의 무력함을 보인다(8.9%). 완화는 **접근 + 활용역량 + 소유구조 + 지역 피드백 차단**을 묶을 때만 일어난다. 공공AI가 효과를 가지려면 '공짜 도구'가 아니라 **역량과 소유를 포함한 사회 인프라**로 설계돼야 한다.
+
+::: {.callout-warning}
+## 반대 해석과 성립하지 않는 범위
+- 이 계산실험은 **합성 페르소나(Nemotron) 기반 모형 동학**이지 한국 사회의 실측·예측이 아니다. "89.2% 완화"는 정책효과 추정이 아니라 모형 내 상대비교다. 실증은 KLIPS·지역고용조사 등 실제 산업통계로 후속돼야 한다.
+- **봉건 테제가 이기는 조건도 실재한다.** 이득의 귀속이 자본으로 고정되고 저자원층의 보완자산 형성이 막히면, 압축효과는 임금·신분으로 전이되지 못하고 콘티의 예측이 우세해진다. 낙관은 자동이 아니라 조건부다.
+- 게이트키퍼 붕괴가 곧 이동성 상승도 아니다. 옛 기득권(자격)을 부수면서 **새 기득권(연산·플랫폼 소유)**을 세우는 재편, 즉 엘리트 교체일 가능성을 배제하지 않는다.
+:::
+
+# 참고 문헌
+
+- Gregory Conti, X(2026-08), 초지능과 사회이동성 종말론.
+- "By default, capital will matter more than ever after AGI", LessWrong(2025).
+- Scott Alexander, "It's Still Easier To Imagine The End Of The World Than The End Of Capitalism", Astral Codex Ten.
+- Thomas Piketty, *Capital in the Twenty-First Century*(2013).
+- Brynjolfsson, Li & Raymond, "Generative AI at Work", QJE(2025).
+- Noy & Zhang, "Experimental evidence on the productivity effects of generative AI", *Science*(2023).
+- 최낙초, *Public AI as Social Infrastructure: A Heterogeneous-Agent Model of Access, Occupational Reallocation, and Economic Polarization*(2026, 작업본).
+- OECD, 생성형 AI 활용역량 관련 보고(2026).
