@@ -1,0 +1,271 @@
+---
+title: "위조가 검증보다 싸질 때"
+subtitle: "법은 왜 진실 판정을 포기하고 서명으로 후퇴하는가 — 법학(증거법) × 정보이론(비용 비대칭) × 암호경제학(출처 증명)"
+author: "Insight Lab × Claude"
+date: "2026-09-06"
+lang: ko
+jupyter: python3
+format:
+  html:
+    theme:
+      dark: darkly
+      light: flatly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    smooth-scroll: true
+    embed-resources: true
+    lightbox: true
+    fig-responsive: true
+execute:
+  echo: false
+  warning: false
+---
+
+```{=html}
+<style>
+/* 모바일 그래프 자동 축소: 콘텐츠 폭에 맞춰 스케일 */
+.cell-output-display img, figure img, .quarto-figure img, .figure img { max-width: 100% !important; height: auto !important; }
+.cell-output-display, .quarto-figure { overflow-x: auto; }
+@media (max-width: 640px){
+  .cell-output-display img, figure img { width: 100%; }
+  figure.fig .ti, .figure-caption, figcaption { font-size: .82rem; }
+}
+</style>
+```
+
+::: {.callout-note}
+## 핵심 문장
+법은 정의 위에 세워진 것이 아니라 **물리적 비대칭** 위에 세워졌다. 인장·필적·사진·녹취가 증거였던 이유는 단 하나, **위조하는 비용 $c_f$ 가 검증하는 비용 $c_v$ 보다 비쌌기** 때문이다. 생성형 AI는 $c_f$ 를 0에 가깝게 떨어뜨렸으나 $c_v$ 는 인간의 시간에 묶어 두었다. 부등식 $c_f \gg c_v$ 가 뒤집힌 순간, 법은 내용의 진위를 판정하는 일을 조용히 포기하고 **서명자의 책임**으로 후퇴한다. 전 세계에서 집계된 1,598건의 AI 환각 판례는 그 후퇴가 이미 시작되었다는 1차 기록이다.
+:::
+
+```{python}
+#| label: setup
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "Noto Sans CJK KR"
+plt.rcParams["axes.unicode_minus"] = False
+plt.rcParams["figure.dpi"] = 130
+BLUE, GREEN, RED, GOLD, MUTED = "#38bdf8", "#22c55e", "#ef4444", "#f59e0b", "#64748b"
+
+def finish(ax, title, sub=""):
+    ax.set_title(title, fontsize=13, fontweight="bold", pad=14, loc="left")
+    if sub:
+        ax.annotate(sub, xy=(0,1.015), xycoords="axes fraction",
+                    fontsize=9.5, color=MUTED)
+    ax.spines[["top","right"]].set_visible(False)
+    ax.tick_params(labelsize=10)
+```
+
+로마의 원로원 의원은 반지에 새긴 인장을 밀랍에 눌렀다. 그 반지를 위조하려면 조각가와 시간과 원본에 대한 접근이 필요했다. 확인하는 쪽은 눈으로 한 번 보면 됐다. 이 **비용 격차**가 인장을 증거로 만들었다.
+
+이후 2천 년 동안 증거의 형태는 바뀌었지만 원리는 그대로였다. 필적은 손의 습관이라 흉내가 어렵다. 사진은 은염이 빛에 반응한 물리적 흔적이라 조작에 암실과 기술이 든다. 녹취는 자기테이프의 연속적 자화라 잘라 붙이면 티가 난다. 법은 이 물리학을 신뢰한 것이지 사람을 신뢰한 것이 아니다.
+
+2026년 현재, 3초 분량의 음성만 있으면 약 85% 정확도의 목소리 복제가 만들어지고, 생성 단가는 분당 $0.018 수준이다([Camb.ai 2026 단가 비교](https://www.camb.ai/blog-post/ai-voice-cloning-cost-pricing-compared-2026), [음성복제 통계 종합](https://www.allaboutai.com/resources/ai-statistics/ai-voice-cloning/)). 인장을 깎던 조각가의 자리에 API 호출이 들어섰다.
+
+# 법은 비용 부등식 위에 서 있다
+
+증거법을 규범이 아니라 **탐지 게임**으로 모델링하면 구조가 드러난다. 위조자는 비용 $c_f$ 를 들여 가짜 증거를 만들고, 법원은 비용 $c_v$ 를 들여 검증한다. 위조가 적발될 확률을 $p$, 적발 시 제재를 $S$ 라 하면 위조자의 기대손익은
+
+$$
+\mathbb{E}[\pi] = G - c_f - p\,S
+$$
+
+이고($G$ 는 위조 성공 시 이득), 법원이 모든 증거를 검증할 수 있는 조건은 대략
+
+$$
+N \cdot c_v \le B
+$$
+
+이다($N$ 은 제출된 증거 수, $B$ 는 사법부의 처리 예산). 두 식을 함께 보면 전통적 법체계가 무엇에 의존했는지가 명확해진다. **$c_f$ 가 높아서 $N$ 이 작게 유지되었고, 그래서 $c_v$ 를 넉넉히 쓸 수 있었다.**
+
+이 구조에서 $c_f \to 0$ 이 되면 $N$ 이 폭증한다. $B$ 는 판사 수와 근무시간이라 거의 고정이다. 따라서 검증 예산 제약이 먼저 깨지고, 그 다음 $p$ 가 떨어지고, 그 결과 위조의 기대손익이 양수가 된다. 이것은 도덕의 붕괴가 아니라 **부등식의 붕괴**다.
+
+# 환각 판례 — 가장 깨끗한 자연실험
+
+이 가설을 검증하기에 이상적인 데이터가 있다. 법률 연구자 다미앵 샤를로탱(Damien Charlotin)이 운영하는 [AI Hallucination Cases 데이터베이스](https://www.damiencharlotin.com/hallucinations/)는 소송 당사자가 AI가 지어낸 판례·인용을 법원에 제출했고 법원이 이에 대응한 사건을 전 세계에서 수집한다.
+
+이 데이터가 특별한 이유는 **검증비용 $c_v$ 가 명백히 낮은 영역**이라는 점이다. 판례 인용의 진위 확인은 법률 데이터베이스에서 사건번호를 조회하면 끝난다. 몇 초에서 몇 분. 위조 탐지가 이보다 쉬운 영역은 법 안에 거의 없다.
+
+```{python}
+#| label: fig-hallucination-growth
+#| fig-cap: "전 세계 AI 환각 판례 누적 집계. 출처: Damien Charlotin, AI Hallucination Cases 데이터베이스(집계 시점별 수치는 Norton Rose Fulbright·PlatinumIDS·HAQQ 등의 보도 인용). 검증이 가장 쉬운 영역에서조차 곡선이 꺾이지 않는다는 점이 핵심이다."
+labels = ["2025.06\n(약 200)", "2026.01\n(719)", "2026.04\n(1,227)", "2026.06.09\n(1,598)"]
+x = np.arange(4)
+y = np.array([200, 719, 1227, 1598])
+
+fig, ax = plt.subplots(figsize=(8.4, 4.3))
+ax.plot(x, y, marker="o", ms=9, lw=2.6, color=RED, zorder=3)
+ax.fill_between(x, 0, y, color=RED, alpha=0.10)
+for xi, yi in zip(x, y):
+    ax.annotate(f"{yi:,}", xy=(xi, yi), xytext=(0, 11), textcoords="offset points",
+                ha="center", fontsize=11, fontweight="bold", color=RED)
+ax.set_xticks(x); ax.set_xticklabels(labels, fontsize=9.5)
+ax.set_ylabel("누적 사건 수")
+ax.set_ylim(0, 1900)
+ax.grid(axis="y", alpha=0.18)
+finish(ax, "검증이 가장 쉬운 곳에서 먼저 무너졌다",
+       "AI가 지어낸 인용을 법원에 제출해 법원이 대응한 사건 (전 세계 누적)")
+plt.tight_layout(); plt.show()
+```
+
+12개월 남짓한 기간에 약 8배다. 그런데 진짜 관찰은 총량이 아니라 **누가 제출했는가**에 있다.
+
+데이터베이스를 열어 2026년 8~9월 항목을 보면 행위자 분류에 `Lawyer`, `Pro Se Litigant`와 함께 **`Judge`** 가 등장한다. 2026년 9월 2일 인도 대법원은 관세당국의 원처분이 AI로 생성된 것으로 보이는 판결·문헌에 의존했고 그중 일부는 존재하지 않는 판례였음을 확인해 고등법원 판결과 과징금 처분을 함께 취소했다. 2026년 8월 28일 미시간 항소법원 사건에서도 판사 측 인용의 왜곡이 기록됐다.
+
+**검증하는 쪽이 오염되었다.** 탐지 게임 모델에서 이것은 $p$ 의 하락이 아니라 게임 자체의 붕괴를 뜻한다. 심판이 위조된 규칙집을 들고 있으면 적발 확률을 논할 수 없다.
+
+# 위조비용이 0으로 가는 속도
+
+법정 밖에서는 같은 붕괴가 훨씬 큰 규모로 진행 중이다.
+
+```{python}
+#| label: fig-deepfake-share
+#| fig-cap: "전체 사기 시도 중 딥페이크가 차지하는 비중. 출처: 2026년 딥페이크 통계 종합(Trusona·Memeburn 등 보도 인용, 원자료는 신원확인 업계 집계). 2022년 대비 약 2,137% 증가."
+yrs = np.array([2022, 2026])
+share = np.array([0.1, 6.5])
+fig, ax = plt.subplots(figsize=(8.4, 4.1))
+bars = ax.bar(["2022", "2026"], share, width=0.42,
+              color=[MUTED, RED], zorder=3)
+for b, v in zip(bars, share):
+    ax.annotate(f"{v}%", xy=(b.get_x()+b.get_width()/2, v), xytext=(0, 7),
+                textcoords="offset points", ha="center",
+                fontsize=13, fontweight="bold", color=RED if v > 1 else MUTED)
+ax.set_ylabel("전체 사기 시도 중 비중 (%)")
+ax.set_ylim(0, 8)
+ax.grid(axis="y", alpha=0.18)
+finish(ax, "사기의 기본 도구가 바뀌었다", "딥페이크가 차지하는 비중 — 65배 증가")
+plt.tight_layout(); plt.show()
+```
+
+```{python}
+#| label: fig-losses
+#| fig-cap: "AI 관련 사기 피해액. 출처: FBI IC3 2025년 집계(AI를 언급한 신고 22,364건, 손실 $893,346,472) 및 Surfshark 2026 조사(문서화된 전 세계 누적 최소 $37억, 이 중 약 89%가 2025년~2026년 상반기에 집중). 두 수치는 집계 기준이 달라 직접 비교가 아니라 규모 감각으로만 읽어야 한다."
+fig, ax = plt.subplots(figsize=(8.4, 4.1))
+names = ["FBI IC3\n2025년 1년치", "Surfshark\n문서화 누적(2026)"]
+vals = [0.893, 3.7]
+bars = ax.barh(names, vals, height=0.44, color=[GOLD, RED], zorder=3)
+for b, v in zip(bars, vals):
+    ax.annotate(f"${v}B", xy=(v, b.get_y()+b.get_height()/2), xytext=(8, 0),
+                textcoords="offset points", va="center",
+                fontsize=12, fontweight="bold", color=MUTED)
+ax.set_xlabel("피해액 (10억 USD)")
+ax.set_xlim(0, 4.6)
+ax.grid(axis="x", alpha=0.18)
+finish(ax, "피해는 이미 조 단위 원화로 계산된다",
+       "집계 기준이 다른 두 출처 — 절대 비교가 아닌 규모 참고")
+plt.tight_layout(); plt.show()
+```
+
+미 의회 조사자들은 음성복제 피해자 중 신고하는 비율을 **5% 미만**으로 추정한다. 즉 위 수치는 하한이다.
+
+# 부등식은 언제 뒤집혔는가
+
+$c_f$ 와 $c_v$ 를 같은 축에 놓으면 무슨 일이 일어났는지 한눈에 보인다. 다만 두 비용을 단일 단위로 실측한 공개 자료는 없으므로, **아래는 실측이 아니라 구조를 보이기 위한 개념 모형이다. 예측이 아니며 축의 절대값에는 의미가 없다.**
+
+```{python}
+#| label: fig-cost-crossover
+#| fig-cap: "【개념 모형 — 실측 아님】 위조비용 $c_f$ 와 검증비용 $c_v$ 의 상대 추이. $c_f$ 는 생성 기술을 따라 지수적으로 하락하는 반면 $c_v$ 는 인간의 확인 시간에 묶여 완만하다. 두 곡선이 교차하는 지점 이후 법은 개별 증거의 진위 판정을 유지할 수 없다. 곡선의 형태는 예시이며 교차 시점을 특정하지 않는다."
+t = np.linspace(0, 10, 300)
+cf = 100 * np.exp(-0.52 * t) + 0.6          # 위조비용: 지수적 하락
+cv = 18 - 0.55 * t                           # 검증비용: 인간 시간에 묶여 완만
+fig, ax = plt.subplots(figsize=(8.4, 4.5))
+ax.plot(t, cf, lw=2.8, color=RED, label=r"위조비용 $c_f$  (생성 기술)")
+ax.plot(t, cv, lw=2.8, color=BLUE, label=r"검증비용 $c_v$  (인간의 확인 시간)")
+idx = int(np.argmin(np.abs(cf - cv)))
+ax.axvline(t[idx], color=MUTED, ls=":", lw=1.6)
+ax.annotate("부등식 역전\n$c_f < c_v$", xy=(t[idx], cf[idx]), xytext=(14, 46),
+            textcoords="offset points", fontsize=10.5, color=MUTED,
+            arrowprops=dict(arrowstyle="->", color=MUTED, lw=1.2))
+ax.fill_between(t, cf, cv, where=(cf < cv), color=RED, alpha=0.08)
+ax.set_xlabel("시간 (임의 단위)"); ax.set_ylabel("상대 비용 (임의 단위)")
+ax.set_xticks([]); ax.set_yticks([])
+ax.legend(frameon=False, fontsize=10.5, loc="upper right")
+finish(ax, "법이 의존한 비대칭이 뒤집히는 구조",
+       "개념 모형 — 실측 데이터 아님, 교차 시점을 특정하지 않음")
+plt.tight_layout(); plt.show()
+```
+
+역전 이후 법원에는 세 가지 선택지밖에 없다. ① 검증 예산 $B$ 를 폭증시킨다 ② 제재 $S$ 를 올려 기대손익을 다시 음수로 만든다 ③ 개별 내용의 진위 판정을 포기하고 **다른 것을 검증한다.**
+
+①은 판사를 몇 배로 늘려야 하므로 불가능하다. 실제로 관측되는 것은 ②와 ③이다.
+
+# 법원은 탐지가 아니라 서명으로 후퇴했다
+
+②의 증거는 제재액이다. 2026년 1분기 미국 법원이 허위 인용에 부과한 제재는 최소 $145,000이고, 2025년 오리건 연방지방법원은 허위 판례 23건과 조작 인용 8건을 제출한 변호사들에게 $110,000을 부과했다([Norton Rose Fulbright](https://www.nortonrosefulbright.com/en-us/knowledge/publications/792d8bf3/ai-in-litigation-update-on-gen-ai-sanctions-in-2026), [ComplexDiscovery](https://complexdiscovery.com/the-ai-sanction-wave-145k-in-q1-penalties-signals-courts-have-lost-patience-with-genai-filing-failures/)).
+
+그러나 더 중요한 것은 ③이다. 데이터베이스의 처분란을 읽으면 법원이 실제로 무엇을 하는지 보인다 — `Brief Stricken; Bar Referral`(서면 각하 및 변호사회 회부), `Admonishment & Warning`, `Monetary Sanctions; CLE`. 법원은 **가짜 인용을 탐지하는 능력을 키우는 대신, 서명한 사람에게 책임을 묻는 쪽으로 이동했다.**
+
+이것은 인식론적 후퇴이자 구조적으로 올바른 선택이다. 내용의 진위 검증비용은 $N$ 에 비례해 커지지만, **서명자의 신원 검증비용은 $N$ 과 무관하게 일정**하기 때문이다. 처리량 문제에 부딪힌 시스템이 취할 수 있는 유일한 확장 가능한 전략이다.
+
+여기서 법학과 암호경제학이 만난다. 블록체인이 "이 거래가 옳은가"를 묻지 않고 "누가 서명했는가"만 검증하는 것과, 법원이 "이 인용이 참인가" 대신 "누가 서명했는가"로 후퇴하는 것은 **같은 부등식에 대한 같은 해법**이다. 내용 검증은 $O(N)$, 서명 검증은 $O(1)$ 이다.
+
+앤트로픽이 2026년 8월 도입한 [텍스트 워터마크](https://www.anthropic.com/news/claude-text-watermark)와 C2PA 계열의 콘텐츠 출처 표준은 이 흐름의 인프라다. 목표는 가짜를 탐지하는 것이 아니라 **진짜에 서명을 붙이는 것**이다. 탐지는 위조자의 기술 발전에 계속 추격당하지만, 서명은 그렇지 않다.
+
+# 경계에서만 나오는 명제
+
+세 분야를 각각 따로 보면 이 결론이 나오지 않는다.
+
+법학만 보면 AI 환각은 **직업윤리 문제**다. 변호사가 게을렀고 확인을 안 했다. 처방은 교육과 징계다.
+
+정보이론만 보면 이것은 **채널 잡음 문제**다. 신호 대 잡음비가 나빠졌으니 오류정정 부호를 강화하면 된다.
+
+암호경제학만 보면 **서명 체계 도입**이 답이다. 기술적으로 이미 풀린 문제다.
+
+경계에서 보면 다른 명제가 나온다.
+
+::: {.callout-important}
+## 경계 명제
+법의 증거체계는 진리 판정 장치가 아니라 **비용 비대칭을 이용한 압축 알고리즘**이었다. "위조가 비싸다"는 물리적 사실을 이용해, 모든 증거를 검증하지 않고도 대부분을 신뢰할 수 있게 만든 것이다. 생성형 AI는 이 압축률을 1로 되돌렸다. 따라서 법은 도덕적으로 타락한 것이 아니라 **알고리즘의 전제가 사라진 것**이며, 필연적으로 진위 판정($O(N)$)에서 출처 검증($O(1)$)으로 이동한다. 이 이동은 정책 선택이 아니라 처리량 제약이 강제하는 결과다.
+:::
+
+이 명제가 예측하는 것이 있다. **AI 환각 판례의 증가는 언젠가 꺾이겠지만, 그것이 AI가 정확해져서는 아닐 것이다.** 법원이 개별 인용의 진위 확인을 아예 하지 않고 서명·인증 요건 위반만 심사하게 되면 "환각 사건"은 통계에서 사라진다. 문제가 해결되어서가 아니라 **측정을 그만두어서** 사라진다.
+
+# 성립하지 않는 범위
+
+이 논증은 **증거법**에 한정된다. 법에는 사실을 확정하는 영역과 규범을 배분하는 영역이 있고, 후자에는 비용 부등식이 적용되지 않는다.
+
+예컨대 한국 발명진흥법 제10조 제3항은 직무발명이 아닌 발명에 대해 사용자에게 권리를 넘기도록 한 근무규정 조항을 **무효**로 규정한다. 이는 강행규정이며, 당사자의 합의나 증거의 상태와 무관하게 작동한다. 위조비용이 0이 되어도 이 조항은 흔들리지 않는다. 여기서는 검증할 사실이 아니라 배분할 권리가 문제이기 때문이다.
+
+또한 이 글은 **형사 증거의 개별 사건 판단**에 대해 아무것도 말하지 않는다. 시스템 수준의 처리량 논증은 개별 사건의 유무죄에 관한 논증이 아니다.
+
+::: {.callout-warning}
+## 반대 해석 — 이 글이 틀릴 수 있는 세 가지 방식
+
+**첫째, 출처 인프라가 아니라 냉소가 이길 수 있다.**
+위조비용이 0이 되면 "모든 것이 검증된 세계"가 아니라 "아무것도 입증되지 않는 세계"가 올 수 있다. 진짜 녹취가 법정에 제출되어도 "AI로 만든 것 아니냐"는 한마디로 증명력이 흔들린다. 이를 **거짓말쟁이의 배당(liar's dividend)** 이라 부른다. 이 시나리오에서 승자는 서명 체계가 아니라 부인(否認)이며, 법은 출처 검증으로 이동하는 대신 증거 자체의 비중을 낮추고 정황과 진술로 후퇴한다. 본문의 예측과 정반대다.
+
+**둘째, 출처가 증명되는 세계는 익명이 불가능한 세계다.**
+모든 콘텐츠에 서명이 붙는 인프라는 내부고발자·취재원·반체제 인사를 동시에 식별한다. 위조비용 $c_f$ 가 높다는 것은 자유의 비용이기도 했다. 익명 문서의 진위를 확정할 수 없다는 바로 그 성질이 권력으로부터의 은신처였다. 본문은 $c_f$ 하락을 순수한 손실로 다루었지만, **$c_f$ 상승을 목표로 삼는 정책은 검열 인프라와 구별되지 않는다.** 어떤 사회는 판정 불가능성을 감수하는 쪽을 합리적으로 선택할 수 있다.
+
+**셋째, 법은 이미 값싼 위조를 2천 년간 견뎌왔다.**
+가장 강한 반론이다. **위증은 언제나 공짜였다.** 사람은 그냥 거짓말하면 되고, 인장이나 암실이 필요 없었다. 그런데도 법은 무너지지 않았다. 교차검증, 반대신문, 그리고 적발 시 제재의 기대비용이 그것을 흡수했기 때문이다. 그렇다면 AI 위조도 같은 방식으로 흡수될 수 있으며, 실제로 제재액 상승은 그 흡수가 작동 중이라는 증거로 읽힌다. 이 해석이 옳다면 지금의 환각 판례 급증은 체제 전환의 신호가 아니라 **새 기술에 대한 통상적 적응기의 과도현상**이고, 몇 년 뒤 정상 수준으로 돌아온다. 본문의 $O(N) \to O(1)$ 이동은 일어나지 않는다.
+
+세 반론 중 어느 것도 아직 기각되지 않았다. 특히 셋째는 데이터로 판별 가능하다 — **환각 판례 곡선이 꺾인 뒤, 법원이 인용 진위를 여전히 심사하는지 아니면 서명 요건만 보는지**를 관찰하면 된다. 전자면 흡수, 후자면 이동이다.
+:::
+
+# 남는 질문
+
+로마의 인장이 증거였던 이유는 반지가 진실했기 때문이 아니라 **반지를 깎기가 어려웠기 때문**이다. 우리는 2천 년 동안 이 우연한 물리적 사실을 정의(正義)라고 불러왔는지도 모른다.
+
+그 사실이 사라진 지금 남는 질문은 기술적인 것이 아니다. 무엇을 근거로 사람을 처벌할 것인가. 그리고 그 근거가 "누가 서명했는가"뿐일 때, 서명할 수 없는 사람들 — 익명이어야만 말할 수 있는 사람들 — 의 진실은 어디에 놓이는가.
+
+# 참고 문헌
+
+- Damien Charlotin, [AI Hallucination Cases Database](https://www.damiencharlotin.com/hallucinations/) — 전 세계 법원에서 AI 생성 허위 인용에 대응한 판결을 수집. 본문의 누적 집계 및 행위자 분류(`Lawyer`/`Pro Se Litigant`/`Judge`), 인도 대법원(2026-09-02)·미시간 항소법원(2026-08-28) 사건은 이 데이터베이스 항목에 근거.
+- Norton Rose Fulbright, [AI in litigation: Update on Gen AI sanctions in 2026](https://www.nortonrosefulbright.com/en-us/knowledge/publications/792d8bf3/ai-in-litigation-update-on-gen-ai-sanctions-in-2026)
+- ComplexDiscovery, [The AI Sanction Wave: $145K in Q1 Penalties](https://complexdiscovery.com/the-ai-sanction-wave-145k-in-q1-penalties-signals-courts-have-lost-patience-with-genai-filing-failures/) — 2026년 1분기 제재 총액, 오리건 $110,000 사건.
+- PlatinumIDS, [1,227 Fabricated Citations and Counting](https://blog.platinumids.com/blog/ai-hallucination-crisis-courts-2026) / HAQQ, [The 1,598-Case Sanctions Tracker](https://www.haqq.ai/blog/ai-legal-hallucination-audit) — 시점별 누적 집계 인용.
+- Trusona, [Deepfake fraud statistics for 2026](https://www.trusona.com/blog/deepfake-fraud-statistics-2026) — FBI IC3 2025년 집계($893,346,472 / 22,364건), 신고율 5% 미만 추정, 사기 시도 중 딥페이크 비중.
+- Memeburn, [Deepfake Statistics 2026 Reveal a 3,892% Fraud Surge](https://memeburn.com/deepfake-statistics-2026-reveal-a-3892-fraud-surge/) — 2022년 0.1% → 2026년 6.5% 비중 변화.
+- Brightside AI, [Deepfake Fraud in 2026: The $3.7B Problem](https://brside.com/blog/deepfake-fraud-losses-2026) — Surfshark 2026 조사 인용.
+- Camb.ai, [AI Voice Cloning Cost: Per-Second & Per-Minute (2026)](https://www.camb.ai/blog-post/ai-voice-cloning-cost-pricing-compared-2026) / AllAboutAI, [AI Voice Cloning Statistics 2026](https://www.allaboutai.com/resources/ai-statistics/ai-voice-cloning/) — 생성 단가, 3초·85% 수치.
+- Anthropic, [How Claude's text watermark works](https://www.anthropic.com/news/claude-text-watermark) (2026-08-14)
+- 발명진흥법 제10조 제3항 (직무발명 외 발명에 관한 근무규정 조항의 무효) — 국가법령정보센터.
+
+::: {.callout-note}
+## 데이터에 관한 고지
+본문의 수치는 모두 위 출처에서 인용한 실측 또는 집계값이며, Charlotin 데이터베이스를 제외한 통계는 2차 인용(업계·로펌 보고서 경유)이다. 집계 기준과 표본이 출처마다 달라 서로 직접 비교할 수 없으며, 특히 피해액 두 수치는 규모 감각으로만 읽어야 한다. @fig-cost-crossover 는 **실측이 아닌 개념 모형**으로, 곡선 형태·교차 시점 모두 예시이며 예측이 아니다.
+:::
