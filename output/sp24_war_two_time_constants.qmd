@@ -1,0 +1,612 @@
+---
+title: "인간의 느림은 지연이 아니라 필터였다"
+subtitle: "전쟁의 되먹임 회로에는 시간상수가 두 개 있다 — 제어이론(지연미분방정식) × 지정학(안보 딜레마) × 행동생태학(집단 간 폭력)"
+author: "Insight Lab × Claude"
+date: "2026-09-12"
+lang: ko
+jupyter: python3
+format:
+  html:
+    theme:
+      dark: darkly
+      light: flatly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    smooth-scroll: true
+    embed-resources: true
+    lightbox: true
+    fig-responsive: true
+execute:
+  echo: false
+  warning: false
+---
+
+```{=html}
+<style>
+.cell-output-display img, figure img, .quarto-figure img, .figure img { max-width: 100% !important; height: auto !important; }
+.cell-output-display, .quarto-figure { overflow-x: auto; }
+@media (max-width: 640px){
+  .cell-output-display img, figure img { width: 100%; }
+  figure.fig .ti, .figure-caption, figcaption { font-size: .82rem; }
+}
+</style>
+```
+
+::: {.callout-note}
+## 핵심 문장
+전쟁을 되먹임 제어계로 옮기면 시간상수가 **두 개** 나온다. 상대의 무장에 반응하기까지의 **반응지연 $\tau_R$**, 그리고 들어온 경보가 진짜인지 판정하는 **판정지연 $\tau_J$**. 리처드슨 군비경쟁 방정식의 지연 확장은 $\tau_R$이 임계값을 넘으면 계가 불안정해진다고 말한다 — 줄이는 것이 옳다. 그러나 1983년 9월 26일 페트로프가 실제로 쓴 시간은 $\tau_R$이 아니라 $\tau_J$였고, 그것은 **지연이 아니라 저역통과 필터의 시상수**였다. AI 지휘체계는 두 $\tau$를 구분하지 않고 함께 0으로 민다. 그때 사라지는 것은 지연이 아니라 **필터**다.
+:::
+
+```{python}
+#| label: setup
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyArrowPatch
+
+import matplotlib.font_manager as fm
+_avail = {f.name for f in fm.fontManager.ttflist}
+for _c in ["Noto Sans CJK KR", "Noto Sans KR", "Noto Sans CJK JP", "Malgun Gothic", "NanumGothic"]:
+    if _c in _avail:
+        plt.rcParams["font.family"] = _c
+        break
+plt.rcParams["axes.unicode_minus"] = False
+plt.rcParams["figure.dpi"] = 130
+BLUE, GREEN, RED, GOLD, MUTED, VIOLET = "#38bdf8", "#22c55e", "#ef4444", "#f59e0b", "#64748b", "#6366f1"
+
+def finish(ax, title, sub=""):
+    ax.set_title(title, fontsize=13, fontweight="bold", pad=14, loc="left")
+    if sub:
+        ax.annotate(sub, xy=(0, 1.015), xycoords="axes fraction",
+                    fontsize=9.5, color=MUTED)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.tick_params(labelsize=10)
+```
+
+# 헬레네와 다르다넬스 — 명분과 원인은 왜 늘 어긋나는가
+
+『일리아스』의 표면적 원인은 한 사람이다. 헬레네를 되찾기 위해 천 척의 배가 떴다.
+
+그런데 트로이가 서 있던 자리를 보면 이야기가 달라진다. 히사를리크 언덕은 다르다넬스 해협 어귀, 에게해에서 흑해로 들어가는 목구멍에 있다. 발굴을 이끈 만프레트 코르프만은 이 도시가 해협을 낀 교역 거점이었고 그 위치에서 부가 나왔다고 보았다. 프랑크 콜프는 이를 정면으로 반박했다 — 청동기 트로이는 그만한 규모의 상업 도시가 아니었고, 코르프만이 '무역 중심지'상을 과대 구성했다는 것이다. 이 논쟁은 2004년 *American Journal of Archaeology* 지면에서 공개적으로 오갔고 아직 합의되지 않았다.
+
+여기서 중요한 것은 어느 쪽이 옳은가가 아니다. **논쟁의 대상이 무엇인가**다. 아무도 헬레네를 두고 다투지 않는다. 다들 해협과 교역로를 두고 다툰다. 3천 년이 지나도 학자들조차 명분이 아니라 원인을 놓고 싸운다.
+
+지도로 보면 이 구조가 한눈에 들어온다.
+
+```{python}
+#| label: fig-map-bronze
+#| lightbox: true
+#| fig-cap: "청동기 에게해–흑해 회랑의 지리 구조(실측 해안선 위에 재구성). 흑해 북안의 곡물과 카프카스·아나톨리아의 금속이 에게해로 나오려면 보스포루스와 다르다넬스라는 두 개의 좁은 문을 반드시 통과해야 한다. 트로이(히사를리크)는 그 바깥 문의 아시아 쪽 어귀에, 항해가 북동풍에 막혀 대기하게 되는 바로 그 지점에 있다. 해안선은 GSHHS 실측 데이터, 교역로는 저자 재구성."
+import warnings
+warnings.filterwarnings("ignore")
+from mpl_toolkits.basemap import Basemap
+
+SEPIA_BG, SEPIA_LAND, SEPIA_LINE, SEPIA_INK = "#e9dfc6", "#f4ecd8", "#a3916d", "#4a3f2f"
+
+fig, ax = plt.subplots(figsize=(12.6, 7.4))
+m = Basemap(projection="cyl", llcrnrlon=21.5, urcrnrlon=42.0,
+            llcrnrlat=35.0, urcrnrlat=47.5, resolution="i", ax=ax)
+m.drawmapboundary(fill_color=SEPIA_BG)
+m.fillcontinents(color=SEPIA_LAND, lake_color=SEPIA_BG)
+m.drawcoastlines(linewidth=0.7, color=SEPIA_LINE)
+m.drawparallels(np.arange(36, 48, 2), labels=[1, 0, 0, 0], color=SEPIA_LINE,
+                linewidth=0.35, fontsize=8, textcolor=SEPIA_INK)
+m.drawmeridians(np.arange(22, 43, 4), labels=[0, 0, 0, 1], color=SEPIA_LINE,
+                linewidth=0.35, fontsize=8, textcolor=SEPIA_INK)
+
+# 곡물·금속 교역로 (흑해 → 에게해 → 미케네)
+route = [(35.5, 46.3), (33.0, 45.0), (31.0, 43.3), (29.6, 41.4), (29.05, 41.1),
+         (28.0, 40.6), (26.9, 40.45), (26.25, 40.15), (25.6, 39.6), (24.2, 38.4),
+         (23.4, 37.5), (22.9, 37.7)]
+rx = [p[0] for p in route]; ry = [p[1] for p in route]
+ax.plot(rx, ry, color=RED, lw=2.6, alpha=0.75, zorder=4,
+        solid_capstyle="round", label="흑해 곡물·금속 회랑")
+for i in (3, 8):
+    ax.annotate("", xy=(rx[i+1], ry[i+1]), xytext=(rx[i], ry[i]),
+                arrowprops=dict(arrowstyle="-|>", color=RED, lw=2.2, alpha=0.9))
+
+gates = [(26.30, 40.18, "다르다넬스 해협", "최협부 약 1.2 km"),
+         (29.05, 41.10, "보스포루스 해협", "최협부 약 0.7 km")]
+for lon, lat, name, sub in gates:
+    ax.plot(lon, lat, "o", ms=13, mfc="none", mec=RED, mew=2.4, zorder=6)
+    ax.annotate(f"{name}\n{sub}", (lon, lat), (lon-1.9, lat+1.5),
+                fontsize=9.5, color=RED, fontweight="bold", ha="center",
+                arrowprops=dict(arrowstyle="-", color=RED, lw=1.1))
+
+ax.plot(26.2389, 39.9576, "*", ms=17, color=VIOLET, zorder=8,
+        markeredgecolor="white", markeredgewidth=1.1)
+ax.annotate("트로이 (히사를리크)", (26.2389, 39.9576), (24.55, 39.05),
+            ha="center", fontsize=10.5, fontweight="bold", color=VIOLET,
+            arrowprops=dict(arrowstyle="-|>", color=VIOLET, lw=1.4))
+for lon, lat, name in [(22.7564, 37.7306, "미케네"), (28.98, 41.01, "비잔티온")]:
+    ax.plot(lon, lat, "s", ms=7, color=SEPIA_INK, zorder=7,
+            markeredgecolor="white", markeredgewidth=0.8)
+    ax.annotate(name, (lon, lat), (lon+0.05, lat-0.45), ha="center", va="top",
+                fontsize=9, color=SEPIA_INK)
+ax.annotate("카프카스 금속 산지", (39.7, 44.6), ha="center", va="top",
+            fontsize=8.8, color=SEPIA_INK)
+
+ax.annotate("흑 해", (33.5, 43.6), fontsize=13, color="#6b7f99",
+            style="italic", ha="center")
+ax.annotate("에게해", (24.6, 38.0), fontsize=11, color="#6b7f99",
+            style="italic", ha="center")
+ax.annotate("곡물 · 금속 →", (31.5, 44.4), fontsize=9.5, color=RED, ha="center")
+ax.set_title("청동기 에게해–흑해 회랑 — 트로이는 문 앞에 있었다",
+             fontsize=13.5, fontweight="bold", loc="left", pad=12, color=SEPIA_INK)
+ax.annotate("해안선: GSHHS 실측 · 교역로: 저자 재구성 · 해협 폭은 최협부 기준",
+            xy=(0, -0.085), xycoords="axes fraction", fontsize=8.5, color=MUTED)
+plt.tight_layout()
+plt.show()
+```
+
+지도가 말하는 것은 단순하다. 흑해에서 나온 배는 **두 개의 문**을 통과해야만 지중해 세계에 닿는다. 보스포루스 최협부는 1 km가 채 되지 않고, 다르다넬스도 가장 좁은 곳이 1 km 남짓이다. 그리고 다르다넬스는 지형상 북동풍이 강하게 내리부는 통로여서, 범선 시대의 배는 바람이 바뀔 때까지 어귀에서 기다려야 했다. **기다리는 배가 있는 곳에 도시가 생기고, 도시는 통행에서 값을 받는다.**
+
+트로이는 정확히 그 대기 지점에 있다.
+
+투키디데스는 이 구조를 세 단어로 정리했다. 인간이 싸우는 이유는 **두려움(phobos), 이익(kerdos), 명예(timē)** 뿐이라는 것이다. 『일리아스』는 이 셋 중 세 번째가 주인공인 서사시다. 전쟁의 명분은 헬레네지만, 이야기를 실제로 굴리는 사건은 아가멤논이 아킬레우스의 전리품을 빼앗은 일 — 즉 **모욕**이다. 아킬레우스가 전선에서 이탈하는 것은 손익 계산이 아니라 체면의 문제다.
+
+## 같은 지도, 3천 년 뒤
+
+그런데 이 구조는 과거형이 아니다. 현대의 세계 지도에 에너지 흐름을 얹으면 같은 종류의 좁은 문들이 그대로 드러난다.
+
+```{python}
+#| label: fig-map-modern
+#| lightbox: true
+#| fig-cap: "세계 해상 석유 초크포인트와 일일 통과량(2025년 상반기, 백만 배럴/일). 원의 면적이 통과량에 비례한다. 파나마 운하는 2025 회계연도 기준. 청동기의 다르다넬스·보스포루스는 오늘날 '터키 해협'이라는 이름으로 같은 목록에 남아 있다. 출처: U.S. EIA, World Oil Transit Chokepoints (2026-03-03 갱신)."
+# (이름, 경도, 위도, mb/d, 라벨 경도, 라벨 위도, 정렬)
+CHOKE = [
+    ("말라카 해협",       101.5,   2.5, 23.2, 128.0, -22.0, "center"),
+    ("호르무즈 해협",      56.25, 26.57, 20.9,  82.0,  40.0, "center"),
+    ("수에즈 운하·SUMED",  32.55, 30.0,  4.9,   8.0,  22.0, "center"),
+    ("덴마크 해협",        11.5,  55.8,  4.9,  -8.0,  66.0, "center"),
+    ("바브엘만데브 해협",   43.3,  12.6,  4.2,  33.0, -12.0, "center"),
+    ("터키 해협",          29.0,  41.0,  3.7,  52.0,  62.0, "center"),
+    ("파나마 운하",       -79.7,   9.1,  2.3, -92.0,  30.0, "center"),
+]
+
+fig, ax = plt.subplots(figsize=(13.0, 6.2))
+m = Basemap(projection="mill", resolution="c", ax=ax,
+            llcrnrlon=-108, urcrnrlon=158, llcrnrlat=-38, urcrnrlat=74)
+m.drawmapboundary(fill_color="#eaf2f8", linewidth=0.6)
+m.fillcontinents(color="#dfe4e8", lake_color="#eaf2f8")
+m.drawcoastlines(linewidth=0.35, color="#9aa5ad")
+m.drawparallels(np.arange(-30, 75, 30), color="#c6ced4", linewidth=0.35)
+m.drawmeridians(np.arange(-90, 151, 60), color="#c6ced4", linewidth=0.35)
+
+for name, lon, lat, val, llon, llat, ha in CHOKE:
+    x, y = m(lon, lat)
+    lx, ly = m(llon, llat)
+    ax.scatter(x, y, s=val*80, color=RED, alpha=0.30, zorder=5,
+               edgecolors=RED, linewidths=1.7)
+    ax.annotate(f"{name}\n{val:.1f} mb/d", (x, y), (lx, ly),
+                ha=ha, va="center", fontsize=9.4, color="#1a1a2e",
+                fontweight="bold", zorder=8,
+                bbox=dict(boxstyle="round,pad=0.24", fc="white", ec="none", alpha=0.72),
+                arrowprops=dict(arrowstyle="-", color=RED, lw=1.0, alpha=0.85))
+
+xt, yt = m(29.0, 41.0)
+ax.scatter(xt, yt, s=3.7*80, facecolors="none", edgecolors=VIOLET,
+           linewidths=2.8, zorder=7)
+lx, ly = m(-38.0, 6.0)
+ax.annotate("트로이가 지키던 바로 그 문", (xt, yt), (lx, ly),
+            fontsize=10.5, color=VIOLET, fontweight="bold", ha="center", zorder=9,
+            bbox=dict(boxstyle="round,pad=0.3", fc="white", ec=VIOLET, alpha=0.9, lw=1.2),
+            arrowprops=dict(arrowstyle="-|>", color=VIOLET, lw=1.7,
+                            connectionstyle="arc3,rad=-0.18"))
+
+ax.set_title("현대 해상 석유 초크포인트 — 원 면적 = 일일 통과량",
+             fontsize=13.5, fontweight="bold", loc="left", pad=12)
+ax.annotate("출처: U.S. EIA, World Oil Transit Chokepoints (2025년 상반기, 파나마는 FY2025)",
+            xy=(0, -0.055), xycoords="axes fraction", fontsize=8.5, color=MUTED)
+plt.tight_layout()
+plt.show()
+```
+
+그리고 그 목록 안에 **터키 해협**이 여전히 있다. 이름만 바뀌었을 뿐 트로이가 지키던 바로 그 두 문이다.
+
+```{python}
+#| label: fig-map-overlay
+#| lightbox: true
+#| fig-cap: "다르다넬스 해협 확대(고해상도 실측 해안선). 히사를리크의 트로이 유적은 해협 남쪽 어귀에서 약 6 km 떨어진 지점에 있다. 2025년 이 해협을 통과한 선박은 44,468척이며, 보스포루스를 합친 터키 해협 전체로는 84,640척·화물 15.8억 총톤이 지나갔다. 출처: 해안선 GSHHS, 통행 통계는 튀르키예 교통인프라부 집계 보도."
+fig, axes = plt.subplots(1, 2, figsize=(12.8, 5.8),
+                         gridspec_kw={"width_ratios": [1.25, 1]})
+
+ax = axes[0]
+m = Basemap(projection="cyl", llcrnrlon=25.6, urcrnrlon=27.4,
+            llcrnrlat=39.75, urcrnrlat=40.85, resolution="h", ax=ax)
+m.drawmapboundary(fill_color="#dbe9f4")
+m.fillcontinents(color="#eef0e6", lake_color="#dbe9f4")
+m.drawcoastlines(linewidth=0.8, color="#7d8a96")
+m.drawparallels(np.arange(39.8, 41.0, 0.3), labels=[1, 0, 0, 0],
+                color="#c6ced4", linewidth=0.3, fontsize=8)
+m.drawmeridians(np.arange(25.8, 27.5, 0.5), labels=[0, 0, 0, 1],
+                color="#c6ced4", linewidth=0.3, fontsize=8)
+
+lane = [(26.75, 40.42), (26.55, 40.32), (26.40, 40.22), (26.28, 40.12),
+        (26.18, 40.02), (26.08, 39.94), (25.90, 39.86)]
+ax.plot([p[0] for p in lane], [p[1] for p in lane], color=BLUE, lw=3.2,
+        alpha=0.65, zorder=4, solid_capstyle="round")
+ax.annotate("", xy=lane[-1], xytext=lane[-3],
+            arrowprops=dict(arrowstyle="-|>", color=BLUE, lw=2.4))
+ax.annotate("2025년 통과 44,468척", (26.42, 40.27), (26.62, 40.60),
+            fontsize=9.5, color=BLUE, fontweight="bold", ha="center",
+            arrowprops=dict(arrowstyle="-", color=BLUE, lw=1.0))
+
+ax.plot(26.2389, 39.9576, "*", ms=19, color=VIOLET, zorder=7,
+        markeredgecolor="white", markeredgewidth=1.2)
+ax.annotate("트로이 (히사를리크)\n39.958°N 26.239°E", (26.2389, 39.9576),
+            (26.30, 39.83), fontsize=9.5, color=VIOLET, fontweight="bold",
+            arrowprops=dict(arrowstyle="-", color=VIOLET, lw=1.2))
+ax.annotate("최협부 ≈ 1.2 km", (26.40, 40.22), (25.95, 40.45),
+            fontsize=9, color=RED, fontweight="bold",
+            arrowprops=dict(arrowstyle="-|>", color=RED, lw=1.3))
+ax.set_title("다르다넬스 — 같은 좌표, 3천 년",
+             fontsize=12.5, fontweight="bold", loc="left", pad=10)
+
+ax = axes[1]
+rows = [("터키 해협 전체\n(2025 통과 선박)", 84640, "척", BLUE),
+        ("  └ 다르다넬스", 44468, "척", VIOLET),
+        ("  └ 보스포루스", 40172, "척", "#8b93d8")]
+ypos = np.arange(len(rows))[::-1]
+ax.barh(ypos, [r[1] for r in rows], height=0.62,
+        color=[r[3] for r in rows], alpha=0.82)
+for y, (lab, v, unit, c) in zip(ypos, rows):
+    ax.annotate(f"{v:,} {unit}", (v, y), (v*1.02, y), va="center",
+                fontsize=10.5, color=c, fontweight="bold")
+ax.set_yticks(ypos); ax.set_yticklabels([r[0] for r in rows], fontsize=10)
+ax.set_xlim(0, 108000); ax.set_ylim(-1.15, 2.55)
+ax.set_xticks([0, 25000, 50000, 75000, 100000])
+ax.set_xticklabels(["0", "2.5만", "5만", "7.5만", "10만"])
+ax.annotate("연간 화물 15.8억 총톤 · 평균 하루 232척 통과", (54000, -0.85),
+            fontsize=10, color=MUTED, ha="center")
+finish(ax, "2025년 터키 해협 통행량", "청동기의 통행세가 오늘의 통항 통계가 되었다")
+plt.tight_layout()
+plt.show()
+```
+
+전쟁의 명분은 3천 년 동안 계속 바뀌었다. 헬레네에서 시작해 신앙, 왕조, 민족, 이념, 그리고 오늘의 추상명사들로. 그러나 **지도는 거의 바뀌지 않았다.** 좁은 문이 있는 자리에 도시가 서고, 그 도시를 두고 다툰다.
+
+이 글은 투키디데스의 셋 중에서 **모형으로 옮길 수 있는 것과 끝내 옮겨지지 않는 것**을 구분하는 데서 시작한다. 두려움은 계수가 된다. 이익도 계수가 된다. 명예는 되지 않는다. 그 사실 자체가 이 글의 결론 중 하나다.
+
+# 인간만의 것은 무엇인가 — 곰베에서 배운 것
+
+먼저 편한 전제 하나를 버려야 한다. "동물은 필요할 때만 죽이고 인간만 동족을 조직적으로 살해한다"는 명제는 사실이 아니다.
+
+1974년 1월 7일부터 1978년 6월 5일까지, 탄자니아 곰베 국립공원에서 침팬지 두 집단이 4년 넘게 싸웠다. 카사켈라 집단(수컷 8, 암컷 12)이 분열해 나간 카하마 집단(수컷 6, 암컷 3)을 매복과 집단 공격으로 하나씩 제거했다. 카하마는 6마리가 죽고 4마리가 실종되어 소멸했다. 제인 구달은 이 관찰로 자신의 기존 침팬지관이 무너졌다고 회고했다. 관찰자의 먹이 공급이 폭력을 유발했다는 비판이 제기되었고, 이후 비급이 집단들에서도 집단 간 치명적 공격이 확인되면서 논쟁은 상당 부분 정리되었다.
+
+그러므로 질문을 바꿔야 한다. "왜 인간만 죽이는가"가 아니라 **"인간의 살해는 구조적으로 무엇이 다른가"**다. 차이는 다섯 가지로 정리된다.
+
+| 구분 | 침팬지·개미 | 인간 |
+|---|---|---|
+| 대상 | 얼굴을 아는 이웃 집단 | 한 번도 본 적 없는 익명의 타자 |
+| 동기 | 영역·자원·번식 | 위의 것 + **존재하지 않는 것**(신·국가·이념·국경) |
+| 실행 | 개체의 흥분 상태 필요 | 감정 없이 작동하는 **제도**(군대·명령체계) |
+| 사후 | 없음 | **서사**(정당화·기념비)가 필수 부품 |
+| 자기희생 | 근연도에 비례(개미는 자매) | **유전적 남남**을 위해 자발적으로 죽음 |
+
+네 번째와 다섯 번째가 특히 인간적이다. 사자는 새끼를 죽이고 나서 이야기를 만들지 않는다. 인간은 죽이기 **전에** 이야기를 만들고 죽인 **후에** 기념비를 세운다.
+
+그리고 이 모든 것의 하부에는 훨씬 단순한 장치가 깔려 있다. 앙리 타지펠의 최소집단 실험(1970–71)은 집단 간 차별에 증오도, 이해관계도, 역사도 필요 없다는 것을 보였다. 참가자들을 아무 의미 없는 기준 — 화면의 점 개수 추정, 심지어 동전 던지기 — 으로 두 집단에 나누기만 해도, 서로 누군지 모르는 상태에서 즉시 자기 집단에 유리한 배분이 나타난다. 일부 조건에서는 자기 집단의 절대 이득을 줄이면서까지 **상대와의 격차**를 벌리는 선택이 관찰되었다.
+
+이것이 뒤에 나올 방정식의 계수 $k$ — 상대의 무장에 대한 위협 민감도 — 가 학습만으로 0이 되지 않는 이유다. $k$는 정책 변수가 아니라 **생물학적 하한이 있는 상수**에 가깝다.
+
+# 리처드슨 방정식 — 전쟁을 미분방정식으로
+
+루이스 프라이 리처드슨은 기상학자이자 수치해석의 개척자였다. 1차대전에서 구급차 운전병으로 복무한 뒤, 그는 전쟁을 유체처럼 다룰 수 있는지 물었다. 그 결과가 군비경쟁 방정식이다.
+
+$$\frac{dx}{dt} = k\,y - a\,x + g, \qquad \frac{dy}{dt} = l\,x - b\,y + h$$
+
+- $x, y$ : 두 국가의 군비 수준
+- $k, l \ge 0$ : **위협 계수** — 상대 군비에 반응하는 정도
+- $a, b > 0$ : **피로 계수** — 군비 유지의 경제적 부담
+- $g, h$ : **적대감 상수** — 군비와 무관하게 존재하는 고정 불만
+
+야코비 행렬은 $A = \begin{pmatrix} -a & k \\ l & -b \end{pmatrix}$이고, 대각합은 $-(a+b) < 0$으로 항상 음수다. 따라서 안정성은 행렬식 하나가 결정한다.
+
+$$\det A = ab - kl > 0 \quad \Longleftrightarrow \quad \boxed{ab > kl}$$
+
+**경제적 부담의 곱이 상호 위협 민감도의 곱보다 커야 평형이 존재한다.** 이것이 리처드슨의 결론이다. 군비경쟁이 파국으로 가는 것은 누군가 악해서가 아니라 $kl$이 $ab$를 넘었기 때문이다.
+
+```{python}
+#| label: fig-phase
+#| lightbox: true
+#| fig-cap: "리처드슨 군비경쟁의 위상평면. 왼쪽은 안정 조건 ab > kl을 만족해 평형점으로 수렴한다. 오른쪽은 위협 민감도가 경제적 부담을 넘어선 경우로, 초기 조건과 무관하게 군비가 발산한다. 두 경우의 차이는 지도자의 의도가 아니라 네 개의 계수뿐이다."
+def rich_field(a, b, k, l, g, h, ax, title, sub):
+    X, Y = np.meshgrid(np.linspace(0, 10, 18), np.linspace(0, 10, 18))
+    U = k*Y - a*X + g
+    V = l*X - b*Y + h
+    M = np.hypot(U, V); M[M == 0] = 1
+    ax.quiver(X, Y, U/M, V/M, M, cmap="Blues", scale=26, width=0.0042, alpha=0.75)
+    det = a*b - k*l
+    if det > 0:
+        xs = (k*h + b*g)/det; ys = (l*g + a*h)/det
+        if 0 < xs < 10 and 0 < ys < 10:
+            ax.plot(xs, ys, "o", ms=11, color=GREEN, zorder=5,
+                    markeredgecolor="white", markeredgewidth=1.5)
+            ax.annotate(f"평형 ({xs:.1f}, {ys:.1f})", (xs, ys), (xs+0.6, ys+0.9),
+                        fontsize=9.5, color=GREEN, fontweight="bold",
+                        arrowprops=dict(arrowstyle="-", color=GREEN, lw=1))
+    for x0, y0 in [(0.5, 0.5), (8.5, 1.0), (1.0, 8.5), (6.0, 6.0)]:
+        p = np.array([x0, y0], float); tr = [p.copy()]
+        for _ in range(2600):
+            dx = np.array([k*p[1] - a*p[0] + g, l*p[0] - b*p[1] + h])
+            p = p + 0.004*dx; tr.append(p.copy())
+            if np.abs(p).max() > 14: break
+        tr = np.array(tr)
+        ax.plot(tr[:, 0], tr[:, 1], color=RED if det <= 0 else VIOLET, lw=1.6, alpha=0.85)
+    ax.set_xlim(0, 10); ax.set_ylim(0, 10)
+    ax.set_xlabel("국가 A 군비 $x$"); ax.set_ylabel("국가 B 군비 $y$")
+    finish(ax, title, sub)
+
+fig, axes = plt.subplots(1, 2, figsize=(12.6, 5.4))
+rich_field(1.0, 1.0, 0.5, 0.5, 0.6, 0.6, axes[0],
+           "안정: $ab=1.00 > kl=0.25$", "피로 계수가 위협 계수를 압도 → 유한한 군비 평형")
+rich_field(0.5, 0.5, 1.1, 1.1, 0.6, 0.6, axes[1],
+           "불안정: $ab=0.25 < kl=1.21$", "위협 민감도가 지배 → 모든 궤적이 발산")
+plt.tight_layout()
+plt.show()
+```
+
+# 지연을 넣으면 — 임계 시간상수의 등장
+
+리처드슨의 원 모형에는 시간 지연이 없다. 상대가 무장하는 순간 내가 즉시 안다고 가정한다. 현실은 다르다. 정찰·해석·보고·의사결정에 시간이 걸린다. 지연 $\tau$를 넣으면 방정식은 지연미분방정식이 된다.
+
+$$\frac{dx}{dt} = k\,y(t-\tau) - a\,x(t-\tau) + g, \qquad \frac{dy}{dt} = l\,x(t-\tau) - b\,y(t-\tau) + h$$
+
+이 확장의 안정성 해석은 최근 연구에서 다뤄졌고, 생존 조건 $\det A = ab - kl > 0$ 아래에서 임계 지연이 다음과 같이 주어진다.
+
+$$\tau_- = \frac{\pi}{4\det A}\left[(a+b) - \sqrt{(a+b)^2 - 4\det A}\right]$$
+
+$\tau < \tau_-$이면 평형은 지수적으로 점근 안정이고, $\tau$가 $\tau_-$를 넘으면 **호프 분기**를 통해 안정성을 잃는다. 계는 진동하기 시작하고, 진동은 군비의 급팽창과 급수축을 반복하는 형태로 나타난다.
+
+여기서 정책적 함의는 명확해 보인다. **지연을 줄여라.** 정보 수집을 빠르게, 판단을 빠르게, 대응을 빠르게. 지연이 작을수록 계는 안정하다.
+
+```{python}
+#| label: fig-delay
+#| lightbox: true
+#| fig-cap: "임계 지연 τ₋의 지형. 왼쪽: 생존 조건(det A > 0)을 만족하는 영역에서만 임계 지연이 정의되며, 위협 민감도 kl이 커질수록 허용되는 지연이 급격히 줄어든다. 오른쪽: 지연이 임계값을 넘는 순간 궤적은 수렴에서 진동으로 바뀐다. 제어이론의 표준 결론 — 지연은 불안정의 원인이다."
+def tau_minus(a, b, k, l):
+    det = a*b - k*l
+    disc = (a+b)**2 - 4*det
+    if det <= 0 or disc < 0:
+        return np.nan
+    return np.pi/(4*det)*((a+b) - np.sqrt(disc))
+
+fig, axes = plt.subplots(1, 2, figsize=(12.6, 5.0))
+
+ax = axes[0]
+kl = np.linspace(0.01, 0.99, 240)
+for (a, b), c, lab in [((1.0, 1.0), VIOLET, "$a=b=1.0$"),
+                       ((1.4, 1.4), BLUE, "$a=b=1.4$"),
+                       ((0.8, 0.8), GOLD, "$a=b=0.8$")]:
+    ys = [tau_minus(a, b, np.sqrt(v), np.sqrt(v)) for v in kl*a*b]
+    ax.plot(kl, ys, color=c, lw=2.3, label=lab)
+ax.set_xlabel("위협 민감도 비율  $kl\\,/\\,ab$")
+ax.set_ylabel("임계 지연  $\\tau_-$")
+ax.legend(frameon=False, fontsize=10)
+ax.axvspan(0.85, 1.0, color=RED, alpha=0.10)
+ax.annotate("생존 경계\n$kl \\to ab$", (0.92, ax.get_ylim()[1]*0.62), ha="center",
+            fontsize=9, color=RED)
+finish(ax, "허용 지연은 위협 민감도에 급격히 잠식된다",
+       "적대가 깊어질수록 '천천히 판단할 여유'가 구조적으로 사라진다")
+
+ax = axes[1]
+a = b = 1.0; k = l = 0.5; g = h = 0.6
+tc = tau_minus(a, b, k, l)
+dt = 0.01
+for tau, c, ls, lab in [(0.3*tc, GREEN, "-", f"$\\tau=0.3\\,\\tau_-$ (안정)"),
+                        (0.9*tc, GOLD, "-", f"$\\tau=0.9\\,\\tau_-$ (임계 근접)"),
+                        (1.6*tc, RED, "-", f"$\\tau=1.6\\,\\tau_-$ (호프 분기 이후)")]:
+    n = int(tau/dt); N = 5000
+    x = np.full(N, 1.0); y = np.full(N, 3.0)
+    for i in range(max(n, 1), N-1):
+        xd, yd = x[i-n], y[i-n]
+        x[i+1] = x[i] + dt*(k*yd - a*xd + g)
+        y[i+1] = y[i] + dt*(l*xd - b*yd + h)
+        if abs(x[i+1]) > 40: x[i+1:] = np.nan; y[i+1:] = np.nan; break
+    ax.plot(np.arange(N)*dt, x, color=c, ls=ls, lw=2.0, label=lab)
+ax.axhline(0, color=MUTED, lw=0.8, alpha=0.5)
+ax.set_xlim(0, 50); ax.set_ylim(-6, 22)
+ax.set_xlabel("시간"); ax.set_ylabel("국가 A 군비 $x(t)$")
+ax.legend(frameon=False, fontsize=9.5, loc="upper left")
+finish(ax, f"임계 지연 $\\tau_-\\approx{tc:.2f}$ 전후의 거동",
+       "같은 계수, 같은 초기조건 — 지연 하나만 바꿨다")
+plt.tight_layout()
+plt.show()
+```
+
+# 그런데 페트로프는 지연을 썼다
+
+1983년 9월 26일 자정 직후, 모스크바 남쪽 세르푸호프-15 벙커. 스타니슬라프 페트로프 중령이 당직이었다. 오코 조기경보 위성 시스템이 미국에서 발사된 대륙간탄도미사일을 감지했다고 보고했다. 처음 한 발, 이어서 다섯 발.
+
+규정대로라면 그는 즉시 상부에 보고해야 했고, 그 보고는 반격 결정으로 이어질 수 있었다. 그는 보고하지 않았다. 이유는 이랬다. **다섯 발은 이상하다.** 미국이 실제로 선제 핵공격을 한다면 수백 발을 한꺼번에 쏠 것이지 다섯 발을 쏘지 않는다. 게다가 지상 레이더는 아무것도 잡지 못하고 있었다.
+
+원인은 나중에 밝혀졌다. 고고도 구름 위에서 반사된 태양광을 위성 센서가 미사일 화염으로 오인한 것이었다.
+
+이제 물어야 한다. **페트로프가 쓴 시간은 리처드슨 방정식의 $\tau$인가?**
+
+아니다. 그는 상대의 군비 증강에 대응하는 것을 미룬 것이 아니다. 그는 **들어온 신호가 실재인지 판정**하는 데 시간을 썼다. 이것은 제어계에서 완전히 다른 부품이다.
+
+::: {.callout-important}
+## 두 개의 시간상수
+
+- **$\tau_R$ (반응지연)** — 상대의 실제 행동을 인지하고 내가 대응하기까지의 시간. 리처드슨 방정식의 $\tau$. 이것이 크면 과잉조정이 일어나 계가 진동한다. **줄이는 것이 옳다.**
+- **$\tau_J$ (판정지연)** — 들어온 신호가 참인지 거짓인지 판별하는 데 쓰는 시간. 이것은 지연이 아니라 **저역통과 필터의 시상수**다. 짧은 글리치를 걸러내는 관성. **줄이면 오경보가 그대로 통과한다.**
+:::
+
+$\tau_J$를 1차 저역통과 필터로 모형화하면 구조가 분명해진다. 지속시간 $T_g$의 오경보 펄스가 들어올 때 필터 출력의 최대값은
+
+$$y_{\max} = 1 - e^{-T_g/\tau_J}$$
+
+이고, 판정 임계값 $\theta$를 넘어야 "실재하는 공격"으로 상신된다. 따라서 오경보가 통과하는 조건은
+
+$$T_g > \tau_J \ln\!\frac{1}{1-\theta}$$
+
+**필터의 차단 능력은 $\tau_J$에 정비례한다.** 사람의 판정 시간이 수 분 단위였기 때문에 수십 초짜리 센서 글리치가 걸러졌다. 판정 시간을 1초로 줄이면 같은 글리치가 100% 통과한다.
+
+```{python}
+#| label: fig-filter
+#| lightbox: true
+#| fig-cap: "판정지연 τ_J를 1차 저역통과 필터로 본 오경보 차단 성능. 왼쪽: 지속시간 40초짜리 센서 글리치에 대한 필터 응답. 판정시간이 길수록 신호가 임계값에 도달하지 못한다. 오른쪽: 글리치 지속시간별 통과 여부 경계. 인간 지휘관(τ_J≈300초)과 자동화 체계(τ_J≈1초) 사이에는 두 자릿수 이상의 차단 성능 차이가 존재한다."
+fig, axes = plt.subplots(1, 2, figsize=(12.6, 5.0))
+THETA = 0.5
+
+ax = axes[0]
+Tg = 40.0
+t = np.linspace(0, 180, 2000)
+for tj, c, lab in [(1.0, RED, "$\\tau_J=1$s  (자동 판정)"),
+                   (20.0, GOLD, "$\\tau_J=20$s"),
+                   (300.0, GREEN, "$\\tau_J=300$s  (인간 판정)")]:
+    y = np.where(t <= Tg, 1-np.exp(-t/tj), (1-np.exp(-Tg/tj))*np.exp(-(t-Tg)/tj))
+    ax.plot(t, y, color=c, lw=2.3, label=lab)
+ax.axhline(THETA, color=MUTED, ls="--", lw=1.3)
+ax.annotate("판정 임계값 $\\theta=0.5$", (178, THETA-0.055), ha="right",
+            fontsize=9.5, color=MUTED)
+ax.axvspan(0, Tg, color=BLUE, alpha=0.08)
+ax.annotate(f"오경보 펄스\n$T_g={Tg:.0f}$s", (Tg/2, 0.74), ha="center",
+            fontsize=9.5, color=BLUE)
+ax.set_xlabel("시간 (초)"); ax.set_ylabel("필터 출력")
+ax.set_ylim(0, 1.08); ax.legend(frameon=False, fontsize=9.5, loc="upper right")
+finish(ax, "같은 오경보, 다른 결말",
+       "빨간 곡선만 임계값을 넘어 '실재하는 공격'으로 상신된다")
+
+ax = axes[1]
+tj = np.logspace(-0.3, 3, 300)
+Tcrit = tj*np.log(1/(1-THETA))
+ax.loglog(tj, Tcrit, color=VIOLET, lw=2.6)
+ax.fill_between(tj, Tcrit, 1e4, color=RED, alpha=0.09)
+ax.fill_between(tj, 1e-2, Tcrit, color=GREEN, alpha=0.09)
+ax.annotate("통과 — 오경보가 상신된다", (1.5, 2.2e3), fontsize=10.5, color=RED, fontweight="bold")
+ax.annotate("차단 — 필터가 걸러낸다", (25, 0.12), fontsize=10.5, color=GREEN, fontweight="bold")
+ax.axhline(40, color=GOLD, ls="--", lw=1.5)
+ax.annotate("실제 사례 규모의 글리치 ($T_g=40$s)", (0.62, 55), fontsize=9.5, color=GOLD)
+for tv, lab, c, mk in [(1.0, "자동 판정 $\\tau_J\\approx1$s\n→ 통과", RED, True),
+                       (300.0, "페트로프 $\\tau_J\\approx300$s\n→ 차단", GREEN, True)]:
+    ax.axvline(tv, color=c, ls=":", lw=1.6)
+    ax.annotate(lab, (tv*1.2, 2.0e-2), fontsize=9, color=c, fontweight="bold")
+    if mk:
+        ax.plot(tv, 40, "o", ms=8, color=c, markeredgecolor="white",
+                markeredgewidth=1.4, zorder=6)
+ax.set_xlim(0.5, 1e3); ax.set_ylim(1e-2, 1e4)
+ax.set_xlabel("판정지연 $\\tau_J$ (초)")
+ax.set_ylabel("차단 가능한 최대 글리치 지속시간 (초)")
+finish(ax, "필터 성능은 판정시간에 정비례한다",
+       "$T_g > \\tau_J \\ln[1/(1-\\theta)]$ — 경계선 위는 전부 통과")
+plt.tight_layout()
+plt.show()
+```
+
+# AI는 어느 시간상수를 줄이는가
+
+여기가 이 글의 핵심이다.
+
+AI를 지휘·통제 회로에 넣으면 $\tau_R$이 줄어든다. 위성 영상 판독, 병력 이동 탐지, 대응 옵션 생성이 빨라진다. 리처드슨 지연 모형에 따르면 이것은 **안정화**다. 임계 지연 $\tau_-$에서 멀어지므로 군비경쟁의 발진 위험이 줄어든다.
+
+그러나 같은 시스템이 $\tau_J$도 함께 줄인다. 그리고 $\tau_J$의 감소는 **필터의 제거**다.
+
+문제는 두 효과가 서로 다른 종류의 파국을 낳는다는 것이다.
+
+| | $\tau_R$ 실패 | $\tau_J$ 실패 |
+|---|---|---|
+| 기전 | 과잉조정 → 호프 분기 → 군비 발진 | 오경보 통과 → 오발사 |
+| 시간척도 | 수 년 ~ 수십 년 | 수 분 |
+| 가역성 | 되돌릴 수 있음(군축 협상) | 되돌릴 수 없음 |
+| 관측 가능성 | 진행 중 관측·경고 가능 | 사후에만 확인 |
+
+시간 척도가 **5~6자릿수** 차이 난다. 서로 다른 시간 척도와 서로 다른 가역성을 가진 두 위험을 하나의 기댓값으로 합산하는 것은 공학적으로 잘못된 집계다. 하나는 수십 년에 걸쳐 관측하며 대응할 수 있는 만성 위험이고, 다른 하나는 관측 즉시 종결되는 급성 위험이다.
+
+```{python}
+#| label: fig-scale
+#| lightbox: true
+#| fig-cap: "두 실패 양식의 시간 척도. AI 도입은 τ_R을 줄여 만성 위험(군비 발진)을 완화하지만, 동시에 τ_J를 줄여 급성 위험(오경보 오발사)을 증폭한다. 두 화살표는 같은 방향으로 움직이지만 결과는 반대다."
+fig, ax = plt.subplots(figsize=(12.6, 3.8))
+ax.set_xscale("log"); ax.set_xlim(0.3, 3e9); ax.set_ylim(0.35, 2.75)
+
+bands = [("판정 · $\\tau_J$", 1.0, 1, 600, RED, "오경보 → 오발사 (비가역, 수 분)"),
+         ("반응 · $\\tau_R$", 2.1, 86400*30, 86400*365*20, BLUE, "군비 발진 (가역, 수 년~수십 년)")]
+for lab, ypos, x0, x1, c, note in bands:
+    ax.barh(ypos, x1-x0, left=x0, height=0.42, color=c, alpha=0.28,
+            edgecolor=c, linewidth=1.8)
+    ax.annotate(lab, (x0*0.78, ypos), ha="right", va="center",
+                fontsize=11.5, fontweight="bold", color=c)
+    ax.annotate(note, (np.sqrt(x0*x1), ypos-0.36), ha="center", va="top",
+                fontsize=9.5, color=MUTED)
+
+ax.add_patch(FancyArrowPatch((300, 1.0), (1.2, 1.0), arrowstyle="-|>",
+                             mutation_scale=17, color=RED, lw=2.2))
+ax.add_patch(FancyArrowPatch((86400*365*10, 2.1), (86400*40, 2.1), arrowstyle="-|>",
+                             mutation_scale=17, color=BLUE, lw=2.2))
+ax.annotate("AI가 미는 방향", (14, 1.30), fontsize=9.5, color=RED, fontweight="bold")
+ax.annotate("AI가 미는 방향", (86400*300, 2.40), fontsize=9.5, color=BLUE, fontweight="bold")
+
+ticks = [1, 60, 3600, 86400, 86400*30, 86400*365, 86400*365*20]
+ax.set_xticks(ticks)
+ax.set_xticklabels(["1초", "1분", "1시간", "1일", "1달", "1년", "20년"])
+ax.set_yticks([]); ax.spines[["left", "right", "top"]].set_visible(False)
+ax.set_xlabel("특성 시간 척도 (로그 스케일)")
+finish(ax, "같은 방향으로 줄어드는 두 시간상수, 반대 방향의 결과", "")
+plt.tight_layout()
+plt.show()
+```
+
+# 모형이 하지 못하는 것
+
+이 글이 세운 모형은 정직하게 말해 **두려움과 이익만 담는다.** 투키디데스의 세 번째 항인 명예는 들어가지 못했다.
+
+$k$와 $l$은 위협 민감도를 표현하지만, 아가멤논이 아킬레우스의 전리품을 빼앗았을 때 발생한 것은 위협이 아니라 모욕이었다. 모욕은 상대의 군비 $y$의 함수가 아니다. 그것은 **관계의 상태 변수**이며, 현재의 리처드슨류 모형에는 대응하는 자리가 없다.
+
+세 가지를 더 기록해 둔다.
+
+**매몰비용.** 방정식은 과거 손실을 기억하지 않는다. 현실의 전쟁은 사망자가 쌓일수록 중단 비용이 올라간다. "여기까지 죽었는데 지금 멈추면 그 죽음이 헛된 것이 된다"는 논리는 미분방정식에 들어가지 않는다. 이것은 $g, h$를 시간에 따라 증가하는 항으로 바꿔야 다뤄지는데, 그 순간 안정 조건 전체가 다시 쓰여야 한다.
+
+**거리와 살해저항.** 데이브 그로스먼의 『On Killing』(1995)은 거리가 멀수록 살해 저항이 감소한다고 주장했고, 이 논지는 S.L.A. 마셜이 2차대전에서 보고한 "보병의 15–25%만 발포했다"는 수치에 크게 의존한다. 그러나 마셜의 원 자료와 면담 기록의 신빙성은 1980년대 이후 역사학계에서 반복적으로 반박되었다. **이 글은 거리-저항 곡선을 정량 모형에 넣지 않았다.** 방향성 있는 정성적 관찰로만 다루는 것이 현재 증거 수준에 맞다.
+
+**임계값 $\theta$의 임의성.** 위 필터 모형에서 $\theta=0.5$는 예시값이다. 실제 지휘체계의 판정 임계는 교전규칙과 정치적 맥락의 함수이며 공개되지 않는다. 따라서 그림 4의 경계선은 **수치가 아니라 구조**로 읽혀야 한다 — 기울기가 1인 로그-로그 직선, 즉 정비례 관계가 요점이다.
+
+# 결론 — 필터를 제도로 남기는 문제
+
+세 가지가 남는다.
+
+**첫째, 'human-in-the-loop'은 속도 논쟁이 아니라 필터 논쟁이다.** 지금까지 이 문제는 대체로 "사람이 개입하면 느려서 진다"는 프레임으로 다뤄져 왔다. 위 분석은 프레임이 틀렸다고 말한다. 사람이 회로에 있어서 얻는 것은 느림이 아니라 **차단 성능**이다. 자동화가 이길 수 있는 것은 $\tau_R$이고, 사람이 대체 불가능한 것은 $\tau_J$다. 이 둘을 구분하지 않은 채 "전 구간 자동화"를 추진하면, 얻는 안정성보다 잃는 필터가 크다.
+
+**둘째, 필터는 개인의 용기가 아니라 제도여야 한다.** 1983년에 작동한 것은 시스템이 아니라 한 사람의 판단이었다. 페트로프는 이후 포상받지 않았고 오히려 근무 기록에 문제가 남았다. 개인의 불복종에 의존하는 안전장치는 설계가 아니다. 판정 시간의 하한을 명시적으로 요구하는 교전규칙 — 즉 **최소 $\tau_J$의 제도화** — 이 필요하다.
+
+**셋째, 계수는 여전히 사람이 정한다.** $k$와 $l$에는 타지펠이 보여준 생물학적 하한이 있어 0으로 내려가지 않는다. 그러나 $ab > kl$이라는 안정 조건은 $k$를 낮추는 것으로만 달성되지 않는다. **$a$와 $b$를 높이는 것** — 즉 군비의 기회비용을 서로에게 크게 만드는 것 — 도 같은 부등식을 만족시킨다. 경제적 상호의존, 검증 가능한 군축, 공급망 결합이 작동하는 자리가 정확히 여기다. 이것들은 선의를 요구하지 않는다. 계수를 바꿀 뿐이다.
+
+---
+
+『일리아스』는 전투 장면이 아니라 24권의 한 장면으로 끝난다. 아킬레우스가 자기가 죽인 헥토르의 시신을 끌고 다니던 밤, 늙은 프리아모스가 홀로 적진에 들어와 아들의 시신을 청한다. 아킬레우스는 그 얼굴에서 자기 아버지를 보고, 둘은 함께 운다.
+
+호메로스는 3천 년 전에 이미 알고 있었다. 죽이는 것도 인간이고, 그것을 멈추게 하는 것도 **상대를 한 사람으로 다시 보는 순간**이라는 것을.
+
+이 글이 덧붙일 수 있는 것은 하나다. 그 순간에는 **시간이 걸린다.** 그리고 우리가 지금 설계하고 있는 시스템들은, 바로 그 시간을 없애는 방향으로 최적화되고 있다.
+
+---
+
+::: {.callout-tip}
+## 크로스오버 요약
+- **제어이론**이 기여한 것: 지연미분방정식의 임계 $\tau_-$와 호프 분기 — 지연이 불안정의 원인이라는 표준 결론
+- **지정학**이 기여한 것: 안보 딜레마의 구조와 리처드슨 계수의 실제 의미, 투키디데스의 세 동기
+- **행동생태학·사회심리학**이 기여한 것: 위협 민감도 $k$에 생물학적 하한이 있다는 제약 조건
+- **경계에서만 나온 결론**: 전쟁 회로의 시간상수는 하나가 아니라 둘이며, 제어이론이 "줄이라"고 말하는 $\tau$와 페트로프가 실제로 쓴 $\tau$는 **다른 부품**이다. 인간의 느림은 지연이 아니라 필터였다.
+:::
+
+## 참고 자료
+
+- Richardson, L. F. *Arms and Insecurity* (1960) — 군비경쟁 미분방정식의 원전
+- [지연 리처드슨 모형의 안정성과 호프 분기 (arXiv)](https://arxiv.org/html/2605.13823v1) — 임계 지연 $\tau_-$ 공식
+- [The Richardson Arms Race Model, UMAP/COMAP](https://comap.org/membership/member-resources/item/the-richardson-arms-race-model-umap)
+- [Gombe Chimpanzee War — Wikipedia](https://en.wikipedia.org/wiki/Gombe_Chimpanzee_War) — 1974–1978 집단 간 절멸 전쟁 기록
+- [Chimpanzee violence — Wikipedia](https://en.wikipedia.org/wiki/Chimpanzee_violence)
+- Tajfel, H. et al. (1971) "Social categorization and intergroup behaviour" — 최소집단 패러다임
+- [Minimal Group Procedures and Outcomes, *Collabra: Psychology* (2023)](https://online.ucpress.edu/collabra/article/9/1/90187/198721/Minimal-Group-Procedures-and-Outcomes) — 최근 재현 연구
+- [1983 Soviet nuclear false alarm incident — Wikipedia](https://en.wikipedia.org/wiki/1983_Soviet_nuclear_false_alarm_incident)
+- [U.S. EIA, *World Oil Transit Chokepoints*](https://www.eia.gov/international/content/analysis/special_topics/World_Oil_Transit_Chokepoints) — 초크포인트별 일일 통과량(2025 상반기)
+- [2025년 터키 해협 통과 선박 84,640척 집계](https://www.turkiyetoday.com/business/84640-ships-transit-turkiye-straits-in-2025-3214197)
+- 지도 해안선: NOAA GSHHS 실측 데이터(Basemap 내장), 교역로·주기는 저자 재구성
+- [Kolb, F. "Troy VI: A Trading Center and Commercial City?" *AJA* 108 (2004)](https://ajaonline.org/wp-content/uploads/2012/11/1084_Kolb.pdf) — 코르프만 반박
+- [Korfmann 측 반론, *AJA* 108 (2004) 615–](https://www.journals.uchicago.edu/doi/pdf/10.3764/aja.108.4.615)
+- [On Killing — Wikipedia](https://en.wikipedia.org/wiki/On_Killing) 및 [S.L.A. Marshall — Wikipedia](https://en.wikipedia.org/wiki/S.L.A._Marshall) — 발포율 논쟁
+- 투키디데스 『펠로폰네소스 전쟁사』 1권 75–76 — phobos·kerdos·timē
+- 호메로스 『일리아스』 1권(아킬레우스의 분노), 24권(프리아모스의 간청)
