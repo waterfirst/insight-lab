@@ -1,0 +1,722 @@
+[
+ {
+  "label": 0,
+  "junk": 0.29,
+  "kind": "transactional",
+  "kind_conf": 0.91
+ },
+ {
+  "label": 0,
+  "junk": 0.43,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 0,
+  "junk": 0.53,
+  "kind": "newsletter",
+  "kind_conf": 0.68
+ },
+ {
+  "label": 0,
+  "junk": 0.3,
+  "kind": "transactional",
+  "kind_conf": 0.54
+ },
+ {
+  "label": 0,
+  "junk": 0.41,
+  "kind": "marketing",
+  "kind_conf": 0.73
+ },
+ {
+  "label": 0,
+  "junk": 0.71,
+  "kind": "marketing",
+  "kind_conf": 0.87
+ },
+ {
+  "label": 0,
+  "junk": 0.36,
+  "kind": "transactional",
+  "kind_conf": 0.46
+ },
+ {
+  "label": 0,
+  "junk": 0.43,
+  "kind": "newsletter",
+  "kind_conf": 0.99
+ },
+ {
+  "label": 0,
+  "junk": 0.65,
+  "kind": "transactional",
+  "kind_conf": 0.88
+ },
+ {
+  "label": 0,
+  "junk": 0.44,
+  "kind": "newsletter",
+  "kind_conf": 0.49
+ },
+ {
+  "label": 0,
+  "junk": 0.6,
+  "kind": "newsletter",
+  "kind_conf": 0.76
+ },
+ {
+  "label": 0,
+  "junk": 0.28,
+  "kind": "newsletter",
+  "kind_conf": 0.85
+ },
+ {
+  "label": 0,
+  "junk": 0.5,
+  "kind": "newsletter",
+  "kind_conf": 0.72
+ },
+ {
+  "label": 0,
+  "junk": 0.36,
+  "kind": "transactional",
+  "kind_conf": 0.99
+ },
+ {
+  "label": 0,
+  "junk": 0.72,
+  "kind": "marketing",
+  "kind_conf": 0.88
+ },
+ {
+  "label": 0,
+  "junk": 0.08,
+  "kind": "other",
+  "kind_conf": 0.47
+ },
+ {
+  "label": 0,
+  "junk": 0.36,
+  "kind": "transactional",
+  "kind_conf": 0.79
+ },
+ {
+  "label": 0,
+  "junk": 0.26,
+  "kind": "newsletter",
+  "kind_conf": 0.42
+ },
+ {
+  "label": 0,
+  "junk": 0.25,
+  "kind": "transactional",
+  "kind_conf": 0.98
+ },
+ {
+  "label": 0,
+  "junk": 0.23,
+  "kind": "transactional",
+  "kind_conf": 0.97
+ },
+ {
+  "label": 0,
+  "junk": 0.41,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 0,
+  "junk": 0.63,
+  "kind": "newsletter",
+  "kind_conf": 0.73
+ },
+ {
+  "label": 0,
+  "junk": 0.18,
+  "kind": "transactional",
+  "kind_conf": 0.97
+ },
+ {
+  "label": 0,
+  "junk": 0.09,
+  "kind": "transactional",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 0,
+  "junk": 0.74,
+  "kind": "marketing",
+  "kind_conf": 0.99
+ },
+ {
+  "label": 0,
+  "junk": 0.34,
+  "kind": "newsletter",
+  "kind_conf": 0.83
+ },
+ {
+  "label": 0,
+  "junk": 0.15,
+  "kind": "transactional",
+  "kind_conf": 0.98
+ },
+ {
+  "label": 0,
+  "junk": 0.18,
+  "kind": "transactional",
+  "kind_conf": 0.98
+ },
+ {
+  "label": 0,
+  "junk": 0.71,
+  "kind": "marketing",
+  "kind_conf": 0.99
+ },
+ {
+  "label": 0,
+  "junk": 0.34,
+  "kind": "transactional",
+  "kind_conf": 0.9
+ },
+ {
+  "label": 0,
+  "junk": 0.56,
+  "kind": "transactional",
+  "kind_conf": 0.85
+ },
+ {
+  "label": 0,
+  "junk": 0.36,
+  "kind": "transactional",
+  "kind_conf": 0.53
+ },
+ {
+  "label": 0,
+  "junk": 0.58,
+  "kind": "marketing",
+  "kind_conf": 0.99
+ },
+ {
+  "label": 0,
+  "junk": 0.16,
+  "kind": "newsletter",
+  "kind_conf": 0.98
+ },
+ {
+  "label": 0,
+  "junk": 0.4,
+  "kind": "marketing",
+  "kind_conf": 0.51
+ },
+ {
+  "label": 0,
+  "junk": 0.32,
+  "kind": "transactional",
+  "kind_conf": 0.41
+ },
+ {
+  "label": 0,
+  "junk": 0.11,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 0,
+  "junk": 0.4,
+  "kind": "newsletter",
+  "kind_conf": 0.99
+ },
+ {
+  "label": 0,
+  "junk": 0.58,
+  "kind": "marketing",
+  "kind_conf": 0.75
+ },
+ {
+  "label": 0,
+  "junk": 0.34,
+  "kind": "transactional",
+  "kind_conf": 0.99
+ },
+ {
+  "label": 0,
+  "junk": 0.59,
+  "kind": "marketing",
+  "kind_conf": 0.99
+ },
+ {
+  "label": 0,
+  "junk": 0.28,
+  "kind": "newsletter",
+  "kind_conf": 0.7
+ },
+ {
+  "label": 0,
+  "junk": 0.36,
+  "kind": "transactional",
+  "kind_conf": 0.49
+ },
+ {
+  "label": 0,
+  "junk": 0.44,
+  "kind": "transactional",
+  "kind_conf": 0.8
+ },
+ {
+  "label": 0,
+  "junk": 0.7,
+  "kind": "newsletter",
+  "kind_conf": 0.99
+ },
+ {
+  "label": 0,
+  "junk": 0.15,
+  "kind": "newsletter",
+  "kind_conf": 0.76
+ },
+ {
+  "label": 0,
+  "junk": 0.32,
+  "kind": "transactional",
+  "kind_conf": 0.46
+ },
+ {
+  "label": 0,
+  "junk": 0.41,
+  "kind": "transactional",
+  "kind_conf": 0.46
+ },
+ {
+  "label": 0,
+  "junk": 0.4,
+  "kind": "transactional",
+  "kind_conf": 0.96
+ },
+ {
+  "label": 0,
+  "junk": 0.24,
+  "kind": "other",
+  "kind_conf": 0.41
+ },
+ {
+  "label": 0,
+  "junk": 0.34,
+  "kind": "transactional",
+  "kind_conf": 0.98
+ },
+ {
+  "label": 0,
+  "junk": 0.09,
+  "kind": "transactional",
+  "kind_conf": 0.99
+ },
+ {
+  "label": 0,
+  "junk": 0.21,
+  "kind": "transactional",
+  "kind_conf": 0.95
+ },
+ {
+  "label": 0,
+  "junk": 0.41,
+  "kind": "transactional",
+  "kind_conf": 0.9
+ },
+ {
+  "label": 0,
+  "junk": 0.17,
+  "kind": "transactional",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 0,
+  "junk": 0.4,
+  "kind": "transactional",
+  "kind_conf": 0.89
+ },
+ {
+  "label": 0,
+  "junk": 0.31,
+  "kind": "transactional",
+  "kind_conf": 0.51
+ },
+ {
+  "label": 0,
+  "junk": 0.34,
+  "kind": "newsletter",
+  "kind_conf": 0.37
+ },
+ {
+  "label": 0,
+  "junk": 0.4,
+  "kind": "transactional",
+  "kind_conf": 0.87
+ },
+ {
+  "label": 0,
+  "junk": 0.09,
+  "kind": "transactional",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.31,
+  "kind": "transactional",
+  "kind_conf": 0.64
+ },
+ {
+  "label": 1,
+  "junk": 0.33,
+  "kind": "transactional",
+  "kind_conf": 0.45
+ },
+ {
+  "label": 1,
+  "junk": 0.68,
+  "kind": "newsletter",
+  "kind_conf": 0.31
+ },
+ {
+  "label": 1,
+  "junk": 0.34,
+  "kind": "newsletter",
+  "kind_conf": 0.8
+ },
+ {
+  "label": 1,
+  "junk": 0.22,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.31,
+  "kind": "transactional",
+  "kind_conf": 0.59
+ },
+ {
+  "label": 1,
+  "junk": 0.25,
+  "kind": "marketing",
+  "kind_conf": 0.84
+ },
+ {
+  "label": 1,
+  "junk": 0.38,
+  "kind": "transactional",
+  "kind_conf": 0.58
+ },
+ {
+  "label": 1,
+  "junk": 0.86,
+  "kind": "marketing",
+  "kind_conf": 0.97
+ },
+ {
+  "label": 1,
+  "junk": 0.82,
+  "kind": "scam",
+  "kind_conf": 0.66
+ },
+ {
+  "label": 1,
+  "junk": 0.8,
+  "kind": "transactional",
+  "kind_conf": 0.52
+ },
+ {
+  "label": 1,
+  "junk": 0.26,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.3,
+  "kind": "transactional",
+  "kind_conf": 0.71
+ },
+ {
+  "label": 1,
+  "junk": 0.4,
+  "kind": "newsletter",
+  "kind_conf": 0.4
+ },
+ {
+  "label": 1,
+  "junk": 0.62,
+  "kind": "newsletter",
+  "kind_conf": 0.23
+ },
+ {
+  "label": 1,
+  "junk": 0.69,
+  "kind": "marketing",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.23,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.29,
+  "kind": "transactional",
+  "kind_conf": 0.58
+ },
+ {
+  "label": 1,
+  "junk": 0.3,
+  "kind": "transactional",
+  "kind_conf": 0.63
+ },
+ {
+  "label": 1,
+  "junk": 0.56,
+  "kind": "transactional",
+  "kind_conf": 0.8
+ },
+ {
+  "label": 1,
+  "junk": 0.76,
+  "kind": "scam",
+  "kind_conf": 0.24
+ },
+ {
+  "label": 1,
+  "junk": 0.98,
+  "kind": "scam",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.84,
+  "kind": "transactional",
+  "kind_conf": 0.41
+ },
+ {
+  "label": 1,
+  "junk": 0.27,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.31,
+  "kind": "transactional",
+  "kind_conf": 0.61
+ },
+ {
+  "label": 1,
+  "junk": 0.7,
+  "kind": "marketing",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.71,
+  "kind": "marketing",
+  "kind_conf": 0.55
+ },
+ {
+  "label": 1,
+  "junk": 0.37,
+  "kind": "marketing",
+  "kind_conf": 0.94
+ },
+ {
+  "label": 1,
+  "junk": 0.58,
+  "kind": "marketing",
+  "kind_conf": 0.44
+ },
+ {
+  "label": 1,
+  "junk": 0.51,
+  "kind": "transactional",
+  "kind_conf": 0.51
+ },
+ {
+  "label": 1,
+  "junk": 0.68,
+  "kind": "scam",
+  "kind_conf": 0.17
+ },
+ {
+  "label": 1,
+  "junk": 0.88,
+  "kind": "scam",
+  "kind_conf": 0.35
+ },
+ {
+  "label": 1,
+  "junk": 0.25,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.31,
+  "kind": "transactional",
+  "kind_conf": 0.74
+ },
+ {
+  "label": 1,
+  "junk": 0.9,
+  "kind": "marketing",
+  "kind_conf": 0.98
+ },
+ {
+  "label": 1,
+  "junk": 0.72,
+  "kind": "newsletter",
+  "kind_conf": 0.17
+ },
+ {
+  "label": 1,
+  "junk": 0.29,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.37,
+  "kind": "marketing",
+  "kind_conf": 0.73
+ },
+ {
+  "label": 1,
+  "junk": 0.35,
+  "kind": "transactional",
+  "kind_conf": 0.47
+ },
+ {
+  "label": 1,
+  "junk": 0.75,
+  "kind": "marketing",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.19,
+  "kind": "transactional",
+  "kind_conf": 0.99
+ },
+ {
+  "label": 1,
+  "junk": 0.76,
+  "kind": "marketing",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.28,
+  "kind": "transactional",
+  "kind_conf": 0.55
+ },
+ {
+  "label": 1,
+  "junk": 0.76,
+  "kind": "marketing",
+  "kind_conf": 0.4
+ },
+ {
+  "label": 1,
+  "junk": 0.74,
+  "kind": "scam",
+  "kind_conf": 0.24
+ },
+ {
+  "label": 1,
+  "junk": 0.36,
+  "kind": "marketing",
+  "kind_conf": 0.49
+ },
+ {
+  "label": 1,
+  "junk": 0.81,
+  "kind": "transactional",
+  "kind_conf": 0.51
+ },
+ {
+  "label": 1,
+  "junk": 0.26,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.23,
+  "kind": "transactional",
+  "kind_conf": 0.77
+ },
+ {
+  "label": 1,
+  "junk": 0.27,
+  "kind": "transactional",
+  "kind_conf": 0.98
+ },
+ {
+  "label": 1,
+  "junk": 0.81,
+  "kind": "transactional",
+  "kind_conf": 0.58
+ },
+ {
+  "label": 1,
+  "junk": 0.8,
+  "kind": "scam",
+  "kind_conf": 0.53
+ },
+ {
+  "label": 1,
+  "junk": 0.24,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.26,
+  "kind": "transactional",
+  "kind_conf": 0.75
+ },
+ {
+  "label": 1,
+  "junk": 0.81,
+  "kind": "newsletter",
+  "kind_conf": 0.4
+ },
+ {
+  "label": 1,
+  "junk": 0.83,
+  "kind": "transactional",
+  "kind_conf": 0.34
+ },
+ {
+  "label": 1,
+  "junk": 0.22,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ },
+ {
+  "label": 1,
+  "junk": 0.35,
+  "kind": "transactional",
+  "kind_conf": 0.72
+ },
+ {
+  "label": 1,
+  "junk": 0.73,
+  "kind": "scam",
+  "kind_conf": 0.21
+ },
+ {
+  "label": 1,
+  "junk": 0.23,
+  "kind": "newsletter",
+  "kind_conf": 1.0
+ }
+]
