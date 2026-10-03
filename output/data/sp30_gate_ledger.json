@@ -1,0 +1,2636 @@
+{
+"note": "Sentinel ledger 2026-09-23..2026-10-03, one user, one agent. Command text, paths and IDs removed.",
+"policy_change": "2026-09-27 16:19 KST: 12 gate rules -> 4 gate rules, rest log-and-pass",
+"window_days": {
+"before": 4.37,
+"after": 5.74
+},
+"approval_latency_min": [
+27.4,
+3.4,
+10.8,
+1.1,
+0.6
+],
+"approval_latency_note": "block->approve minutes for the 5 non-test approvals; expiry window 30 min",
+"outcomes": {
+"approved": 5,
+"test": 3,
+"expired": 17,
+"bulk_cleared": 83,
+"individually_closed": 6
+},
+"standing_grants": 11,
+"events": [
+{
+"date": "2026-09-23",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-23",
+"status": "code_bad",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-23",
+"status": "approved",
+"rule": "git_publish",
+"period": "before"
+},
+{
+"date": "2026-09-23",
+"status": "allow_approved",
+"rule": "git_publish",
+"period": "before"
+},
+{
+"date": "2026-09-23",
+"status": "blocked",
+"rule": "git_publish",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-23",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-23",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-23",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-23",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-23",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-23",
+"status": "blocked",
+"rule": "remote_copy",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-23",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-23",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-24",
+"status": "blocked",
+"rule": "remote_copy",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-24",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-24",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-24",
+"status": "blocked",
+"rule": "remote_copy",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-24",
+"status": "blocked",
+"rule": "sudo_system",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-24",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-24",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-24",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-24",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-24",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-24",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-24",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-24",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-24",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-24",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-24",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-24",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-24",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-24",
+"status": "approved",
+"rule": "rm_recursive",
+"period": "before"
+},
+{
+"date": "2026-09-24",
+"status": "allow_approved",
+"rule": "rm_recursive",
+"period": "before"
+},
+{
+"date": "2026-09-24",
+"status": "blocked",
+"rule": "git_commit",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-24",
+"status": "blocked",
+"rule": "net_egress",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-24",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-24",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-25",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-25",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-25",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-25",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-25",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-25",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-25",
+"status": "approved",
+"rule": "rm_recursive",
+"period": "before"
+},
+{
+"date": "2026-09-25",
+"status": "allow_approved",
+"rule": "rm_recursive",
+"period": "before"
+},
+{
+"date": "2026-09-25",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-25",
+"status": "blocked",
+"rule": "remote_copy",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-25",
+"status": "blocked",
+"rule": "sudo_system",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-25",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-25",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-25",
+"status": "blocked",
+"rule": "net_egress",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-25",
+"status": "blocked",
+"rule": "git_commit",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-25",
+"status": "blocked",
+"rule": "net_egress",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-25",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-25",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "sudo_system",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "sudo_system",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "remote_copy",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "remote_copy",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "net_egress",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "git_publish",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "git_commit",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "git_publish",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "net_egress",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "sudo_system",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "net_egress",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "git_commit",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-26",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "bot_infra",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "allow_granted",
+"rule": "git_commit",
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "allow_granted",
+"rule": "git_publish",
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "allow_granted",
+"rule": "git_publish",
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "bot_infra",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "bot_infra",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "remote_copy",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "sudo_system",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "sudo_system",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "sudo_system",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "git_publish",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "allow_granted",
+"rule": "git_commit",
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "allow_granted",
+"rule": "git_publish",
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "allow_granted",
+"rule": "git_commit",
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "allow_granted",
+"rule": "git_publish",
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "git_publish",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "git_commit",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "git_commit",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "remote_copy",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "remote_copy",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "expired",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "remote_copy",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "remote_copy",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "git_publish",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "remote_copy",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "allow_granted",
+"rule": "git_publish",
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-27",
+"status": "allow_granted",
+"rule": "git_publish",
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "before",
+"worth_asking": true,
+"second_signal": true,
+"in_four_rules": true
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "rm_recursive",
+"period": "before",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": false
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "before",
+"worth_asking": true,
+"second_signal": true,
+"in_four_rules": true
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "before",
+"worth_asking": true,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "before",
+"worth_asking": true,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-27",
+"status": "approved",
+"rule": "sentinel_tamper",
+"period": "before"
+},
+{
+"date": "2026-09-27",
+"status": "allow_approved",
+"rule": "sentinel_tamper",
+"period": "after"
+},
+{
+"date": "2026-09-27",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": true,
+"second_signal": true,
+"in_four_rules": true
+},
+{
+"date": "2026-09-27",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-09-27",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-27",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-27",
+"status": "allow_notified",
+"rule": "git_commit",
+"period": "after"
+},
+{
+"date": "2026-09-27",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "sudo_system",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "blocked",
+"rule": "rm_catastrophic",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "git_commit",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "mail_send",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "blocked",
+"rule": "rm_catastrophic",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "blocked",
+"rule": "disk_destroy",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-28",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "sudo_system",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "sudo_system",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "sudo_system",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "net_egress",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "mail_send",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "blocked",
+"rule": "rm_catastrophic",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "sudo_system",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "git_commit",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "git_commit",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "sudo_system",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "net_egress",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "net_egress",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "git_commit",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "mail_send",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "mail_send",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "sudo_system",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "mail_send",
+"period": "after"
+},
+{
+"date": "2026-09-29",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-29",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-29",
+"status": "allow_notified",
+"rule": "git_commit",
+"period": "after"
+},
+{
+"date": "2026-09-30",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-30",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-30",
+"status": "allow_notified",
+"rule": "sudo_system",
+"period": "after"
+},
+{
+"date": "2026-09-30",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-09-30",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-30",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-30",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-30",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-09-30",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-30",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-09-30",
+"status": "allow_notified",
+"rule": "git_commit",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "sudo_system",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "rm_catastrophic",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "rm_catastrophic",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "net_egress",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "disk_destroy",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "net_egress",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "disk_destroy",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "git_commit",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "git_publish",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "git_commit",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "rm_catastrophic",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "approved",
+"rule": "rm_catastrophic",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "approved",
+"rule": "secrets_egress",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "sudo_system",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "sudo_system",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "bot_infra",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "rm_catastrophic",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "sudo_system",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": true,
+"second_signal": true,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "net_egress",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "net_egress",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "net_egress",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-01",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "blocked",
+"rule": "rm_catastrophic",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": "net_egress",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "blocked",
+"rule": "rm_catastrophic",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": "git_publish",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": "remote_copy",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-02",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-02",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": "net_egress",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-02",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-02",
+"status": "blocked",
+"rule": "secrets_egress",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-02",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+},
+{
+"date": "2026-10-02",
+"status": "allow_notified",
+"rule": "git_commit",
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-02",
+"status": "denied",
+"rule": null,
+"period": "after"
+},
+{
+"date": "2026-10-03",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-03",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-03",
+"status": "allow_notified",
+"rule": "rm_recursive",
+"period": "after"
+},
+{
+"date": "2026-10-03",
+"status": "blocked",
+"rule": "sentinel_tamper",
+"period": "after",
+"worth_asking": false,
+"second_signal": false,
+"in_four_rules": true
+}
+]
+}
