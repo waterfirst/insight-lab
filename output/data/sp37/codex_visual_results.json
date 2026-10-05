@@ -1,0 +1,96 @@
+{
+  "video": "JABHMSoi1bU.mp4",
+  "fps": 30,
+  "rois": {
+    "screen_right_seated_suited_A": [
+      245,
+      245,
+      330,
+      365
+    ],
+    "speaker_upper_body": [
+      45,
+      225,
+      92,
+      275
+    ],
+    "hanbok_woman": [
+      335,
+      245,
+      420,
+      355
+    ],
+    "global_stage": [
+      0,
+      200,
+      640,
+      390
+    ]
+  },
+  "first_abnormal_stage_person": {
+    "label": "screen_right_seated_suited_A",
+    "frame": 320,
+    "time_s": 10.667,
+    "metric": "mean absolute frame-to-frame luma difference",
+    "baseline_median": 0.131,
+    "baseline_mad": 0.118,
+    "threshold": 3.731,
+    "value": 4.137
+  },
+  "speaker_disappears_behind_lectern": {
+    "frame": 412,
+    "time_s": 13.733,
+    "metric": "dark pixels in tight upper-body speaker ROI",
+    "roi_threshold_luma": 45.0,
+    "baseline_count": 1030.0,
+    "low_threshold_count": 360.5,
+    "value": 352
+  },
+  "hanbok_woman_first_abnormal": {
+    "frame": 407,
+    "time_s": 13.567,
+    "metric": "bright-head centroid displacement and ROI luma-difference",
+    "baseline_centroid_xy": [
+      396.21,
+      334.95
+    ],
+    "centroid_xy": [
+      399.28,
+      334.59
+    ],
+    "x_displacement_px": 3.07,
+    "motion_threshold": 4.657,
+    "motion_value": 5.048,
+    "lean_direction": "screen right"
+  },
+  "scene_transition_edit_traces": {
+    "metric": "global stage ROI frame-to-frame luma difference",
+    "baseline_median": 0.168,
+    "baseline_mad": 0.076,
+    "threshold": 14.568,
+    "spike_groups": [
+      {
+        "frames": [
+          412,
+          419
+        ],
+        "time_s": [
+          13.733,
+          13.967
+        ],
+        "peak": 19.322
+      },
+      {
+        "frames": [
+          426,
+          457
+        ],
+        "time_s": [
+          14.2,
+          15.233
+        ],
+        "peak": 22.064
+      }
+    ]
+  }
+}

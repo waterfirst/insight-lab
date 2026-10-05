@@ -1,0 +1,29 @@
+{
+  "video": "JABHMSoi1bU.mp4",
+  "sample_rate": 48000,
+  "duration_analyzed_s": 20,
+  "gunshot_criteria": "rise time <2 ms, broadband energy through 8-16 kHz not more than 30 dB below total band energy, and decay to -20 dB within 180 ms",
+  "impulse_candidates": [
+    {
+      "time_s": 19.60777,
+      "sample": 941173,
+      "residual_height": 8.12,
+      "rise_ms_10_90": 1.188,
+      "decay_to_minus20db_ms": 0.25,
+      "band_energy_db_relative": {
+        "120-1000Hz": -1.9,
+        "1000-3000Hz": -4.5,
+        "3000-8000Hz": -25.7,
+        "8000-16000Hz": -34.2,
+        "16000-22000Hz": -52.4
+      },
+      "meets_gunshot_impulse_criteria": false
+    }
+  ],
+  "gunshot_candidates": [],
+  "bandwidth_high_frequency_rolloff": {
+    "median_power_8_16k_vs_1_3k_db": -30.78,
+    "median_power_16_22k_vs_1_3k_db": -46.66,
+    "median_spectral_rolloff_95pct_hz": 1359.4
+  }
+}

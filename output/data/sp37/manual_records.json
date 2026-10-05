@@ -1,0 +1,21 @@
+{
+ "unresolved_candidate_U1": {"t": 7.9265, "rise_ms": 2.5, "decay_minus20db_ms": 148, "centroid_hz": 735, "hf_2_6k_vs_low_db": -25.6, "autocorr_peak": 0.29, "stage_reaction": "none in frames 7.75-8.25 s", "verdict": "미판정 (파열음 또는 원거리 충격음)"},
+ "concordance": [
+  {"event": "무대 위 인물 A 첫 이상움직임", "claude": [9.933, 10.6], "codex": [10.667, 10.667], "verdict": "일치(임계값 차이)"},
+  {"event": "연설자 은신(연단 뒤 소실)", "claude": [12.233, 12.5], "codex": [13.733, 13.733], "verdict": "Codex 오측정: ROI가 벽 무늬, 카메라 이동에 반응. 원본 프레임 판정 12.3-12.5"},
+  {"event": "한복 인물 이상동작", "claude": [13.0, 13.5], "codex": [13.567, 13.567], "verdict": "일치, 화면 오른쪽으로 기울어짐(Codex)"},
+  {"event": "카메라 급동요 시작", "claude": [13.47, 13.47], "codex": [13.733, 13.733], "verdict": "일치(검출 기준 차이)"}
+ ],
+ "bae_2005": {"source": "경향신문 2005-02-11; 프레시안 29335", "first_to_fourth_shot_s": 6.91, "reaction_after_fourth_s": 0.17, "claimed_distance_m": [15.0, 18.2], "claimed_bullet_mps": 250, "sound_mps": 340, "shots_mun": [1,2,3,5], "shots_guard": [4,6,7], "audio_sources": "CBS·KBS·MBC·미국 CBS TV·라디오 현장자료"},
+ "gemini_citation_check": [
+  {"cited": "news.kbs.co.kr ncd=702958", "actual_title": "칸 박사, 이란에 원심 분리기 제공"},
+  {"cited": "ohmynews A0000245648", "actual_title": "5주간 의식불명 플로리다 남성 '기적'의 재생"},
+  {"cited": "yna AKR20050220038900001", "actual_title": "(빈 페이지)"},
+  {"cited": "imnews 2018 4619728", "actual_title": "(빈 페이지)"}
+ ],
+ "ach_v2": {
+  "hypotheses": ["H1 문세광 탄 치명","H2 경호원 탄 치명","H3 사전 기획","H4 실수·은폐·이용","H5 제3의 사수","H6 음향 비동기·교체","H7 영상 편집·압축"],
+  "evidence": ["E-a 첫 반응→은신 2.3s","E-b 은신 후 약 1s 노출","E-c 인물 A 팔 뻗음(판독 불가)","E-d 총성 미검출","E-e 사본 4점 단일 계통","E-f 하울링 11.0s","E-g ENF 연속(9-13s)"],
+  "codes": [["N","N","N","N","N","N","N"],["N","N","N","N","N","N","N"],["?","?","?","?","?","?","?"],["?","?","?","?","?","C","wC"],["N","N","N","N","N","C","wC"],["N","N","N","N","N","N","N"],["N","N","N","N","N","N","wI"]]
+ }
+}
