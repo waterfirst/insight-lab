@@ -1,0 +1,420 @@
+---
+title: "당신이 계속 중위 연령이었던 이유"
+subtitle: "기업의 나이는 인구 현상이 아니라 자본배분의 흔적이다 — 노동경제학 × 인구통계학 × 자본이론"
+author: "Insight Lab × Claude"
+date: "2026-10-11"
+lang: ko
+jupyter: python3
+format:
+  html:
+    theme:
+      dark: darkly
+      light: flatly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    smooth-scroll: true
+    embed-resources: true
+    lightbox: true
+    fig-responsive: true
+execute:
+  echo: false
+  warning: false
+---
+
+```{=html}
+<style>
+.cell-output-display img, figure img, .quarto-figure img { max-width:100% !important; height:auto !important; }
+@media (max-width:640px){ .cell-output-display img, figure img { width:100%; } .figure-caption, figcaption { font-size:.82rem; } }
+</style>
+```
+
+::: {.callout-note}
+## 핵심 문장
+
+한 사람이 조직의 중위 연령에 오래 머물렀다면, 그는 자신이 **전형적인 직원**이라고 느낀다. 그러나 통계는 다른 것을 말한다. 중위가 그를 따라 올라온 것이다. 산업의 중위 연령은 연 0.36세씩 오르는데 사람은 연 1.00세씩 늙는다. 두 속도가 가까울수록 교차는 길어지고, 긴 교차는 **정지로 체감된다**. 그래서 "나는 계속 중간이었다"는 감각은 전형성의 증거가 아니라 **그 아래로 자본이 들어오지 않았다는 신호**다. 기업의 나이는 인구 현상이 아니라 자본배분의 흔적이다.
+:::
+
+```{python}
+#| label: setup
+import json, csv, re, collections
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
+
+plt.rcParams["font.family"] = "Noto Sans CJK KR"
+plt.rcParams["axes.unicode_minus"] = False
+plt.rcParams["figure.dpi"] = 130
+
+BLUE, GREEN, RED, GOLD, MUTED = "#38bdf8", "#22c55e", "#ef4444", "#f59e0b", "#64748b"
+
+def finish(ax, title, sub=""):
+    ax.set_title(title, fontsize=13, fontweight="bold", loc="left", pad=14)
+    if sub:
+        ax.text(0, 1.015, sub, transform=ax.transAxes, fontsize=9.5, color=MUTED, va="bottom")
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.grid(axis="y", alpha=.18, linewidth=.8)
+    ax.set_axisbelow(True)
+
+S = json.load(open("data/sp40/summary.json", encoding="utf-8"))
+DIST = json.load(open("data/sp40/age_dist_mfg.json", encoding="utf-8"))
+BR = [("~ 19세",15,19),("20 ~ 24",20,24),("25 ~ 29",25,29),("30 ~ 34",30,34),("35 ~ 39",35,39),
+      ("40 ~ 44",40,44),("45 ~ 49",45,49),("50 ~ 54",50,54),("55 ~ 59",55,59),("60세 ~",60,69)]
+
+def median_of(d):
+    tot = sum(d.get(k,0) for k,_,_ in BR); cum = 0
+    for k, lo, hi in BR:
+        n = d.get(k, 0)
+        if n and cum + n >= tot/2:
+            return lo + ((tot/2 - cum)/n) * (hi - lo + 1)
+        cum += n
+    return None
+
+MED = {int(y): median_of(d) for y, d in DIST.items() if median_of(d)}
+U30, O50, MINE = {}, {}, {}
+for y, d in DIST.items():
+    tot = sum(d.get(k,0) for k,_,_ in BR)
+    U30[int(y)] = sum(d.get(k,0) for k,lo,_ in BR if lo < 30)/tot*100
+    O50[int(y)] = sum(d.get(k,0) for k,lo,_ in BR if lo >= 50)/tot*100
+    age = int(y) - 1976
+    k = next((k for k,lo,hi in BR if lo <= age <= hi), "60세 ~")
+    MINE[int(y)] = d.get(k,0)/tot*100
+
+MFG = {}
+for r in csv.DictReader(open("data/sp40/industry_age.csv", encoding="utf-8")):
+    if r["metric"] == "평균연령" and r["industry"].replace(" ","").startswith(("제조업","C.제조업")):
+        MFG[int(r["year"])] = float(r["value"])
+NAT = {y: v for y, v in S["nat_age"]}
+```
+
+# 같은 사실에서 정반대의 두 진리
+
+한국 기업이 늙는다는 사실에는 서로 반대되면서 **둘 다 그럴듯한** 설명이 있다.
+
+**설명 A — 사람이 오래 남아서 늙는다.** 정년이 60세로 늘었고, 연공 임금 때문에 고참이 버틴다. 그러니 평균 연령이 올라간다.
+
+**설명 B — 사람이 들어오지 않아서 늙는다.** 출생아가 줄었고 기업은 신입 대신 경력을 산다. 그러니 평균 연령이 올라간다.
+
+두 설명은 정책 처방이 정반대다. A가 맞으면 **출구**를 열어야 하고(임금피크·명예퇴직·정년 유연화), B가 맞으면 **입구**를 열어야 한다(신규 채용·투자 유인). 둘을 가르는 것은 의견이 아니라 하나의 숫자다. **평균 근속연수.**
+
+```{python}
+#| label: fig-tenure
+#| fig-cap: "사람은 10년 늙었는데 근속은 1년도 늘지 않았다. 설명 A(오래 남아서 늙는다)는 이 그림에서 기각된다. 출처: 통계청·고용노동부 「고용형태별노동실태조사」, 상용 5인 이상."
+fig, ax = plt.subplots(figsize=(8.6, 3.9))
+ys = sorted(NAT)
+ax.plot(ys, [NAT[y] for y in ys], color=BLUE, lw=2.6, label="평균연령(세)")
+ax2 = ax.twinx()
+t = {y: v for y, v in S["nat_tenure"]}
+ts = sorted(t)
+ax2.plot(ts, [t[y] for y in ts], color=GOLD, lw=2.6, ls="--", label="평균근속(년)")
+ax2.set_ylim(0, 14); ax2.set_ylabel("평균근속연수(년)", color=GOLD, fontsize=10)
+ax2.tick_params(axis="y", colors=GOLD); ax2.spines[["top"]].set_visible(False)
+ax.set_ylabel("평균연령(세)", color=BLUE, fontsize=10); ax.tick_params(axis="y", colors=BLUE)
+ax.axvspan(1997, 1999, color=RED, alpha=.10)
+ax.text(1998, 33.0, "외환위기", fontsize=9, color=RED, ha="center")
+finish(ax, "전 산업 평균연령 vs 평균근속", "1993~2025 · 연령 +10.3세, 근속 +0.9년")
+fig.legend(loc="lower right", bbox_to_anchor=(.88,.18), fontsize=9.5, frameon=False)
+plt.tight_layout(); plt.show()
+```
+
+평균 연령은 1993년 34.3세에서 2025년 **44.6세**로 10.3세 올랐다. 같은 기간 평균 근속은 2009년 6.2년에서 2025년 **7.1년**으로 0.9년 늘었을 뿐이다.
+
+사람이 오래 남아서 늙었다면 근속이 연령과 **같이** 올라가야 한다. 그렇지 않았다. **설명 A는 기각된다.** 조직은 머무름이 아니라 **비어 있음**으로 늙었다.
+
+::: {.callout-tip}
+## 경계에서만 보이는 첫 번째 사실
+
+노동경제학은 "연공 임금이 고참을 비싸게 만든다"고 말하고, 인구통계학은 "출생 코호트가 줄었다"고 말한다. 두 분야 모두 **평균 연령**만 본다. 그러나 평균 연령과 평균 근속을 **같은 축에 올려놓는 순간** 두 설명이 갈라진다. 근속이 따라 오르지 않는 고령화는 체류가 아니라 **결손**이다.
+:::
+
+# 33년에 단 한 번, 조직이 젊어진 해
+
+```{python}
+#| label: fig-1999
+#| fig-cap: "전년 대비 평균연령 변화. 33년 중 하락은 1999년 단 한 번(−0.22세)이다. 채용을 멈추면 평균은 올라야 하므로, 이 하락은 고연령 감축이 채용중단 효과를 압도했다는 뜻이다. 출처: 동 조사."
+fig, ax = plt.subplots(figsize=(8.6, 3.5))
+ys = sorted(NAT); d = [NAT[ys[i]] - NAT[ys[i-1]] for i in range(1, len(ys))]
+xs = ys[1:]
+cols = [RED if v < 0 else BLUE for v in d]
+ax.bar(xs, d, color=cols, width=.72)
+ax.axhline(0, color="#334155", lw=1)
+i = int(np.argmin(d))
+ax.annotate(f"1999년 {d[i]:+.2f}세", xy=(xs[i], d[i]), xytext=(xs[i]+4, d[i]-.28),
+            fontsize=10, color=RED, fontweight="bold",
+            arrowprops=dict(arrowstyle="->", color=RED, lw=1.3))
+ax.set_ylabel("전년 대비 변화(세)", fontsize=10)
+finish(ax, "조직이 젊어진 해는 단 한 번뿐이었다", "1994~2025 · 평균연령 전년차")
+plt.tight_layout(); plt.show()
+```
+
+이 한 칸이 1998년에 무슨 일이 있었는지 말해 준다. 채용을 멈추면 평균 연령은 **반드시** 오른다. 그런데 1999년에는 내려갔다. 신규 유입 중단보다 **고연령 이탈이 더 컸다**는 뜻이다.
+
+당시 한국노동연구원 조사에서 기업들이 가장 먼저 줄여야 할 직급으로 꼽은 것은 부장·차장급이었다. 그 설문 결과가 **거시 통계에 흔적으로 남아 있다.** 1998년의 한국 기업은 비싼 사람부터 덜어냈다.
+
+# 2016년, 법은 정년을 올렸고 현실은 움직이지 않았다
+
+```{python}
+#| label: fig-retire
+#| fig-cap: "법정 정년은 2016년 60세가 됐지만 주된 일자리 퇴직 연령은 12년간 49.4세로 고정이다. 축을 실제 척도(44~63세)로 두어야 이 평평함이 보인다. 출처: 통계청 「경제활동인구조사 고령층 부가조사」, 55~64세 응답."
+fig, ax = plt.subplots(figsize=(8.6, 3.6))
+ry = [y for y, _ in S["retire"]]; rv = [v for _, v in S["retire"]]
+ax.plot(ry, rv, color=RED, lw=2.8, marker="o", ms=4.5, label="주된 일자리 퇴직 평균연령")
+ax.axhline(60, color="#0f172a", lw=1.5, ls=(0,(7,5)))
+ax.text(ry[-1], 60.7, "법정 정년 60세", ha="right", fontsize=10, fontweight="bold")
+ax.axvspan(2016, 2017, color=GOLD, alpha=.16)
+ax.text(2016.5, 45.0, "정년 60세\n시행", ha="center", fontsize=9, color="#92400e")
+ax.annotate("", xy=(2022, 60), xytext=(2022, 49.3),
+            arrowprops=dict(arrowstyle="<->", color=MUTED, lw=1.4))
+ax.text(2022.3, 54.4, "10.6년", fontsize=11, color=MUTED, fontweight="bold")
+ax.set_ylim(44, 63); ax.set_ylabel("연령(세)", fontsize=10)
+finish(ax, "정년 연장은 퇴직을 미루지 못했다", "2013~2024 · 변화 0.0세")
+plt.tight_layout(); plt.show()
+```
+
+2013년 49.4세, 2024년 **49.4세**. 12년 동안 소수점 첫째 자리까지 같다. 그 사이 법정 정년은 55세 안팎 관행에서 **60세**로 올랐다.
+
+법과 현실 사이에 **10.6년**의 빈 구간이 있다. 정년 연장이 만든 것은 "모두가 60세까지 다니는 사회"가 아니라 **60세까지 다닐 수 있는 사람과 없는 사람의 격차**였다.
+
+::: {.callout-tip}
+## 경계에서만 보이는 두 번째 사실
+
+법학은 정년을 **권리**로 보고, 노동경제학은 **비용**으로 본다. 두 관점 모두 정년이 올라가면 무언가 달라진다고 가정한다. 그런데 인구통계가 측정한 실제 퇴직 연령은 **한 해도 움직이지 않았다**. 정년은 상한선이지 기대값이 아니다. 법이 정한 것은 퇴직 시점이 아니라, **그 시점까지 도달할 수 있는 사람의 자격 조건**이었다.
+:::
+
+# 1976년생 코호트: 중위에 머문다는 착각
+
+이제 한 코호트를 따라가 보자. **1976년생**, 2001년 반도체·디스플레이 업계 입사. 이 코호트는 "시간이 지나도 계속 중위 연령이었다"고 체감한다. 검증 가능한 주장이다.
+
+```{python}
+#| label: fig-cross
+#| fig-cap: "1976년생의 나이(빨강)와 제조업 평균연령(파랑). 입사 시점엔 11.2년 어렸고 2017년에 교차한 뒤 지금은 5.5년 많다. 붉은 점선은 주된 일자리 퇴직 평균연령 49.4세. 출처: 동 조사 + 고령층 부가조사."
+fig, ax = plt.subplots(figsize=(8.6, 4.2))
+ys = [y for y in sorted(MFG) if 1996 <= y <= 2025]
+ax.plot(ys, [MFG[y] for y in ys], color=BLUE, lw=2.8, label="제조업 평균연령")
+me_y = list(range(2001, 2026)); me_a = [y-1976 for y in me_y]
+ax.plot(me_y, me_a, color=RED, lw=2.8, label="1976년생 나이")
+ax.axhline(49.4, color=RED, lw=1.3, ls=(0,(5,4)), alpha=.75)
+ax.text(1996.4, 50.3, "주된 일자리 퇴직 49.4세", fontsize=9, color=RED)
+ax.axhline(60, color="#0f172a", lw=1.2, ls=(0,(7,5)), alpha=.8)
+ax.text(1996.4, 60.8, "법정 정년 60세", fontsize=9, color="#0f172a")
+ax.scatter([2001],[25], color=RED, zorder=5, s=44)
+ax.annotate("2001 입사 · 25세\n평균보다 11.2년 어림", xy=(2001,25), xytext=(2002.4,21.0),
+            fontsize=9.5, color=MUTED)
+ax.scatter([2017],[41], facecolor="white", edgecolor="#0f172a", lw=2, zorder=6, s=78)
+ax.annotate("2017 교차 · 41세", xy=(2017,41), xytext=(2008.6,45.6), fontsize=10,
+            fontweight="bold", arrowprops=dict(arrowstyle="->", color="#0f172a", lw=1.2))
+ax.annotate("", xy=(2025,49), xytext=(2025,MFG[2025]),
+            arrowprops=dict(arrowstyle="<->", color=MUTED, lw=1.4))
+ax.text(2025.3, 46.2, "+5.5세", fontsize=10, color=MUTED, fontweight="bold")
+ax.set_ylim(18, 64); ax.set_ylabel("연령(세)", fontsize=10); ax.set_xlim(1996, 2027)
+finish(ax, "정지가 아니라 통과였다", "1996~2025 · 중위를 지나가는 데 걸린 시간")
+ax.legend(loc="lower right", fontsize=9.5, frameon=False)
+plt.tight_layout(); plt.show()
+```
+
+```{python}
+#| label: fig-gap
+#| fig-cap: "1976년생과 제조업 중위연령의 격차. 2009~2025년 평균은 정확히 0.0세이지만, 이는 머문 것이 아니라 가로지른 것이다. 음영은 ±2.5세 구간."
+fig, ax = plt.subplots(figsize=(8.6, 3.5))
+gy = sorted(MED); gv = [(y-1976) - MED[y] for y in gy]
+ax.axhspan(-2.5, 2.5, color=GREEN, alpha=.12)
+ax.bar(gy, gv, color=[RED if v > 0 else BLUE for v in gv], width=.72)
+ax.axhline(0, color="#334155", lw=1.2)
+ax.text(2010.2, 2.9, "±2.5세 = \"내가 딱 중간\" 체감 구간", fontsize=9, color="#15803d")
+ax.set_ylabel("나이 − 중위연령 (세)", fontsize=10)
+finish(ax, "17년 평균 격차 0.0세 — 그러나 한 번의 교차",
+       f"2009년 {gv[0]:+.1f}세 → 2017년 0.0세 → 2025년 {gv[-1]:+.1f}세")
+plt.tight_layout(); plt.show()
+```
+
+2009~2025년 17년간 이 코호트와 제조업 중위 연령의 **격차 평균은 정확히 0.0세**다. 체감은 통계적으로 정확하다.
+
+그러나 그것은 **머무름이 아니라 통과**였다. 2001년 입사 때 11.2년 어렸고, 2017년에 교차했고, 2025년에 5.5년 많다. 24년에 걸쳐 격차가 16.7년 움직였다.
+
+왜 정지처럼 느껴졌나. **중위는 연 0.36세, 사람은 연 1.00세**로 늙는다. 차이가 0.64세/년뿐이라 ±2.5세 구간을 벗어나는 데 **9년**이 걸렸다. 인생의 9년은 길다. 길어서 **정지로 오인된다**.
+
+::: {.callout-important}
+## 중위 연령의 함정
+
+중위 연령에 오래 머물렀다는 체감은 **자신이 전형적이라는 증거가 아니다.** 그것은 조직의 중위가 **자기 속도의 3분의 1로만 따라오고 있다**는 뜻이다. 사람이 중위를 향해 간 것이 아니라, 중위가 사람을 향해 끌려온 것이다. 끌려온 이유는 하나다 — **아래가 채워지지 않았다.**
+:::
+
+# 중위가 끌려온 이유
+
+```{python}
+#| label: fig-compo
+#| fig-cap: "제조업 연령 구성비. 30세 미만이 반토막 나는 동안 50세 이상은 2.4배가 됐고, 둘은 2012년에 역전했다. 출처: 동 조사 연령계층별 근로자수에서 직접 산출."
+fig, ax = plt.subplots(figsize=(8.6, 4.0))
+ys = sorted(U30)
+ax.plot(ys, [U30[y] for y in ys], color=BLUE, lw=2.8, marker="o", ms=3.6, label="30세 미만")
+ax.plot(ys, [O50[y] for y in ys], color=RED, lw=2.8, marker="o", ms=3.6, label="50세 이상")
+ax.plot(ys, [MINE[y] for y in ys], color=MUTED, lw=2.0, ls="--", label="1976년생이 속한 5세 구간")
+xi = next(y for y in ys if O50[y] >= U30[y])
+ax.axvline(xi, color=GOLD, lw=1.4, ls=":")
+ax.text(xi+.18, 34.5, f"{xi}년 역전", fontsize=10, color="#92400e", fontweight="bold")
+ax.set_ylabel("구성비(%)", fontsize=10); ax.set_ylim(8, 38)
+finish(ax, "아래가 비고 위가 찼다", "2009~2025 · 제조업")
+ax.legend(fontsize=9.5, frameon=False, loc="center left")
+plt.tight_layout(); plt.show()
+```
+
+30세 미만 비중은 **23.5% → 13.9%**로 반토막 났고, 50세 이상은 **13.6% → 33.2%**로 2.4배가 됐다. 둘이 뒤집힌 해는 **2012년**이다.
+
+여기에 세 번째 선이 있다. **1976년생이 속한 5세 구간의 비중도 17.9% → 12.2%로 떨어졌다.** 같이 들어온 사람들이 나갔다는 뜻이다.
+
+그러므로 "우리 세대가 계속 중심이었다"는 감각에는 **생존자 편향**이 섞여 있다. 나간 동기는 분포에서 사라지므로 체감에 잡히지 않는다. 남은 사람에게는 자기 또래가 여전히 두텁게 보인다.
+
+# 업종 이름은 나이를 가르지 못한다
+
+```{python}
+#| label: fig-sector
+#| fig-cap: "산업대분류 19개의 평균연령 변화(2009→2025). 보건·복지가 전체 평균의 두 배 속도로 늙었고, 정보통신은 거의 늙지 않았다. 출처: 동 조사."
+rows = S["by_sector"]
+fig, ax = plt.subplots(figsize=(8.6, 5.2))
+names = [r[0] for r in rows][::-1]; vals = [r[3] for r in rows][::-1]
+cur = [r[2] for r in rows][::-1]
+cols = [GOLD if n == "※ 전 산업" else (RED if v >= 7 else (BLUE if v <= 3 else MUTED)) for n, v in zip(names, vals)]
+ax.barh(names, vals, color=cols, height=.68)
+for i, (v, c) in enumerate(zip(vals, cur)):
+    ax.text(v + .12, i, f"{v:+.1f}  (현재 {c:.1f}세)", va="center", fontsize=9, color="#475569")
+ax.set_xlabel("평균연령 변화(세)", fontsize=10); ax.set_xlim(0, 15.5)
+finish(ax, "같은 나라 안에서 업종이 갈라졌다", "2009 → 2025")
+plt.tight_layout(); plt.show()
+```
+
+그런데 업종 **이름**으로 나이를 가르면 틀린다. 대분류에서 정보통신업은 **39.0세로 전 업종 중 가장 젊다**. 그러나 그 안을 열면:
+
+```{python}
+#| label: fig-mid
+#| fig-cap: "산업중분류 평균연령(2025). 같은 '정보통신' 안에서 우편·통신업과 정보서비스업이 8.8세 벌어져 있다. 출처: 동 조사, 10차 분류."
+rows = sorted(S["mid"], key=lambda r: r[2])
+fig, ax = plt.subplots(figsize=(8.6, 4.4))
+names = [r[0] for r in rows]; cur = [r[2] for r in rows]
+cols = [RED if v >= 45 else (GOLD if v >= 42 else BLUE) for v in cur]
+ax.barh(names, cur, color=cols, height=.66)
+for i, v in enumerate(cur):
+    ax.text(v + .22, i, f"{v:.1f}", va="center", fontsize=9.5, fontweight="bold", color="#334155")
+ax.set_xlim(34, 51); ax.set_xlabel("2025년 평균연령(세)", fontsize=10)
+finish(ax, "'정보통신업'이라는 한 칸에 8.8세가 들어 있다", "우편·통신 46.2세 ↔ 정보서비스 37.4세")
+plt.tight_layout(); plt.show()
+```
+
+**우편·통신업 46.2세, 정보서비스업 37.4세.** 같은 대분류 안에서 8.8세가 벌어진다. 반도체가 포함된 전자부품 제조업은 **39.0세**로 제조업 전체(43.5세)보다 4.5세 젊다.
+
+나이를 가르는 것은 업종 이름이 아니다. **그 안에 자본이 지금 들어가고 있는가**다.
+
+# 주가는 올랐는데 채용은 반토막났다
+
+여기가 이 분석에서 가장 반직관적인 지점이다.
+
+```{python}
+#| label: fig-stock-hire
+#| fig-cap: "주가 상승률(2021→2025-10-10)과 300인 이상 사업체 연간 채용 변화(2021→2024). 반도체는 정반대로 움직였다. 출처: 네이버 금융 일별시세, 고용노동부 「직종별사업체노동력조사」."
+PX = {n: (b/a-1)*100 for n, a, b in S["px"]}
+HI = {r[0]: r[3] for r in S["hiring"]}
+pairs = [("반도체·전자부품", PX["SK하이닉스"], HI.get("반도체·전자부품")),
+         ("조선·방산",       PX["HD현대중공업"], HI.get("기타운송장비(조선·방산)")),
+         ("의약품",         PX["삼성바이오로직스"], HI.get("의약품")),
+         ("금융·보험",       PX["신한지주"], HI.get("금융·보험")),
+         ("통신",           PX["SK텔레콤"], HI.get("우편·통신"))]
+pairs = [p for p in pairs if p[2] is not None]
+fig, ax = plt.subplots(figsize=(8.6, 4.2))
+x = np.arange(len(pairs)); w = .37
+ax.bar(x-w/2, [p[1] for p in pairs], w, color=GOLD, label="대표종목 주가 변화(%)")
+ax.bar(x+w/2, [p[2] for p in pairs], w, color=BLUE, label="대기업 채용 변화(%)")
+ax.axhline(0, color="#334155", lw=1.1)
+for i, p in enumerate(pairs):
+    ax.text(i-w/2, p[1] + (12 if p[1] >= 0 else -26), f"{p[1]:+.0f}", ha="center", fontsize=9, color="#92400e")
+    ax.text(i+w/2, p[2] + (12 if p[2] >= 0 else -26), f"{p[2]:+.0f}", ha="center", fontsize=9, color="#075985")
+ax.set_xticks(x); ax.set_xticklabels([p[0] for p in pairs], fontsize=10)
+ax.set_ylabel("변화율(%)", fontsize=10)
+finish(ax, "자본집약 산업의 호황은 사람으로 가지 않는다", "주가 2021→2025 · 채용 2021→2024")
+ax.legend(fontsize=9.5, frameon=False, loc="upper right")
+plt.tight_layout(); plt.show()
+```
+
+| 산업 | 대표종목 주가 | 대기업 채용 |
+|---|---:|---:|
+| 반도체·전자부품 | **+227%** | **−44%** |
+| 조선·방산 | **+441%** | **+344%** |
+| 의약품 | +14% | +91% |
+| 통신 | −6% | +88% |
+
+반도체는 주가가 3배 넘게 뛰는 동안 300인 이상 사업체 연간 채용이 **12,900명 → 7,200명**으로 줄었다. 조선·방산은 주가와 채용이 **같이** 올랐다.
+
+차이는 산업의 **자본집약도**다. 반도체 호황은 **설비**로 간다. 조선 호황은 **사람**으로 간다. 수주 한 건에 용접공이 필요한 산업과, 투자 한 건에 노광장비가 필요한 산업은 같은 "호황"이라는 단어를 공유하지만 고용에 대한 함의가 반대다.
+
+::: {.callout-tip}
+## 경계에서만 보이는 세 번째 사실
+
+금융은 주가를 **미래 현금흐름의 할인**으로 읽고, 노동경제학은 채용을 **생산함수의 노동 투입**으로 읽는다. 두 분야를 따로 두면 "좋은 산업에 가라"는 조언이 나온다. 겹쳐 놓으면 다른 명제가 나온다 — **주가가 오르는 산업에 가라는 조언은 자본집약도를 모르면 반쪽이다.** 공장을 짓는다는 사실만으로는 부족하고, 그 공장이 **사람을 많이 쓰는 종류**여야 한다.
+:::
+
+# 청년 일자리는 어디로 갔는가
+
+```{python}
+#| label: fig-jobs
+#| fig-cap: "연령대별 임금근로 일자리수(각 연도 4분기). 전체가 240.8만 개 늘어나는 동안 20대 이하만 22.5만 개 줄었다. 출처: 통계청 「임금근로일자리동향행정통계」."
+J = S["jobs"]; yr = J["years"]
+fig, ax = plt.subplots(figsize=(8.6, 4.0))
+style = {"20대이하": (RED, 3.0), "30대": (MUTED, 1.8), "40대": (MUTED, 1.8),
+         "50대": (BLUE, 2.6), "60대이상": (GREEN, 2.6)}
+for k, (c, lw) in style.items():
+    ax.plot(yr, J[k], color=c, lw=lw, marker="o", ms=3.4)
+    ax.text(yr[-1]+.08, J[k][-1], f" {k} {J[k][-1]:.0f}", fontsize=9.5, color=c, va="center", fontweight="bold")
+ax.set_xlim(yr[0]-.1, yr[-1]+1.9); ax.set_ylabel("만 개", fontsize=10)
+finish(ax, "다섯 연령대 중 하나만 줄었다", "2018 Q4 → 2024 Q4 · 전체 +240.8만, 20대 −22.5만")
+plt.tight_layout(); plt.show()
+```
+
+6년간 임금근로 일자리는 **240.8만 개** 늘었다. 그런데 **20대 이하만 −22.5만 개**다. 50대는 +83.8만, 60대 이상은 +168.2만이다.
+
+2022→2024로 좁히면 20대 −24.5만, 50대 +18.3만으로 거의 **일대일 교환**이다. 이 크기는 독립 출처(한국은행 추정 약 21만)와도 일치한다.
+
+# 종합: 기업의 나이는 자본배분의 흔적이다
+
+세 분야가 각각 한 조각을 들고 있었다.
+
+- **노동경제학**: 연공 임금은 후불 계약이다. 성장이 멈추면 갚을 수 없다.
+- **인구통계학**: 코호트가 줄었다. 아래가 얇다.
+- **자본이론**: 투자는 산업별로 불균등하고, 자본집약 산업에서는 투자가 고용으로 번역되지 않는다.
+
+세 조각을 겹치면 각각에는 없던 명제가 나온다.
+
+::: {.callout-note}
+## 경계 명제
+
+**조직의 중위 연령은 그 조직이 최근 몇 년간 어디에 돈을 넣었는지를 보여주는 지표다.**
+
+평균 근속이 멈춘 채 평균 연령만 오르면 그것은 체류가 아니라 결손이다. 결손은 채용에서 생기고, 채용은 투자를 따라간다. 따라서 중위 연령은 인구 지표가 아니라 **지연된 자본배분 지표**다. 한 사람이 중위에 오래 머물렀다는 것은 그 사람의 전형성이 아니라, **그의 아래로 돈이 들어오지 않은 기간의 길이**를 측정한 값이다.
+:::
+
+이 명제는 실무적으로 검증 가능한 예측을 만든다. **어떤 회사의 30세 미만 비중은 그 회사의 2~3년 전 설비투자 증가율을 따라간다.** 반도체가 2021년 대비 채용을 반 토막 낸 것은 2023년 메모리 불황의 지연 반영이고, AI 메모리 투자의 고용 효과는 2025~2026년 자료에서 나타나야 한다. 이 글은 그 검증 **직전**에 쓰였다.
+
+::: {.callout-warning}
+## 반대 해석 — 이 분석이 틀릴 수 있는 지점
+
+**1. 중위 연령은 자본이 아니라 단순 인구 때문일 수 있다.** 1976년생은 약 80만 명, 2000년대생은 60만 명대다. 아래가 얇은 것이 투자 부족이 아니라 **출생아 수** 때문이라면 이 글의 인과는 뒤집힌다. 반론: 그렇다면 업종 간 격차(광업 53.6세 ↔ 정보서비스 37.4세, 16.2세)가 설명되지 않는다. 모든 업종이 같은 인구 풀에서 뽑기 때문이다. 다만 **업종별 선호도 차이**가 인구 효과를 매개할 수 있고, 이 글은 그것을 분리하지 못했다.
+
+**2. 근속이 안 늘어난 것은 이직 증가 때문일 수 있다.** 평균 근속 정체를 "유입 결손"으로 읽었지만, 경력직 이동이 활발해져 **같은 사람이 여러 회사를 거치는** 경우에도 근속은 정체한다. 이 경우 조직은 비어서 늙은 것이 아니라 **회전하면서** 늙은 것이다. 두 해석을 가르려면 개인 단위 패널 자료가 필요하고, 이 글에는 없다.
+
+**3. 제조업으로 반도체를 대리한 것은 약점이다.** 중분류 연령 분포가 공표되지 않아 1976년생 코호트 분석을 **제조업 전체**로 수행했다. 전자부품 제조업 평균은 39.0세로 제조업(43.5세)보다 4.5세 젊으므로, 반도체·디스플레이에서는 교차 시점이 **더 늦고** 현재 격차가 **더 클** 가능성이 높다. 방향은 같지만 크기는 다를 수 있다.
+
+**4. "채용"은 신입이 아니다.** 고용노동부 채용인원에는 경력직이 포함된다. 반도체 −44%는 "신입이 반토막"이 아니라 "채용 전체가 반토막"이다. 신입만 분리한 공식 통계는 존재하지 않는다.
+
+**5. 주가-채용 비교는 시점이 어긋나 있다.** 주가는 2025년 10월까지, 채용은 2024년까지다. 2025년 채용 자료가 나오면 반도체 −44%는 완화될 가능성이 크다. 이 글의 가장 약한 숫자다.
+
+**6. 모집단이 서로 다르다.** 평균연령은 상용 5인 이상, 일자리동향은 전체 임금근로, 채용은 사업체 1인 이상이다. 서로 더하거나 비율로 나누면 안 된다. 이 글은 각 지표를 **독립적으로만** 사용했다.
+:::
+
+# 참고 문헌
+
+- 통계청·고용노동부, 「고용형태별노동실태조사」(구 임금구조기본통계조사), 1993~2025. KOSIS 표 `DT_PAYN003`·`DT_PAYN103`·`DT_118N_PAYN32`·`DT_118N_PAYN42`·`DT_118N_PAYN43`·`DT_118N_PAYN20`·`DT_118N_PAYN30`.
+- 통계청, 「경제활동인구조사 고령층 부가조사」, 2013~2024. KOSIS 표 `DT_1DE8036S`(가장 오래 근무한 일자리를 그만둔 연령 및 평균이직연령).
+- 통계청, 「임금근로일자리동향행정통계」, 2018~2024. KOSIS 표 `DT_1FL_7008`(연령 및 산업대분류별 임금근로 일자리).
+- 고용노동부, 「직종별사업체노동력조사」, 2021~2024. KOSIS 표 `DT_118N_DEN051`·`DT_118N_DEN061`(산업별·규모별 채용인원).
+- 네이버 금융 일별시세, 2021-01-04 ~ 2025-10-10.
+- 원자료·수집 스크립트: `output/data/sp40/`.
+
+*모든 수치는 KOSIS OpenAPI로 직접 수집해 재현 가능하다. 특정 기업의 내부 자료는 일절 사용하지 않았다.*
