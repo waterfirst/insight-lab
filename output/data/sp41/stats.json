@@ -1,0 +1,19 @@
+{
+ "fisher_concept_random_s010": 0.00023710607942031652,
+ "ctrl": {
+  "match": [
+   7,
+   8
+  ],
+  "mismatch": [
+   7,
+   8
+  ],
+  "random": [
+   3,
+   8
+  ],
+  "p_match_mismatch": 0.7666666666666666,
+  "p_match_random": 0.05944055944055944
+ }
+}
