@@ -1,0 +1,322 @@
+---
+title: "선형이 된 것은 속도뿐이었다"
+subtitle: "의사결정 모델이 자랑한 '긴 컨텍스트 선형 지연'을 판단 과제로 실측하다 — 전산학(subquadratic attention) × 인지심리학(정보 획득과 수확체감) × 정보경제학(충분통계량·결정이론)"
+author: "Insight Lab × Claude"
+date: "2026-10-17"
+lang: ko
+jupyter: python3
+format:
+  html:
+    theme:
+      dark: darkly
+      light: flatly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    smooth-scroll: true
+    embed-resources: true
+    lightbox: true
+    fig-responsive: true
+execute:
+  echo: false
+  warning: false
+---
+
+```{=html}
+<style>
+.cell-output-display img, figure img, .quarto-figure img { max-width:100% !important; height:auto !important; }
+@media (max-width:640px){ .cell-output-display img, figure img { width:100%; } .figure-caption, figcaption { font-size:.82rem; } }
+</style>
+```
+
+::: {.callout-note}
+## 핵심 문장
+
+같은 주에 의사결정 모델 두 개가 나와 **"컨텍스트가 길어져도 지연은 선형으로만 는다"**를 자랑했다. 선형 지연은 분명 공급측의 성취다 — 토큰을 더 싸게 삼킬 수 있다. 그러나 실측해 보니, 같은 판단 과제에서 입력을 **16배 늘려도 순 정확도는 +1%p**였고, 개별 판단의 **17%는 맞던 것과 틀리던 것이 서로 자리를 바꾸는 맞교환**으로 뒤집혔다. 그 미미한 순이득조차 **영어에서는 +11%p, 한국어에서는 −8%p로 방향이 갈라졌다.** 선형이 된 것은 속도이지 판단이 아니다.
+:::
+
+```{python}
+#| label: setup
+import json
+import numpy as np
+import matplotlib.pyplot as plt
+from pathlib import Path
+
+plt.rcParams["font.family"] = "Noto Sans CJK KR"
+plt.rcParams["axes.unicode_minus"] = False
+plt.rcParams["figure.dpi"] = 130
+BLUE, GREEN, RED, GOLD, MUTED = "#38bdf8", "#22c55e", "#ef4444", "#f59e0b", "#64748b"
+
+def finish(ax, title, sub=""):
+    ax.set_title(title, fontsize=13, fontweight="bold", loc="left", pad=14)
+    if sub:
+        ax.text(0, 1.02, sub, transform=ax.transAxes, fontsize=9.5, color=MUTED, va="bottom")
+    ax.spines[["top", "right"]].set_visible(False)
+
+R = json.loads(Path("data/sp42_length_sweep.json").read_text())
+LENS = ["120", "500", "2000"]
+N = len(R)
+
+def pred(c):   return c["junk"] >= .5
+def correct(r, k): return pred(r["by_len"][k]) == bool(r["label"])
+
+def acc(k, filt=lambda r: True):
+    s = [r for r in R if filt(r)]
+    return sum(correct(r, k) for r in s) / max(len(s), 1), len(s)
+
+KO = lambda r: r["ko"]
+EN = lambda r: not r["ko"]
+```
+
+# 같은 주에 "의사결정 모델"이 범주가 되었다
+
+2026년 10월 둘째 주, 글을 쓰지 않는 모델이 줄지어 나왔다. 미리 정해둔 보기 중 하나를 고르고 거기에 확률만 붙여 **값으로 돌려주는** 모델들이다.
+
+- **10월 9일** — 마이크로소프트가 `Microsoft-Decision-1`을 공개했다(Foundry 제공, OpenRouter 예정).
+- **같은 날** — a16z가 이 계열의 선두 TypeSafe AI(모델명 Jev)에 8.7억 달러 투자를 주도한다고 발표했다. 투자 메모는 Jev를 **"System One 모델"이라는 새 범주의 첫 주자**로 규정했다.
+- **10월 12일** — 스타트업 SubQuadratic이 `Snap`을 내놨다. 기본 컨텍스트 **384K**. 광고 문구의 핵심은 속도가 아니라 **스케일링의 모양**이었다.
+
+이 글의 출발점은 Snap을 소개한 공개 수치 한 쌍이다. 입력 **100K 토큰에 660ms, 384K 토큰에 2,500ms.** 소개자는 이렇게 요약했다 — *"입력이 3.84배인데 시간이 3.8배. 이것이 선형 스케일링의 모습이다."*
+
+맞는 말이다. 표준 어텐션의 비용은 입력 길이의 제곱으로 는다. subquadratic 계열은 그 곡선을 거의 직선으로 눕혔다. **토큰당 시간이 일정**해진다는 뜻이다.
+
+```{python}
+#| label: fig-subq
+#| fig-cap: "SubQ Snap 공개 수치 2점(660ms/100K, 2,500ms/384K)으로 재계산한 토큰당 지연. 입력 3.84배에 시간 3.79배 — 토큰당 6.5~6.6µs로 거의 일정하다. 제곱 비용(점선)이었다면 384K에서 ~9,700ms가 들었을 것이다. 출처: SubQuadratic 공개 수치(2026-10-12). 실측이 아닌 공개 2점의 재계산이다."
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(9.4, 3.5))
+toks = np.array([100, 384])            # K tokens
+ms   = np.array([660, 2500])
+a1.plot(toks, ms, "o-", color=BLUE, lw=2, label="Snap 공개 2점 (선형)")
+quad = 660 * (toks / 100) ** 2
+a1.plot(toks, quad, "o--", color=RED, lw=1.6, label="같은 시작점의 제곱 비용")
+a1.set_xlabel("입력 (K 토큰)"); a1.set_ylabel("지연 (ms)")
+for x, y in zip(toks, ms): a1.text(x, y+120, f"{y}ms", ha="center", fontsize=9)
+a1.legend(fontsize=8.5, frameon=False, loc="upper left")
+finish(a1, "선형 vs 제곱", "subquadratic이 눕힌 곡선")
+
+per = ms / (toks * 1000) * 1e6         # µs per token
+a2.bar(["100K", "384K"], per, color=[BLUE, GREEN], width=.5)
+a2.set_ylabel("토큰당 지연 (µs)"); a2.set_ylim(0, 9)
+for i, v in enumerate(per): a2.text(i, v+.2, f"{v:.1f}µs", ha="center", fontsize=10, fontweight="bold")
+finish(a2, "토큰당 비용은 일정", "이것이 '선형'의 실체")
+plt.tight_layout(); plt.show()
+```
+
+광고는 사실이다. 그런데 광고가 답하지 않는 질문이 하나 있다. **토큰을 더 싸게 삼킨다고 해서, 더 많은 토큰이 더 나은 판단을 만드는가?**
+
+선형 지연은 **공급**의 속성이다. 더 긴 입력을 감당할 수 있다는 뜻이다. 그러나 그 긴 입력을 **쓸 가치가 있는지**는 **수요**의 속성이다 — 입력이 길어질 때 판단이 실제로 좋아져야 한다. 아무도 그쪽은 재지 않았다. 그래서 쟀다.
+
+# 실측 설계
+
+과제는 SP25와 같다 — **한국어·영어가 섞인 실제 수신 메일의 스팸 판정.** 정답은 메일 서비스가 자체 분류한 폴더(정상함/스팸함)다. 소속 기관 발신은 사전에 제외했고, 모델에 보낸 것은 발신 도메인·제목·본문뿐이다.
+
+SP25와 다른 점은 단 하나다. **같은 메일을 세 가지 본문 길이로 각각 판정시켰다** — 120자, 500자, 2,000자. 본문이 200자 미만이라 길이를 바꿀 수 없는 메일은 제외했다. 호출 모델은 Jev(`jev-1.13`), 질문은 "이 메일은 스팸인가"라는 확률 하나다.
+
+```{python}
+#| label: fig-two-promises
+#| fig-cap: "입력 길이를 16배 늘렸을 때의 전체 정확도와 지연 중앙값. 두 광고(정확·선형 빠름) 모두 이 과제·이 길이 범위에서는 나타나지 않는다. 지연이 길이와 무관한 것은 네트워크 왕복이 지배하기 때문이며(아래 한계 참조) 모델 내부 비용의 측정이 아니다. 출처: 본 실험 133건 × 3길이."
+accs = [acc(k)[0]*100 for k in LENS]
+medms = []
+for k in LENS:
+    v = sorted(r["by_len"][k]["ms"] for r in R)
+    medms.append(v[len(v)//2])
+x = [120, 500, 2000]
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(9.4, 3.4))
+a1.plot(x, accs, "o-", color=BLUE, lw=2.2, ms=8)
+a1.axhline(50, ls="--", lw=1.1, color=MUTED)
+a1.set_xscale("log"); a1.set_xticks(x); a1.set_xticklabels(x)
+a1.set_ylim(40, 75); a1.set_xlabel("본문 길이 (자, 로그)"); a1.set_ylabel("정확도 (%)")
+for xi, yi in zip(x, accs): a1.text(xi, yi+1.5, f"{yi:.0f}%", ha="center", fontsize=10, fontweight="bold")
+finish(a1, "정확도: 거의 평평", "회색 점선은 동전(50%)")
+a2.plot(x, medms, "o-", color=GOLD, lw=2.2, ms=8)
+a2.set_xscale("log"); a2.set_xticks(x); a2.set_xticklabels(x)
+a2.set_ylim(0, max(medms)*1.4); a2.set_xlabel("본문 길이 (자, 로그)"); a2.set_ylabel("지연 중앙값 (ms)")
+for xi, yi in zip(x, medms): a2.text(xi, yi+30, f"{yi:.0f}ms", ha="center", fontsize=10, fontweight="bold")
+finish(a2, "지연: 거의 평평", "네트워크가 지배 — 모델 내부 비용 아님")
+plt.tight_layout(); plt.show()
+```
+
+입력을 16배 늘려도 정확도는 **55% → 56%.** 순이득 1%포인트다. 여기서 멈추면 "길이는 무의미하다"는 싱거운 결론이 된다. 그런데 이 평평한 평균 뒤에 세 가지가 숨어 있었다.
+
+# 평균 뒤에 숨은 것 ①: 맞교환
+
+평균이 안정적인 것과 개별 판단이 안정적인 것은 다르다. 120자와 2,000자의 판정이 같은 메일에서 얼마나 바뀌었는지 셌다.
+
+```{python}
+#| label: fig-flip
+#| fig-cap: "120자와 2,000자 판정의 변화. 전체의 17%가 뒤집혔고, 그 안에서 '틀리다 맞음'과 '맞다 틀림'이 거의 비긴다. 평균이 평평한 것은 판단이 안정적이어서가 아니라 이득과 손실이 상쇄되기 때문이다. 출처: 본 실험 133건."
+same = sum(1 for r in R if pred(r["by_len"]["120"]) == pred(r["by_len"]["2000"]))
+g2b  = sum(1 for r in R if correct(r,"120") and not correct(r,"2000"))
+b2g  = sum(1 for r in R if not correct(r,"120") and correct(r,"2000"))
+fig, ax = plt.subplots(figsize=(7.8, 3.0))
+segs = [("판정 유지", same, MUTED), ("틀리다 → 맞음 (이득)", b2g, GREEN), ("맞다 → 틀림 (손실)", g2b, RED)]
+left = 0
+for lab, v, c in segs:
+    ax.barh(0, v, left=left, color=c, height=.5, label=f"{lab}  {v}건")
+    # 건수는 넓은 '판정 유지'만 막대 안, 좁은 두 칸은 막대 위에 색 맞춰 표기
+    if v > N*0.3:
+        ax.text(left+v/2, 0, f"{v}건", ha="center", va="center", fontsize=11, color="white", fontweight="bold")
+    else:
+        ax.annotate(f"{v}건", xy=(left+v/2, .25), xytext=(left+v/2, .52), ha="center", fontsize=9.5,
+                    color=c, fontweight="bold", arrowprops=dict(arrowstyle="-", color=c, lw=1))
+    left += v
+ax.set_xlim(0, N); ax.set_ylim(-.5, .8); ax.set_yticks([])
+ax.set_xlabel("메일 수"); ax.spines[["top","right","left"]].set_visible(False)
+ax.legend(fontsize=9, frameon=False, loc="lower center", ncol=3, bbox_to_anchor=(.5, -.55))
+ax.set_title("입력을 늘리면 17%가 뒤집히지만, 순이득은 2건", fontsize=12.5, fontweight="bold", loc="left", pad=12)
+plt.tight_layout(); plt.show()
+```
+
+22건이 뒤집혔다. 그중 12건은 틀리다 맞았고, 10건은 맞다 틀렸다. **순이득 2건.** 추가로 들어간 1,880자가 한 일은 정보를 더한 것이 아니라 **판정을 흔든** 것이다. 긴 맥락은 신호이면서 동시에 잡음이었다.
+
+# 평균 뒤에 숨은 것 ②: 언어가 방향을 가른다
+
+전체 평균이 평평했던 더 중요한 이유가 여기 있다.
+
+```{python}
+#| label: fig-language
+#| fig-cap: "언어별 길이 효과. 입력을 늘리면 영어 메일의 정확도는 오르고 한국어는 떨어진다. 두 곡선이 반대로 움직여 전체 평균에서 상쇄된다. 막대 옆 수는 표본 수. 출처: 본 실험(영어 등 63건, 한국어 70건)."
+fig, ax = plt.subplots(figsize=(7.8, 3.4))
+en = [acc(k, EN)[0]*100 for k in LENS]
+ko = [acc(k, KO)[0]*100 for k in LENS]
+allv = [acc(k)[0]*100 for k in LENS]
+x = [120, 500, 2000]
+ax.plot(x, en, "o-", color=BLUE, lw=2.4, ms=8, label=f"영어 등 (n={acc('120',EN)[1]})")
+ax.plot(x, ko, "o-", color=RED, lw=2.4, ms=8, label=f"한국어 (n={acc('120',KO)[1]})")
+ax.plot(x, allv, "o--", color=MUTED, lw=1.6, ms=6, label="전체 (상쇄됨)")
+ax.axhline(50, ls=":", lw=1, color=MUTED)
+ax.set_xscale("log"); ax.set_xticks(x); ax.set_xticklabels(x)
+ax.set_xlabel("본문 길이 (자, 로그)"); ax.set_ylabel("정확도 (%)"); ax.set_ylim(35, 80)
+for xi, yi in zip(x, en): ax.text(xi, yi+1.4, f"{yi:.0f}", ha="center", fontsize=9, color=BLUE)
+for xi, yi in zip(x, ko): ax.text(xi, yi-3.2, f"{yi:.0f}", ha="center", fontsize=9, color=RED)
+ax.legend(fontsize=9, frameon=False, loc="lower left")
+finish(ax, "긴 입력은 영어를 돕고 한국어를 해쳤다", "")
+plt.tight_layout(); plt.show()
+```
+
+영어 메일은 62% → 73%로 **11%포인트 올랐다.** 같은 입력 증가가 한국어 메일에서는 49% → 41%로 **8%포인트 떨어졌다.** 전체 평균이 평평했던 것은 길이가 쓸모없어서가 아니라, **두 집단에서 정반대로 작동해 서로를 지웠기** 때문이다.
+
+이것이 '선형 스케일링'이라는 공급측 서사가 감추는 지점이다. 긴 컨텍스트를 처리하는 비용은 모두에게 똑같이 선형으로 떨어지지만, 그 긴 컨텍스트가 주는 **이득은 균등하지 않다.** 학습 분포가 두꺼운 언어에서만 긴 입력이 증거가 되고, 얇은 언어에서는 잡음이 된다.
+
+# 평균 뒤에 숨은 것 ③: 분별력은 미세하게, 그러나 한쪽으로만
+
+정확도(임계값 0.5를 넘느냐)가 아니라 모델이 내놓은 **확률 자체**가 길이에 따라 어떻게 움직였는지 보면 결이 하나 더 드러난다.
+
+```{python}
+#| label: fig-separation
+#| fig-cap: "길이별 평균 스팸 확률. 정상 메일에 매긴 확률은 입력이 길수록 내려가고(0.41→0.36), 스팸에 매긴 확률은 거의 제자리다. 둘의 간격(분별력)은 0.066에서 0.115로 벌어지지만, 그 개선은 거의 전적으로 '정상 메일을 덜 의심하게 된 것'에서 온다. 출처: 본 실험 133건."
+import statistics as st
+hm = [st.mean(r["by_len"][k]["junk"] for r in R if r["label"]==0) for k in LENS]
+sm = [st.mean(r["by_len"][k]["junk"] for r in R if r["label"]==1) for k in LENS]
+x = np.arange(3); w = .36
+fig, ax = plt.subplots(figsize=(7.8, 3.3))
+ax.bar(x-w/2, hm, w, color=GREEN, label="정상 메일에 매긴 평균 확률")
+ax.bar(x+w/2, sm, w, color=RED, label="스팸 메일에 매긴 평균 확률")
+ax.set_xticks(x); ax.set_xticklabels([f"{l}자" for l in LENS])
+ax.set_ylabel("평균 스팸 확률"); ax.set_ylim(0, .6)
+for i in range(3):
+    ax.text(i-w/2, hm[i]+.01, f"{hm[i]:.2f}", ha="center", fontsize=9)
+    ax.text(i+w/2, sm[i]+.01, f"{sm[i]:.2f}", ha="center", fontsize=9)
+    ax.text(i, .55, f"간격 {sm[i]-hm[i]:.3f}", ha="center", fontsize=8.5, color=MUTED)
+ax.legend(fontsize=8.8, frameon=False, loc="upper center")
+finish(ax, "간격은 벌어지지만 한쪽 발만 움직인다", "")
+plt.tight_layout(); plt.show()
+```
+
+간격이 0.066에서 0.115로 벌어진 것은 사실이다. 긴 입력이 아주 조금은 분별에 보탰다. 그러나 그 개선은 **스팸을 더 잘 알아본 것이 아니라 정상 메일을 덜 의심하게 된 것**이다. 스팸에 매긴 확률은 세 길이에서 거의 변하지 않았다. 정작 걸러내야 할 쪽에서는 추가 1,880자가 아무 일도 하지 않았다.
+
+# 세 분야가 각각 말하는 것
+
+## 전산학: subquadratic이 바꾼 것은 공급 곡선이다
+
+표준 트랜스포머의 어텐션은 입력 길이 $n$에 대해 $O(n^2)$다. 입력이 두 배면 비용은 네 배다. 이 곡선이 긴 컨텍스트를 **비싸게** 만들었다. subquadratic 계열(선형 어텐션·상태공간·희소화)이 한 일은 이 곡선을 $O(n)$ 가까이 눕힌 것이다. Snap의 공개 수치 — 토큰당 6.5µs가 100K와 384K에서 똑같다 — 가 바로 그 성취의 증거다.
+
+그러나 이것은 전부 **공급측** 사건이다. "같은 돈으로 더 긴 입력을 감당한다"는 말이지, "더 긴 입력이 더 나은 답을 준다"는 말이 아니다. 전산학의 곡선은 비용을 말하고, 가치는 말하지 않는다.
+
+## 인지심리학: 증거의 획득은 수확체감한다
+
+사람이 판단에 필요한 증거를 모을 때, 정보 획득량은 입력량에 비례하지 않는다. 처음 몇 개의 단서가 불확실성을 크게 줄이고, 그다음부터는 같은 양의 입력이 점점 적은 정보를 준다 — 수확체감이다. 스팸 판정에서 결정적 단서("무료", "클릭", 낯선 도메인, 또는 정상 거래의 참조번호)는 대개 **앞부분에 몰려** 있다.
+
+측정된 곡선이 이 구조를 그대로 보여준다. 120자에서 이미 55%에 도달했고, 그 뒤 1,880자는 순 1%포인트만 보탰다. 더 결정적인 것은 **맞교환**이다. 인지심리학이 오래 보고해 온 현상 — 긴 자료에서 중간 정보가 양 끝에 가려 소실되는 것(serial position) — 과 같은 결로, 추가된 맥락은 어떤 메일에는 신호였고 어떤 메일에는 기존 단서를 흐리는 잡음이었다.
+
+## 정보경제학: 결정에 필요한 충분통계량은 입력 길이와 무관하다
+
+통계적 결정 이론에는 **충분통계량**이라는 개념이 있다. 어떤 결정에 필요한 정보가 데이터 전체가 아니라 그 일부 요약값에 이미 다 담겨 있다는 것이다. "스팸이냐"라는 이진 결정의 충분통계량은 대개 작다 — 몇 개의 표면 단서면 족하다.
+
+그러면 경제는 이렇게 된다. **공급 곡선(토큰당 비용)은 선형으로 평평해졌지만, 수요 곡선(토큰당 결정 가치)은 그보다 훨씬 빨리 0으로 내려앉는다.** 둘이 만나는 지점이 "쓸 만한 입력 길이"다. 이 과제에서 그 지점은 120자 언저리였다. 그 너머의 토큰은 공급가가 아무리 싸도 살 가치가 없다.
+
+```{python}
+#| label: fig-econ
+#| fig-cap: "모식도(실험 해석). 공급측 비용은 subquadratic으로 거의 선형이 되었지만(토큰당 일정), 결정에 더해지는 한계 가치는 충분통계량을 지난 뒤 빠르게 0으로 수렴한다. 둘이 만나는 지점 너머의 토큰은 싸도 살 이유가 없다. 측정값이 아니라 두 분야의 곡선을 겹친 개념도다."
+x = np.linspace(0, 2000, 200)
+cost = 0.03 + x * 0.00018                 # 선형 공급(토큰당 일정)
+value = 0.9 * np.exp(-x / 250)            # 수확체감하는 한계 가치
+fig, ax = plt.subplots(figsize=(7.8, 3.3))
+ax.plot(x, cost, color=BLUE, lw=2.2, label="한계 비용 (subquadratic·선형)")
+ax.plot(x, value, color=GREEN, lw=2.2, label="한계 결정 가치 (수확체감)")
+ix = np.argmin(np.abs(cost - value))
+ax.axvline(x[ix], ls="--", lw=1.2, color=MUTED)
+ax.text(x[ix]+30, .55, f"교차 ≈ {x[ix]:.0f}자\n충분통계량의 끝", fontsize=9, color=MUTED)
+ax.fill_between(x, value, cost, where=(x > x[ix]), color=RED, alpha=.10)
+ax.text(1250, .12, "싸지만\n살 가치 없는 토큰", fontsize=9, color=RED, ha="center")
+ax.set_xlabel("입력 길이 (자)"); ax.set_ylabel("토큰당 (임의 단위)"); ax.set_ylim(0, .95)
+ax.legend(fontsize=9, frameon=False, loc="upper right")
+finish(ax, "선형 공급 × 수확체감 수요", "")
+plt.tight_layout(); plt.show()
+```
+
+# 경계에서만 나오는 명제
+
+> **긴 컨텍스트의 '선형 지연'은 공급의 성취이지 판단의 성취가 아니다.**
+>
+> 토큰당 비용이 선형으로 평평해져도, 그 토큰이 결정에 더하는 한계 가치는 충분통계량을 지나면 0으로 내려간다. 그러므로 긴 입력이 돈값을 하는가는 모델의 스케일링 모양이 아니라 **"판단에 필요한 정보가 입력 길이에 비례해 들어 있는 과제인가"**로 결정된다. 그렇지 않은 과제에서 긴 입력은 순이득 없이 판정을 흔들 뿐이고(맞교환), 그 흔들림의 방향은 학습 분포가 얇은 쪽(여기서는 한국어)에서 손해로 기운다.
+
+세 분야 중 하나만으로는 이 명제에 닿지 못한다.
+
+- **전산학만으로는** "선형이 되었다"에서 멈춘다. 선형이 된 것이 비용일 뿐 가치가 아니라는 것을 말하지 못한다.
+- **인지심리학만으로는** "수확체감한다"는 일반 법칙을 말하고 끝난다. 그 체감이 **지금 팔리는 상품의 핵심 광고**를 어떻게 무력화하는지 보지 못한다.
+- **정보경제학만으로는** 충분통계량이 작다고 예측하지만, 그 작은 통계량 너머의 토큰이 **무해한 잉여가 아니라 판정을 뒤집는 잡음**이라는 경험적 사실(17% 맞교환, 언어별 반대 부호)을 내놓지 못한다.
+
+셋을 겹쳐야 이렇게 말할 수 있다. **공급 곡선을 아무리 눕혀도, 수요 곡선이 먼저 바닥에 닿은 과제에서는 긴 입력이 상품이 아니다.**
+
+# 설계로 옮기면
+
+1. **긴 컨텍스트를 사기 전에 충분통계량을 먼저 재라.** 입력을 2~4단계 길이로 잘라 같은 판단을 시켜 보고, 정확도가 오르는 구간이 있는지 확인한다. 평평하면 그 과제는 짧은 입력으로 끝난 것이다.
+2. **평균 정확도만 보지 마라.** 맞교환 비율을 따로 센다. 평균이 그대로여도 개별 판정이 길이에 따라 요동친다면, 그 모델은 입력 길이에 **불안정**한 것이고 운영에서 재현성이 떨어진다.
+3. **언어·도메인별로 쪼개서 보라.** 전체가 평평해도 하위 집단에서 반대로 움직일 수 있다. 한국어 트래픽이 많다면, 영어 벤치의 '선형 스케일링 이득'은 당신에게 손해일 수 있다.
+4. **선형 지연은 긴 입력이 증거인 과제에 써라.** 장문 요약·코드 전체 리뷰·다문서 대조처럼 답이 뒤에 흩어진 과제에서는 수요 곡선이 늦게 내려간다. 거기서는 subquadratic이 진짜 가치다.
+
+::: {.callout-warning}
+## 반대 해석과 한계
+
+**1. 길이 범위가 광고의 스케일과 다르다.** Snap이 자랑한 선형성은 100K~384K 토큰 구간의 이야기다. 이 실험은 120~2,000자(수백~수천 토큰)만 다뤘다. 그러므로 이 글은 **"선형 지연이 거짓"이라고 말하지 않는다.** 선형 지연은 사실일 것이다. 이 글이 보인 것은 **그 선형성이 전형적 판단 입력 길이에서는 살 거리를 만들지 못한다**는 것뿐이다.
+
+**2. 지연 측정은 모델 내부 비용이 아니다.** 측정된 571~574ms는 한국에서 OpenRouter를 거친 왕복이 지배한다. 입력 길이와 지연의 상관이 0.001로 나온 것은 **네트워크가 짧은 입력 범위의 계산 시간을 덮었기** 때문이지, 모델이 길이에 무관하게 빠르다는 증거가 아니다. 이 숫자로 Snap의 선형 주장을 반증하지 않는다.
+
+**3. 표본이 작고 하위 집단은 더 작다.** 133건, 언어별로 63/70건이다. 영어 +11%p·한국어 −8%p는 방향은 뚜렷하지만 표본이 작아 구간 경계·메일 구성에 민감하다. 재현이 필요하다.
+
+**4. 모델 하나만 실측했다.** MS Decision-1과 SubQ Snap은 systemone 호출 경로가 없어 직접 재지 못했고, Snap 수치는 공개 2점의 재계산일 뿐이다. 결론은 Jev 한 모델의 거동이며, 의사결정 모델 범주 전체로의 일반화는 보류한다.
+
+**5. 반대 방향의 해석 — 고칠 것은 모델이 아닐 수 있다.** 한국어가 길수록 나빠진 것을, 모델의 결함이 아니라 **데이터의 속성**으로 볼 수도 있다. 한국어 스팸은 길어질수록 정상 거래·공지 문구를 더 많이 닮아 표면 단서가 희석될 수 있다. 그렇다면 틀린 것은 모델이 아니라, 답을 본문 바깥(수신자의 구독 이력)에 둔 **과제 설정**이다. 이 해석이 맞다면 긴 입력의 손해는 모델이 아니라 라벨이 만든 것이다.
+
+**6. 정답 라벨이 완벽하지 않다.** 메일 서비스의 자동 분류를 정답으로 삼았다. 정상함에 들어온 광고는 서비스가 통과시킨 것일 뿐 "원하는 메일"이라는 뜻이 아니다. 모델과 정답이 같은 실수를 공유할 가능성을 배제하지 못했다.
+:::
+
+# 남는 질문
+
+의사결정 모델 경쟁의 다음 전선은 이미 컨텍스트 길이로 옮겨 가고 있다 — Snap은 384K, GPT-6.1 계열은 기본 500K. 더 긴 입력을 더 싸게 삼키는 경주다.
+
+그러나 이 글의 측정이 가리키는 질문은 길이가 아니다.
+
+**그 과제의 충분통계량은 몇 자인가.** 그 자리를 넘는 토큰은, 공급가가 0에 수렴해도 수요가 먼저 0이다. 긴 컨텍스트가 상품이 되는 것은 그 자리가 뒤에 있는 과제에서뿐이다. 선형이 된 것이 속도만이 아니라 판단이기도 한 과제를, 우리는 아직 충분히 가려내지 못했다.
+
+# 참고 문헌
+
+- Vaswani, A. et al. "Attention Is All You Need." *NeurIPS*, 2017. — 어텐션의 $O(n^2)$ 비용 구조.
+- Tay, Y. et al. "Efficient Transformers: A Survey." *ACM Computing Surveys*, 2022. — 선형·희소·저랭크 어텐션 계열(subquadratic) 정리.
+- Liu, N. F. et al. "Lost in the Middle: How Language Models Use Long Contexts." *TACL*, 2024. — 긴 입력에서 중간 정보의 활용 저하.
+- Simon, H. A. *Models of Bounded Rationality*. MIT Press, 1982. — 제한된 합리성과 정보 탐색의 수확체감.
+- Fisher, R. A. "On the Mathematical Foundations of Theoretical Statistics." *Phil. Trans. R. Soc. A*, 1922. — 충분통계량 개념의 정립.
+- SubQuadratic, Snap 모델 공개 수치(2026-10-12), 및 Microsoft-Decision-1 공개(2026-10-09), a16z TypeSafe 투자 발표(2026-10-09). — 의사결정 모델 범주 형성의 1차 소식.
+- Insight Lab SP25 「싸진 판단은 어디서 정직한가」(2026-09-27). — 같은 과제·같은 모델의 캘리브레이션 실측(선행 연구).
