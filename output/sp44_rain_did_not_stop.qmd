@@ -1,0 +1,265 @@
+---
+title: "비는 공세를 멈추지 않았다 — 670년 나당 전쟁과 2022년 헤르손의 교전 달력"
+subtitle: "기후학 × 군사학 × 지리학 × 역사학 — 강과 보급선이 공세의 시간을 자르는 방식"
+author: "Insight Lab × Claude"
+date: "2026-10-25"
+lang: ko
+jupyter: python3
+format:
+  html:
+    theme:
+      dark: darkly
+      light: flatly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    smooth-scroll: true
+    embed-resources: true
+    lightbox: true
+    fig-responsive: true
+execute:
+  echo: false
+  warning: false
+---
+
+```{=html}
+<style>
+.cell-output-display img, figure img, .quarto-figure img { max-width:100% !important; height:auto !important; }
+@media (max-width:640px){ .cell-output-display img, figure img { width:100%; } .figure-caption, figcaption { font-size:.82rem; } }
+</style>
+```
+
+::: {.callout-note}
+## 핵심 문장
+
+기후는 전쟁을 정하지 않는다. 대신 한 번에 작전을 할 수 있는 날의 길이를 정한다. 그런데 두 전쟁의 기록을 나란히 놓으면 이상한 점이 보인다. 신라-당 교전 기록의 77%가 몬순이 집중되는 6–9월에 있었고, 헤르손에서는 강수 최고치인 11월에 철수가 있었다. **이 표본에서 비는 공세를 멈추지 않았다.** 공세를 멈춘 것은 강을 건너는 능력과 보급선으로 보인다. 이것은 가설이며, 아래 한계 절에서 검증 조건을 적었다.
+:::
+
+```{python}
+#| label: setup
+import json, statistics as st
+from pathlib import Path
+from collections import defaultdict, Counter
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "Noto Sans CJK KR"
+plt.rcParams["axes.unicode_minus"] = False
+plt.rcParams["figure.dpi"] = 130
+BLUE, GREEN, RED, GOLD, MUTED = "#38bdf8", "#22c55e", "#ef4444", "#f59e0b", "#64748b"
+
+def finish(ax, title, sub=""):
+    ax.set_title(title, fontsize=13, fontweight="bold", loc="left", pad=24 if sub else 14)
+    if sub:
+        ax.text(0, 1.02, sub, transform=ax.transAxes, fontsize=9.5, color=MUTED, va="bottom")
+    ax.spines[["top", "right"]].set_visible(False)
+
+MONTHS = [f"{m}월" for m in range(1, 13)]
+```
+
+# 두 전쟁을 한 표에 놓는 이유
+
+두 전쟁은 시대도 행위자도 다르다. 670년대 신라와 당은 한반도에서 싸웠다. 2022년 이후 러시아와 우크라이나는 드니프로 강 남쪽 기슭, 헤르손 방면에서 싸우고 있다. 이 글은 두 전쟁을 같은 이야기로 묶지 않는다. 대신 한 질문을 두 장소에 던진다. **계절과 강이 공세를 할 수 있는 날을 얼마나 줄였는가?**
+
+이 질문은 학문 하나로 답할 수 없다.
+
+- **군사학**은 공세 단계와 보급선을 본다. 보급이 끊기면 병력은 움직여도 버티지 못한다 (van Creveld 1977).
+- **지리학**은 강과 해안이 움직일 수 있는 길을 정한다.
+- **기후학**은 강수와 기온, 토양 상태가 그 길을 얼마나 자주 막는지 잰다.
+- **역사학**은 교전 기록이 실제로 어떤 달에 있었는지 확인한다. 기록은 편집되어 전해진다.
+
+범위를 먼저 적는다. 헤르손은 한 전선이고, 신라-당은 『삼국사기』 신라본기에서 뽑은 기사 15건이다. 그중 교전과 공세에 해당하는 것은 13건이다. 표본은 작다. 이 글의 목적은 결론을 내리는 것보다, 기후 자료가 어떤 주장을 지지하고 어떤 주장을 지지하지 않는지 보여주는 데 있다.
+
+# 헤르손의 월별 기후
+
+```{python}
+#| label: kherson-monthly
+#| fig-cap: "그림 1. 헤르손(46.6°N, 32.6°E)의 월별 강수(막대)와 평균기온(선). 각 달은 자료가 있는 해의 평균이다(1–6월은 2022–2026년 5년, 7–12월은 2022–2025년 4년). 출처: Open-Meteo Historical API(ERA5 계열 재분석), 2026-10-25 조회."
+K = json.loads(Path("data/sp44_kherson_daily.json").read_text())["daily"]
+ysum, tmp = defaultdict(float), defaultdict(list)
+for t, p, tm in zip(K["time"], K["precipitation_sum"], K["temperature_2m_mean"]):
+    mo = int(t[5:7])
+    ysum[(t[:4], mo)] += p or 0
+    if tm is not None:
+        tmp[mo].append(tm)
+prec = [st.mean([v for (y, m), v in ysum.items() if m == mo]) for mo in range(1, 13)]
+temp = [st.mean(tmp[mo]) for mo in range(1, 13)]
+
+fig, ax = plt.subplots(figsize=(7.2, 3.6))
+ax.bar(range(1, 13), prec, color=BLUE, width=0.7, label="강수 (mm)")
+ax2 = ax.twinx()
+ax2.plot(range(1, 13), temp, color=RED, marker="o", lw=2, label="평균기온 (°C)")
+ax.set_xticks(range(1, 13))
+ax.set_xticklabels(MONTHS, fontsize=8)
+ax.set_ylabel("월 강수량 (mm)")
+ax2.set_ylabel("평균기온 (°C)")
+ax2.spines[["top"]].set_visible(False)
+ax.annotate(f"11월 {prec[10]:.0f} mm\n연중 최고", xy=(11, prec[10]), xytext=(8.6, 66),
+            fontsize=8.5, arrowprops=dict(arrowstyle="-", color=MUTED))
+finish(ax, "헤르손: 월별 강수와 기온", "막대 = 강수, 선 = 기온")
+fig.tight_layout()
+plt.show()
+```
+
+11월은 평균 71.3 mm로 연중 가장 많이 내린다. 4월(61.6 mm)이 그다음이다. 여름인 7월은 16.9 mm로 가장 건조하다. 1월 평균기온은 1.3°C다. 2022년 11월 드니프로 우안에서의 철수는 이 가장 젖은 달과 겹친다. 철수의 정확한 날짜는 보도 기준으로 확인이 필요하다.
+
+# 땅의 상태: 토양수분
+
+강수보다 중요할 수 있는 것은 땅이 얼마나 젖어 있느냐다. 같은 비라도 마른 땅에서는 흡수되고, 포화된 땅에서는 차량과 보병의 이동을 막는다. 아래 그림은 헤르손의 표층 7cm 토양수분이다.
+
+```{python}
+#| label: soil
+#| fig-cap: "그림 2. 헤르손 표층 0–7 cm 토양수분의 월평균(2022년 1월–2026년 6월). 단위는 m³/m³. 출처: Open-Meteo Historical API(ERA5 계열 토양층 자료)."
+import matplotlib.dates as mdates
+S = json.loads(Path("data/sp44_kherson_soil.json").read_text())["daily"]
+mm = defaultdict(list)
+for t, v in zip(S["time"], S["soil_moisture_0_to_7cm_mean"]):
+    if v is not None:
+        mm[t[:7]].append(v)
+keys = sorted(mm)
+series = [st.mean(mm[k]) for k in keys]
+dates = [np.datetime64(k + "-15") for k in keys]
+low = min(range(len(keys)), key=lambda i: series[i])
+
+fig, ax = plt.subplots(figsize=(7.2, 3.4))
+ax.plot(dates, series, color=GREEN, lw=1.8)
+ax.scatter(dates, series, color=GREEN, s=12, zorder=3)
+ax.scatter([dates[low]], [series[low]], color=RED, s=40, zorder=4)
+ax.annotate(f"최저 {series[low]:.3f}\n({keys[low]})", xy=(dates[low], series[low]),
+            xytext=(dates[low], series[low] + 0.12), fontsize=8.5, ha="center",
+            arrowprops=dict(arrowstyle="-", color=MUTED))
+ax.set_ylabel("토양수분 (m³/m³)")
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
+ax.set_ylim(0.1, 0.55)
+finish(ax, "헤르손: 표층 토양수분, 2022–2026", "여름에 말라 가을에 다시 젖는다")
+fig.tight_layout()
+plt.show()
+```
+
+달별 평균을 보면 1–2월은 약 0.45, 7–8월은 약 0.25다. 9월 0.30, 10월 0.37, 11월 0.42로 가을에 다시 젖는다. 가장 낮은 달은 2025년 7월의 0.149였다. 가을의 재습윤은 기상 자료가 말하는 가장 뚜렷한 계절 변화다. 헤르손의 전장 해석에서 "진흙 계절"을 가을 쪽에 두는 근거가 여기에 있다. 다만 토양수분이 실제로 기동을 막았는지는 이 자료만으로 알 수 없다. 이것은 작전 기록과 맞춰 봐야 하는 가설이다.
+
+# 한반도 몬순과 교전 달
+
+헤르손의 기후는 실제 교전지의 기후와 다르다. 신라-당 전쟁의 교전지인 연천, 파주, 서천 부근 관측 자료는 아직 확보하지 않았다. 여기서는 서울의 1981–2010년 월별 강수를 대리 지표로 쓴다. 서울은 교전지에서 멀지 않은 중부 지역이며, 한반도 여름 몬순의 강수 분포를 보여주기에 충분하다.
+
+```{python}
+#| label: seoul-climatology
+#| fig-cap: "그림 3. 서울(37.5°N, 127.0°E)의 월별 강수, 1981–2010년. 막대는 평균, 회색 띠는 연도별 10–90 백분위 범위. 출처: Open-Meteo Historical API."
+SE = json.loads(Path("data/sp44_seoul_daily.json").read_text())["daily"]
+ym = defaultdict(float)
+for t, p in zip(SE["time"], SE["precipitation_sum"]):
+    ym[(t[:4], int(t[5:7]))] += p or 0
+per_mon = {mo: [v for (y, m), v in ym.items() if m == mo] for mo in range(1, 13)}
+clim = np.array([st.mean(per_mon[mo]) for mo in range(1, 13)])
+lo = np.array([np.percentile(per_mon[mo], 10) for mo in range(1, 13)])
+hi = np.array([np.percentile(per_mon[mo], 90) for mo in range(1, 13)])
+ANNUAL = clim.sum()
+
+fig, ax = plt.subplots(figsize=(7.2, 3.6))
+x = np.arange(1, 13)
+ax.fill_between(x, lo, hi, color="#cbd5e1", alpha=0.7, label="10–90 백분위")
+ax.bar(x, clim, color=GREEN, width=0.7, alpha=0.9, label="평균")
+ax.set_xticks(x)
+ax.set_xticklabels(MONTHS, fontsize=8)
+ax.set_ylabel("월 강수량 (mm)")
+ax.legend(frameon=False, fontsize=8.5)
+finish(ax, "서울: 월별 강수, 1981–2010", f"연 {ANNUAL:,.0f} mm. 6–9월이 {clim[5:9].sum()/ANNUAL:.0%}")
+fig.tight_layout()
+plt.show()
+```
+
+서울의 연 강수 1,267 mm 가운데 6–8월이 58%, 6–9월이 70%를 차지한다. 7–8월만 보면 47%다. 신라-당 전쟁이 한창이던 시기의 한반도에서도 이 몬순 구조는 같았다고 가정할 수 있다. 다만 이 가정은 기후 자료 쪽의 기본값이고, 역사 자료로 확인한 것이 아니다.
+
+## 교전 연표
+
+아래 표는 『삼국사기』 신라본기 문무왕 기사에서 옮긴 것이다. 문무왕은 661년에 즉위했으므로 연차에 660을 더해 서기 연도로 바꿨다. 월 단위만 있는 기사가 많고, 일 단위가 있는 것은 매소성(9월 29일)과 당 조운선 공격(10월 6일)뿐이다. 주도(主導)는 기록의 문장을 따라 적었다. 정치적 사건은 교전 집계에서 뺐다.
+
+| 연도 | 월 | 사건 | 주도 | 영역 |
+|---|---|---|---|---|
+| 670 | 7 | 안승을 고구려왕으로 책봉 (정치) | 신라 | 정치 |
+| 671 | 1 | 웅진 남쪽에서 백제 공략 | 신라 | 육상 |
+| 671 | 6 | 석성에서 당군과 교전 | 신라 | 육상 |
+| 671 | 9 | 고간 등이 대방을 침입 | 당 | 육상 |
+| 671 | 10 (6일) | **당 조운선 공격, 승리** | 신라 | **해상·보급선** |
+| 672 | 7 | 고간·이근행이 평양에 군영 설치 | 당 | 육상 |
+| 672 | 8 | 고구려군과 함께 당군과 교전 | 신라 | 육상 |
+| 673 | 9 | 당·말갈·거란과 아홉 번 교전, 모두 승리 | 신라 | 육상 |
+| 674 | 1 | 당이 김인문을 신라왕으로 책봉하고 공격 준비 (정치) | 당 | 정치 |
+| 675 | 9 | 천성에서 설인귀를 격파 | 신라 | 육상 |
+| 675 | 9 (29일) | **매소성에서 이근행을 격파** | 신라 | 육상 |
+| 675 | 9 | 칠중성 포위 | 당 | 육상 |
+| 675 | 9 | 석현성 함락 | 당 | 육상 |
+| 676 | 7 | 도림성 공격 | 당 | 육상 |
+| 676 | 11 | **기벌포에서 설인귀 격파** | 신라 | **해상** |
+
+675년 9월의 네 건(천성, 매소성, 칠중성, 석현성)과 "열여덟 번 싸워 모두 이겼다"는 기록은 한 해의 한 묶음으로 읽어야 한다. 독립된 사건 네 개로 세면 9월이 과대 계산된다.
+
+```{python}
+#| label: events-vs-rain
+#| fig-cap: "그림 4. 월별 비중 비교. 금색 막대는 신라-당 교전 기록 13건(정치 사건 제외)의 월별 비중, 초록 막대는 서울 강수의 연중 비중(1981–2010)이다. 교전 기록은 연대기 편집을 거쳤으므로 건수는 절대량이 아니라 분포의 모양으로만 읽는다."
+EV = json.loads(Path("data/sp44_samguk_events.json").read_text())
+battle = [e for e in EV if e["domain"] != "political"]
+cnt = Counter(e["month"] for e in battle)
+ev_share = np.array([cnt.get(m, 0) for m in range(1, 13)]) / len(battle)
+rain_share = clim / ANNUAL
+
+fig, ax = plt.subplots(figsize=(7.2, 3.6))
+ax.bar(x - 0.18, ev_share, width=0.36, color=GOLD, label="교전 기록 비중 (13건)")
+ax.bar(x + 0.18, rain_share, width=0.36, color=GREEN, alpha=0.8, label="서울 강수 비중 (1981–2010)")
+ax.set_xticks(x)
+ax.set_xticklabels(MONTHS, fontsize=8)
+ax.set_ylabel("연간 대비 비중")
+ax.yaxis.set_major_formatter(lambda v, _: f"{v:.0%}")
+ax.legend(frameon=False, fontsize=8.5)
+finish(ax, "교전 기록의 달과 몬순의 달", "6–9월: 교전 기록 77%, 서울 강수 70%")
+fig.tight_layout()
+plt.show()
+```
+
+6–9월에 있었던 기록은 13건 가운데 10건(77%)이다. 675년 9월 묶음을 한 건으로 줄여도 9건 가운데 6건(67%)이 6–9월이다. 같은 기간 서울 강수는 70%다. 교전 기록은 몬순기에 몰리지 않았다는 쪽이 아니라, 강수 분포와 거의 같은 비율로 몬순기에 있었다. 적어도 이 표본에서는 "비가 많은 달은 피한다"는 가설이 지지되지 않는다.
+
+# 지도
+
+![그림 5. 왼쪽: 670–676년 신라-당 교전 지점의 근사 위치(칠중성·매소성은 연천–파주 일대, 기벌포는 금강 하구 추정). 오른쪽: 헤르손 시(Kherson)의 위치. 좌표는 근사치이며 제출 전에 『삼국사기』 지명 고증으로 확인해야 한다. 전선선은 그리지 않았다.](data/sp44_map.png){#fig-map width=100%}
+
+지도는 두 장소의 위치 관계만 보여준다. 헤르손 전선의 선을 그리지 않은 이유는 두 가지다. 첫째, 날짜별 전선 자료를 아직 코딩하지 않았다. 둘째, 실시간 전황 지도 사이트의 내용은 재배포 조건을 확인하지 않았으므로 기사에 옮기지 않았다. 지도 대신 공개 전황 보고서의 좌표를 쓰는 방식으로 교체할 수 있다.
+
+# 경계에서만 나오는 명제
+
+위 자료만으로 말할 수 있는 것은 제한적이다. 하지만 두 사례를 나란히 놓으면 한 문장으로 줄일 수 있다.
+
+> **비는 공세를 멈추지 않았다. 강과 보급선이 멈추게 했다.**
+
+이 명제는 기후학만으로는 나오지 않는다. 기후학은 "비가 많다"는 사실을 준다. 하지만 비가 많은 달에 교전이 있었다는 사실이 비가 작전을 막지 않았다는 뜻은 아니다. 두 번째 줄, 즉 강과 보급선이 작전의 한계였다는 말은 군사학과 지리학에서 온다. 670년 10월 신라 해군이 당의 조운선을 공격한 것은 보급선이 실제로 끊기는 사례다. 2022년 11월 드니프로 우안에서의 철수는 강을 건너는 능력의 문제로 읽힌다. 역사학은 이 사건들이 실제로 어떤 달에 있었는지를 준다. 세 분야가 함께 있어야 "비가 많다"가 "그래서 무엇이 바뀌었다"로 이어진다.
+
+이것은 가설이다. 논문 초고의 보급선 가설(H3, 보급선 차단이 공세의 정체를 만든다)에 대응하는 검증이 필요하며, 두 사례로는 확인되지 않는다.
+
+::: {.callout-warning}
+## 반대 해석과 이 결론이 깨지는 조건
+
+1. **월평균은 작전 날씨가 아니다.** 11월 평균 71 mm는 어느 해의 어느 날에 진흙이 있었는지 말해주지 않는다. 철수 날짜의 일일 기상을 확인하기 전까지 기후와 철수의 관계는 연결되지 않는다.
+2. **연대기는 승리와 함락을 더 기록한다.** 『삼국사기』는 국가 편찬물이다. 몬순기의 소규모 교전이나 행군이 빠졌을 수 있다. 빠진 기록이 있다면 교전 달의 분포가 달라진다.
+3. **드론과 포병은 계절의 제약을 바꾼다.** 2022년 이후의 전장에서는 드론 사정거리 안의 보급선이 계절과 무관하게 노출된다. 신라-당 시대의 "비가 많으면 보급이 끊긴다"는 구조가 드론 시대에도 같다고 볼 수 없다.
+4. **지리는 사람이 바꿀 수 있다.** 2023년 6월 카호프카 댐의 붕괴는 드니프로의 지리를 바꾸었다(보도 기준, 날짜와 영향은 원문 확인 필요). 기후 조건이 아니라 인공 구조물이 강의 역할을 바꾼 것이다. 이 경우 기후-지리 연결은 약해진다.
+5. **두 사례는 짝이 아니다.** 한 전선과 한 전쟁 체계를 비교했다. 공통 구조가 있다고 말하려면 비교 집합이 필요하다.
+:::
+
+# 한계와 다음 단계
+
+- **사료 확인.** 연차를 서기 연도로 바꾸는 환산(+660)은 문무왕 즉위년(661)에 근거한다. 월만 있는 기사는 정확한 날이 아니다. 판본 대조가 필요하다.
+- **교전지의 강수.** 서울은 대리 지표다. 연천, 파주, 서천 부근의 관측 자료(기상청 지점 자료)를 받아 같은 그림을 다시 그려야 한다.
+- **비교 집합.** 수 양제의 고구려 원정(612), 1812년 나폴레옹의 러시아 원정, 1941년 독일의 소련 침공을 같은 방식으로 코딩해야 한다. 지금은 사례가 두 개뿐이다.
+- **헤르손 날짜.** 2022년 11월 철수와 2023년 6월 댐 붕괴의 날짜는 공개 보고서로 확인해야 한다. 이 글은 보도 기준 날짜를 쓰지 않았다.
+- **데이터 한계.** Open-Meteo는 재분석 자료다. 실제 관측 일강수가 아니다. 토양수분도 모형값이다.
+
+# 참고 문헌
+
+- Buhaug, H. (2010). Climate not to blame for African civil wars. *PNAS*, 107(38), 16477–16482.
+- Hsiang, S. M., Burke, M., & Miguel, E. (2013). Quantifying the influence of climate on human conflict. *Science*, 341(6151), 1235367.
+- Mach, K. J. et al. (2019). Climate as a risk factor for armed conflict. *Nature*, 571, 193–197.
+- Snyder, G. H. (1984). The security dilemma in alliance politics. *World Politics*, 36(4), 461–495.
+- van Creveld, M. (1977). *Supplying War: Logistics from Wallenstein to Patton*. Cambridge University Press.
+- Mackinder, H. J. (1904). The geographical pivot of history. *The Geographical Journal*, 23(4), 421–437.
+- 김부식 (1145). 『삼국사기』 신라본기 문무왕 기사. 로컬 사본 참조, 판본 대조 필요.
+- Open-Meteo. Historical Weather API (ERA5 계열 재분석, 토양층 자료 포함). 2026-10-25 조회.

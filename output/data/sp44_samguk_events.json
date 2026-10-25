@@ -1,0 +1,137 @@
+[
+ {
+  "year": 670,
+  "month": 7,
+  "day": null,
+  "initiator": "Silla",
+  "domain": "political",
+  "label": "Silla invests Goguryeo remnant king An Seung (안승 책봉)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 671,
+  "month": 1,
+  "day": null,
+  "initiator": "Silla",
+  "domain": "land",
+  "label": "Silla attacks south of Ungjin (웅진 남쪽 전투)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 671,
+  "month": 6,
+  "day": null,
+  "initiator": "Silla",
+  "domain": "land",
+  "label": "Battle at Seokseong with Tang forces (석성 전투)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 671,
+  "month": 9,
+  "day": null,
+  "initiator": "Tang",
+  "domain": "land",
+  "label": "Tang generals Go Gan et al. raid Daebang (대방 침입)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 671,
+  "month": 10,
+  "day": 6,
+  "initiator": "Silla",
+  "domain": "naval",
+  "label": "Silla attacks Tang grain/supply ships and wins (당 조운선 공격)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 672,
+  "month": 7,
+  "day": null,
+  "initiator": "Tang",
+  "domain": "land",
+  "label": "Tang generals establish camp at Pyongyang (평양 군영)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 672,
+  "month": 8,
+  "day": null,
+  "initiator": "Silla",
+  "domain": "land",
+  "label": "Silla fights Tang with Goguryeo troops (고구려군과 함께 교전)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 673,
+  "month": 9,
+  "day": null,
+  "initiator": "Tang",
+  "domain": "land",
+  "label": "Tang, Malgal and Khitan forces; nine battles, all won by Silla (9회 교전 승리 기록)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 674,
+  "month": 1,
+  "day": null,
+  "initiator": "Tang",
+  "domain": "political",
+  "label": "Tang names Kim In-mun king of Silla and prepares attack (김인문 책봉, 공격 준비)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 675,
+  "month": 9,
+  "day": null,
+  "initiator": "Silla",
+  "domain": "land",
+  "label": "Victory at Cheonseong against Seol In-gwi (천성 승리)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 675,
+  "month": 9,
+  "day": 29,
+  "initiator": "Silla",
+  "domain": "land",
+  "label": "Battle at Maeso fortress; Yi Geun-haeng driven out (매소성)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 675,
+  "month": 9,
+  "day": null,
+  "initiator": "Tang",
+  "domain": "land",
+  "label": "Tang, Khitan and Malgal surround Chilcheong fortress (칠중성 포위)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 675,
+  "month": 9,
+  "day": null,
+  "initiator": "Tang",
+  "domain": "land",
+  "label": "Tang takes Seokhyeon fortress (석현성 함락)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 676,
+  "month": 7,
+  "day": null,
+  "initiator": "Tang",
+  "domain": "land",
+  "label": "Tang attacks Docheong fortress (도림성 공격)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ },
+ {
+  "year": 676,
+  "month": 11,
+  "day": null,
+  "initiator": "Silla",
+  "domain": "naval",
+  "label": "Si Deuk defeats Seol In-gwi at Gibeolpo (기벌포 해전)",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+ }
+]
