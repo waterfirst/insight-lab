@@ -1,0 +1,3559 @@
+{
+ "source": "삼국사기 신라본기 권1–12 원문 XML (국사편찬위원회)",
+ "n_war": 205,
+ "n_weather": 239,
+ "records": [
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0020_0080",
+   "date": "19년 1월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0030_0030",
+   "date": "원년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0030_0120",
+   "date": "15년 7월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0030_0150",
+   "date": "19년 11월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0040_0080",
+   "date": "11년 6월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 6
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0040_0090",
+   "date": "13년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0040_0150",
+   "date": "33년 5월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0050_0070",
+   "date": "5년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0050_0090",
+   "date": "8년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0050_0100",
+   "date": "8년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0050_0110",
+   "date": "8년 12월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 12
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0050_0180",
+   "date": "18년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0050_0200",
+   "date": "19년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0050_0210",
+   "date": "20년 9월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0050_0220",
+   "date": "21년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0050_0240",
+   "date": "24년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0080",
+   "date": "6년 1월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0150",
+   "date": "14년 10월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0160",
+   "date": "15년 2월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0180",
+   "date": "17년 7월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0190",
+   "date": "17년 9월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0200",
+   "date": "18년 1월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0210",
+   "date": "19년 4월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0220",
+   "date": "21년 7월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0230",
+   "date": "21년 10월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0260",
+   "date": "23년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0310",
+   "date": "26년 2월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0340",
+   "date": "27년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0060_0390",
+   "date": "32년 5월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0040",
+   "date": "3년 3월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0050",
+   "date": "3년 4월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0060",
+   "date": "4년 2월",
+   "subject": "정치＞군사＞전쟁＞전투이유",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0070",
+   "date": "4년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0080",
+   "date": "5년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0130",
+   "date": "10년 4월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0150",
+   "date": "11년 7월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0170",
+   "date": "12년 4월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0180",
+   "date": "12년 5월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0200",
+   "date": "14년 1월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0210",
+   "date": "14년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0240",
+   "date": "17년 10월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0250",
+   "date": "17년 11월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0270",
+   "date": "20년 5월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0070_0280",
+   "date": "21년 2월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0080_0050",
+   "date": "4년 2월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0080_0090",
+   "date": "6년 7월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0080_0100",
+   "date": "6년 8월",
+   "subject": "정치＞군사＞전쟁＞전투유형",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0080_0110",
+   "date": "6년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0080_0140",
+   "date": "9년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0080_0170",
+   "date": "10년 11월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0080_0250",
+   "date": "16년 11월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0080_0260",
+   "date": "17년 4월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0080_0280",
+   "date": "18년 3월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_001.xml",
+   "id": "sg_001_0080_0290",
+   "date": "20년 10월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0020_0080",
+   "date": "7년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0020_0090",
+   "date": "8년 7월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0020_0140",
+   "date": "14년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0020_0180",
+   "date": "17년 7월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0020_0190",
+   "date": "17년 10월",
+   "subject": "정치＞군사＞전쟁＞전투유형",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0020_0240",
+   "date": "21년 1월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 1
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0020_0250",
+   "date": "21년 2월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0030_0030",
+   "date": "2년 2월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0030_0080",
+   "date": "4년 10월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0030_0090",
+   "date": "5년 2월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0030_0100",
+   "date": "6년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0030_0140",
+   "date": "9년 3월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0030_0150",
+   "date": "9년 5월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0030_0210",
+   "date": "13년 3월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0040",
+   "date": "3년 5월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0060",
+   "date": "4년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0110",
+   "date": "8년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0130",
+   "date": "10년 7월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0170",
+   "date": "13년 4월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0180",
+   "date": "14년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0220",
+   "date": "17년 5월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0230",
+   "date": "19년 3월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0240",
+   "date": "19년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0250",
+   "date": "19년 12월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 12
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0260",
+   "date": "23년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0290",
+   "date": "27년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0300",
+   "date": "27년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0310",
+   "date": "29년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0370",
+   "date": "34년 9월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 9
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0040_0380",
+   "date": "34년 10월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0050_0040",
+   "date": "2년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0050_0050",
+   "date": "3년 4월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0050_0060",
+   "date": "4년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0050_0070",
+   "date": "4년 5월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 5
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0050_0080",
+   "date": "4년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0050_0110",
+   "date": "8년 8월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0050_0150",
+   "date": "16년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0050_0170",
+   "date": "17년 11월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0060_0060",
+   "date": "3년 4월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0060_0100",
+   "date": "9년 9월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0060_0110",
+   "date": "9년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0060_0140",
+   "date": "13년 7월",
+   "subject": "사회＞사회상＞혼란이유＞재해",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0070_0030",
+   "date": "원년 7월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0070_0080",
+   "date": "5년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0070_0110",
+   "date": "11년 7월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0070_0120",
+   "date": "11년 11월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 11
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0070_0140",
+   "date": "17년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0070_0150",
+   "date": "17년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0070_0160",
+   "date": "19년 4월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0070_0200",
+   "date": "22년 9월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0070_0210",
+   "date": "22년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0080_0050",
+   "date": "3년 3월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0080_0060",
+   "date": "4년 4월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0080_0080",
+   "date": "7년 5월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0080_0100",
+   "date": "9년 6월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 6
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0080_0110",
+   "date": "9년 6월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 6
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0080_0170",
+   "date": "15년 2월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0090_0080",
+   "date": "7년 8월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0090_0090",
+   "date": "7년 9월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 9
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0100_0050",
+   "date": "4년 7월",
+   "subject": "사회＞사회상＞혼란이유＞재해",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0100_0120",
+   "date": "28년 3월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0100_0130",
+   "date": "28년 4월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0100_0150",
+   "date": "35년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_002.xml",
+   "id": "sg_002_0100_0210",
+   "date": "41년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0020_0060",
+   "date": "9년 4월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0020_0080",
+   "date": "11년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0020_0170",
+   "date": "33년 4월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0020_0180",
+   "date": "33년 6월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 6
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0020_0210",
+   "date": "34년 2월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0020_0220",
+   "date": "34년 7월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0020_0240",
+   "date": "38년 5월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 5
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0020_0250",
+   "date": "40년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0020_0260",
+   "date": "42년 7월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0020_0270",
+   "date": "44년 7월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0030_0040",
+   "date": "2년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0030_0060",
+   "date": "4년 4월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0030_0070",
+   "date": "5년 7월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0030_0080",
+   "date": "5년 10월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0030_0090",
+   "date": "5년 11월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0030_0100",
+   "date": "6년 3월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 3
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0030_0110",
+   "date": "6년 6월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 6
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0030_0170",
+   "date": "14년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0030_0190",
+   "date": "15년 5월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0060",
+   "date": "4년 7월",
+   "subject": "사회＞사회상＞혼란이유＞재해",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0100",
+   "date": "15년 4월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0110",
+   "date": "15년 7월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0180",
+   "date": "19년 1월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 1
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0210",
+   "date": "20년 4월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0220",
+   "date": "22년 4월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0230",
+   "date": "22년 4월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0250",
+   "date": "24년 6월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 6
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0280",
+   "date": "34년 7월",
+   "subject": "정치＞군사＞전쟁＞전투유형",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0320",
+   "date": "38년 7월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0330",
+   "date": "38년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0340",
+   "date": "39년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0350",
+   "date": "41년 2월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0360",
+   "date": "41년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0040_0370",
+   "date": "42년 2월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0050_0030",
+   "date": "2년 4월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0050_0060",
+   "date": "5년 5월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 5
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0050_0070",
+   "date": "6년 2월",
+   "subject": "정치＞군사＞전쟁＞전투유형",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0050_0090",
+   "date": "8년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0050_0100",
+   "date": "8년 5월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0050_0160",
+   "date": "12년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0050_0170",
+   "date": "12년 7월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0050_0210",
+   "date": "14년 10월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0050_0250",
+   "date": "17년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0050_0270",
+   "date": "19년 6월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 6
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0050_0280",
+   "date": "20년 5월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 5
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0050_0300",
+   "date": "21년 10월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0040",
+   "date": "2년 5월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0050",
+   "date": "2년 10월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0060",
+   "date": "2년 11월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 11
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0080",
+   "date": "3년 3월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 3
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0090",
+   "date": "4년 2월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0100",
+   "date": "4년 4월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0110",
+   "date": "4년 5월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 5
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0120",
+   "date": "5년 4월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0130",
+   "date": "5년 7월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0150",
+   "date": "5년 11월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0180",
+   "date": "6년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0240",
+   "date": "8년 4월",
+   "subject": "정치＞군사＞전쟁＞전투이유",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0290",
+   "date": "9년 10월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0360",
+   "date": "11년 9월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0370",
+   "date": "11년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0430",
+   "date": "16년 4월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0440",
+   "date": "16년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0490",
+   "date": "18년 5월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0500",
+   "date": "18년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0520",
+   "date": "19년 4월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0530",
+   "date": "19년 7월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0540",
+   "date": "19년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_003.xml",
+   "id": "sg_003_0060_0550",
+   "date": "22년 3월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 3
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0020_0140",
+   "date": "10년 3월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0020_0150",
+   "date": "10년 7월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0020_0160",
+   "date": "11년 5월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0020_0170",
+   "date": "11년 10월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0020_0180",
+   "date": "13년 6월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 6
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0040_0030",
+   "date": "원년 10월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0040_0040",
+   "date": "2년 3월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0040_0100",
+   "date": "9년 2월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0040_0120",
+   "date": "11년 1월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0040_0130",
+   "date": "11년 3월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 3
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0040_0220",
+   "date": "15년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0040_0310",
+   "date": "23년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0040_0320",
+   "date": "23년 9월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0050_0040",
+   "date": "2년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0100",
+   "date": "7년 3월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0130",
+   "date": "8년 5월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0170",
+   "date": "11년 7월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0280",
+   "date": "24년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0300",
+   "date": "25년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0340",
+   "date": "27년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0360",
+   "date": "30년 2월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0370",
+   "date": "30년 4월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0400",
+   "date": "33년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0420",
+   "date": "35년 4월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0470",
+   "date": "37년 10월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0480",
+   "date": "38년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0580",
+   "date": "46년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0610",
+   "date": "48년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0630",
+   "date": "49년 3월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0650",
+   "date": "49년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0660",
+   "date": "49년 8월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0680",
+   "date": "50년 2월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_004.xml",
+   "id": "sg_004_0060_0710",
+   "date": "51년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0020_0030",
+   "date": "원년 5월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0020_0070",
+   "date": "2년 2월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0020_0090",
+   "date": "2년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0020_0120",
+   "date": "3년 3월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0020_0180",
+   "date": "5년 5월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 5
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0020_0240",
+   "date": "7년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0020_0250",
+   "date": "7년 11월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 11
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0020_0300",
+   "date": "11년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0020_0310",
+   "date": "11년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0020_0320",
+   "date": "11년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0020_0440",
+   "date": "14년 5월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 5
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0030_0080",
+   "date": "원년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0030_0110",
+   "date": "2년 3월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 3
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0030_0150",
+   "date": "3년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0030_0260",
+   "date": "6년 3월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0090",
+   "date": "2년 3월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 3
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0170",
+   "date": "4년 7월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0260",
+   "date": "7년 5월 26일",
+   "subject": "정치＞군사＞전쟁＞전투이유",
+   "kind": "war",
+   "month": 5
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0290",
+   "date": "7년 7월 9일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0300",
+   "date": "7년 7월 9일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0340",
+   "date": "7년 7월 13일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0350",
+   "date": "7년 7월 18일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0380",
+   "date": "7년 8월 2일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0390",
+   "date": "7년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0400",
+   "date": "7년 8월 26일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0410",
+   "date": "7년 9월 3일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0420",
+   "date": "7년 9월 23일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0450",
+   "date": "7년 10월 9일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0460",
+   "date": "7년 10월 18일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0470",
+   "date": "7년 10월 30일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0480",
+   "date": "7년 11월 1일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 11
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0490",
+   "date": "7년 11월 5일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 11
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0530",
+   "date": "8년 3월 12일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 3
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0540",
+   "date": "8년 4월 19일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_005.xml",
+   "id": "sg_005_0040_0550",
+   "date": "8년 5월 9일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 5
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0060",
+   "date": "원년 9월 25일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0070",
+   "date": "원년 9월 27일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0100",
+   "date": "원년 9월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0110",
+   "date": "원년 9월",
+   "subject": "정치＞군사＞전쟁＞전후처리",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0190",
+   "date": "2년 1월 23일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0220",
+   "date": "2년 2월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0250",
+   "date": "2년 2월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0280",
+   "date": "2년 8월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0300",
+   "date": "2년 8월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0340",
+   "date": "3년 2월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0360",
+   "date": "3년 5월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0380",
+   "date": "3년 10월 21일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0440",
+   "date": "4년 2월",
+   "subject": "정치＞군사＞전쟁＞전후처리",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0490",
+   "date": "4년 8월 14일",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0570",
+   "date": "6년 2월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0610",
+   "date": "6년 12월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 12
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0620",
+   "date": "6년 12월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 12
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0790",
+   "date": "8년 6월 22일",
+   "subject": "정치＞군사＞전쟁＞전후처리",
+   "kind": "war",
+   "month": 6
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0830",
+   "date": "8년 9월 21일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0930",
+   "date": "9년 5월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_0990",
+   "date": "10년 4월 4일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_1000",
+   "date": "10년 6월",
+   "subject": "정치＞군사＞전쟁＞전후처리",
+   "kind": "war",
+   "month": 6
+  },
+  {
+   "file": "sg_006.xml",
+   "id": "sg_006_0020_1020",
+   "date": "10년 7월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0020",
+   "date": "11년 01월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0030",
+   "date": "11년 01월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0060",
+   "date": "11년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0070",
+   "date": "11년 06월",
+   "subject": "정치＞군사＞전쟁＞전투유형",
+   "kind": "war",
+   "month": 6
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0080",
+   "date": "11년 06월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 6
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0130",
+   "date": "11년 10월06일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0140",
+   "date": "12년 01월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0150",
+   "date": "12년 02월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0160",
+   "date": "12년 07월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0170",
+   "date": "12년 08월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0320",
+   "date": "13년 09월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0370",
+   "date": "14년 01월",
+   "subject": "정치＞군사＞전쟁＞전투이유",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0390",
+   "date": "14년 07월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0460",
+   "date": "15년 09월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0470",
+   "date": "15년 09월29일",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0500",
+   "date": "15년 09월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0510",
+   "date": "15년 09월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0520",
+   "date": "15년 09월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0530",
+   "date": "15년 09월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0540",
+   "date": "15년 09월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0570",
+   "date": "16년 07월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0590",
+   "date": "16년 11월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 11
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0850",
+   "date": "21년 01월",
+   "subject": "정치＞군사＞전쟁＞전투유형",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_007.xml",
+   "id": "sg_007_0020_0870",
+   "date": "21년 05월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0020_0150",
+   "date": "3년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0030_0100",
+   "date": "4년 10월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0030_0140",
+   "date": "5년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0030_0180",
+   "date": "7년 02월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0030_0210",
+   "date": "7년 07월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0030_0250",
+   "date": "8년 09월",
+   "subject": "정치＞군사＞전쟁＞전투유형",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0030_0251",
+   "date": "8년 09월",
+   "subject": "정치＞군사＞전쟁＞전투유형",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_0190",
+   "date": "4년 05월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_0230",
+   "date": "4년 10월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_0300",
+   "date": "5년 08월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_0380",
+   "date": "7년 02월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_0410",
+   "date": "8년 05월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_0470",
+   "date": "10년 03월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_0830",
+   "date": "15년 03월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_0880",
+   "date": "16년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_0930",
+   "date": "17년 03월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_0940",
+   "date": "17년 06월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 6
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_1050",
+   "date": "19년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_1150",
+   "date": "21년 02월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_1290",
+   "date": "24년 03월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_1300",
+   "date": "24년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_008.xml",
+   "id": "sg_008_0040_1530",
+   "date": "30년 04월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0020_0050",
+   "date": "원년 05월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0020_0310",
+   "date": "6년 02월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0030_0080",
+   "date": "2년 08월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0030_0170",
+   "date": "4년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0030_0180",
+   "date": "4년 05월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0030_0280",
+   "date": "6년 03월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0030_0360",
+   "date": "8년 02월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0030_0450",
+   "date": "13년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0030_0490",
+   "date": "13년 08월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0030_0580",
+   "date": "15년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0030_0830",
+   "date": "22년 07월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0030_0900",
+   "date": "24년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0090",
+   "date": "3년 06월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 6
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0150",
+   "date": "4년 06월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 6
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0170",
+   "date": "4년 06월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 6
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0220",
+   "date": "5년 05월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0250",
+   "date": "5년 11월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0270",
+   "date": "6년 03월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0320",
+   "date": "6년 11월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0510",
+   "date": "13년 03월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0520",
+   "date": "13년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0550",
+   "date": "15년 03월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0580",
+   "date": "16년 01월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 1
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0590",
+   "date": "16년 02월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0040_0591",
+   "date": "16년 02월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_009.xml",
+   "id": "sg_009_0050_0120",
+   "date": "4년 02월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0090",
+   "date": "2년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0110",
+   "date": "2년 7월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0120",
+   "date": "2년 9월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 9
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0130",
+   "date": "2년 10월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0150",
+   "date": "3년 2월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0190",
+   "date": "3년 7월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0240",
+   "date": "5년 1월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 1
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0250",
+   "date": "5년 7월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0340",
+   "date": "6년 5월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0380",
+   "date": "7년 10월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0400",
+   "date": "7년 11월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0470",
+   "date": "9년 8월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0490",
+   "date": "10년 2월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0560",
+   "date": "11년 4월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0570",
+   "date": "11년 8월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0600",
+   "date": "13년 9월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 9
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0020_0630",
+   "date": "14년 3월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0030_0100",
+   "date": "2년 4월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0040_0140",
+   "date": "2년 10월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0040_0180",
+   "date": "3년 7월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0040_0240",
+   "date": "4년 10월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0040_0360",
+   "date": "6년 11월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0040_0430",
+   "date": "8년 8월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0050_0230",
+   "date": "6년 5월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0050_0240",
+   "date": "6년 8월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0050_0280",
+   "date": "7년 5월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0050_0370",
+   "date": "9년 5월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0050_0380",
+   "date": "9년 10월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0050_0510",
+   "date": "13년 12월29일",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 12
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0050_0530",
+   "date": "14년 2월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0050_0660",
+   "date": "15년 7월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0060_0060",
+   "date": "2년 5월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0060_0120",
+   "date": "3년 3월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0060_0190",
+   "date": "6년 1월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 1
+  },
+  {
+   "file": "sg_010.xml",
+   "id": "sg_010_0060_0241",
+   "date": "7년 7월",
+   "subject": "경제＞경제정책＞재해＞재해대책",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0020_0040",
+   "date": "2년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0020_0150",
+   "date": "6년 03월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0020_0190",
+   "date": "7년 11월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0020_0280",
+   "date": "10년 10월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0020_0350",
+   "date": "13년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0020_0410",
+   "date": "15년 06월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 6
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0020_0420",
+   "date": "15년 08월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0020_0440",
+   "date": "17년 12월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 12
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0030_0050",
+   "date": "2년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0030_0060",
+   "date": "2년 05월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0040_0090",
+   "date": "3년 11월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 11
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0040_0190",
+   "date": "7년 08월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0040_0230",
+   "date": "8년 06월",
+   "subject": "정치＞신이＞자연현상＞기후",
+   "kind": "weather",
+   "month": 6
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0040_0270",
+   "date": "10년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0040_0290",
+   "date": "10년 07월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 7
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0040_0340",
+   "date": "12년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0040_0350",
+   "date": "12년 08월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0040_0430",
+   "date": "15년 02월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 2
+  },
+  {
+   "file": "sg_011.xml",
+   "id": "sg_011_0070_0120",
+   "date": "2년 05월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 5
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0020_0050",
+   "date": "2년 07월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0020_0070",
+   "date": "3년 07월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0020_0080",
+   "date": "4년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0020_0100",
+   "date": "5년 08월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0020_0110",
+   "date": "6년 03월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0020_0170",
+   "date": "9년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0020_0220",
+   "date": "10년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0020_0260",
+   "date": "12년 03월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0020_0270",
+   "date": "12년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0020_0280",
+   "date": "13년 06월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 6
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0030_0050",
+   "date": "2년 04월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0030_0060",
+   "date": "3년 03월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 3
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0030_0090",
+   "date": "5년 08월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0030_0100",
+   "date": "5년 10월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 10
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0040_0050",
+   "date": "2년 07월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0040_0100",
+   "date": "4년 02월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0040_0140",
+   "date": "5년 02월",
+   "subject": "정치＞군사＞전쟁＞전후처리",
+   "kind": "war",
+   "month": 2
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0040_0150",
+   "date": "5년 04월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 4
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0040_0160",
+   "date": "5년 08월",
+   "subject": "경제＞경제정책＞재해＞재해결과",
+   "kind": "weather",
+   "month": 8
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0040_0170",
+   "date": "6년 01월",
+   "subject": "정치＞군사＞전쟁＞전후처리",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0040_0180",
+   "date": "6년 01월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0040_0190",
+   "date": "7년 07월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0050_0060",
+   "date": "3년 04월",
+   "subject": "정치＞군사＞전쟁＞전투이유",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0050_0100",
+   "date": "4년 03월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 3
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0050_0130",
+   "date": "4년 04월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 4
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0050_0140",
+   "date": "4년 09월",
+   "subject": "정치＞군사＞전쟁＞전후처리",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0040",
+   "date": "원년 12월",
+   "subject": "정치＞군사＞전쟁＞전투유형",
+   "kind": "war",
+   "month": 12
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0050",
+   "date": "2년 01월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0060",
+   "date": "2년 05월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 5
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0070",
+   "date": "2년 06월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 6
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0080",
+   "date": "2년 08월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 8
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0100",
+   "date": "2년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0120",
+   "date": "3년 07월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 7
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0140",
+   "date": "3년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0150",
+   "date": "4년 01월",
+   "subject": "정치＞군사＞전쟁＞전후처리",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0160",
+   "date": "4년 01월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 1
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0180",
+   "date": "4년 09월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0210",
+   "date": "6년 01월",
+   "subject": "경제＞경제정책＞재해＞재해유형",
+   "kind": "weather",
+   "month": 1
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0250",
+   "date": "8년 09월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 9
+  },
+  {
+   "file": "sg_012.xml",
+   "id": "sg_012_0060_0260",
+   "date": "9년 10월",
+   "subject": "정치＞군사＞전쟁＞전쟁결과",
+   "kind": "war",
+   "month": 10
+  }
+ ]
+}

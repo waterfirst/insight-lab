@@ -1,21 +1,14 @@
 [
  {
   "year": 670,
-  "month": 7,
+  "month": 8,
   "day": null,
   "initiator": "Silla",
   "domain": "political",
-  "label": "Silla invests Goguryeo remnant king An Seung (안승 책봉)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
- },
- {
-  "year": 671,
-  "month": 1,
-  "day": null,
-  "initiator": "Silla",
-  "domain": "land",
-  "label": "Silla attacks south of Ungjin (웅진 남쪽 전투)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "outcome": "political",
+  "label": "Silla invests Goguryeo remnant king An Seung (안승 책봉, 冊文 '秋八月')",
+  "note": "",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 671,
@@ -23,8 +16,10 @@
   "day": null,
   "initiator": "Silla",
   "domain": "land",
+  "outcome": "기록상 참수 5,300급",
   "label": "Battle at Seokseong with Tang forces (석성 전투)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "note": "",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 671,
@@ -32,8 +27,10 @@
   "day": null,
   "initiator": "Tang",
   "domain": "land",
+  "outcome": "당군 침입",
   "label": "Tang generals Go Gan et al. raid Daebang (대방 침입)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "note": "",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 671,
@@ -41,35 +38,43 @@
   "day": 6,
   "initiator": "Silla",
   "domain": "naval",
-  "label": "Silla attacks Tang grain/supply ships and wins (당 조운선 공격)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "outcome": "당 조운선 70여 척 공격 (결과 미기재)",
+  "label": "Silla attacks Tang grain/supply ships (당 조운선 공격)",
+  "note": "",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 672,
   "month": 7,
   "day": null,
   "initiator": "Tang",
-  "domain": "land",
-  "label": "Tang generals establish camp at Pyongyang (평양 군영)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "domain": "occupation",
+  "outcome": "군영 8곳 설치",
+  "label": "Tang generals set up eight camps at Pyongyang (평양 군영)",
+  "note": "",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 672,
   "month": 8,
   "day": null,
-  "initiator": "Silla",
+  "initiator": "Goguryeo",
   "domain": "land",
-  "label": "Silla fights Tang with Goguryeo troops (고구려군과 함께 교전)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "outcome": "신라군 패전 (석문)",
+  "label": "Silla army fights Goguryeo troops; defeated at Seokmun (석문 패전)",
+  "note": "",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 673,
-  "month": 9,
+  "month": null,
   "day": null,
-  "initiator": "Tang",
+  "initiator": "Silla",
   "domain": "land",
-  "label": "Tang, Malgal and Khitan forces; nine battles, all won by Silla (9회 교전 승리 기록)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "outcome": "9회 교전 모두 승리 기록",
+  "label": "Nine battles against Tang, Malgal and Khitan forces, recorded as Silla victories (9회 교전)",
+  "note": "월 미기재",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 674,
@@ -77,8 +82,21 @@
   "day": null,
   "initiator": "Tang",
   "domain": "political",
-  "label": "Tang names Kim In-mun king of Silla and prepares attack (김인문 책봉, 공격 준비)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "outcome": "political",
+  "label": "Tang names Kim In-mun king of Silla (김인문 책봉)",
+  "note": "1–2월 사이 추정",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
+ },
+ {
+  "year": 675,
+  "month": 2,
+  "day": null,
+  "initiator": "Tang",
+  "domain": "land",
+  "outcome": "신라군 패전 (칠중성)",
+  "label": "Liu Renjun defeats Silla army at Chilju (칠중성 패전)",
+  "note": "",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 675,
@@ -86,8 +104,10 @@
   "day": null,
   "initiator": "Silla",
   "domain": "land",
+  "outcome": "참수 1,400급, 전선 40척 획득",
   "label": "Victory at Cheonseong against Seol In-gwi (천성 승리)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "note": "",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 675,
@@ -95,26 +115,32 @@
   "day": 29,
   "initiator": "Silla",
   "domain": "land",
-  "label": "Battle at Maeso fortress; Yi Geun-haeng driven out (매소성)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "outcome": "신라 승리 (전마 30,380필 획득)",
+  "label": "Battle at Maeso fortress; Yi Geun-haeng driven out (매소성 승리)",
+  "note": "",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 675,
-  "month": 9,
+  "month": null,
   "day": null,
   "initiator": "Tang",
   "domain": "land",
-  "label": "Tang, Khitan and Malgal surround Chilcheong fortress (칠중성 포위)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "outcome": "칠중성 함락 실패",
+  "label": "Tang, Khitan and Malgal forces surround Chilcheong fortress (칠중성 포위)",
+  "note": "월 미기재",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 675,
-  "month": 9,
+  "month": null,
   "day": null,
   "initiator": "Tang",
   "domain": "land",
+  "outcome": "석현성 함락",
   "label": "Tang takes Seokhyeon fortress (석현성 함락)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "note": "월 미기재",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 676,
@@ -122,16 +148,31 @@
   "day": null,
   "initiator": "Tang",
   "domain": "land",
-  "label": "Tang attacks Docheong fortress (도림성 공격)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "outcome": "도림성 함락",
+  "label": "Tang attacks and takes Docheong fortress (도림성 함락)",
+  "note": "",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
+ },
+ {
+  "year": 676,
+  "month": 11,
+  "day": null,
+  "initiator": "Tang",
+  "domain": "naval",
+  "outcome": "신라군 패전 (기벌포)",
+  "label": "Si Deuk defeated by Seol In-gwi at Gibeolpo (기벌포 패전)",
+  "note": "패전 기사",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  },
  {
   "year": 676,
   "month": 11,
   "day": null,
   "initiator": "Silla",
-  "domain": "naval",
-  "label": "Si Deuk defeats Seol In-gwi at Gibeolpo (기벌포 해전)",
-  "source": "삼국사기 신라본기 문무왕 연차+660 (sg_006–008.xml, 로컬 사본)"
+  "domain": "unspecified",
+  "outcome": "22회 교전 승리 기록",
+  "label": "After Gibeolpo, Silla fights 22 more battles and wins (기벌포 이후 22회 교전)",
+  "note": "패전 뒤 이어진 기사, 전장 미상",
+  "source": "삼국사기 신라본기 문무왕 연차+660 (국사편찬위원회 원문 대조, 2026-10-25)"
  }
 ]
