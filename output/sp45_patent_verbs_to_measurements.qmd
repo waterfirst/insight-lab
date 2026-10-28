@@ -1,0 +1,135 @@
+---
+title: "특허의 동사를 재현성으로 번역하기"
+subtitle: "GIP 특허 해석 × 회로 시뮬레이션 × 측정이론"
+author: "Insight Lab × Muse"
+date: "2026-10-29"
+lang: ko
+jupyter: python3
+format:
+  html:
+    theme: {dark: darkly, light: flatly}
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    smooth-scroll: true
+    embed-resources: true
+    lightbox: true
+    fig-responsive: true
+execute: {echo: false, warning: false}
+---
+
+```{=html}
+<style>
+.cell-output-display img, figure img, .quarto-figure img { max-width:100% !important; height:auto !important; }
+@media (max-width:640px){ .cell-output-display img, figure img { width:100%; } .figure-caption, figcaption { font-size:.82rem; } }
+</style>
+```
+
+::: {.callout-note}
+## 핵심 문장
+특허의 “차단한다·유지한다·리셋한다”는 문장은 곧바로 소자 성능의 증명이 아니다. 그러나 같은 **명시된 합성 조건** 아래 회로를 재구성하고, 원시 파형·넷리스트·판정 규칙을 남기면 그 문장은 반증 가능한 실험 가설이 된다.
+:::
+
+```{python}
+import json
+from pathlib import Path
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "Noto Sans CJK KR"
+plt.rcParams["axes.unicode_minus"] = False
+plt.rcParams["figure.dpi"] = 130
+BLUE, GREEN, RED, GOLD, MUTED = "#38bdf8", "#22c55e", "#ef4444", "#f59e0b", "#64748b"
+data = json.loads(Path("data/sp45_gip_benchmark.json").read_text())
+
+def finish(ax, title, sub=""):
+    ax.set_title(title, fontsize=13, fontweight="bold", loc="left", pad=14)
+    ax.spines[["top", "right"]].set_visible(False)
+    if sub: ax.text(0, 1.01, sub, transform=ax.transAxes, color=MUTED, fontsize=9)
+```
+
+# 왜 특허 문장만으로는 부족한가
+
+특허는 회로의 구성과 효과를 언어로 쓴다. 그러나 “출력이 유지된다”는 문장에는 적어도 네 층이 섞여 있다. 어떤 회로를 비교 대상으로 삼았는가, 어떤 자극을 넣었는가, 어떤 전압을 통과선으로 삼았는가, 그리고 어느 모델을 썼는가다. 이 네 층이 빠지면 문장은 설계 의도이지 검증 결과가 아니다.
+
+반대로 회로 시뮬레이션도 특허의 효과를 실측처럼 대신할 수 없다. 이 글은 여섯 특허 식별자를 출발점으로 만든 **연구용 회로 재구성**을 같은 합성 TFT 카드와 고정된 전원·타이밍 조건에서 비교한 기록이다. 따라서 여기서의 수치는 실제 패널, 특정 공정, 특허의 신규성·진보성을 판정하지 않는다.
+
+# 한 조건에서 여섯 가지 동사를 시험하다
+
+재구성 대상은 KR10-2017-0060953, KR10-2017-0071217, KR10-2017-0072514, KR10-2017-0072528, KR10-2017-0112036, EP2738758B1이다. 전부 공개 특허 식별자이지만, 회로 치수·일부 파형·모델 파라미터는 원문만으로 결정되지 않는다. 그래서 이 글은 절대 전압보다 **동일 가정 아래의 비교 차이**만 읽는다.
+
+| 특허 식별자 | 재구성에서 본 수단 | 이 글의 증거 범위 |
+|---|---|---|
+| KR10-2017-0060953 | 클록-캐리 기반 리셋 | 단일 단계 5 측정점 |
+| KR10-2017-0071217 | M7 클록 게이트 | 16 슬롯 실패 비교 |
+| KR10-2017-0072514 | RST 소스 초기화 | 구조·파형 초기화만 |
+| KR10-2017-0072528 | T1/T2 세트·리셋 | 4단 자기 슬롯 |
+| KR10-2017-0112036 | 다중 보호 경로 | 24 슬롯 실패 비교 |
+| EP2738758B1 | carry-게이트 분리 | 3 kΩ 결함 비교 |
+
+## “분리한다”는 동사: 결함 앞의 carry
+
+EP2738758B1에서 가져온 비교 질문은 단순하다. 게이트 라인에 3 kΩ 직렬 결함을 넣었을 때 carry가 어느 쪽에 남는가. 재구성된 분리 구조에서는 carry가 8.00 V, 비교 구조에서는 5.49 V였다. 여기서 6 V는 이 실험에서만 쓰인 판정선이며, 보편적인 GIP 규격이 아니다.
+
+```{python}
+#| label: fig-carry
+#| fig-cap: "합성 조건의 3 kΩ 결함 비교. 막대는 재구성 회로의 원시 파형에서 집계한 carry와 gate-line의 대표 전압이며, 실측 소자값이 아니다."
+c = data["carry"]
+fig, ax = plt.subplots(figsize=(8.2, 4.2))
+x = range(len(c)); w = .36
+ax.bar([i-w/2 for i in x], [r["carry_v"] for r in c], w, label="carry", color=BLUE)
+ax.bar([i+w/2 for i in x], [r["gate_v"] for r in c], w, label="gate line", color=GOLD)
+ax.axhline(6, color=RED, ls="--", lw=1, label="이 실험의 6 V 판정선")
+ax.set_xticks(list(x), [r["case"] for r in c]); ax.set_ylabel("V"); ax.set_ylim(0, 9)
+ax.legend(frameon=False, ncol=3, fontsize=8); finish(ax, "결함은 gate를 낮췄지만, 분리된 carry는 이 조건에서 남았다")
+plt.show()
+```
+
+이 차이는 “발명이 실제 제품에서 항상 더 낫다”가 아니라, **선언된 결함·모델·판정선의 조합에서** 회로 연결 방식이 다른 출력을 만들었다는 뜻이다. 측정이론의 언어로 말하면, 동사를 수치로 바꾼 것이 아니라 동사가 성립하는 관측 조건을 함께 적어 둔 것이다.
+
+## “유지한다”는 동사: 실패 수를 세는 법
+
+두 재구성에서는 노이즈·초기 상태·글리치 조건을 슬롯 단위로 세었다. KR10-2017-0112036 재구성은 24개 슬롯에서 0 실패, 비교 회로는 22 실패였다. KR10-2017-0071217 재구성은 16개에서 0 실패, 비교 회로는 13 실패였다.
+
+```{python}
+#| label: fig-failures
+#| fig-cap: "합성 시나리오별 실패 비율. 같은 회로의 독립 양산 표본이 아니므로, 유의확률을 공정 수율 또는 일반화된 신뢰도로 해석하면 안 된다."
+f = data["failure"]
+fig, ax = plt.subplots(figsize=(8.2, 4.2))
+x = range(len(f)); w = .36
+rate_a=[r["design_fail"]/r["design_total"]*100 for r in f]
+rate_b=[r["comparison_fail"]/r["comparison_total"]*100 for r in f]
+ax.bar([i-w/2 for i in x], rate_a, w, label="재구성 설계", color=GREEN)
+ax.bar([i+w/2 for i in x], rate_b, w, label="비교 회로", color=RED)
+ax.set_xticks(list(x), [r["case"] for r in f]); ax.set_ylabel("실패율 (%)"); ax.set_ylim(0, 100)
+ax.legend(frameon=False); finish(ax, "조건부 글리치·초기화 시험에서는 실패 수가 갈렸다")
+plt.show()
+```
+
+원 원고는 이 표에 Fisher 정확검정을 붙였다. 계산 자체는 가능하지만, 이 슬롯들은 서로 독립적으로 추출된 소자가 아니라 같은 가정에서 만든 시나리오다. 그래서 이 글은 p값을 “우연이 아니다”의 증거로 쓰지 않는다. 더 정직한 문장은 이것이다. **이 제한된 시나리오 묶음에서 차이가 반복되었고, 그 차이를 뒤집을 반례 시나리오도 따로 찾아야 한다.**
+
+# 경계에서 얻는 새 명제: 특허 해석은 실험 설계가 된다
+
+특허 해석과 시뮬레이션은 서로를 대체하지 않는다. 특허는 무엇을 비교해야 하는지 알려 주고, 시뮬레이션은 그 비교가 어떤 가정에 매달렸는지 드러낸다. 둘 사이에 측정이론을 넣으면, “효과”는 세 단계의 질문으로 바뀐다.
+
+1. **구성:** 어떤 연결을 다르게 읽었는가?
+2. **관측:** 어떤 결함·글리치·판정선을 걸었는가?
+3. **반증:** 어느 온도·산포·위상·부하에서 그 차이가 사라지는가?
+
+이 틀의 장점은 특허를 법률 판단으로 과장하지 않으면서도, 문장을 회로 실험의 출발점으로 쓸 수 있다는 데 있다. 다음 실험의 목표는 더 많은 “통과”를 얻는 것이 아니라, 이 결과가 깨지는 경계를 찾는 것이다.
+
+::: {.callout-warning}
+## 반대해석과 한계
+- 모든 결과는 연구용 합성 TFT 모델, 단일 실행, 고정 전원·타이밍·부하 조건에 한정된다. HSPICE 일치, 상용 공정 일치, 실측 재현을 주장하지 않는다.
+- 특허 원문만으로 회로 치수와 자극이 완전히 정해지지 않는 부분은 가정이다. 특히 KR10-2017-0072514와 KR10-2017-0072528은 구조 재현의 비중이 크다.
+- 실패 슬롯은 독립적인 양산 표본이 아니다. 실패율·p값을 수율, 신뢰성, 통계적 일반화로 읽을 수 없다.
+- 이 글은 특허의 유효성·침해·신규성·진보성에 관한 의견이 아니다.
+:::
+
+# 재현 자료와 참고 문헌
+
+이 글의 집계값은 `output/data/sp45_gip_benchmark.json`에 공개했다. 차트는 그 파일에서 렌더되며, 모든 수치는 합성 조건의 회로 재구성에서 나온 값이다.
+
+1. Google Patents, [KR10-2017-0060953](https://patents.google.com/?q=KR1020170060953), [KR10-2017-0071217](https://patents.google.com/?q=KR1020170071217), [KR10-2017-0072514](https://patents.google.com/?q=KR1020170072514), [KR10-2017-0072528](https://patents.google.com/?q=KR1020170072528), [KR10-2017-0112036](https://patents.google.com/?q=KR1020170112036), [EP2738758B1](https://patents.google.com/patent/EP2738758B1).
+2. Fisher, R. A. (1922). *On the interpretation of χ² from contingency tables, and the calculation of P*. Journal of the Royal Statistical Society.
+3. 연구 재현 자료: Insight Lab, `sp45_gip_benchmark.json` (2026-10-29).

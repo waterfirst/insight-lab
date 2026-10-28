@@ -1,0 +1,20 @@
+{
+  "scope": "Six GIP patent-inspired circuit reconstructions under one synthetic TFT simulation card; not measured-device data and not a patent-validity opinion.",
+  "carry": [
+    {"case":"분리 구조·정상", "carry_v":8.00, "gate_v":7.00},
+    {"case":"분리 구조·3 kΩ 결함", "carry_v":8.00, "gate_v":1.55},
+    {"case":"비교 구조·3 kΩ 결함", "carry_v":5.49, "gate_v":3.29}
+  ],
+  "failure": [
+    {"case":"KR10-2017-0112036 재구성", "design_fail":0, "design_total":24, "comparison_fail":22, "comparison_total":24},
+    {"case":"KR10-2017-0071217 재구성", "design_fail":0, "design_total":16, "comparison_fail":13, "comparison_total":16}
+  ],
+  "six_cases": [
+    {"id":"KR10-2017-0060953", "device":"클록-캐리 기반 리셋 재구성", "evidence":"단일 단계 5 측정점"},
+    {"id":"KR10-2017-0071217", "device":"M7 클록 게이트 재구성", "evidence":"16 슬롯: 0/16 대 13/16 실패"},
+    {"id":"KR10-2017-0072514", "device":"RST 소스 초기화 재구성", "evidence":"구조·파형 초기화만"},
+    {"id":"KR10-2017-0072528", "device":"T1/T2 세트·리셋 재구성", "evidence":"4단 자기 슬롯 7.34 V"},
+    {"id":"KR10-2017-0112036", "device":"다중 보호 경로 재구성", "evidence":"24 슬롯: 0/24 대 22/24 실패"},
+    {"id":"EP2738758B1", "device":"carry-게이트 분리 재구성", "evidence":"3 kΩ 결함: 8.00 V 대 5.49 V carry"}
+  ]
+}
