@@ -101,7 +101,27 @@ fig.tight_layout(); plt.show()
 
 이 구조의 목표는 “수련 기간을 기계적으로 줄이는 것”이 아니다. 실제 환자에게 처음 시도해야 하는 행동의 수를 줄이고, 전문의의 피드백을 기록 가능한 형태로 늘리는 것이다.
 
-# 3. 수술로봇의 현재 위치: 자율의 약속보다 감독의 설계
+# 3. 노동력 제공형 도제에서 역량 중심 수련으로
+
+과거의 장시간 수련을 그대로 복원하는 것은 답이 아니다. 한국의 전공의 수련은 이미 당직을 포함해 원칙적으로 주당 80시간 상한을 두고 있다. 보건복지부도 2024년 수련혁신 방안에서 평균 수련시간을 80시간에서 72시간으로 낮추고, 단계적으로 60시간 수준을 검토하는 시범사업을 제시했다. 동시에 지도전문의 지원, 임상교육훈련센터 확대, 다기관 협력 수련을 내걸었다. [보건복지부 의료개혁 1차 실행방안](https://mohw.go.kr/menu.es?mid=a50103000000)
+
+이 변화는 단순히 시간이 줄었다는 뜻이 아니다. 병원이 전공의의 장시간 노동으로 빈 자리를 메우는 구조에서는, 시간이 줄수록 교육 기회도 함께 줄 수 있다. 그래서 전공의를 '진료 인력'과 '피교육자' 중 하나로 고르는 식의 이분법도 충분하지 않다. 진료 참여는 교육의 핵심이지만, 그 참여가 **관찰·피드백·위임 기준** 없이 반복 업무에 흡수되면 수련이 아니라 인력 운용이 된다.
+
+개혁의 단위는 병원 운영과 교육 평가를 같이 바꾸는 일이다.
+
+| 바꿀 대상 | 기존의 노동력 제공형 도제 | 역량 중심 수련 |
+|---|---|---|
+| 투입 기준 | 연차·당직표 중심 | 시뮬레이션과 직접관찰을 통과한 술기 단위 |
+| 지도 방식 | 같은 현장에 있었는가 | 영상·로그·다수 지도자의 기록 피드백 |
+| 전문의 역할 | 공백을 메우며 사후 감독 | 위임 기준을 정하고 고위험 판단을 직접 담당 |
+| 병원 운영 | 전공의 수에 진료 용량이 연동 | 전문의 중심 진료와 교육 시간을 별도 확보 |
+| 평가 기준 | 사례 수·근속 기간 | 맡겨도 되는 수준(entrustment)과 환자안전 결과 |
+
+시뮬레이션은 실제 수술을 대신하는 면허증이 아니다. 다만 드물지만 치명적인 상황을 같은 조건으로 반복하고, 실패를 환자에게 전가하지 않은 채 끝까지 경험하게 한다는 장점이 있다. WHO는 시뮬레이션의 장점으로 희귀·긴급 상황 반복, 동일 시나리오의 비교, 오류를 실제 환자 위험 없이 끝까지 관찰하는 점을 든다. [WHO Patient Safety Curriculum Guide](https://iris.who.int/bitstream/handle/10665/44641/9789241501958_eng.pdf?sequence=)
+
+역량 중심 평가는 추상적 구호도 아니다. ACGME의 평가 지침은 직접관찰, 술기 시뮬레이터·가상현실, 수술 사례 로그, 영상으로 포착된 술기, 다면 피드백을 함께 쓰는 방법을 제시한다. 중요한 것은 AI가 점수를 내는 것이 아니라, **어떤 증거가 있어야 지도전문의가 다음 술기를 맡길 수 있는지**를 미리 정하는 것이다. [ACGME Clinical Competency Committees Guidebook](https://www.acgme.org/globalassets/acgmeclinicalcompetencycommitteeguidebook.pdf)
+
+# 4. 수술로봇의 현재 위치: 자율의 약속보다 감독의 설계
 
 FDA가 2026년 공개한 로봇수술기기 초안 가이드는 로봇보조수술기기(RASD)를 **자격 있는 의료진이 수술기구를 정밀하게 위치·제어하도록 돕는 원격조작·소프트웨어 제어 시스템**으로 정의한다. 임상 자료, 비임상 시험, 표시사항을 요구하는 전임상 심사 대상이다. [FDA RASD 초안 가이드](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/robotically-assisted-surgical-devices-premarket-submissions)
 
@@ -130,7 +150,7 @@ fig.tight_layout(); plt.show()
 - 사람이 언제 즉시 넘겨받는가?
 - 사고가 나면 제조사·병원·감독 의료진의 책임과 기록은 어떻게 남는가?
 
-# 4. 인구절벽이 요구하는 것은 '의사 없는 병원'이 아니다
+# 5. 인구절벽이 요구하는 것은 '의사 없는 병원'이 아니다
 
 저출생은 자동화를 정당화하는 면허가 아니다. 사람이 부족하다고 검증되지 않은 자율 수술을 취약 환자에게 먼저 적용하면, 의료 공백을 줄이는 대신 위험을 불평등하게 배분할 수 있다. 특히 지역·필수의료일수록 "대안이 없으니 먼저 써 보자"는 유혹이 강하다.
 
@@ -145,7 +165,7 @@ fig.tight_layout(); plt.show()
 
 도제는 사라지지 않는다. 대신 “한 명의 스승이 옆에서 지켜봐야만 전달되는 지식”의 비중을 줄이고, 기록·시뮬레이션·원격감독으로 복제할 수 있는 부분을 넓혀야 한다. 도제의 핵심은 위계가 아니라 **피드백이 책임과 함께 전달되는 것**이기 때문이다.
 
-# 5. 반대해석: 기술이 아니라 보상·근무환경이 병목일 수 있다
+# 6. 반대해석: 기술이 아니라 보상·근무환경이 병목일 수 있다
 
 ::: {.callout-warning}
 ## 반대해석과 한계
@@ -170,3 +190,6 @@ fig.tight_layout(); plt.show()
 2. [FDA, *Robotically-Assisted Surgical Devices — Premarket Submissions*, Draft Guidance (2026-09)](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/robotically-assisted-surgical-devices-premarket-submissions)
 3. [FDA, *Robotic Medical Devices*](https://www.fda.gov/medical-devices/products-and-medical-procedures/robotic-medical-devices)
 4. [Harry Cockburn, *Elon Musk says AI surgeons will be better than humans in just three years*, The Independent (2026-01-08)](https://www.independent.co.uk/tech/elon-musk-ai-optimus-surgeons-b2897000.html)
+5. [보건복지부, *의료개혁 1차 실행방안* (2024-08-30)](https://mohw.go.kr/menu.es?mid=a50103000000)
+6. [ACGME, *Clinical Competency Committees Guidebook*](https://www.acgme.org/globalassets/acgmeclinicalcompetencycommitteeguidebook.pdf)
+7. [WHO, *Patient Safety Curriculum Guide*](https://iris.who.int/bitstream/handle/10665/44641/9789241501958_eng.pdf?sequence=)
