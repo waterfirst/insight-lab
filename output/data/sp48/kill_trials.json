@@ -1,0 +1,878 @@
+[
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L3_sigkill_group",
+"stop_ms": 20,
+"accepted": {
+"bg": 29,
+"sid": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 26,
+"accepted": {
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L5_cgroup_timer_revoke",
+"stop_ms": 22,
+"accepted": {},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L2_sigkill_pid",
+"stop_ms": 20,
+"accepted": {
+"sid": 30,
+"bg": 30,
+"fg": 30,
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L1_sigterm",
+"stop_ms": 928,
+"accepted": {
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L2_sigkill_pid",
+"stop_ms": 21,
+"accepted": {
+"sid": 29,
+"bg": 29,
+"fg": 29
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L3_sigkill_group",
+"stop_ms": 31,
+"accepted": {
+"bg": 29,
+"sid": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 30,
+"accepted": {
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L5_cgroup_timer_revoke",
+"stop_ms": 37,
+"accepted": {},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L1_sigterm",
+"stop_ms": 898,
+"accepted": {
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L2_sigkill_pid",
+"stop_ms": 31,
+"accepted": {
+"sid": 29,
+"bg": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L5_cgroup_timer_revoke",
+"stop_ms": 33,
+"accepted": {},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 32,
+"accepted": {
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L3_sigkill_group",
+"stop_ms": 20,
+"accepted": {
+"sid": 29,
+"bg": 29,
+"fg": 29,
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L1_sigterm",
+"stop_ms": 878,
+"accepted": {
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L5_cgroup_timer_revoke",
+"stop_ms": 44,
+"accepted": {},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 27,
+"accepted": {
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L2_sigkill_pid",
+"stop_ms": 20,
+"accepted": {
+"sid": 29,
+"bg": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L3_sigkill_group",
+"stop_ms": 20,
+"accepted": {
+"bg": 29,
+"sid": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L1_sigterm",
+"stop_ms": 918,
+"accepted": {
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L2_sigkill_pid",
+"stop_ms": 20,
+"accepted": {
+"sid": 29,
+"bg": 29,
+"fg": 29
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L3_sigkill_group",
+"stop_ms": 20,
+"accepted": {
+"bg": 29,
+"sid": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 32,
+"accepted": {
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L5_cgroup_timer_revoke",
+"stop_ms": 25,
+"accepted": {},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L1_sigterm",
+"stop_ms": 920,
+"accepted": {
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L2_sigkill_pid",
+"stop_ms": 20,
+"accepted": {
+"sid": 29,
+"bg": 29,
+"fg": 29,
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L5_cgroup_timer_revoke",
+"stop_ms": 22,
+"accepted": {},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 26,
+"accepted": {
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L3_sigkill_group",
+"stop_ms": 20,
+"accepted": {
+"fg": 30,
+"bg": 29,
+"sid": 29,
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L1_sigterm",
+"stop_ms": 948,
+"accepted": {
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L2_sigkill_pid",
+"stop_ms": 21,
+"accepted": {
+"sid": 29,
+"bg": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L3_sigkill_group",
+"stop_ms": 21,
+"accepted": {
+"sid": 29,
+"bg": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 26,
+"accepted": {
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L5_cgroup_timer_revoke",
+"stop_ms": 32,
+"accepted": {},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L1_sigterm",
+"stop_ms": 21,
+"accepted": {
+"sid": 29,
+"bg": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L1_sigterm",
+"stop_ms": 21,
+"accepted": {
+"bg": 30,
+"sid": 30,
+"fg": 30
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L3_sigkill_group",
+"stop_ms": 21,
+"accepted": {
+"bg": 29,
+"fg": 29,
+"sid": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L5_cgroup_timer_revoke",
+"stop_ms": 23,
+"accepted": {},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 26,
+"accepted": {
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L2_sigkill_pid",
+"stop_ms": 21,
+"accepted": {
+"bg": 29,
+"sid": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L5_cgroup_timer_revoke",
+"stop_ms": 25,
+"accepted": {},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L2_sigkill_pid",
+"stop_ms": 21,
+"accepted": {
+"bg": 29,
+"sid": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 38,
+"accepted": {
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L1_sigterm",
+"stop_ms": 21,
+"accepted": {
+"bg": 29,
+"sid": 29,
+"fg": 29,
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L3_sigkill_group",
+"stop_ms": 31,
+"accepted": {
+"sid": 29,
+"bg": 29,
+"fg": 29,
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": 1
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L6_revoke_only",
+"stop_ms": null,
+"accepted": {},
+"rejected": {
+"fg": 30,
+"sid": 29,
+"bg": 29,
+"timer": 1
+},
+"delivered_before_stop": null,
+"agent_binary_after": {
+"claude": 1
+}
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L6_revoke_only",
+"stop_ms": null,
+"accepted": {},
+"rejected": {
+"bg": 29,
+"sid": 29,
+"fg": 29,
+"timer": 2
+},
+"delivered_before_stop": null,
+"agent_binary_after": {
+"claude": 1
+}
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L6_revoke_only",
+"stop_ms": null,
+"accepted": {},
+"rejected": {
+"bg": 29,
+"sid": 29,
+"fg": 29,
+"timer": 2
+},
+"delivered_before_stop": null,
+"agent_binary_after": {
+"claude": 1
+}
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L6_revoke_only",
+"stop_ms": null,
+"accepted": {},
+"rejected": {
+"sid": 29,
+"bg": 29,
+"fg": 29,
+"timer": 1
+},
+"delivered_before_stop": null,
+"agent_binary_after": {
+"codex": 1
+}
+},
+{
+"harness": "claude",
+"parent": "orphan",
+"level": "L1_sigterm",
+"stop_ms": 878,
+"accepted": {
+"bg": 30,
+"sid": 30,
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "claude",
+"parent": "orphan",
+"level": "L1_sigterm",
+"stop_ms": 887,
+"accepted": {
+"bg": 30,
+"sid": 30,
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "claude",
+"parent": "orphan",
+"level": "L1_sigterm",
+"stop_ms": 898,
+"accepted": {
+"sid": 30,
+"bg": 30,
+"timer": 3
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "claude",
+"parent": "orphan",
+"level": "L1_sigterm",
+"stop_ms": 878,
+"accepted": {
+"bg": 30,
+"sid": 30,
+"timer": 3
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "claude",
+"parent": "orphan",
+"level": "L1_sigterm",
+"stop_ms": 837,
+"accepted": {
+"timer": 3,
+"bg": 30,
+"sid": 30
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "codex",
+"parent": "orphan",
+"level": "L1_sigterm",
+"stop_ms": 21,
+"accepted": {
+"sid": 30,
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "claude",
+"parent": "orphan",
+"level": "L2_sigkill_pid",
+"stop_ms": 20,
+"accepted": {
+"bg": 29,
+"sid": 29,
+"fg": 29,
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "claude",
+"parent": "orphan",
+"level": "L2_sigkill_pid",
+"stop_ms": 20,
+"accepted": {
+"fg": 29,
+"bg": 29,
+"sid": 29,
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "claude",
+"parent": "orphan",
+"level": "L2_sigkill_pid",
+"stop_ms": 20,
+"accepted": {
+"sid": 30,
+"bg": 30,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "codex",
+"parent": "orphan",
+"level": "L1_sigterm",
+"stop_ms": 21,
+"accepted": {
+"sid": 29,
+"timer": 3
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "codex",
+"parent": "orphan",
+"level": "L1_sigterm",
+"stop_ms": 21,
+"accepted": {
+"sid": 30,
+"timer": 3
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "claude",
+"parent": "orphan",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 25,
+"accepted": {
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "claude",
+"parent": "orphan",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 27,
+"accepted": {
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "claude",
+"parent": "orphan",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 26,
+"accepted": {
+"timer": 3
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "codex",
+"parent": "orphan",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 29,
+"accepted": {
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "codex",
+"parent": "orphan",
+"level": "L4_sigkill_cgroup",
+"stop_ms": 36,
+"accepted": {
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L2_sigkill_pid",
+"stop_ms": 20,
+"accepted": {
+"bg": 29,
+"sid": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "claude",
+"parent": "alive",
+"level": "L1_sigterm",
+"stop_ms": 928,
+"accepted": {
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L2_sigkill_pid",
+"stop_ms": 21,
+"accepted": {
+"sid": 29,
+"bg": 29,
+"fg": 29,
+"timer": 2
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+},
+{
+"harness": "codex",
+"parent": "alive",
+"level": "L1_sigterm",
+"stop_ms": 21,
+"accepted": {
+"sid": 29,
+"bg": 29,
+"fg": 29,
+"timer": 1
+},
+"rejected": {},
+"delivered_before_stop": null,
+"agent_binary_after": {}
+}
+]

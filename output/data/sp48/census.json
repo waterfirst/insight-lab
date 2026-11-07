@@ -1,0 +1,37 @@
+{
+ "sessions": 531,
+ "harness": {
+  "claude": 461,
+  "codex": 70
+ },
+ "excluded_experiment_sessions": 73,
+ "calls": {
+  "none": 11177,
+  "local": 2703,
+  "background": 150,
+  "remote": 34,
+  "schedule": 15,
+  "deliver": 217
+ },
+ "total_calls": 14296,
+ "sessions_with": {
+  "none": 531,
+  "local": 349,
+  "background": 42,
+  "remote": 18,
+  "schedule": 11,
+  "deliver": 135
+ },
+ "sessions_irr": 159,
+ "sessions_surv": 181,
+ "sessions_surv_excl_deliver": 65,
+ "kill_random": {
+  "irr": 0.101,
+  "surv": 0.138,
+  "any": 0.434,
+  "strict": 0.064
+ },
+ "kill_random_sessions": 512,
+ "first_surv_pos_median": 0.67,
+ "len_median": 13
+}
