@@ -71,6 +71,24 @@ format:
 
 세네갈과 알제리는 같은 제국에서 벗어났지만 프랑스어의 공적 지위는 달라졌다. 알제리에서 헌법의 공용어 조항을 읽는 것과 도시에서 사람들이 주고받는 말을 조사하는 것은 별개의 일이다. 인도의 법에는 영어가 계속 쓰이는 기관이 적혀 있다. 이 사례들을 같은 지도에 올리면, **독립 연도만으로는 어떤 언어가 공문서와 교실, 일상에서 이어졌는지 설명할 수 없다**는 점이 드러난다. 대표 사례 12건의 지도에서는 독립 경로와 중앙정부의 언어 지위를 함께 확인할 수 있다. [독립 이후 언어 지도와 사례별 사료](https://waterfirst.github.io/King-Sejong-s-utterances/atlas.html#colonies)
 
+
+## 한국과 베트남의 1945년, 그리고 모국어의 자리 {#korea-vietnam}
+
+1945년 8월 15일, 일본의 패전으로 한반도에서 식민 통치가 끝났다. 같은 해 9월 2일, 호찌민은 하노이에서 독립을 선언하고 베트남민주공화국의 출범을 알렸다. 한국에서는 1919년 3·1운동과 대한민국 임시정부로 이어진 독립운동이 있었고, 베트남에서는 베트민이 8월 혁명을 이끌었다. 두 사회 모두 1945년을 독립의 전환점으로 기억한다. 그 뒤에 전개된 전쟁과 국가 수립의 순서는 달랐다. [국가기록원 광복절 기록](https://theme.archives.go.kr/next/anniversary/anniversary.do?anniversaryId=9803000000) · [대한민국 임시정부 기록](https://theme.archives.go.kr/viewer/common/archWebViewer.do?archiveEventId=0052235127&singleData=Y) · [베트남 헌법 전문](https://xaydungchinhsach.chinhphu.vn/toan-van-hien-phap-nuoc-cong-hoa-xa-hoi-chu-nghia-viet-nam-119231225213002261.htm)
+
+| 비교 | 한반도·대한민국 | 베트남 |
+|---|---|---|
+| 식민 통치와 1945년 | 1910년 일본의 병합. 1945년 8월 15일 광복. 이후 북위 38도선을 기준으로 미군과 소련군이 각각 남북에 진주했다. | 프랑스령 인도차이나에 편입됐고 제2차 세계대전 중 일본의 점령도 겪었다. 1945년 9월 2일 독립을 선언했으나 프랑스가 지배권 회복을 시도하면서 전쟁이 이어졌다. |
+| 분단과 전쟁 이후 | 1948년 남과 북에 별도 정부가 수립됐다. 1950년 시작된 한국전쟁은 1953년 정전으로 멈췄고 군사분계선을 사이에 둔 분단이 이어졌다. | 1954년 제네바 합의로 프랑스와의 전쟁이 종결되고 북위 17도선 부근에 임시 군사분계선이 놓였다. 1975년 4월 30일 사이공 함락으로 베트남전이 끝났고, 1976년 통일 국회가 베트남사회주의공화국이라는 국호를 채택했다. |
+| 모국어를 적는 대표 문자 | 한국어를 한글로 적는다. 세종이 창제한 자모를 음절 단위로 모아 쓴다. | 베트남어를 라틴 문자 기반의 **꾸옥응으**(chữ Quốc ngữ)로 적는다. 예를 들어 *ma*, *má*, *mà*는 성조 표시가 다르다. |
+| 독립 이후 공적 사용 | 대한민국은 1948년 한글전용법으로 공용문서의 한글 표기를 원칙으로 삼되 당시 필요한 한자 병용도 허용했다. 현행 국어기본법은 한국어를 대한민국의 공용어로 정의한다. | 베트남민주공화국은 1945년부터 꾸옥응으로 읽고 쓰는 대중 문해 운동을 폈다. 현행 헌법 제5조는 베트남어를 국가 언어로 정하고 각 민족이 자기 언어와 문자를 사용할 권리도 명시한다. |
+
+[국가기록원 38도선과 미·소 진주](https://theme.archives.go.kr/next/625/background/causes.do) · [국가기록원 6·25전쟁과 정전](https://theme.archives.go.kr/next/koreaOfRecord/625.do) · [1954년 제네바 정전협정문](https://history.state.gov/historicaldocuments/frus1952-54v16/d1035) · [베트남 정부 1975년 종전 기록](https://en.baochinhphu.vn/reunification-day-11119699.htm) · [베트남 국회 1976년 결의](https://thuvienso.quochoi.vn/handle/11742/17809) · [1948년 한글전용법](https://www.law.go.kr/LSW/lsInfoP.do?chrClsCd=010202&efYd=19481009&lsiSeq=3291&urlMode=lsInfoP) · [국어기본법](https://www.law.go.kr/lsInfoP.do?lsId=009877&urlMode=lsInfoP) · [베트남 사회과학원 문해 운동 자료](https://vass.gov.vn/bao-ve-nen-tang-tu-tuong-cua-dang/cach-mang-thang-tam-nam-1945-dau-moc-quan-trong-mo-ra-ky-nguyen-moi-cua-nen-giao-duc-viet-nam-579955) · [베트남 헌법 제5조](https://chinhphu.vn/hien-phap-nam-2013/chuong-i-che-do-chinh-tri-10052990)
+
+**같은 한자문화권을 거쳤지만 말의 계통과 문자의 경로는 달랐다.** 조선과 베트남에서는 한문이 관료와 지식인의 글에 널리 쓰였다. 베트남에서는 한자를 바탕으로 베트남어를 적는 쯔놈(chữ Nôm)도 발전했다. 17세기에 선교사들이 베트남어를 라틴 문자로 적는 방식을 발전시켰고, 프랑스 식민기에는 이 표기가 행정과 인쇄물에 퍼졌다. 베트남 지식인과 교육 운동가들은 같은 문자를 베트남어 신문과 대중 교육에 활용했다. 한국에서는 식민지 이전에 만들어진 한글을 조선어학회가 맞춤법과 사전으로 다듬었다. 한국어는 한국어족, 베트남어는 오스트로아시아어족으로 분류된다. [한·베트남 언어사 비교 연구](https://www.cambridge.org/core/journals/european-journal-of-sociology-archives-europeennes-de-sociologie/article/end-of-an-era-transforming-language-and-society-in-japan-korea-and-vietnam-c-18701950/F82649A33D5A3AF7C97BE21E7558C317) · [베트남 문자 형성 연구](https://jesuitsourcesdigital.bc.edu/jeq_2025v1n2_p313/) · [베트남 문해 교육사](https://link.springer.com/chapter/10.1007/978-981-99-9093-1_2) · [Glottolog 한국어](https://glottolog.org/glottolog?iso=kor) · [Glottolog 베트남어](https://glottolog.org/glottolog?name=Vietnamese&namequerytype=whole)
+
+지도에서 한글과 라틴 문자를 따로 고르면 이 차이가 보인다. 베트남이 라틴 문자 지도에서 칠해지는 까닭은 **베트남어를 그 문자로 쓰기 때문**이다. 대한민국은 기존의 한글을 공문서에 넓혔고, 베트남은 외부에서 전해진 문자를 베트남어 문해 교육에 활용했다. 두 사례에서 모국어의 공적 자리를 넓힌 주체는 그 문자를 쓰고 가르친 사람들이었다. 동시에 한 국가의 대표 언어와 주민 개개인의 모국어는 구분해야 한다. 베트남 헌법 제5조는 국가 언어와 각 민족의 언어·문자 사용권을 함께 규정한다. [언어·문자 지도](https://waterfirst.github.io/King-Sejong-s-utterances/atlas.html#distribution)
+
 # AI의 언어 지도에는 또 다른 기준이 필요하다
 
 한글의 조합 규칙은 컴퓨터에서도 그대로 쓸 수 있다. 유니코드는 한글 음절을 자모로 분해하고 다시 합치는 규칙을 제공한다. Cognetta 등의 영한 뉴스 번역 실험은 그 구조를 이용해 한국어 임베딩·출력층의 매개변수를 1,140만 개에서 3만 6천 개로 줄였고, 두 비교 설정의 BLEU는 14.1과 14.0이었다. 이 수치는 **한국어 임베딩·출력층**과 해당 번역 실험의 결과다. [유니코드 한글 조합·분해](https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-3/) · [Cognetta 등, EACL 2023 표 2](https://aclanthology.org/2023.eacl-main.172/)
